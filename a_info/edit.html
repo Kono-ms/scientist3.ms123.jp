@@ -1,0 +1,164 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+	<h1>お知らせ管理</h1>
+
+	<ol class="breadcrumb">
+		<li><i class="fa fa-dashboard"></i> Home</li>
+		<li><a href="/a_info/">お知らせ管理</a></li>
+		<li>お知らせ登録・編集</li>
+	</ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+
+
+		<div class="col-xs-12">
+			<div class="box box-warning">
+
+				<div class="box-header">
+					<h3 class="box-title">登録・編集</h3>
+				</div><!-- /.box-header -->
+
+				<div class="box-body">
+
+					[ERR-S]
+					<div class="alert alert-warning alert-dismissible">
+						<div class="message_box mb20">
+							<p><i class="icon fa fa-warning"></i> 入力内容に不備がございますので、内容のご確認をお願いいたします。</p>
+						</div>
+						<div class="page_text">
+							<ul class="error_list">
+								[ERRMSG]
+							</ul>
+						</div>
+					</div>
+					[ERR-E]
+
+					<form method="post" action="./" enctype="multipart/form-data">
+						<button name="submit" value="submit" type="submit" class="mb20 btn btn-block btn-default"
+							onclick="var ok=confirm('保存してもよろしいですか？');if (ok) this.form.submit(); return false;"><i
+								class="fa fa-floppy-o"></i> 保存</button>
+						<input type="hidden" name="mode" value="save">
+						<input type="hidden" name="key" value="[ID]">
+						<input type="hidden" name="sort" value="[SORT]">
+						<input type="hidden" name="word" value="[WORD]">
+						<input type="hidden" name="page" value="[PAGE]">
+						<input type="hidden" name="lid" value="[LID]">
+						<input type="hidden" name="ID" value="[ID]">
+						<input type="hidden" name="ETC05" value="[ETC05]">
+
+						<table id="table_summary" class="table table-bordered table_edit" summary="表">
+							<tbody>
+								<tr>
+									<th width="140">公開フラグ</th>
+									<td>[OPT-ETC12]</td>
+								</tr>
+								<tr>
+									<th width="140">日付</th>
+									<td><input type="text" name="DATE" value="[DATE]" size="30" id="japan_calendar1">
+									</td>
+								</tr>
+								<tr>
+									<th width="140">カテゴリ</th>
+									<td>
+										<ul><select name="CCATE">[OPT-CCATE]</select></ul>
+									</td>
+								</tr>
+
+								<tr>
+									<th width="140">サプライヤー向け、研究者向け</th>
+									<td>[OPT-ETC04]</td>
+								</tr>
+
+								<tr>
+									<th width="140">タイトル</th>
+									<td><input type="text" name="TITLE" value="[TITLE]" size="90"></td>
+								</tr>
+								<tr>
+									<th width="140">本文</th>
+									<td><textarea name="COMMENT" style="width:100%;" rows="30"
+											id="editor">[COMMENT]</textarea></td>
+								</tr>
+								<!--<tr><th width="140">本文</th><td><textarea name="COMMENT" cols="100" rows="30" class="ckeditor" id="editor1">[COMMENT]</textarea></td></tr>
+<script type="text/javascript">
+if ( typeof CKEDITOR == 'undefined' ){
+} else {
+  var editor = CKEDITOR.replace( 'editor1' );
+  CKFinder.setupCKEditor( editor, '/js/ckfinder/' ) ;
+}
+</script>-->
+
+								<!--tr><th width="140">ID</th><td><input type="text" name="HID" value="[HID]" size="90"><br />※複数の自動車教習所を登録する場合、自動車教習所IDは半角カンマ「,」区切りで入力してください。</td></tr-->
+
+								[S-NEWDATA]<tr>
+									<th width="140">メイン画像</th>
+									<td><input type="file" name="EP_PIC" value="[PIC]" size="30"><input type="hidden"
+											name="PIC" value="[PIC]"></td>
+								</tr>[E-NEWDATA]
+								[S-EDITDATA]<tr>
+									<th width="140">メイン画像</th>
+									<td><img src="[PIC]" width="200"> 削除 <input type="checkbox"
+											name="DEL_IMAGE_PIC"><br><input type="file" name="EP_PIC" value="[PIC]"
+											size="30"><input type="hidden" name="PIC" value="[PIC]"></td>
+								</tr>[E-EDITDATA]
+
+								[S-NEWDATA]<tr>
+									<th width="140">サブ画像１</th>
+									<td><input type="file" name="EP_ETC02" value="[ETC02]" size="30"><input
+											type="hidden" name="ETC02" value="[ETC02]"></td>
+								</tr>[E-NEWDATA]
+								[S-EDITDATA]<tr>
+									<th width="140">サブ画像１</th>
+									<td><img src="[ETC02]" width="200"> 削除 <input type="checkbox"
+											name="DEL_IMAGE_ETC02"><br><input type="file" name="EP_ETC02"
+											value="[ETC02]" size="30"><input type="hidden" name="ETC02" value="[ETC02]">
+									</td>
+								</tr>[E-EDITDATA]
+
+								[S-NEWDATA]<tr>
+									<th width="140">サブ画像２</th>
+									<td><input type="file" name="EP_ETC03" value="[ETC03]" size="30"><input
+											type="hidden" name="ETC03" value="[ETC03]"></td>
+								</tr>[E-NEWDATA]
+								[S-EDITDATA]<tr>
+									<th width="140">サブ画像２</th>
+									<td><img src="[ETC03]" width="200"> 削除 <input type="checkbox"
+											name="DEL_IMAGE_ETC03"><br><input type="file" name="EP_ETC03"
+											value="[ETC03]" size="30"><input type="hidden" name="ETC03" value="[ETC03]">
+									</td>
+								</tr>[E-EDITDATA]
+
+								[S-NEWDATA]<tr>
+									<th width="140">サブ画像３</th>
+									<td><input type="file" name="EP_ETC11" value="[ETC11]" size="30"><input
+											type="hidden" name="ETC11" value="[ETC11]"></td>
+								</tr>[E-NEWDATA]
+								[S-EDITDATA]<tr>
+									<th width="140">サブ画像３</th>
+									<td><img src="[ETC11]" width="200"> 削除 <input type="checkbox"
+											name="DEL_IMAGE_ETC11"><br><input type="file" name="EP_ETC11"
+											value="[ETC11]" size="30"><input type="hidden" name="ETC11" value="[ETC11]">
+									</td>
+								</tr>[E-EDITDATA]
+
+								<!--<tr><th width="140">画像ALT</th><td><input type="text" name="ALT" value="[ALT]" size="90"></td></tr>
+<tr><th width="140">筆者名</th><td><input type="text" name="AUTHOR" value="[AUTHOR]" size="90"></td></tr>-->
+
+						</table>
+						<button name="submit" value="submit" type="submit" class="btn btn-block btn-default"
+							onclick="var ok=confirm('保存してもよろしいですか？');if (ok) this.form.submit(); return false;"><i
+								class="fa fa-floppy-o"></i> 保存</button>
+					</form>
+
+
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</section><!-- /.content -->

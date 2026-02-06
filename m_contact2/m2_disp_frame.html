@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+  <script>
+    $(document).ready(function () {
+
+      $('header').hide();
+      $('.breadcrumb').hide();
+      $('footer').hide();
+
+      if (location.search.indexOf('frame=on') != -1) {
+        $('header').hide();
+        $('.breadcrumb').hide();
+        $('.c-head').hide();
+        $('footer').hide();
+        $('.wrap').css('padding', '0px');
+        $('.edit').css('padding', '0px');
+        $('.container').css('padding', '0px');
+        $('.form-box').css('padding', '3rem');
+      }
+
+      $('#close_btn').on('click', function () {
+        close_popup();
+      });
+    });
+    function close_popup() {
+      $('#mask_mcontact2', parent.document).hide();
+      $('#popup_mcontact2', parent.document).fadeOut();
+    }
+  </script>
+</head>
+
+<body>
+  <div class="sub" style="background-color:white;">
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
+          <div>
+            <a href="javascript:close_popup();">
+              閉じる
+            </a>
+          </div>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <div class="formset">
+            <div class="formset__item">
+              <div class="formset__ttl"><span>案件名</span></div>
+              <div class="formset__input">[D-TITLE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>サプライヤー</span></div>
+              <div class="formset__input">[M1_VIEW]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">詳細項目</div>
+              <div class="formset__input">[D-M2_TITLE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">金額</div>
+              <div class="formset__input">[D-M2_PRICE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">備考</div>
+              <div class="formset__input">[D-M2_COMMENT]</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

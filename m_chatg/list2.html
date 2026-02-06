@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/common/css/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="/js/prototype.js"></script>
+
+</head>
+<body style="width:95%;">
+<div class="wrap sub">
+<!--コンテンツ開始-->
+<div class="l-container">
+<div class="inner" id="inner">
+[INNER]
+</div>
+<br class="clear_balloon"/>
+
+</div>
+<!--コンテンツ終了-->
+
+<a name="bott">&nbsp;</a>
+
+</div>
+
+<script>
+var myAjax=new Ajax.PeriodicalUpdater(
+	'inner',
+	'/m_chatg/chatinner2.php',
+	{
+		method:'get',
+		parameters:'aid=[AID]',
+		insertion:'Bottom',
+		frequency: 1,
+	        decay: 1,
+	}
+);
+
+function bottt(){
+	window.location.hash = "";
+	window.location.hash = "bott";
+};
+
+setTimeout("bottt()", 10);
+
+jQuery(document).ready(function () {
+  jQuery('body,html').animate( {scrollTop: 999999}, 800, 'swing' );
+});
+
+</script>
+
+</body>
+</html>

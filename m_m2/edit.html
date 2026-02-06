@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>研究者プロフィール編集｜Scientist3</title>
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head2.html--><!-- 研究者側だけValidationを日本語化 -->
+
+  <script type="text/javascript" src="//ajaxzip3.github.io/ajaxzip3.js"></script>
+  <script>
+    function get_address() {
+      AjaxZip3.zip2addr('M2_DVAL06', '', 'M2_DVAL07', 'M2_DVAL07');
+    }
+  </script>
+
+  <script>
+    // ニックネーム
+    $(function () {
+      $('#M2_DVAL02').on('input', function (event) {
+        setNickName();
+      });
+      $('#M2_DVAL03').on('input', function (event) {
+        setNickName();
+      });
+      function setNickName() {
+        let name = $('#M2_DVAL02').val();
+        let company = $('#M2_DVAL03').val();
+        $('#M2_DVAL01').val(name + company);
+      }
+    });
+  </script>
+
+  <script>
+    // 追加バリデーション
+    $(function() {
+      $.validator.addMethod(
+        "hpurl",
+        function (value, element) {
+          return this.optional(element) || /^(http(s?):\/\/[a-zA-Z0-9+&@#/%?=~_|!:,.;\-]+)$/.test(value);
+        },
+        "URL形式の入力にしてください"
+      );
+      $.validator.addClassRules(
+        "validation-hpurl", {
+          'hpurl': true,
+      });
+    });
+  </script>
+
+</head>
+
+<body>
+  <div class="wrap sub">
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <!--<li class="breadcrumb__item"><a href="#">マイページ</a></li>-->
+          <li class="breadcrumb__item">研究者プロフィール編集</li>
+        </ol>
+      </div>
+    </div>
+    <section class="edit">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">研究者プロフィール編集</h1>
+          <!--<p class="c-head__txt">研究者プロフィールの編集をおこないます。</p>-->
+        </div>
+        [S-ERR]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [E-ERR]
+        <form method="post" action="./" enctype="multipart/form-data">
+          <input type="hidden" name="mode" value="saveconf">
+          <input type="hidden" name="key" value="[ID]">
+          <input type="hidden" name="sort" value="[SORT]">
+          <input type="hidden" name="word" value="[WORD]">
+          <input type="hidden" name="page" value="[PAGE]">
+          <input type="hidden" name="lid" value="[LID]">
+          <input type="hidden" name="token" value="[TOKEN]">
+          <input type="hidden" name="ID" value="[ID]">
+          <input type="hidden" name="SOCIALID" value="[SOCIALID]">
+          <input type="hidden" name="M2_ETC01" value="[M2_ETC01]">
+          <input type="hidden" name="M2_ETC02" value="[M2_ETC02]">
+          <input type="hidden" name="M2_ETC03" value="[M2_ETC03]">
+          <input type="hidden" name="M2_ETC04" value="[M2_ETC04]">
+          <input type="hidden" name="M2_ETC05" value="[M2_ETC05]">
+          <input type="hidden" name="M2_ETC06" value="[M2_ETC06]">
+          <input type="hidden" name="M2_ETC07" value="[M2_ETC07]">
+          <input type="hidden" name="M2_ETC08" value="[M2_ETC08]">
+          <input type="hidden" name="M2_ETC09" value="[M2_ETC09]">
+          <input type="hidden" name="M2_ETC10" value="[M2_ETC10]">
+          <input type="hidden" name="M2_ETC11" value="[M2_ETC11]">
+          <input type="hidden" name="M2_ETC12" value="[M2_ETC12]">
+          <input type="hidden" name="M2_ETC13" value="[M2_ETC13]">
+          <input type="hidden" name="M2_ETC14" value="[M2_ETC14]">
+          <input type="hidden" name="M2_ETC15" value="[M2_ETC15]">
+          <input type="hidden" name="M2_ETC16" value="[M2_ETC16]">
+          <input type="hidden" name="M2_ETC17" value="[M2_ETC17]">
+          <input type="hidden" name="M2_ETC18" value="[M2_ETC18]">
+          <!--<input type="hidden" name="M2_ETC19" value="[M2_ETC19]">-->
+          <input type="hidden" name="M2_ETC20" value="[M2_ETC20]">
+          <input type="hidden" name="M2_DVAL03" value="[M2_DVAL03]">
+          <input type="hidden" name="MID" value="[MID]">
+          <input type="hidden" name="M2_ENABLE" value="[M2_ENABLE]">
+          <input type="hidden" name="M2_NEWDATE" value="[M2_NEWDATE]">
+          <input type="hidden" name="M2_EDITDATE" value="[M2_EDITDATE]">
+
+
+          <input type="hidden" name="M2_DRDO01" value="[M2_DRDO01]"><!--登録状態-->
+
+          <input type="hidden" name="EMAIL" value="[EMAIL]">
+          <input type="hidden" name="PASS" value="[PASS]">
+          <input type="hidden" name="M2_DVAL13" value="[M2_DVAL13]">
+          <input type="hidden" name="M2_DVAL15" value="[M2_DVAL15]">
+
+
+          <div class="formset">
+            <!--<div class="formset__item">
+              <div class="formset__ttl">会員ID</div>
+              <div class="formset__input">[MID]</div>
+            </div>
+          -->
+            <div class="formset__item">
+              <div class="formset__ttl">研究者ID</div>
+              <div class="formset__input">[MID_NEW]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">メールアドレス</div>
+              <div class="formset__input">[EMAIL]<!--<input type="text" name="EMAIL" value="[EMAIL]">--></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">パスワード</div>
+              <div class="formset__input">********<!--<input type="text" name="PASS" value="[PASS]">--></div>
+            </div>
+            <span>(パスワード変更をご希望の場合→ <a href="/reminder2/" target="_blank">再設定用メール送信</a>)</span>
+          </div>
+
+          [S-NEWREGIST]
+          <div class="formset">
+            <div class="formset__item">
+              <div class="formset__ttl">ニックネーム</div>
+              <div class="formset__input"><input type="text" id="M2_DVAL01" name="M2_DVAL01" value="[M2_DVAL01]"
+                  data-jquery-validate-rule="alpha-num"></div>
+            </div>
+
+            <!--
+          <div class="formset__item"><div class="formset__ttl">氏名</div><div class="formset__input"><input type="text" id="M2_DVAL02" name="M2_DVAL02" value="[M2_DVAL02]"></div></div>
+          -->
+            <div class="formset__item">
+              <div class="formset__ttl"><span>氏名</span><span class="formset__must">*</span></div>
+              <div class="formset__input">
+
+                姓 <input type="text" name="M2_DVAL16" value="[M2_DVAL16]" style="width:200px;" required />
+                　名 <input type="text" name="M2_DVAL17" value="[M2_DVAL17]" style="width:200px;" required />
+
+              </div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>氏名（英語表記）</span><span class="formset__must">*</span></div>
+              <div class="formset__input">
+
+                FirstName <input type="text" name="M2_DVAL18" value="[M2_DVAL18]" style="width:200px;" required data-jquery-validate-rule="alpha-num" />
+                　LastName <input type="text" name="M2_DVAL19" value="[M2_DVAL19]" style="width:200px;" required data-jquery-validate-rule="alpha-num" />
+
+              </div>
+            </div>
+
+            <div class="formset__item">
+              <div class="formset__ttl">組織名</div>
+              <div class="formset__input"><!--<input type="text" id="M2_DVAL03" name="M2_DVAL03" value="[M2_DVAL03]"
+                 >-->[M2_DVAL03]</div>
+            </div>
+
+            <div class="formset__item">
+              <div class="formset__ttl">組織名(英語表記)</div>
+              <div class="formset__input">[M2_ETC20]<!--<input type="text" id="M2_ETC20" name="M2_ETC20" value="[M2_ETC20]"
+                  data-jquery-validate-rule="alpha-num">--></div>
+            </div>
+
+            <div class="formset__item">
+              <div class="formset__ttl">部署名</div>
+              <div class="formset__input"><input type="text" name="M2_DVAL04" value="[M2_DVAL04]"></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">部署名（英語表記）</div>
+              <div class="formset__input"><input type="text" name="M2_DVAL21" value="[M2_DVAL21]" data-jquery-validate-rule="alpha-num"></div>
+            </div>
+
+            <div class="formset__item">
+              <div class="formset__ttl">役職</div>
+              <div class="formset__input"><input type="text" id="M2_ETC19" name="M2_ETC19" value="[M2_ETC19]"></div>
+            </div>
+
+            <!-- <div class="formset__item">
+              <div class="formset__ttl">国</div>
+              <div class="formset__input"><input type="text" name="M2_DVAL05" value="[M2_DVAL05]"></div>
+            </div> -->
+            <!-- <div class="formset__item">
+              <div class="formset__ttl">都道府県</div>
+              <div class="formset__input"><select name="M2_DSEL01"
+                  class="input_select form-control">[OPT-M2_DSEL01]</select></div>
+            </div> -->
+
+            <!--
+          <div class="formset__item"><div class="formset__ttl">郵便番号</div><div class="formset__input"><input type="text" name="M2_DVAL06" value="[M2_DVAL06]"></div></div>
+          -->
+            <div class="formset__item">
+              <div class="formset__ttl"><span>郵便番号</span></div>
+              <div class="formset__input"><input type="tel" name="M2_DVAL06" value="[M2_DVAL06]" style="width:200px;" data-jquery-validate-rule="zip" />
+                <a onclick="javascript:get_address();">住所検索</a>
+              </div>
+            </div>
+
+            <div class="formset__item">
+              <div class="formset__ttl"><span>住所</span><span class="formset__must">*</span></div>
+              <div class="formset__input"><input type="text" name="M2_DVAL07" value="[M2_DVAL07]" required></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>住所（英語表記）</span><span class="formset__must">*</span></div>
+              <div class="formset__input"><input type="text" name="M2_DVAL20" value="[M2_DVAL20]" required data-jquery-validate-rule="alpha-num"></div>
+            </div>
+
+            <div class="formset__item">
+              <div class="formset__ttl"><span>TEL</span><span class="formset__must">*</span></div>
+              <div class="formset__input"><input type="text" name="M2_DVAL08" value="[M2_DVAL08]" required></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>FAX</span></div>
+              <div class="formset__input"><input type="text" name="M2_DVAL09" value="[M2_DVAL09]"></div>
+            </div>
+
+            <div style="display:none;">
+              <div class="formset__item">
+                <div class="formset__ttl"><span>メールアドレス</span></div>
+                <div class="formset__input"><input type="text" name="M2_DVAL10" value="[M2_DVAL10]"></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span>システム管理者</span></div>
+                <div class="formset__input"><input type="text" name="M2_DVAL11" value="[M2_DVAL11]"></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span>アカウント種類</span></div>
+                <div class="formset__input">
+                  <ul>[OPT-M2_DVAL12]</ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="formset__item">
+              <div class="formset__ttl"><span>決裁者ID</span></div>
+              <div class="formset__input">[DISP1-M2_DVAL15]<!--<input type="text" name="M2_DVAL13" value="[M2_DVAL13]">--></div>
+            </div>
+            <div class="formset__item" style="display:none;">
+              <div class="formset__ttl"><span>会員種別</span></div>
+              <div class="formset__input">
+                <ul>[OPT-M2_DVAL14]</ul>
+              </div>
+            </div>
+            <!-- <div class="formset__item"><div class="formset__ttl">M2_DVAL15-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL15" value="[M2_DVAL15]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL16-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL16" value="[M2_DVAL16]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL17-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL17" value="[M2_DVAL17]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL18-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL18" value="[M2_DVAL18]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL19-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL19" value="[M2_DVAL19]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL20-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL20" value="[M2_DVAL20]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL21-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL21" value="[M2_DVAL21]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL22-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL22" value="[M2_DVAL22]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL23-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL23" value="[M2_DVAL23]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL24-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL24" value="[M2_DVAL24]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL25-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL25" value="[M2_DVAL25]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL26-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL26" value="[M2_DVAL26]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL27-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL27" value="[M2_DVAL27]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL28-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL28" value="[M2_DVAL28]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL29-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL29" value="[M2_DVAL29]"></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DVAL30-TITLE</div><div class="formset__input"><input type="text" name="M2_DVAL30" value="[M2_DVAL30]"></div></div>
+           -->
+           <!--
+            <div class="formset__item">
+              <div class="formset__ttl"><span>PRコメント</span></div>
+              <div class="formset__input"><textarea name="M2_DTXT01" cols="70" rows="5">[M2_DTXT01]</textarea></div>
+            </div>
+          -->
+            <div class="formset__item">
+              <div class="formset__ttl"><span>ホームページURL</span></div>
+              <div class="formset__input"><!--<textarea name="M2_DTXT02" cols="70" rows="5">[M2_DTXT02]</textarea>-->
+                <input type="text" name="M2_DTXT02" value="[M2_DTXT02]" class="validation-hpurl">
+              </div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>興味のある研究分野（キーワード）<br>※英語で記載してください</span></div>
+              <div class="formset__input"><textarea name="M2_DTXT03" cols="70" rows="5" data-jquery-validate-rule="alpha-num">[M2_DTXT03]</textarea></div>
+            </div>
+            <!--
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT04-TITLE</div><div class="formset__input"><textarea name="M2_DTXT04" cols="70" rows="5">[M2_DTXT04]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT05-TITLE</div><div class="formset__input"><textarea name="M2_DTXT05" cols="70" rows="5">[M2_DTXT05]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT06-TITLE</div><div class="formset__input"><textarea name="M2_DTXT06" cols="70" rows="5">[M2_DTXT06]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT07-TITLE</div><div class="formset__input"><textarea name="M2_DTXT07" cols="70" rows="5">[M2_DTXT07]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT08-TITLE</div><div class="formset__input"><textarea name="M2_DTXT08" cols="70" rows="5">[M2_DTXT08]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT09-TITLE</div><div class="formset__input"><textarea name="M2_DTXT09" cols="70" rows="5">[M2_DTXT09]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT10-TITLE</div><div class="formset__input"><textarea name="M2_DTXT10" cols="70" rows="5">[M2_DTXT10]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT11-TITLE</div><div class="formset__input"><textarea name="M2_DTXT11" cols="70" rows="5">[M2_DTXT11]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT12-TITLE</div><div class="formset__input"><textarea name="M2_DTXT12" cols="70" rows="5">[M2_DTXT12]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT13-TITLE</div><div class="formset__input"><textarea name="M2_DTXT13" cols="70" rows="5">[M2_DTXT13]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT14-TITLE</div><div class="formset__input"><textarea name="M2_DTXT14" cols="70" rows="5">[M2_DTXT14]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT15-TITLE</div><div class="formset__input"><textarea name="M2_DTXT15" cols="70" rows="5">[M2_DTXT15]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT16-TITLE</div><div class="formset__input"><textarea name="M2_DTXT16" cols="70" rows="5">[M2_DTXT16]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT17-TITLE</div><div class="formset__input"><textarea name="M2_DTXT17" cols="70" rows="5">[M2_DTXT17]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT18-TITLE</div><div class="formset__input"><textarea name="M2_DTXT18" cols="70" rows="5">[M2_DTXT18]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT19-TITLE</div><div class="formset__input"><textarea name="M2_DTXT19" cols="70" rows="5">[M2_DTXT19]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT20-TITLE</div><div class="formset__input"><textarea name="M2_DTXT20" cols="70" rows="5">[M2_DTXT20]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT21-TITLE</div><div class="formset__input"><textarea name="M2_DTXT21" cols="70" rows="5">[M2_DTXT21]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT22-TITLE</div><div class="formset__input"><textarea name="M2_DTXT22" cols="70" rows="5">[M2_DTXT22]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT23-TITLE</div><div class="formset__input"><textarea name="M2_DTXT23" cols="70" rows="5">[M2_DTXT23]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT24-TITLE</div><div class="formset__input"><textarea name="M2_DTXT24" cols="70" rows="5">[M2_DTXT24]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT25-TITLE</div><div class="formset__input"><textarea name="M2_DTXT25" cols="70" rows="5">[M2_DTXT25]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT26-TITLE</div><div class="formset__input"><textarea name="M2_DTXT26" cols="70" rows="5">[M2_DTXT26]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT27-TITLE</div><div class="formset__input"><textarea name="M2_DTXT27" cols="70" rows="5">[M2_DTXT27]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT28-TITLE</div><div class="formset__input"><textarea name="M2_DTXT28" cols="70" rows="5">[M2_DTXT28]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT29-TITLE</div><div class="formset__input"><textarea name="M2_DTXT29" cols="70" rows="5">[M2_DTXT29]</textarea></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DTXT30-TITLE</div><div class="formset__input"><textarea name="M2_DTXT30" cols="70" rows="5">[M2_DTXT30]</textarea></div></div> -->
+
+            <!-- <div class="formset__item"><div class="formset__ttl">M2_DSEL02-TITLE</div><div class="formset__input"><select name="M2_DSEL02" class="input_select form-control">[OPT-M2_DSEL02]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DSEL03-TITLE</div><div class="formset__input"><select name="M2_DSEL03" class="input_select form-control">[OPT-M2_DSEL03]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DSEL04-TITLE</div><div class="formset__input"><select name="M2_DSEL04" class="input_select form-control">[OPT-M2_DSEL04]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DSEL05-TITLE</div><div class="formset__input"><select name="M2_DSEL05" class="input_select form-control">[OPT-M2_DSEL05]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DSEL06-TITLE</div><div class="formset__input"><select name="M2_DSEL06" class="input_select form-control">[OPT-M2_DSEL06]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DSEL07-TITLE</div><div class="formset__input"><select name="M2_DSEL07" class="input_select form-control">[OPT-M2_DSEL07]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DSEL08-TITLE</div><div class="formset__input"><select name="M2_DSEL08" class="input_select form-control">[OPT-M2_DSEL08]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DSEL09-TITLE</div><div class="formset__input"><select name="M2_DSEL09" class="input_select form-control">[OPT-M2_DSEL09]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DSEL10-TITLE</div><div class="formset__input"><select name="M2_DSEL10" class="input_select form-control">[OPT-M2_DSEL10]</select></div></div>
+          
+          <div class="formset__item"><div class="formset__ttl">M2_DRDO02-TITLE</div><div class="formset__input"><ul>[OPT-M2_DRDO02]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DRDO03-TITLE</div><div class="formset__input"><ul>[OPT-M2_DRDO03]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DRDO04-TITLE</div><div class="formset__input"><ul>[OPT-M2_DRDO04]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DRDO05-TITLE</div><div class="formset__input"><ul>[OPT-M2_DRDO05]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DRDO06-TITLE</div><div class="formset__input"><ul>[OPT-M2_DRDO06]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DRDO07-TITLE</div><div class="formset__input"><ul>[OPT-M2_DRDO07]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DRDO08-TITLE</div><div class="formset__input"><ul>[OPT-M2_DRDO08]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DRDO09-TITLE</div><div class="formset__input"><ul>[OPT-M2_DRDO09]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DRDO10-TITLE</div><div class="formset__input"><ul>[OPT-M2_DRDO10]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DCHK01-TITLE</div><div class="formset__input"><ul>[OPT-M2_DCHK01]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DCHK02-TITLE</div><div class="formset__input"><ul>[OPT-M2_DCHK02]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DCHK03-TITLE</div><div class="formset__input"><ul>[OPT-M2_DCHK03]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DCHK04-TITLE</div><div class="formset__input"><ul>[OPT-M2_DCHK04]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DCHK05-TITLE</div><div class="formset__input"><ul>[OPT-M2_DCHK05]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DCHK06-TITLE</div><div class="formset__input"><ul>[OPT-M2_DCHK06]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DCHK07-TITLE</div><div class="formset__input"><ul>[OPT-M2_DCHK07]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DCHK08-TITLE</div><div class="formset__input"><ul>[OPT-M2_DCHK08]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DCHK09-TITLE</div><div class="formset__input"><ul>[OPT-M2_DCHK09]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_DCHK10-TITLE</div><div class="formset__input"><ul>[OPT-M2_DCHK10]</ul></div></div> -->
+            <!--DFIL01-->
+            <!-- [S-NEWDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL01-TITLE</div><div class="formset__input"><input type="file" name="EP_M2_DFIL01" value="[M2_DFIL01]"><input type="hidden" name="M2_DFIL01" value="[M2_DFIL01]"></div></div>[E-NEWDATA]
+          [S-EDITDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL01-TITLE</div><div class="formset__input"><img src="[M2_DFIL01]" width="200"><input type="checkbox" name="DEL_IMAGE_M2_DFIL01"><span class="txt-delete">削除</span><br><input type="file" name="EP_M2_DFIL01" value="[M2_DFIL01]"><input type="hidden" name="M2_DFIL01" value="[M2_DFIL01]"></div></div>[E-EDITDATA]  -->
+            <!--DFIL02-->
+            <!-- [S-NEWDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL02-TITLE</div><div class="formset__input"><input type="file" name="EP_M2_DFIL02" value="[M2_DFIL02]"><input type="hidden" name="M2_DFIL02" value="[M2_DFIL02]"></div></div>[E-NEWDATA]
+          [S-EDITDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL02-TITLE</div><div class="formset__input"><img src="[M2_DFIL02]" width="200"><input type="checkbox" name="DEL_IMAGE_M2_DFIL02"><span class="txt-delete">削除</span><br><input type="file" name="EP_M2_DFIL02" value="[M2_DFIL02]"><input type="hidden" name="M2_DFIL02" value="[M2_DFIL02]"></div></div>[E-EDITDATA]  -->
+            <!--DFIL03-->
+            <!-- [S-NEWDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL03-TITLE</div><div class="formset__input"><input type="file" name="EP_M2_DFIL03" value="[M2_DFIL03]"><input type="hidden" name="M2_DFIL03" value="[M2_DFIL03]"></div></div>[E-NEWDATA]
+          [S-EDITDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL03-TITLE</div><div class="formset__input"><img src="[M2_DFIL03]" width="200"><input type="checkbox" name="DEL_IMAGE_M2_DFIL03"><span class="txt-delete">削除</span><br><input type="file" name="EP_M2_DFIL03" value="[M2_DFIL03]"><input type="hidden" name="M2_DFIL03" value="[M2_DFIL03]"></div></div>[E-EDITDATA]  -->
+            <!--DFIL04-->
+            <!-- [S-NEWDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL04-TITLE</div><div class="formset__input"><input type="file" name="EP_M2_DFIL04" value="[M2_DFIL04]"><input type="hidden" name="M2_DFIL04" value="[M2_DFIL04]"></div></div>[E-NEWDATA]
+          [S-EDITDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL04-TITLE</div><div class="formset__input"><img src="[M2_DFIL04]" width="200"><input type="checkbox" name="DEL_IMAGE_M2_DFIL04"><span class="txt-delete">削除</span><br><input type="file" name="EP_M2_DFIL04" value="[M2_DFIL04]"><input type="hidden" name="M2_DFIL04" value="[M2_DFIL04]"></div></div>[E-EDITDATA]  -->
+            <!--DFIL05-->
+            <!-- [S-NEWDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL05-TITLE</div><div class="formset__input"><input type="file" name="EP_M2_DFIL05" value="[M2_DFIL05]"><input type="hidden" name="M2_DFIL05" value="[M2_DFIL05]"></div></div>[E-NEWDATA]
+          [S-EDITDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL05-TITLE</div><div class="formset__input"><img src="[M2_DFIL05]" width="200"><input type="checkbox" name="DEL_IMAGE_M2_DFIL05"><span class="txt-delete">削除</span><br><input type="file" name="EP_M2_DFIL05" value="[M2_DFIL05]"><input type="hidden" name="M2_DFIL05" value="[M2_DFIL05]"></div></div>[E-EDITDATA]  -->
+            <!--DFIL06-->
+            <!-- [S-NEWDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL06-TITLE</div><div class="formset__input"><input type="file" name="EP_M2_DFIL06" value="[M2_DFIL06]"><input type="hidden" name="M2_DFIL06" value="[M2_DFIL06]"></div></div>[E-NEWDATA]
+          [S-EDITDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL06-TITLE</div><div class="formset__input"><img src="[M2_DFIL06]" width="200"><input type="checkbox" name="DEL_IMAGE_M2_DFIL06"><span class="txt-delete">削除</span><br><input type="file" name="EP_M2_DFIL06" value="[M2_DFIL06]"><input type="hidden" name="M2_DFIL06" value="[M2_DFIL06]"></div></div>[E-EDITDATA]  -->
+            <!--DFIL07-->
+            <!-- [S-NEWDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL07-TITLE</div><div class="formset__input"><input type="file" name="EP_M2_DFIL07" value="[M2_DFIL07]"><input type="hidden" name="M2_DFIL07" value="[M2_DFIL07]"></div></div>[E-NEWDATA]
+          [S-EDITDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL07-TITLE</div><div class="formset__input"><img src="[M2_DFIL07]" width="200"><input type="checkbox" name="DEL_IMAGE_M2_DFIL07"><span class="txt-delete">削除</span><br><input type="file" name="EP_M2_DFIL07" value="[M2_DFIL07]"><input type="hidden" name="M2_DFIL07" value="[M2_DFIL07]"></div></div>[E-EDITDATA]  -->
+            <!--DFIL08-->
+            <!-- [S-NEWDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL08-TITLE</div><div class="formset__input"><input type="file" name="EP_M2_DFIL08" value="[M2_DFIL08]"><input type="hidden" name="M2_DFIL08" value="[M2_DFIL08]"></div></div>[E-NEWDATA]
+          [S-EDITDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL08-TITLE</div><div class="formset__input"><img src="[M2_DFIL08]" width="200"><input type="checkbox" name="DEL_IMAGE_M2_DFIL08"><span class="txt-delete">削除</span><br><input type="file" name="EP_M2_DFIL08" value="[M2_DFIL08]"><input type="hidden" name="M2_DFIL08" value="[M2_DFIL08]"></div></div>[E-EDITDATA]  -->
+            <!--DFIL09-->
+            <!-- [S-NEWDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL09-TITLE</div><div class="formset__input"><input type="file" name="EP_M2_DFIL09" value="[M2_DFIL09]"><input type="hidden" name="M2_DFIL09" value="[M2_DFIL09]"></div></div>[E-NEWDATA]
+          [S-EDITDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL09-TITLE</div><div class="formset__input"><img src="[M2_DFIL09]" width="200"><input type="checkbox" name="DEL_IMAGE_M2_DFIL09"><span class="txt-delete">削除</span><br><input type="file" name="EP_M2_DFIL09" value="[M2_DFIL09]"><input type="hidden" name="M2_DFIL09" value="[M2_DFIL09]"></div></div>[E-EDITDATA]  -->
+            <!--DFIL10-->
+            <!-- [S-NEWDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL10-TITLE</div><div class="formset__input"><input type="file" name="EP_M2_DFIL10" value="[M2_DFIL10]"><input type="hidden" name="M2_DFIL10" value="[M2_DFIL10]"></div></div>[E-NEWDATA]
+          [S-EDITDATA]<div class="formset__item"><div class="formset__ttl">M2_DFIL10-TITLE</div><div class="formset__input"><img src="[M2_DFIL10]" width="200"><input type="checkbox" name="DEL_IMAGE_M2_DFIL10"><span class="txt-delete">削除</span><br><input type="file" name="EP_M2_DFIL10" value="[M2_DFIL10]"><input type="hidden" name="M2_DFIL10" value="[M2_DFIL10]"></div></div>[E-EDITDATA] -->
+          </div>
+          <!-- <div class="formset">
+          <div class="formset__item"><div class="formset__ttl">M2_MSEL01-TITLE</div><div class="formset__input"><select name="M2_MSEL01" class="input_select form-control">[OPT-M2_MSEL01]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MSEL02-TITLE</div><div class="formset__input"><select name="M2_MSEL02" class="input_select form-control">[OPT-M2_MSEL02]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MSEL03-TITLE</div><div class="formset__input"><select name="M2_MSEL03" class="input_select form-control">[OPT-M2_MSEL03]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MSEL04-TITLE</div><div class="formset__input"><select name="M2_MSEL04" class="input_select form-control">[OPT-M2_MSEL04]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MSEL05-TITLE</div><div class="formset__input"><select name="M2_MSEL05" class="input_select form-control">[OPT-M2_MSEL05]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MSEL06-TITLE</div><div class="formset__input"><select name="M2_MSEL06" class="input_select form-control">[OPT-M2_MSEL06]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MSEL07-TITLE</div><div class="formset__input"><select name="M2_MSEL07" class="input_select form-control">[OPT-M2_MSEL07]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MSEL08-TITLE</div><div class="formset__input"><select name="M2_MSEL08" class="input_select form-control">[OPT-M2_MSEL08]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MSEL09-TITLE</div><div class="formset__input"><select name="M2_MSEL09" class="input_select form-control">[OPT-M2_MSEL09]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MSEL10-TITLE</div><div class="formset__input"><select name="M2_MSEL10" class="input_select form-control">[OPT-M2_MSEL10]</select></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MRDO01-TITLE</div><div class="formset__input"><ul>[OPT-M2_MRDO01]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MRDO02-TITLE</div><div class="formset__input"><ul>[OPT-M2_MRDO02]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MRDO03-TITLE</div><div class="formset__input"><ul>[OPT-M2_MRDO03]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MRDO04-TITLE</div><div class="formset__input"><ul>[OPT-M2_MRDO04]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MRDO05-TITLE</div><div class="formset__input"><ul>[OPT-M2_MRDO05]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MRDO06-TITLE</div><div class="formset__input"><ul>[OPT-M2_MRDO06]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MRDO07-TITLE</div><div class="formset__input"><ul>[OPT-M2_MRDO07]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MRDO08-TITLE</div><div class="formset__input"><ul>[OPT-M2_MRDO08]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MRDO09-TITLE</div><div class="formset__input"><ul>[OPT-M2_MRDO09]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MRDO10-TITLE</div><div class="formset__input"><ul>[OPT-M2_MRDO10]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MCHK01-TITLE</div><div class="formset__input"><ul>[OPT-M2_MCHK01]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MCHK02-TITLE</div><div class="formset__input"><ul>[OPT-M2_MCHK02]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MCHK03-TITLE</div><div class="formset__input"><ul>[OPT-M2_MCHK03]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MCHK04-TITLE</div><div class="formset__input"><ul>[OPT-M2_MCHK04]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MCHK05-TITLE</div><div class="formset__input"><ul>[OPT-M2_MCHK05]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MCHK06-TITLE</div><div class="formset__input"><ul>[OPT-M2_MCHK06]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MCHK07-TITLE</div><div class="formset__input"><ul>[OPT-M2_MCHK07]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MCHK08-TITLE</div><div class="formset__input"><ul>[OPT-M2_MCHK08]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MCHK09-TITLE</div><div class="formset__input"><ul>[OPT-M2_MCHK09]</ul></div></div>
+          <div class="formset__item"><div class="formset__ttl">M2_MCHK10-TITLE</div><div class="formset__input"><ul>[OPT-M2_MCHK10]</ul></div></div>
+        </div> -->
+          [E-NEWREGIST] [S-EDITREGIST]
+          <input type="hidden" name="M2_DVAL01" value="[M2_DVAL01]">
+          <input type="hidden" name="M2_DVAL02" value="[M2_DVAL02]">
+          <input type="hidden" name="M2_DVAL03" value="[M2_DVAL03]">
+          <input type="hidden" name="M2_DVAL04" value="[M2_DVAL04]">
+          <input type="hidden" name="M2_DVAL05" value="[M2_DVAL05]">
+          <input type="hidden" name="M2_DVAL06" value="[M2_DVAL06]">
+          <input type="hidden" name="M2_DVAL07" value="[M2_DVAL07]">
+          <input type="hidden" name="M2_DVAL08" value="[M2_DVAL08]">
+          <input type="hidden" name="M2_DVAL09" value="[M2_DVAL09]">
+          <input type="hidden" name="M2_DVAL10" value="[M2_DVAL10]">
+          <input type="hidden" name="M2_DVAL11" value="[M2_DVAL11]">
+          <input type="hidden" name="M2_DVAL12" value="[M2_DVAL12]">
+          <input type="hidden" name="M2_DVAL13" value="[M2_DVAL13]">
+          <input type="hidden" name="M2_DVAL14" value="[M2_DVAL14]">
+          <input type="hidden" name="M2_DTXT01" value="[M2_DTXT01]">
+          <input type="hidden" name="M2_DTXT02" value="[M2_DTXT02]">
+          <input type="hidden" name="M2_DSEL01" value="[M2_DSEL01]">
+          <div class="formset">
+            <div class="formset__item">
+              <div class="formset__ttl">ニックネーム</div>
+              <div class="formset__input">[M2_DVAL01]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">氏名</div>
+              <div class="formset__input">[M2_DVAL02]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">会社名または屋号</div>
+              <div class="formset__input">[M2_DVAL03]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">部署名</div>
+              <div class="formset__input">[M2_DVAL04]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">国</div>
+              <div class="formset__input">[M2_DVAL05]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">郵便番号</div>
+              <div class="formset__input">[M2_DVAL06]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">住所</div>
+              <div class="formset__input">[M2_DVAL07]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">TEL</div>
+              <div class="formset__input">[M2_DVAL08]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">FAX</div>
+              <div class="formset__input">[M2_DVAL09]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">メールアドレス</div>
+              <div class="formset__input">[M2_DVAL10]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">システム管理者</div>
+              <div class="formset__input">[M2_DVAL11]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">アカウント種類</div>
+              <div class="formset__input">[D-M2_DVAL12]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">決裁者ID</div>
+              <div class="formset__input">[DISP1-M2_DVAL15]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">会員種別</div>
+              <div class="formset__input">[D-M2_DVAL14]</div>
+            </div>
+
+            <div class="formset__item">
+              <div class="formset__ttl">PRコメント</div>
+              <div class="formset__input">[D-M2_DTXT01]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">ホームページURL</div>
+              <div class="formset__input">[D-M2_DTXT02]</div>
+            </div>
+
+            <div class="formset__item">
+              <div class="formset__ttl">都道府県</div>
+              <div class="formset__input">[D-M2_DSEL01]</div>
+            </div>
+          </div>
+
+          [E-EDITREGIST]
+          <div class="btn formset__btn">
+            <!--<input type="submit" value="この内容で保存する" name="submit"
+              onclick="var ok=confirm('May I save it？');if (ok) this.form.submit(); return false;" />-->
+              <input type="submit" value="この内容で保存する" name="submit"
+              onclick="this.form.submit(); return false;" />
+          </div>
+        </form>
+      </div>
+    </section>
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

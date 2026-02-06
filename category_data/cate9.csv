@@ -1,0 +1,209 @@
+"第一階層","第二階層","第三階層","第四階層"
+"Toxicology","Anatomic Pathology","Anatomic Pathology
+Digital Pathology
+Histology
+Histopathology
+Neuropathology",""
+"","Neurotoxicology","Abuse and Dependence Liability Testing","Abuse Liability
+Conditioned Place Preference or Aversion Study - Mouse /Murine
+Conditioned Place Preference or Aversion Study - Rat
+Dependence Potential Study - Other Species
+Dependence Potential Study - Rat
+Drug Discrimination Study - Other Species
+Drug Discrimination Study - Rat
+Locomotor Activity Assessment Study - Rat
+Self Administration Study - Other Species
+Self Administration Study - Rat"
+"","","Other","Developmental Neurotoxicty Study - Other Species
+OECD 426: Developmental Neurotoxicity Study
+Repeat Dose Neurotoxicity Study - Other Species
+Repeat Dose Neurotoxicity Study - Rat
+Seizure Liability Study - Other Species
+Seizure Liability Study - Rat
+Single Dose Acute Neurotoxicity Study - Other Species
+Single Dose Acute Neurotoxicity Study - Rat"
+"","Specialty Dosing Routes","Dermal","Dermal Toxicology
+Topical Dermal Toxicity and/or Toxicokinetic Study - Dog / Canine
+Topical Dermal Toxicity and/or Toxicokinetic Study - Minipig
+Topical Dermal Toxicity and/or Toxicokinetic Study - Monkeys/Non-human Primates
+Topical Dermal Toxicity and/or Toxicokinetic Study - Mouse / Murine
+Topical Dermal Toxicity and/or Toxicokinetic Study - Other Species
+Topical Dermal Toxicity and/or Toxicokinetic Study - Rabbit
+Topical Dermal Toxicity and/or Toxicokinetic Study - Rat"
+"","","Infusion","Chronic Intravenous Infusion Carcinogenicity Study - Other Species
+Chronic Intravenous Infusion Carcinogenicity Study - Rat
+Repeat Dose Intravenous Infusion Study - Dog / Canine
+Repeat Dose Intravenous Infusion Study - Monkey / Non-human Primate
+Repeat Dose Intravenous Infusion Study - Other Species
+Repeat Dose Intravenous Infusion Study - Rats
+Single Dose Acute Intravenous Infusion Study - Dog / Canine
+Single Dose Acute Intravenous Infusion Study - Monkey / Non-human Primate
+Single Dose Acute Intravenous Infusion Study - Other Species
+Single Dose Acute Intravenous Infusion Study - Rats"
+"","","Inhalation","Chronic Inhalation Carcinogenicity Study - Other Species
+Chronic Inhalation Carcinogenicity Study - Rat
+Inhalation Toxicology
+Repeat Dose Inhalation Study - Other Species
+Repeat Dose Inhalation Study - Rat
+Single Dose Acute Inhalation Study - Other Species
+Single Dose Acute Inhalation Study - Rat
+Intranasal
+Chronic Intranasal Carcinogenicity Study - Other Species
+Chronic Intranasal Carcinogenicity Study - Rats
+Repeat Dose Intranasal Study - Dog / Canine
+Repeat Dose Intranasal Study - Monkey / Non-human Primate
+Repeat Dose Intranasal Study - Mouse / Murine
+Repeat Dose Intranasal Study - Other Species
+Repeat Dose Intranasal Study - Rat
+Single Dose Acute Intranasal Study - Dog / Canine
+Single Dose Acute Intranasal Study - Mouse / Murine
+Single Dose Acute Intranasal Study - Other Species
+Single Dose Acute Intranasal Study - Rat"
+"","","Ocular","Intracameral Implant Toxicity and/or Toxicokinetic Study - Dog / Canine
+Intracameral Implant Toxicity and/or Toxicokinetic Study - Monkey / Non-human Primate
+Intracameral Implant Toxicity and/or Toxicokinetic Study - Other Species
+Intracameral Implant Toxicity and/or Toxicokinetic Study - Rabbit, Non-pigmented (New Zealand White; NZW)
+Intracameral Implant Toxicity and/or Toxicokinetic Study - Rabbit, Pigmented (Dutch Belted, New Zealand Red)
+Intravitreal Toxicity and/or Toxicokinetic Study - Dog / Canine
+Intravitreal Toxicity and/or Toxicokinetic Study - Minipig
+Intravitreal Toxicity and/or Toxicokinetic Study - Monkey / Non-human Primate
+Intravitreal Toxicity and/or Toxicokinetic Study - Other Species
+Intravitreal Toxicity and/or Toxicokinetic Study - Rabbit, Non-pigmented (New Zealand White; NZW)
+Intravitreal Toxicity and/or Toxicokinetic Study - Rabbit, Pigmented (Dutch Belted, New Zealand Red)
+Ophthalmologic Toxicology
+Topical Ocular Toxicity and/or Toxicokinetic Study - Dog / Canine
+Topical Ocular Toxicity and/or Toxicokinetic Study - Minipig
+Topical Ocular Toxicity and/or Toxicokinetic Study - Monkey / Non-human Primate
+Topical Ocular Toxicity and/or Toxicokinetic Study - Mouse / Murine
+Topical Ocular Toxicity and/or Toxicokinetic Study - Rabbit, Non-pigmented (New Zealand White; NZW)
+Topical Ocular Toxicity and/or Toxicokinetic Study - Rabbit, Pigmented (Dutch Belted, New Zealand Red)
+Topical Ocular Toxicity and/or Toxicokinetic Study - Rat
+"
+"","","Other","Intra-Articular Toxicology
+Intra-Auricular Toxicology
+Intrathecal/Intraspinal Toxicology"
+"","Developmental and Reproductive Toxicology (DART)","Juvenile Toxicology","Juvenile Toxicity Study - Dog / Canine
+Juvenile Toxicity Study - Other Species
+Juvenile Toxicity Study - Rat
+"
+"","","Segment I","Fertility and Embryonic Development Study (Segment I) - Mouse / Murine
+Fertility and Embryonic Development Study (Segment I) - Other Species
+Fertility and Embryonic Development Study (Segment I) - Rat"
+"","","Segment II","Embryo-Fetal Development (EFD) Study (Segment II) - Mouse / Murine
+Embryo-Fetal Development (EFD) Study (Segment II) - Other Species
+Embryo-Fetal Development (EFD) Study (Segment II) - Rabbit
+Embryo-Fetal Development (EFD) Study (Segment II) - Rat"
+"","","Segment III","Pre/Post-Natal Development (PPND) Study (Segment III) - Mouse / Murine
+Pre/Post-Natal Development (PPND) Study (Segment III) - Other Species
+Pre/Post-Natal Development (PPND) Study (Segment III) - Rat"
+"","","Other","Enhanced Pre/Post-Natal Development Study (ePPND) - Monkey / Non-human Primate
+OECD 426: Developmental Neurotoxicity Study
+Reproductive Toxicology"
+"","REACH Services","in vitro","OECD 209: Activated Sludge, Respiration Inhibition Test (Carbon and Ammonium Oxidation)
+OECD 431: In Vitro Skin Corrosion: Human Skin Model Test
+OECD 432: In Vitro 3T3 NRU Phototoxicity Test
+OECD 437: Bovine Corneal Opacity and Permeability Test Method (BCOP) for Identifying Ocular Corrosives and Severe Irritants
+OECD 439: In Vitro Skin Irritation (Reconstructed Human Epidermis Test Method)
+OECD 471: Bacterial Reverse Mutation Test (Ames)
+OECD 473: In Vitro Mammalian Chromosomal Aberration Test
+OECD 474: Mammalian Erythrocyte Micronucleus Test
+OECD 476: In Vitro Mammalian Cell Gene Mutation Test (Mouse Lymphoma Assay)
+OECD 487: In Vitro Mammalian Cell Micronucleus Test"
+"","","in vivo","OECD 402: Acute Dermal Toxicity
+OECD 403: Acute Inhalation Toxicity
+OECD 404: Acute Dermal Irritation/Corrosion
+OECD 405: Acute Eye Irritation/Corrosion
+OECD 406: Skin Sensitisation
+OECD 407: Repeated Dose 28-day Oral Toxicity Study in Rodents
+OECD 408: Repeated Dose 90-Day Oral Toxicity Study in Rodents
+OECD 410: Repeated Dose Dermal Toxicity: 21/28-day Study
+OECD 411: Subchronic Dermal Toxicity: 90-day Study
+OECD 412: Subacute Inhalation Toxicity: 28-Day Study
+OECD 413: Subchronic Inhalation Toxicity: 90-day Study
+OECD 414: Prenatal Developmental Toxicity Study
+OECD 416: Two-Generation Reproduction Toxicity
+OECD 417: Toxicokinetics Study
+OECD 420: Acute Oral Toxicity - Fixed Dose Procedure
+OECD 421: Reproduction/Developmental Toxicity Screening Test
+OECD 422: Combined Repeated Dose Toxicity Study with the Reproduction/Developmental Toxicity Screening Test
+OECD 423: Acute Oral toxicity - Acute Toxic Class Method
+OECD 425: Acute Oral Toxicity: Up-and-Down Procedure
+OECD 426: Developmental Neurotoxicity Study
+OECD 429: Skin Sensitisation (Local Lymph Node Assay)
+OECD 436: Acute Inhalation Toxicity - Acute Toxic Class Method
+OECD 451: Carcinogenicity Studies
+OECD 452: Chronic Toxicity Studies
+OECD 474: Mammalian Erythrocyte Micronucleus Test
+OECD 475: Mammalian Bone Marrow Chromosomal Aberration Test
+OECD 486: Unscheduled DNA Synthesis (UDS) Test with Mammalian Liver Cells in vivo"
+"","","Other","REACH Services"
+"","General in vivo Toxicology","Carcinogenicity Study - Mouse","Carcinogenicity Study - Rat
+Dose Range Finding Study - Dog /Canine
+Dose Range Finding Study - Mouse / Murine
+Dose Range Finding Study - Other Species
+Dose Range Finding Study - Rat
+Gastrointestinal Toxicology
+General Toxicology
+Mammalian Toxicology
+Oral Toxicology
+Repeat Dose Toxicity Study - Dog / Canine
+Repeat Dose Toxicity Study - Monkey / Non-human Primate
+Repeat Dose Toxicity Study - Mouse / Murine
+Repeat Dose Toxicity Study - Other Species
+Repeat Dose Toxicity Study - Rat
+Single Dose Acute Toxicity Study - Dog / Canine
+Single Dose Acute Toxicity Study - Monkey / Non-human Primate
+Single Dose Acute Toxicity Study - Mouse / Murine
+Single Dose Acute Toxicity Study - Other Species
+Single Dose Acute Toxicity Study - Rat
+Tg.rasH2 Mouse Carcinogenicity Study"
+"","Other Specialty Toxicology","Ototoxicology","Ototoxicity Study - Monkey / Non-human Primate
+Ototoxicity Study - Murine / Mouse
+Ototoxicity Study - Other Species"
+"","","Phototoxicology","Cutaneous Phototoxicity Study - Guinea Pig
+Cutaneous Phototoxicity Study - Mouse / Murine
+Cutaneous Phototoxicity Study - Other Species
+Cutaneous Phototoxicity Study - Rat
+Ocular Phototoxicity Study - Other Species
+Ocular Phototoxicty Study - Rat
+Phototoxicity"
+"","","Other",""
+"","in vitro Toxicology","Biosafety Testing","Biosafety Services
+Biosafety Testing Consulting
+Cell Line Characterization
+Cell Transfection
+Microbial Testing
+Microdilution Testing
+OECD 209: Activated Sludge, Respiration Inhibition Test (Carbon and Ammonium Oxidation)
+Raw Materials Testing
+Residual DNA Analysis
+Tumorigenicity Testing
+United States Pharmacopeia (USP) Testing
+Viral Testing"
+"","","Cardiotoxicity","Action Potential Duration
+Cardiac Channels
+Cardiovascular Toxicology
+hERG Inhibition
+Microelectrode Array Cardiotoxicity Assays
+Perfused Heart"
+"","","Cytotoxicity","ADCC and CDC Assay Services
+Apoptosis Assays
+Cardiomyocyte Toxicity
+CH50 Assays
+Cytotoxicity
+Endothelial Cell Toxicity
+Epidermal Cell Toxicity
+Hematopoietic Cell Toxicity
+HepaRG Cells
+Hepatocyte Toxicity
+Neuronal Cell Toxicity
+Tubule Epithelial Cell Toxicity
+Zebrafish Embryo Toxicity"
+"","","Genotoxicity","Big Blue Mouse Transgenic Rodent Mutation (TRM) Assay
+Mouse Lymphoma Assay
+OECD 471: Bacterial Reverse Mutation Test (Ames)
+OECD 473: In Vitro Mammalian Chromosomal Aberration Test
+OECD 476: In Vitro Mammalian Cell Gene Mutation Test (Mouse Lymphoma Assay)
+OECD 487: In Vitro Mammalian Cell Micronucleus Test
+OECD 489: In Vivo Mammalian Alkaline Comet Assay"
+"","","Other","Microelectrode Array Neurotoxicity Assays"

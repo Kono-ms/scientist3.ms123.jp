@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>メッセージ｜Scientist3</title>
+    <meta name="description"
+        content="メッセージのページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/icon-192x192.png">
+    <!--template=/common/template/head.html-->
+
+    <script>
+        var contact_id = '';
+        var contact_status = '';
+        // 2020.12.01 yamamoto 縦幅の自動調整
+        $(document).ready(function () {
+            var wsize = $(window).width();
+            var hsize = $(window).height();
+            var dh1 = 110;
+            var dh2 = 220;
+            if (wsize > 768) {
+                dh1 = 160;
+                dh2 = 310;
+            }
+
+            //$(".chat-outline").css("height", (hsize - dh1) + "px");
+            $(".chat-outline").css("height", (hsize - 0) + "px");
+
+            $(".ifrm").css("height", (hsize - dh2) + "px");
+
+            $(".ifrm_mcontact").css("width", (wsize - 40) + "px");
+            $(".ifrm_mcontact").css("height", (hsize - 40) + "px");
+            $(".ifrm_mcontact2").css("width", (wsize - 40) + "px");
+            $(".ifrm_mcontact2").css("height", (hsize - 40) + "px");
+
+            $('#popup_btn4').on('click', function () {
+                $('.ifrm_mcontact').attr('src', '/m_mcontact/?mode=edit&word=[MID2]&frame=on&contact_status=4&etc02=[ETC02]&contact_id=&side=1&rid=[MID1]');
+                $('#mask_mcontact').show();
+                $('#popup_mcontact').fadeIn();
+            });
+
+            $('#popup_title_btn').on('click', function () {
+                $('.ifrm_mcontact').attr('src', '/m_mtitle/?mode=edit&word=[AID]&frame=on&contact_status=1&etc02=[ETC02]&contact_id=' + contact_id);
+                $('#mask_mcontact').show();
+                $('#popup_mcontact').fadeIn();
+            });
+
+            $('#popup_file_btn').on('click', function () {
+                $('.ifrm_mcontact').attr('src', '/m_filestatus1/?mode=list&word=[AID]&frame=on&contact_status=1&etc02=[ETC02]&contact_id=' + contact_id);
+                $('#mask_mcontact').show();
+                $('#popup_mcontact').fadeIn();
+            });
+
+            $('body,html', $('.ifrm').contents()).animate({
+                scrollTop: 999999
+            }, 800, 'swing');
+
+            // 2020.12.02 yamamoto 金額提示状況
+            contact_id = '[CONTACT_ID]';
+            if (contact_id != '') {
+                $('#popup_btn').css('display', 'none');
+                $('#popup_btn2').css('display', 'inline');
+                $('#popup_btn3').css('display', 'inline');
+            }
+
+
+            //初期フォーカス
+            $('#COMMENT').focus();
+
+
+        });
+        $(window).resize(function () {
+            var wsize = $(window).width();
+            var hsize = $(window).height();
+            var dh1 = 110;
+            var dh2 = 220;
+            if (wsize > 768) {
+                dh1 = 160;
+                dh2 = 310;
+            }
+            //$(".chat-outline").css("height", (hsize - dh1) + "px");
+            //$(".ifrm").css("height", (hsize - dh2) + "px");
+        });
+        function file_select(id) {
+            var val = $('#' + id).val();
+            if (val.indexOf('/') != -1) {
+                val2 = val.split('/');
+                val = val2[val2.length - 1];
+            }
+            else if (val.indexOf('\\') != -1) {
+                val2 = val.split('\\');
+                val = val2[val2.length - 1];
+            }
+            $('#file_upload_name_' + id).text(val);
+            $('#' + id + '_delete').show();
+        }
+        function file_undo(id) {
+            $('#' + id).val('');
+            $('#file_upload_name_' + id).html('');
+            $('#' + id + '_delete').hide();
+        }
+
+        function chat_close() {
+            $('#mask_shodan_chat', parent.document).hide();
+            $('#popup_shodan_chat', parent.document).fadeOut();
+        }
+
+        function shodan_cancel(shodan_id) {
+            if (confirm('I would like to withdraw from this business meeting. Are you sure?')) {
+                parent.location.href = '/m_contact1/?type=辞退&mode=save&shodan_id=' + shodan_id;
+            }
+        }
+        function shodan_hacchu_ok(shodan_id,div_id) {
+            if (confirm('I accept this order. Are you sure?')) {
+                //parent.location.href = '/m_contact1/?type=受注承認&mode=save&shodan_id=' + shodan_id;
+                parent.location.href = '/m_contact1/?type=受注承認&mode=save&shodan_id=' + shodan_id + '&param_div_id=' + div_id;
+            }
+        }
+
+        function open_mcontact2(url) {
+            $('.ifrm_mcontact2').attr('src', url);
+            $('#mask_mcontact2').show();
+            $('#popup_mcontact2').fadeIn();
+        }
+
+        function toggle_input() {
+            var wsize = $(window).width();
+            var hsize = $(window).height();
+            var dh1 = 110;
+            var dh2 = 220;
+            if (wsize > 768) {
+                dh1 = 160;
+                dh2 = 310;
+            }
+
+            if ($('.chat-footer').css('display') == 'none') {
+                $('.chat-footer').show();
+                $(".ifrm").css("height", (hsize - dh2 - 140) + "px");
+            }
+            else {
+                $('.chat-footer').hide();
+                $(".ifrm").css("height", (hsize - dh2) + "px");
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="sub page-chat">
+        <!--template=/common/template/header.html-->
+        <!-- 以上共通 -->
+        <div class="breadcrumb">
+            <div class="l-container">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a href="/">トップ</a></li>
+                    <li class="breadcrumb__item"><a href="/m_message1/">メッセージ一覧</a></li>
+                    <li class="breadcrumb__item">[D-M2-M2_DVAL01]さんとのメッセージ</li>
+                </ol>
+            </div>
+        </div>
+
+        <!--コンテンツ開始-->
+        <section class="chat-outline bg__gray">
+            <div class="l-container">
+                <div class="c-head chat-head">
+                    <span style="color: tomato;">※現在「一括前払い」の新規フローの実装中なのでその条件の場合は正しく動作しません </span>
+                    <h1 class="c-head__ttl">[TITLE]</h1>
+                    <!-- ポップアップ用Closeボタン -->
+                    <div class="chat__close">
+                        <a href="javascript:chat_close();">
+                            <span>Close</span>
+                        </a>
+                    </div>
+                    <div class="chat__status">
+                        <i>Status</i>
+                        <span>[SHODAN_STATUS]</span>
+                    </div>
+                </div>
+                <!--
+                <div class="chat__status">
+                    <input id="popup_title_btn" class="btn" type="button" value="タイトル編集" style="z-index:2;" />
+                </div>
+                <div class="chat__status">
+                    [CONTACT_STATUS]
+                </div>
+-->
+                [S-HEADER_BUTTON_AREA]
+                <div class="chat__status">
+                    <input id="popup_file_btn" class="btn" type="button" value="File status" style="z-index: 2;" />
+                </div>
+                <div class="chat__head-buttons">
+                    [HEADER_BUTTON_AREA]
+                </div>
+                [E-HEADER_BUTTON_AREA]
+
+                <div class="chat-inner">
+                    <iframe class="ifrm" src="/m_chat1/chatinner.php?aid=[AID]&t=[T]&etc02=[ETC02]"
+                        frameborder="none"></iframe>
+                    <div class="chat-footer-close btn--small"><button onclick="toggle_input();">Open the entry
+                            field</button></div>
+                    <div class="chat-footer" style="display:none; [READONLY_CSS]">
+                        <form method="post" action="./?etc02=[ETC02]" enctype="multipart/form-data">
+                            <input type="hidden" name="mode" value="send">
+                            <input type="hidden" name="word" value="[AID]">
+                            <input type="hidden" name="mid1" value="[MID1]">
+                            <input type="hidden" name="mid2" value="[MID2]">
+                            <textarea tabindex="0" rows="5" cols="60" name="COMMENT" id="COMMENT"
+                                placeholder="(Press Send to send a line feed or message-feed in Enter.)"></textarea>
+                            <div class="submit__area">
+                                <label for="file1"><span style="cursor:pointer;"></span>
+                                    <div class="btn-file">
+                                        <input type="file" id="file1" name="file1" style="display:none;"
+                                            onchange="file_select('file1');" accept="image/*;capture=camera" />
+                                    </div>
+                                </label>
+                                <span id="file_upload_name_file1"></span> <a id="file1_delete"
+                                    href="javascript:file_undo('file1');"
+                                    style="padding:0px 10px 0px 10px;display:none;">delete</a>
+                                <div class="chat__submit">
+                                    <input type="submit" name="submit"
+                                        value="Send"><!-- <input type="button" id="popup_btn" name="popup_btn" value="金額を提示" style="width:12%;display:none;"><input type="button" id="popup_btn2" name="popup_btn2" value="金額を訂正" style="width:12%;display:none;">
+                                    <input type="button" id="popup_btn3" name="popup_btn3" value="依頼を取り消す" style="width:12%;display:none;"><input type="button" id="popup_btn4" name="popup_btn4" value="ステータスを提示"　style="width:12%;display:none;"> -->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--コンテンツ終了-->
+
+        <!-- 以下共通 -->
+    </div>
+    <style>
+        .popup_mcontact {
+            display: none;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            z-index: 10002;
+        }
+
+        .mask_mcontact {
+            display: none;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: #808080;
+            opacity: 0.5;
+            z-index: 10001;
+        }
+    </style>
+    <div id="popup_mcontact" class="popup_mcontact">
+        <iframe class="ifrm_mcontact" src="" frameborder="none"></iframe>
+    </div>
+    <div id="mask_mcontact" class="mask_mcontact"> </div>
+
+    <style>
+        .popup_mcontact2 {
+            display: none;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            z-index: 10002;
+        }
+
+        .mask_mcontact2 {
+            display: none;
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: #808080;
+            opacity: 0.5;
+            z-index: 10001;
+        }
+    </style>
+    <div id="popup_mcontact2" class="popup_mcontact">
+        <iframe class="ifrm_mcontact2" src="" frameborder="none"></iframe>
+    </div>
+    <div id="mask_mcontact2" class="mask_mcontact"> </div>
+</body>
+
+</html>

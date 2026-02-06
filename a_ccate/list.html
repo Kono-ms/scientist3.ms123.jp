@@ -1,0 +1,66 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+<h1>記事カテゴリー管理</h1>
+
+<ol class="breadcrumb">
+<li><a href="/admin/"><i class="fa fa-dashboard"></i> Home</a></li>
+<li>記事カテゴリー管理</li>
+</ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+<div class="row">
+
+
+<div class="col-md-4">
+<div class="box box-default same_height">
+<div class="box-body">
+<div class="mb10">
+<a href="./?mode=new&sort=[SORT]&word=[WORD]&page=[PAGE]" class="btn btn-block btn-warning"><i class="fa fa-plus-square"></i> 新規登録</a>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div class="col-xs-12">
+
+<div class="box box-default">
+<div class="box-body">
+
+<table id="table_summary" class="table table-bordered table-hover" summary="表">
+
+<thead>
+				<tr>
+  <th>URL</th>
+  <th>カテゴリー名</th>
+
+					<th>編集</th>
+					<th>削除</th>
+				</tr>
+<meta LIST-START>
+				<tr class="[LIST-BG]">
+  <td>[D-URL]</td>
+  <td>[D-CNAME]</td>
+
+<td><a href="./?mode=edit&key=[ID]&lid=[LID]&sort=[SORT]&word=[WORD]&page=[PAGE]" class="btn btn-block btn-default btn-xs"><i class="fa fa-pencil"></i> 編集</a></td>
+<td><a href="./?mode=delete&key=[ID]&lid=[LID]&sort=[SORT]&word=[WORD]&page=[PAGE]&token=[TOKEN]" class="btn btn-block btn-default btn-xs" onclick='return confirm("削除してもよろしいですか？");'><i class="fa fa-trash"></i> 削除</a></td>
+				</tr>
+<meta LIST-END>
+</tbody>
+</table>
+
+</div><!-- /.box-body -->
+</div><!-- /.box -->
+
+[PAGING]
+
+</div><!-- /.col -->
+
+</div><!-- /.row -->
+</section><!-- /.content -->

@@ -1,0 +1,175 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+  <h1>商談管理</h1>
+
+  <ol class="breadcrumb">
+    <li><a href="/admin/"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li>商談管理</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="box box-default same_height">
+        <div class="box-header with-border">
+          <i class="fa fa-search"></i>
+          <h3 class="box-title">絞り込み検索</h3>
+        </div>
+        <form method="post" action="./">
+          <div class="box-body">
+            <input type="hidden" name="mode" value="list">
+            <!-- <input type="hidden" name="sort" value="[SORT]"> -->
+            <input type="hidden" name="page" value="1">
+            <div class="row">
+              <div class="col-sm-12 col-xs-12 col_vam">
+                <label>絞り込みたいキーワードを入力してください。</label>
+                <input type="text" name="word" value="[WORD]" class="form-control">
+                <!-- 並び順：<select name="sort" class="input_select form-control">[OPT-SORT]</select> -->
+              </div>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-sm-4 col-xs-12 col-sm-offset-4">
+                <button name="submit1" value="submit1" type="submit" class="btn btn-block btn-success">検索する</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="box box-default same_height">
+        <div class="box-body">
+          <div class="mb10">
+            <a href="./?mode=new&sort=[SORT]&word=[WORD]&page=[PAGE]" class="btn btn-block btn-warning"><i
+                class="fa fa-plus-square"></i> 新規登録</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-xs-12">
+
+      <div class="box box-default">
+        <div class="box-body">
+
+          <table id="table_summary" class="table table-bordered table-hover" summary="表">
+
+            <thead>
+              <tr>
+
+                <!-- TODO -->
+                <th>
+                  [S-Q]<a href="./?mode=list&lid=[LID]&sort=21&word=[WORD]&page=[PAGE]">問合せID</a>[E-Q]
+                  [S-Q_ASC]<a href="./?mode=list&lid=[LID]&sort=22&word=[WORD]&page=[PAGE]">問合せID▲</a>[E-Q_ASC]
+                  [S-Q_DESC]<a href="./?mode=list&lid=[LID]&sort=21&word=[WORD]&page=[PAGE]">問合せID▼</a>[E-Q_DESC]
+                </th>
+                <th>
+                  [S-SYODAN2]<a href="./?mode=list&lid=[LID]&sort=101&word=[WORD]&page=[PAGE]">商談ID</a>[E-SYODAN2]
+                  [S-SYODAN2_ASC]<a href="./?mode=list&lid=[LID]&sort=102&word=[WORD]&page=[PAGE]">商談ID▲</a>[E-SYODAN2_ASC]
+                  [S-SYODAN2_DESC]<a href="./?mode=list&lid=[LID]&sort=101&word=[WORD]&page=[PAGE]">商談ID▼</a>[E-SYODAN2_DESC]
+                </th>
+                <th>
+                  [S-SYODAN]<a href="./?mode=list&lid=[LID]&sort=1&word=[WORD]&page=[PAGE]">商談詳細ID</a>[E-SYODAN]
+                  [S-SYODAN_ASC]<a href="./?mode=list&lid=[LID]&sort=2&word=[WORD]&page=[PAGE]">商談詳細ID▲</a>[E-SYODAN_ASC]
+                  [S-SYODAN_DESC]<a href="./?mode=list&lid=[LID]&sort=1&word=[WORD]&page=[PAGE]">商談詳細ID▼</a>[E-SYODAN_DESC]
+                </th>
+                <th>
+                  [S-M2]<a href="./?mode=list&lid=[LID]&sort=3&word=[WORD]&page=[PAGE]">研究者</a>[E-M2]
+                  [S-M2_ASC]<a href="./?mode=list&lid=[LID]&sort=4&word=[WORD]&page=[PAGE]">研究者▲</a>[E-M2_ASC]
+                  [S-M2_DESC]<a href="./?mode=list&lid=[LID]&sort=3&word=[WORD]&page=[PAGE]">研究者▼</a>[E-M2_DESC]
+
+                </th>
+                <th>
+                  [S-M1]<a href="./?mode=list&lid=[LID]&sort=5&word=[WORD]&page=[PAGE]">サプライヤー</a>[E-M1]
+                  [S-M1_ASC]<a href="./?mode=list&lid=[LID]&sort=6&word=[WORD]&page=[PAGE]">サプライヤー▲</a>[E-M1_ASC]
+                  [S-M1_DESC]<a href="./?mode=list&lid=[LID]&sort=5&word=[WORD]&page=[PAGE]">サプライヤー▼</a>[E-M1_DESC]
+                </th>
+                <th>
+                  [S-TITLE]<a href="./?mode=list&lid=[LID]&sort=7&word=[WORD]&page=[PAGE]">案件名</a>[E-TITLE]
+                  [S-TITLE_ASC]<a href="./?mode=list&lid=[LID]&sort=8&word=[WORD]&page=[PAGE]">案件名▲</a>[E-TITLE_ASC]
+                  [S-TITLE_DESC]<a href="./?mode=list&lid=[LID]&sort=7&word=[WORD]&page=[PAGE]">案件名▼</a>[E-TITLE_DESC]
+
+                </th>
+                <th>
+                  [S-STATUS]<a href="./?mode=list&lid=[LID]&sort=9&word=[WORD]&page=[PAGE]">ステータス</a>[E-STATUS]
+                  [S-STATUS_ASC]<a
+                    href="./?mode=list&lid=[LID]&sort=10&word=[WORD]&page=[PAGE]">ステータス▲</a>[E-STATUS_ASC]
+                  [S-STATUS_DESC]<a
+                    href="./?mode=list&lid=[LID]&sort=9&word=[WORD]&page=[PAGE]">ステータス▼</a>[E-STATUS_DESC]
+
+                </th>
+
+                <th>
+                  [S-EDITDATE]<a href="./?mode=list&lid=[LID]&sort=11&word=[WORD]&page=[PAGE]">更新日時</a>[E-EDITDATE]
+                  [S-EDITDATE_ASC]<a
+                    href="./?mode=list&lid=[LID]&sort=12&word=[WORD]&page=[PAGE]">更新日時▲</a>[E-EDITDATE_ASC]
+                  [S-EDITDATE_DESC]<a
+                    href="./?mode=list&lid=[LID]&sort=11&word=[WORD]&page=[PAGE]">更新日時▼</a>[E-EDITDATE_DESC]
+
+                </th>
+
+                <th>ファイル・ステータス</th>
+                <th>メッセージ</th>
+
+                <th>編集</th>
+                <th>削除</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <meta LIST-START>
+              <tr>
+                <!-- TODO -->
+                <!--
+                <td>[D-ID]</td>
+                -->
+                <td>[D-Q-ID]</td>
+                <td>[D-ID]</td>
+                <td>[D-FILESTATUS-ID]</td>
+                <td>[D-MID2]</td>
+
+
+                <!-- TODO -->
+                <!--
+                <td>[D-MID1_LIST]</td>
+                -->
+                <td>[D-M1-NAME]</td>
+
+                <td>[D-TITLE]</td>
+                <td>[D-STATUS][EXT-MSG]</td>
+                <td>[D-EDITDATE]</td>
+                <td><span style="color:tomato;font-weight: bold;font-size: 1rem;">[FS_NEW]</span><a href="/a_filestatus/?mode=list&key=&lid=&sort=&word=商談ID：[D-FILESTATUS-ID]&page="
+                    class="btn btn-block btn-default btn-xs">ファイル・ステータス</a></td>
+                <td><a href="/a_message/?mode=list&key=&lid=&sort=&word=商談ID：[D-FILESTATUS-ID]&page="
+                    class="btn btn-block btn-default btn-xs">メッセージ</a></td>
+                <td><a href="./?mode=edit&key=[ID]&lid=[LID]&sort=[SORT]&word=[WORD]&page=[PAGE]"
+                    class="btn btn-block btn-default btn-xs"><i class="fa fa-pencil"></i> 編集</a></td>
+                <td><a href="./?mode=delete&key=[ID]&lid=[LID]&sort=[SORT]&word=[WORD]&page=[PAGE]&token=[TOKEN]"
+                    class="btn btn-block btn-default btn-xs" onclick='return confirm("削除してもよろしいですか？");'><i
+                      class="fa fa-trash"></i> 削除</a></td>
+              </tr>
+              <meta LIST-END>
+
+            </tbody>
+          </table>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
+      [PAGING]
+
+    </div><!-- /.col -->
+
+  </div><!-- /.row -->
+</section><!-- /.content -->

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Supplier Login｜Scientist3</title>
+  <meta name="description"
+    content="Supplierログインのページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head1.html-->
+  <!-- ogp -->
+  <meta property="og:type" content="article" />
+  <meta property="og:TITLE" content="Supplierログイン｜Scientist3" />
+  <meta property="og:description"
+    content="Supplierログインのページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--<meta property="og:image" content="[BASE_URL]/common/images/ogp-top.png">-->
+  <!--<meta property="og:image:alt" content="Scientist3の共有用画像">-->
+  <meta property="og:url" content="[BASE_URL]/login1/" />
+  <meta property="og:site_name" content="Scientist3" />
+  <!-- facebook -->
+  <meta property="article:publisher" content="https://www.facebook.com/FB-URL/">
+  <meta property="fb:app_id" content="FB-APPID" />
+  <!-- twitter card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@TW-NAME" />
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header_en.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/about2/">Top</a></li>
+          <li class="breadcrumb__item">Supplier Login</li>
+        </ol>
+      </div>
+    </div>
+
+    <!--<section class="login">
+    <div class="l-container">
+      <div class="c-head">
+        <h2 class="c-head__ttl">Supplierログイン</h2>
+      </div>
+      <div class="form-box">
+        <div class="c-head">
+          <h4 class="c-head__ttl">LINEをお持ちの方はこちら</h4>
+        </div>
+        <div class="btn btn-line">
+          <a href="https://api.socialplus.jp/SP-COMID/SP-APPID/line/authenticate?callback=[BASE_URL]/login&extended_items=email">LINEでログイン</a>
+        </div>
+      </div>
+
+    </div>
+  </section>-->
+
+    <section class="login">
+      <div class="l-container">
+        <div class="c-head">
+          <p class="c-head__logo"><a href="/"><img src="/common/images/logo.png" width="195" height="44"
+                alt="Scientist3" /></a></p>
+          <h2 class="c-head__ttl">Supplier</h2>
+        </div>
+        <div class="formColumn">
+          <div class="formColumn__inner formColumn__inner-67">
+            <form method="post" action="./" enctype="multipart/form-data">
+              <input type="hidden" name="mode" value="saveconf">
+              <input type="hidden" name="key" value="[ID]">
+              <input type="hidden" name="sort" value="[SORT]">
+              <input type="hidden" name="word" value="[WORD]">
+              <input type="hidden" name="page" value="[PAGE]">
+              <input type="hidden" name="lid" value="[LID]">
+              <input type="hidden" name="token" value="[TOKEN]">
+              <input type="hidden" name="ID" value="[ID]">
+              <input type="hidden" name="MID" value="[MID]">
+              <input type="hidden" name="ENABLE" value="[ENABLE]">
+              <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+              <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+              <p>[ERRMSG]</p>
+              <div class="formset">
+                <h2 class="c-formset__ttl">Login</h2>
+                <div class="formset__item">
+                  <div class="formset__ttl"><span>
+                      <label for="login_email">E-mail address</label>
+                    </span></div>
+                  <div class="formset__input"><input type="email" name="id" placeholder="taro@gmail.com" required />
+                  </div>
+                </div>
+                <div class="formset__item">
+                  <div class="formset__ttl"><span>
+                      <label for="login_password">Password</label>
+                    </span></div>
+                  <div class="formset__input"><input type="password" name="pass" placeholder="●●●●●●●●●●" required />
+                  </div>
+                </div>
+                <div class="formset__btn">
+                  <button type="submit">Login</button>
+                </div>
+                <div class="btn-under-txt">
+                  <p><a href="/reminder1/">Forgot your password?</a></p>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="formColumn__inner formColumn__inner-30">
+            <div class="formset">
+              <h2 class="c-formset__ttl">New membership registration</h2>
+              <p class="formset__txt">Register here if you have not yet completed member registration.</p>
+              <div class="formset__btn">
+                <a href="/register1/">Register as a member<br />(free of charge)</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer_en.html-->
+  </div>
+</body>
+
+</html>

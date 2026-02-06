@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>記事管理｜Scientist3</title>
+<!--template=/common/template/head.html-->
+</head>
+<body>
+<div class="wrap sub"> 
+  <!--template=/common/template/header.html--> 
+  
+  <!-- 以上共通 -->
+  <div class="breadcrumb">
+    <div class="l-container">
+      <ol class="breadcrumb__list">
+        <li class="breadcrumb__item"><a href="/">トップ</a></li>
+        <li class="breadcrumb__item">記事管理</li>
+      </ol>
+    </div>
+  </div>
+  <section class="subpage-head">
+    <div class="l-container">
+      <div class="c-head">
+        <h1 class="c-head__ttl">記事管理</h1>
+        <p class="c-head__txt">現在投稿している記事情報が[RECCOUNT]件見つかりました。</p>
+        <div class="btn"><a href="./?mode=new&sort=[SORT]&word=[WORD]&page=[PAGE]" target="_blank">記事を新規作成</a></div>
+      </div>
+    </div>
+  </section>
+  <section class="result">
+    <div class="l-container">
+    <div class="card__list">
+      <meta LIST-START>
+      <div class="card__item">
+        <div class="card__img"><a href="/m_search1b/?mode=disp&key=[O2-ID]" target="_blank"><img src="[D-O2-O2_DFIL01]" alt=""></a></div>
+        <div class="card__desc">
+            <div class="result__public">[D-O2-ENABLE]</div>
+            <h3 class="card__ttl"><a href="/m_search1b/?mode=disp&key=[O2-ID]" target="_blank">[D-O2-O2_DVAL01]</a></h3>
+            <div class="btnBox">
+              <div class="btn--small"><a href="./?mode=edit&key=[O2-ID]&lid=[LID]&sort=[SORT]&word=[WORD]&page=[PAGE]">編集</a></div>
+              <div class="btn--small"><a href="./?mode=delete&key=[O2-ID]&lid=[LID]&sort=[SORT]&word=[WORD]&page=[PAGE]" onclick="var ok=confirm('削除してもよろしいですか？');if (ok) this.form.submit(); return false;">削除</a></div>
+              [S-BDISABLE]
+              <div class="btn--small"><a href="./?mode=disable&key=[O2-ID]&lid=[LID]&sort=[SORT]&word=[OID]&page=[PAGE]">非公開にする</a></div>
+              [E-BDISABLE]
+              [S-BENABLE]
+              <div class="btn--small"><a href="./?mode=enable&key=[O2-ID]&lid=[LID]&sort=[SORT]&word=[OID]&page=[PAGE]">公開にする</a></div>
+              [E-BENABLE] </div>
+        </div>
+      </div>
+      <meta LIST-END>
+      </div>
+      <div class="pagination">
+        <div class="pagination__list"> [PAGING] </div>
+      </div>
+    </div>
+  </section>
+  <!-- 以下共通 --> 
+  
+  <!--template=/common/template/footer.html--> 
+</div>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>[SCREEN_TITLE]｜Scientist3</title>
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/icon-192x192.png">
+    <!--template=/common/template/head.html-->
+    <script>
+        $(function () {
+            function setMoney() {
+                let sumMoney = 0;
+                let sumMoney2 = 0;
+                let rate = $("#rate").val();
+                let currency_rate = $("#currency_rate").val();
+
+                $("#detailData .QUANTITY").each(function () {
+                    if (isNumber($(this).val())) {
+                        sumMoney = sumMoney + parseFloat($(this).val());
+                    }
+                });
+
+                sumMoney2 = sumMoney;
+                if (isNumber(rate)) {
+                    sumMoney2 = sumMoney + (sumMoney * (rate / 100));
+                }
+
+                sumMoney = sumMoney * currency_rate; //通貨レートをかける
+                $("#sumMoney").text(Math.floor(sumMoney).toLocaleString()); //小数点切り捨て
+                $("#sumMoney2").text(sumMoney2.toLocaleString());
+            }
+
+            function isNumber(val) {
+                var regex = new RegExp(/^[+-]?[0-9]+$/);
+                return regex.test(val);
+            }
+            setMoney();
+        });
+    </script>
+    <style>
+        .formset__input input[type="text"] {
+            background: #f6f6f6;
+        }
+    </style>
+
+    <!-- 印刷時のcss -->
+    <style type="text/css" media="print">
+        .content-print {
+
+            /* width: 172mm; 
+                 height: 251mm;  */
+            /* width:max-content;
+                height:max-content; */
+
+            /* top:0 !IMPORTANT;
+            left:0 !IMPORTANT;
+            width:172mm !IMPORTANT;
+            height:251mm !IMPORTANT; */
+            /* page-break-after: always; */
+            /* Zoom:80%; */
+        }
+
+        header {
+            display: none;
+        }
+
+        footer {
+            display: none;
+        }
+
+        .breadcrumb {
+            display: none;
+        }
+
+        .formset__btn {
+            display: none;
+        }
+
+        .c-head {
+            margin-bottom: 2rem !IMPORTANT;
+            padding-top: 2rem !IMPORTANT;
+        }
+
+        .formset__item:first-child {
+            padding-top: 0rem !IMPORTANT;
+        }
+
+        .formset__item {
+            margin-bottom: 0rem !IMPORTANT;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="wrap sub">
+        <!--template=/common/template/header.html-->
+        <input type="hidden" id="rate" name="rate" value="[RATE]">
+        <input type="hidden" id="currency_rate" name="currency_rate" value="[CURRENCY_RATE]">
+
+        <!-- 以上共通 -->
+        <div class="breadcrumb">
+            <div class="l-container">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a href="/">トップ</a></li>
+                    <li class="breadcrumb__item"><a href="/m_message1/">メッセージ一覧</a></li>
+                    <li class="breadcrumb__item">[SCREEN_TITLE]</li>
+                </ol>
+            </div>
+        </div>
+
+        <section class="edit">
+            <div class="l-container">
+                <div class="c-head">
+                    <h2 class="c-head__ttl">[SCREEN_TITLE]</h2>
+                    <p class="c-head__txt">[SCREEN_TITLE_DETAIL]</p>
+                </div>
+                [S-ERR]
+                <div class="error_01">
+                    <div class="head_01">
+                        <div class="right">
+                            <div class="box">&nbsp;</div>
+                        </div>
+                        <div class="left">&nbsp;</div>
+                    </div>
+                    <div class="body">
+                        <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28"
+                                alt="入力内容に不備があります。" />
+                        </p>
+                        <p class="mLft10">[ERRMSG]</p>
+                    </div>
+                    <div class="foot_01">
+                        <div class="right">
+                            <div class="box">&nbsp;</div>
+                        </div>
+                        <div class="left">&nbsp;</div>
+                    </div>
+                </div>
+                [E-ERR]
+
+
+                <div class="formset">
+
+                    <div class="formset__item" style="margin-bottom: 0;">
+                        <div class="formset__input" style="padding:0 0 2 0;text-align: left;">
+                            Cosmo Bio Co., Ltd.<br />
+                            Toyo-Ekimae Bldg., 2-20, Toyo 2-chome ,<br />
+                            Koto-ku, Tokyo 135-0016, Japan
+                        </div>
+                        <div class="formset__input" style="padding:0 0 0 0;text-align: right;">
+                            請求書番号：[ETC03]<br />
+                            PF見積番号管理：[EID]
+                        </div>
+                    </div>
+
+
+                    <div class="formset__item" style="margin-bottom: 0;">
+                        <div class="formset__input" style="padding:0 0 0 0;text-align: right">
+                            [M1-M1_DVAL01]<br />
+                            〒[M1-M1_DVAL05]<br />
+                            [M1-M1_DVAL06]
+                        </div>
+                    </div>
+
+
+                    <div class="formset__item">
+                        <div class="formset__input">件名：[TITLE]
+                        </div>
+                    </div>
+                    <div class="formset__item" style="margin-bottom: 0;">
+                        <div class="formset__input" style="padding:0 0 2 0;text-align: left">
+                            依頼者：[M2-M2_DVAL02]<br />
+                            [M2-M2_DVAL03]<br />
+                            [M2-M2_DVAL04]
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="formset__item">
+            <div class="formset__input">依頼内容：[T-COMMENT]
+            </div>
+          </div> -->
+
+                    <!-- 
+                    <div class="formset__item" style="margin-bottom:0px;">
+                        <div class="formset__input">*ユーザー、代理店への見積り金額</div>
+
+                    </div> -->
+                    <div id="detailData">
+                        <div class="formset__item" style="margin-bottom:0px;">
+                            <div class="formset__input">詳細項目</div>
+                            <div class="formset__input">金額</div>
+                            <!-- <div class="formset__input">金額+PF利用料</div> -->
+                            <div class="formset__input">備考</div>
+                        </div>
+                        [DETAIL]
+                    </div>
+
+                    <br />
+                    <div class="formset__item">
+                        <div class="formset__input">
+                            <span>ご請求金額　　　　　 ：￥</span><span id="sumMoney">\XXX,XXX,XXX</span><span>（C）</span>
+                            <br /><span>輸入サポート　　　　　</span><span>[D-ISFLG]</span>
+                            <br /><span>振込先情報　　　　　：</span>[D-M1-M1_ETC02]
+                        </div>
+                    </div>
+
+
+
+                    [S-PF_FEE]
+                    <!-- <div class="formset__item">
+            <div class="formset__input"><span>PF使用料（[RATE]％(仮)）：￥</span><span id="sumMoney2">\
+                XXX,XXX,XXX</span><span>（B）</span></div>
+          </div> -->
+                    [E-PF_FEE]
+                    <div class="formset__item">
+                        <div class="formset__input">備考：<br />
+                            [D-ETC09]
+                        </div>>
+                    </div>
+                </div>
+                <form method="post" action="./" enctype="multipart/form-data">
+                    <input type="hidden" name="mode" value="back">
+
+                    <input type="hidden" name="key" value="[ID]">
+                    <input type="hidden" name="sort" value="[SORT]">
+                    <input type="hidden" name="word" value="[WORD]">
+                    <input type="hidden" name="page" value="[PAGE]">
+                    <input type="hidden" name="lid" value="[LID]">
+                    <input type="hidden" name="token" value="[TOKEN]">
+                    <input type="hidden" name="ID" value="[ID]">
+                    <input type="hidden" name="EID" value="[EID]">
+                    <input type="hidden" name="M1ID" value="[M1ID]">
+                    <input type="hidden" name="M2ID" value="[M2ID]">
+                    <input type="hidden" name="M1NAME" value="[M1NAME]">
+                    <input type="hidden" name="YDATE" value="[YDATE]">
+                    <input type="hidden" name="MDATE" value="[MDATE]">
+                    <input type="hidden" name="JDAETE" value="[JDAETE]">
+                    <input type="hidden" name="NDATE" value="[NDATE]">
+                    <input type="hidden" name="CDATE" value="[CDATE]">
+                    <input type="hidden" name="ISFLG" value="[ISFLG]">
+                    <input type="hidden" name="STATUS" value="[STATUS]">
+                    <input type="hidden" name="ENABLE" value="[ENABLE]">
+                    <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+                    <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+                    <input type="hidden" name="ETC01" value="[ETC01]">
+                    <input type="hidden" name="ETC02" value="[ETC02]">
+                    <input type="hidden" name="ETC03" value="[ETC03]">
+                    <input type="hidden" name="ETC04" value="[ETC04]">
+                    <input type="hidden" name="ETC05" value="[ETC05]">
+                    <input type="hidden" name="ETC06" value="[ETC06]">
+                    <input type="hidden" name="ETC07" value="[ETC07]">
+                    <input type="hidden" name="ETC08" value="[ETC08]">
+                    <input type="hidden" name="ETC09" value="[ETC09]">
+                    <input type="hidden" name="ETC10" value="[ETC10]">
+                    <input type="hidden" name="ETC11" value="[ETC11]">
+                    <input type="hidden" name="ETC12" value="[ETC12]">
+                    <input type="hidden" name="ETC13" value="[ETC13]">
+                    <input type="hidden" name="ETC14" value="[ETC14]">
+                    <input type="hidden" name="ETC15" value="[ETC15]">
+                    <input type="hidden" name="ETC16" value="[ETC16]">
+                    <input type="hidden" name="ETC17" value="[ETC17]">
+                    <input type="hidden" name="ETC18" value="[ETC18]">
+                    <input type="hidden" name="ETC19" value="[ETC19]">
+                    <input type="hidden" name="ETC20" value="[ETC20]">
+                    <input type="hidden" name="M2NAME" value="[M2NAME]">
+                    <input type="hidden" name="TITLE" value="[TITLE]">
+                    <textarea style="display: none;" name="COMMENT" cols="70" rows="5">[T-COMMENT]</textarea>
+
+                    <div style="display: none;">
+                        [DETAIL]
+                    </div>
+                    <div class="btn formset__btn">
+                        <input type="submit" value="Close" name="submit" onclick="window.close();" />
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- 以下共通 -->
+
+        <!--template=/common/template/footer.html-->
+    </div>
+</body>
+
+</html>

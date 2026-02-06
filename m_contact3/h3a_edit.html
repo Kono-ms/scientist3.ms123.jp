@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+  <script>
+    $(document).ready(function () {
+
+      $('header').hide();
+      $('.breadcrumb').hide();
+      $('footer').hide();
+
+      if (location.search.indexOf('frame=on') != -1) {
+        $('header').hide();
+        $('.breadcrumb').hide();
+        $('.c-head').hide();
+        $('footer').hide();
+        $('.wrap').css('padding', '0px');
+        $('.edit').css('padding', '0px');
+        $('.container').css('padding', '0px');
+        $('.form-box').css('padding', '3rem');
+      }
+
+      $('#close_btn').on('click', function () {
+        close_popup();
+      });
+    });
+    function close_popup() {
+      $('#mask_mcontact2', parent.document).hide();
+      $('#popup_mcontact2', parent.document).fadeOut();
+    }
+    function go_preview() {
+      $('[name=mode]').val('preview');
+      document.form1.submit();
+    }
+    function go_save() {
+      $('[name=mode]').val('saveconf2');
+      document.form1.submit();
+    }
+  </script>
+</head>
+
+<body>
+  <div class="sub" style="background-color:white;">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
+          <div>
+            <a href="javascript:close_popup();">
+              閉じる
+            </a>
+          </div>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <form id="form1" name="form1" method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="type" value="[TYPE]">
+            <input type="hidden" name="mode" value="saveconf">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="shodan_id" value="[SHODAN_ID]">
+            <input type="hidden" name="sort" value="[SORT]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="word2" value="[WORD2]">
+            <input type="hidden" name="mid_list" value="[MID_LIST]">
+            <input type="hidden" name="m1_id" value="[M1_ID]">
+            <input type="hidden" name="page" value="[PAGE]">
+            <input type="hidden" name="lid" value="[LID]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="TMP04" value="[TMP04]">
+            <input type="hidden" name="TMP05" value="[TMP05]">
+            <input type="hidden" name="TMP06" value="[TMP06]">
+            <input type="hidden" name="TMP07" value="[TMP07]">
+            <input type="hidden" name="TMP08" value="[TMP08]">
+            <input type="hidden" name="TMP09" value="[TMP09]">
+            <input type="hidden" name="TMP10" value="[TMP10]">
+            <input type="hidden" name="ENABLE" value="[ENABLE]">
+            <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+            <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+            <input type="hidden" name="MID1_LIST" value="[MID1_LIST]">
+            <input type="hidden" name="TITLE" value="[D-TITLE]">
+            <input type="hidden" name="param_div_id" value="[D-DIV_ID]">
+            <div class="formset">
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>案件名</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"></div>
+                <div class="formset__input">
+                  [D-TITLE]
+                </div>
+              </div>
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>サプライヤー</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"></div>
+                <div class="formset__input">
+                  [M1_VIEW]
+                </div>
+              </div>
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>内容</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">メッセージ<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <textarea class="textarea_w73p" cols="40" rows="8" name="H3A_MESSAGE" placeholder=""
+                    required>[H3A_MESSAGE]</textarea>
+                </div>
+              </div>
+              <div class="btn formset__btn">
+                <input type="submit" value="To confirm" />
+              </div>
+              <button type="button" onclick="history.back();">戻る</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

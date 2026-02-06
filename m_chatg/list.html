@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>メッセージ｜Scientist3</title>
+  <meta name="description"
+    content="メッセージのページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head.html-->
+
+  <script>
+    function file_select(id) {
+      var val = $('#' + id).val();
+      if (val.indexOf('/') != -1) {
+        val2 = val.split('/');
+        val = val2[val2.length - 1];
+      }
+      else if (val.indexOf('\\') != -1) {
+        val2 = val.split('\\');
+        val = val2[val2.length - 1];
+      }
+      $('#file_upload_name_' + id).text(val);
+      $('#' + id + '_delete').show();
+    }
+    function file_undo(id) {
+      $('#' + id).val('');
+      $('#file_upload_name_' + id).html('');
+      $('#' + id + '_delete').hide();
+    }
+  </script>
+</head>
+
+<body>
+  <div class="wrap sub">
+    <!--template=/common/template/header.html-->
+    <!-- 以上共通 -->
+
+    <!--コンテンツ開始-->
+    <section class="chat-outline bg__gray">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[DVAL01]のグループメッセージ</h1>
+          <p>質問やContact Usしたいことがあればお気軽に質問してください！</p>
+        </div>
+        <div class="chat-inner">
+          <iframe class="ifrm" src="/m_chatg/chatinner.php?aid=[AID]&t=[T]" frameborder="none"></iframe>
+          <div class="chat-footer">
+            <form method="post" action="./" enctype="multipart/form-data">
+              <input type="hidden" name="mode" value="send">
+              <input type="hidden" name="word" value="[AID]">
+              <input type="hidden" name="mid1" value="[MID1]">
+              <input type="hidden" name="mid2" value="[MID2]">
+              <textarea rows="5" cols="60" name="COMMENT"
+                placeholder="Please enter your message.(Press Send to send a line feed or message-feed in Enter.)"></textarea>
+              <div class="submit__area">
+                <label for="file1"><span style="cursor:pointer;"></span>
+                  <div class="btn-file">
+                    <input type="file" id="file1" name="file1" style="display:none;" onchange="file_select('file1');"
+                      accept="image/*;capture=camera" />
+                  </div>
+                </label>
+                <span id="file_upload_name_file1"></span> <a id="file1_delete" href="javascript:file_undo('file1');"
+                  style="padding:0px 10px 0px 10px;display:none;">削除</a>
+                <div class="chat__submit">
+                  <input type="submit" name="submit" value="Send">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--コンテンツ終了-->
+
+    <!-- 以下共通 -->
+  </div>
+</body>
+
+</html>

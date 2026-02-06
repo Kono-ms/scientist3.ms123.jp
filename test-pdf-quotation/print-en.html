@@ -1,0 +1,465 @@
+<html>
+<head>
+<!--NOTE: TCPDFは空要素で余白調整が必要です。必要な空要素を消さないようにご注意をお願いします。-->
+<style>
+	p {
+		padding: 0;
+		margin: 0;
+	}
+	ol, ul {
+		list-style: none;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+	li {
+		list-style: none;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+	img {}
+	.tableset {
+		/*font-family: 'KozGoPro-Medium-Acro', 'Kozuka Gothic Pro', Tahoma, Geneva, sans-serif;*/
+		font-family: 'GenShinGothic', 'GenShinGothic-Regular', Tahoma, Geneva, sans-serif;
+	}
+	.tableset__h2 {
+		text-align: center;
+		font-weight: bold;
+		font-size: 1.5em;
+		line-height: 1;
+	}
+	.tableset__hr {
+		line-height: 0.1;
+	}
+	.header__cell-title-01 {
+		width: 16.66%;
+	}
+	.header__cell-title-02 {
+		width: 66.66%;
+	}
+	.header__cell-title-03 {
+		width: 16.66%;
+	}
+
+	/* NOTE: 日本語と英語ではサイズが異なるので注意（流用ができない） */
+	.header__cell-01 {
+		font-size: 0.75em;
+		width: 12.5%;
+	}
+	.header__cell-02 {
+		font-size: 0.75em;
+		width: 42.5%;
+	}
+	.header__cell-03 {
+		font-size: 0.75em;
+		width: 12.5%;
+	}
+	.header__cell-04 {
+		font-size: 0.75em;
+		width: 20%;
+	}
+	.header__cell-05 {
+		font-size: 0.75em;
+		width: 12.5%;
+	}
+
+	/* NOTE: 日本語と英語ではサイズが異なるので注意（流用ができない） */
+	.s3-info__cell-01 {
+		font-size: 0.75em;
+		width: 4.16%;
+	}
+	.s3-info__cell-02 {
+		font-size: 0.75em;
+		width: 37.5%;
+	}
+	.s3-info__cell-03 {
+		font-size: 0.75em;
+		width: 16.66%;
+	}
+	.s3-info__cell-04 {
+		font-size: 0.75em;
+		width: 37.5%;
+	}
+	.s3-info__cell-05 {
+		font-size: 0.75em;
+		width: 4.16%;
+	}
+	.s3-info__cell-title {
+		line-height: 1.5;
+	}
+	.s3-info__cell-text {
+		line-height: 1.25;
+	}
+	.s3-info__cell-border {
+		line-height: 0.1;
+	}
+	.s3-info__cell-margin-block {
+		line-height: 0.2;
+	}
+
+	/* NOTE:  */
+	.item-table {
+		font-size: 0.8em;
+	}
+	.item-header {
+		font-size: 0.8em;
+	}
+	.item-table__cell-01 {
+		width: 40%;
+	}
+	.item-table__cell-02 {
+		width: 20%;
+	}
+	.item-table__cell-03 {
+		width: 20%;
+	}
+	.item-table__cell-04 {
+		width: 20%;
+	}
+
+	/* NOTE:  */
+	.calc-table {
+		font-size: 0.8em;
+	}
+	.calc-table__cell-01 {
+		font-weight: bold;
+		width: 20%;
+	}
+	.calc-table__cell-02 {
+		width: 80%;
+	}
+</style>
+</head>
+
+<body>
+
+<!--<img src="/common/images/logo-s3-xl.png" alt="">-->
+<!--<img src="/common/images/logo-s3-bg.png" alt="">-->
+
+<table cellspacing="0" cellpadding="0" border="0" summary="header">
+	<tbody>
+		<tr>
+			<td class="tableset__h2 header__cell-title-01"></td>
+			<td class="tableset__h2 header__cell-title-02"></td>
+			<td class="tableset__h2 header__cell-title-03"></td>
+		</tr>
+		<tr>
+			<td class="tableset__h2 header__cell-title-01"><img src="/common/images/logo-s3-xl.png" alt=""></td>
+			<td class="tableset__h2 header__cell-title-02">Quotation</td>
+			<td class="tableset__h2 header__cell-title-03"></td>
+		</tr>
+		<tr>
+			<td colspan="3" bgcolor="#D66B01" class="tableset__hr"></td><!--border-bottom-->
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="0" border="0" summary="header">
+	<tbody>
+		<tr>
+			<td colspan="5"></td><!--margin-bottom-->
+		</tr>
+		<tr>
+			<td class="header__cell-01"></td>
+			<td class="header__cell-02"></td>
+			<td class="header__cell-03"></td>
+			<td class="header__cell-04">Quote No.:</td>
+			<td class="header__cell-05">XXXXXXXXXX</td>
+		</tr>
+		<tr>
+			<td class="header__cell-01">Project Name:</td>
+			<td class="header__cell-02">XXXXXX</td>
+			<td class="header__cell-03"></td>
+			<td class="header__cell-04">Date:</td>
+			<td class="header__cell-05">2023/6/12</td>
+		</tr>
+		<tr>
+			<td class="header__cell-01">Study Code:</td>
+			<td class="header__cell-02">XXXXX</td>
+			<td class="header__cell-03"></td>
+			<td class="header__cell-04">Valid until:</td>
+			<td class="header__cell-05">2023/7/12</td>
+		</tr>
+		<tr>
+			<td class="header__cell-01"></td>
+			<td class="header__cell-02"></td>
+			<td class="header__cell-03"></td>
+			<td class="header__cell-04">Scientist3 Control No.:</td>
+			<td class="header__cell-05">XXXXXXXXXX</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<table cellspacing="0" cellpadding="0" border="0" summary="s3-info">
+	<tbody>
+		<tr>
+			<td class="s3-info__cell-01"></td>
+			<td class="s3-info__cell-02"></td>
+			<td class="s3-info__cell-03"></td>
+			<td class="s3-info__cell-04"></td>
+			<td class="s3-info__cell-05"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-01 s3-info__cell-title"></td>
+			<td class="s3-info__cell-02 s3-info__cell-title">Bill to:</td>
+			<td class="s3-info__cell-03 s3-info__cell-title"></td>
+			<td class="s3-info__cell-04 s3-info__cell-title">Ship to:</td>
+			<td class="s3-info__cell-05 s3-info__cell-title"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-01 s3-info__cell-border"></td>
+			<td class="s3-info__cell-02 s3-info__cell-border" bgcolor="#ccc"></td>
+			<td class="s3-info__cell-03 s3-info__cell-border"></td>
+			<td class="s3-info__cell-04 s3-info__cell-border" bgcolor="#ccc"></td>
+			<td class="s3-info__cell-05 s3-info__cell-border"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-01 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-02 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-03 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-04 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-05 s3-info__cell-margin-block"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-01 s3-info__cell-text"></td>
+			<td class="s3-info__cell-02 s3-info__cell-text">Cosmo Bio Co Ltd<br/>Toyo Ekimae Bldg. 2-20, Toyo 2-chome,<br/>Koto-ku, Tokyo 135-0016, Japan<br/>Tel: (81)3-35632-9615</td>
+			<td class="s3-info__cell-03 s3-info__cell-text"></td>
+			<td class="s3-info__cell-04 s3-info__cell-text">Cosmo Bio Shinsuna Distribution Center<br/>ShinSuna 1-Chome, Koto-Ku,Tokyo 136-0075, Japan 3F 12-39<br/>TEL: 81-3-5632-9608</td>
+			<td class="s3-info__cell-05 s3-info__cell-text"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-01"></td>
+			<td class="s3-info__cell-02"></td>
+			<td class="s3-info__cell-03"></td>
+			<td class="s3-info__cell-04"></td>
+			<td class="s3-info__cell-05"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-01 s3-info__cell-title"></td>
+			<td class="s3-info__cell-02 s3-info__cell-title">Researcher information:</td>
+			<td class="s3-info__cell-03 s3-info__cell-title"></td>
+			<td class="s3-info__cell-04 s3-info__cell-title">Suppier name</td>
+			<td class="s3-info__cell-05 s3-info__cell-title"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-01 s3-info__cell-border"></td>
+			<td class="s3-info__cell-02 s3-info__cell-border" bgcolor="#aa2c27"></td>
+			<td class="s3-info__cell-03 s3-info__cell-border"></td>
+			<td class="s3-info__cell-04 s3-info__cell-border" bgcolor="#D66B01"></td>
+			<td class="s3-info__cell-05 s3-info__cell-border"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-01 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-02 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-03 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-04 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-05 s3-info__cell-margin-block"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-01 s3-info__cell-text"></td>
+			<td class="s3-info__cell-02 s3-info__cell-text">Reseacher Company Name</td>
+			<td class="s3-info__cell-03 s3-info__cell-text"></td>
+			<td class="s3-info__cell-04 s3-info__cell-text">Address</td>
+			<td class="s3-info__cell-05 s3-info__cell-text"></td>
+		</tr>
+	</tbody>
+</table>
+
+
+<!--Start item-->
+<table cellspacing="0" cellpadding="0" border="0" summary="item-header" class="item-header">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+		<tr>
+			<td>１</td>
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="item-body" class="item-table">
+	<tbody>
+		<tr>
+			<td class="item-table__cell-01">Item#</td>
+			<td class="item-table__cell-02">Qty:</td>
+			<td class="item-table__cell-03">Unit Price:</td>
+			<td class="item-table__cell-04">Total:</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				Description:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				Note:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				Payment Terms: Invoices will be issued upon completion of acceptance inspection of the report or upon completion of delivery of goods.
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!--End item-->
+
+<!--Start item-->
+<table cellspacing="0" cellpadding="0" border="0" summary="item-header" class="item-header">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+		<tr>
+			<td>2</td>
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="item-body" class="item-table">
+	<tbody>
+		<tr>
+			<td class="item-table__cell-01">Item#</td>
+			<td class="item-table__cell-02">Qty:</td>
+			<td class="item-table__cell-03">Unit Price:</td>
+			<td class="item-table__cell-04">Total:</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				Description:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				Note:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				Payment Terms: Invoices will be issued upon completion of acceptance inspection of the report or upon completion of delivery of goods.
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!--End item-->
+
+<!--Start item-->
+<table cellspacing="0" cellpadding="0" border="0" summary="item-header" class="item-header">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+		<tr>
+			<td>3</td>
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="item-body" class="item-table">
+	<tbody>
+		<tr>
+			<td class="item-table__cell-01">Item#</td>
+			<td class="item-table__cell-02">Qty:</td>
+			<td class="item-table__cell-03">Unit Price:</td>
+			<td class="item-table__cell-04">Total:</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				Description:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				Note:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				Payment Terms: Invoices will be issued upon completion of acceptance inspection of the report or upon completion of delivery of goods.
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!--End item-->
+
+
+<!--Start special item-->
+<table cellspacing="0" cellpadding="0" border="0" summary="item-header" class="item-header">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="special" class="item-table">
+	<tbody>
+		<tr>
+			<td>
+				Special Note:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Number of Payments:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!--End special item-->
+
+
+<!--Start calc-->
+<table cellspacing="0" cellpadding="0" border="0" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td class="calc-table__cell-01">Special Discount</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+		<tr>
+			<td class="calc-table__cell-01">Subtotal</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+		<tr>
+			<td class="calc-table__cell-01">Tax Rate</td>
+			<td class="calc-table__cell-02">12%</td>
+		</tr>
+		<tr>
+			<td class="calc-table__cell-01">Sales Tax</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="0" border="0" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td class="calc-table__cell-01">Total</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+	</tbody>
+</table>
+<!--End calc-->
+
+
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test</title>
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/icon-192x192.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/common/css/import.css" />
+    <link rel="stylesheet" href="/common/css/jquery.bxslider.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/localization/messages_ja.js"></script>--><!--ja-->
+    <script src="/common/js/jquery.bxslider.js"></script> 
+    <script src="/common/js/ofi.min.js"></script> 
+    <script src="/common/js/common.js"></script> 
+    <script>
+      $(function(){
+
+        // NOTE: jquery.validate.js
+
+        $('[action]').not('[role]').validate({
+          errorElement: 'span',
+          errorClass: 'jquery-validate--error',
+          errorPlacement: function ($err, $input) {
+            if ( String($input.attr('type')).match(/radio|checkbox/) && $input.closest('ul')[0] ) {
+              // NOTE: radio, checkbox
+              $input.closest('ul').before($err);
+            } else {
+              //if($input.attr('name') == 'logout-user-block'){
+                //
+      		//}else{
+                $input.before($err);
+      	    //}
+            }
+            // NOTE: auto scroll for error item
+            let firstError = $('.jquery-validate--error').eq(0).offset().top;
+            let position = firstError > window.innerHeight / 2 ? firstError - ( window.innerHeight / 2 ) : 0;
+            $('html, body').stop().animate({ scrollTop: position }, 400);
+          }
+        });
+      })
+    </script>
+
+</head>
+
+<body>
+    <div class="wrap sub">
+        <section class="edit">
+            <div class="l-container">
+                <div class="c-head">
+                    <h1 class="c-head__ttl">Test</h1>
+                    <p class="c-head__txt">新しく追加したフォームスタイル</p>
+                </div>
+                <form method="post" id="form1" action="javascript:void(0)" enctype="multipart/form-data">
+
+                    <div class="formset">
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>フォームグループのタイトル（新設したスタイルです）</strong></div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Name</div>
+                            <div class="formset__input">
+                                <input type="text" name="" value="" size="90">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formset">
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl">
+								<strong>必須あり<small class="formset__note">(Note: text)</small></strong>
+								<span class="formset__must">Mandatory</span>
+							</div>
+                        </div>
+                        <div class="formset__txt">
+                            ただし、タイトルの必須は、見た目だけです。バリデーション有効化は いままで通りinputなどにrequiredを付与してください。
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">必須なし</div>
+                            <div class="formset__input">
+                                <input type="text" name="" value="" size="90">
+                            </div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">
+                                <span>必須あり</span>
+                                <!--<span class="formset__must">Mandatory</span>-->
+                            </div>
+                            <div class="formset__input">
+                                <input type="text" name="test1" value="" size="90" placeholder="必須ラベルはありませんがrequired" required>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="formset">
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl">
+								<strong>新しく追加したフォーム部品のレイアウト</strong>
+							</div>
+                        </div>
+                        <div class="formset__txt">
+                            ●以下、悪い例から
+                        </div>
+
+                        <p class="formset__lead">3カラム 悪い例</p>
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__ttl">
+                                <span>このタイトル部分は任意で付与可能</span>
+                                <span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input col--3">
+
+                                <input type="text" name="" value="" size="90" placeholder="今までのスタイルが混在している部分　×">
+
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>test1</span>
+                                        <span class="formset__must">Mandatory</span>
+                                    </label>
+                                    <div class="formset__input-child-body">
+                                        <input type="text" name="test2" value="" size="90" placeholder="○ OK" required>
+                                    </div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">test2</label>
+                                    <div class="formset__input-child-body">
+                                        <input type="text" name="" value="" size="90" placeholder="○ OK">
+                                    </div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">test3</label>
+                                    <div class="formset__input-child-body">
+                                        <input type="text" name="" value="" size="90" placeholder="○ OK">
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+
+                        <p class="formset__lead">3カラム 正しい例</p>
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__ttl">
+                                <span>このタイトル部分は任意で付与可能</span>
+                                <span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input col--3">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>test1</span>
+                                        <span class="formset__must">Mandatory</span>
+                                    </label>
+                                    <div class="formset__input-child-body">
+                                        <input type="text" name="test3" value="" size="90" required>
+                                    </div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">test2</label>
+                                    <div class="formset__input-child-body">
+                                        <input type="text" name="" value="" size="90">
+                                    </div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">test3</label>
+                                    <div class="formset__input-child-body">
+                                        <input type="text" name="" value="" size="90">
+                                    </div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">test4</label>
+                                    <div class="formset__input-child-body">
+                                        単なるテキストなどの配置も可能です。ただし、このフレームワークをフォーム以外場所でフォーム以外の用途として使うとスタイルを制御できなくなるので使わないでください。
+                                    </div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>test5<small class="formset__note">(.pdf, .png, .gif, or .jpg)</small></span>
+                                    </label>
+                                    <div class="formset__input-child-body">
+
+                                        <img src="/common/images/img-user-w3.jpg" alt="">
+
+                                        <a href="javascript:void(0)" download="">ダウンロード</a> 削除
+                                        <input type="checkbox" name="delete"><br>
+
+                                        <input type="file" name="selectFile" value="" size="90">
+                                        <input type="hidden" name="selectFileHidden" value="">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="formset__txt">
+                            ●以下、連続する2カラム、4カラムの例です。ただし、実際に.formset__inputを連続させることは、ほとんどありません。
+                        </div>
+
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__input col--2">
+                                <div class="formset__input-child">
+                                    <input type="text" name="" value="" size="90">
+                                </div>
+                                <div class="formset__input-child">
+                                    <input type="text" name="" value="" size="90">
+                                </div>
+                                <div class="formset__input-child">
+                                    <input type="text" name="" value="" size="90">
+                                </div>
+                            </div>
+                            <div class="formset__input col--2">
+                                <div class="formset__input-child">
+                                    <input type="text" name="" value="" size="90">
+                                </div>
+                                <div class="formset__input-child">
+                                    <ul>
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="radiotest">
+                                                <span>テキスト</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="radiotest">
+                                                <span>テキスト</span>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="radiotest">
+                                                <span>テキスト</span>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="formset__input-child">
+                                    <input type="text" name="" value="" size="90" placeholder="ここまで2カラム">
+                                </div>
+                            </div>
+                            <div class="formset__input col--4">
+                                <div class="formset__input-child">
+                                    <input type="text" name="" value="" size="90" placeholder="ここから4カラム">
+                                </div>
+                                <div class="formset__input-child">
+                                    <input type="text" name="" value="" size="90">
+                                </div>
+                                <div class="formset__input-child">
+                                    <input type="text" name="" value="" size="90">
+                                </div>
+                                <div class="formset__input-child">
+                                    <input type="text" name="" value="" size="90">
+                                </div>
+                                <div class="formset__input-child">
+                                    <input type="text" name="" value="" size="90">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="formset__txt">
+                            ●以下、今まで通りお使いいただけます。
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">Name</div>
+                            <div class="formset__input">
+                                <input type="text" name="" value="" size="90" placeholder="デフォルトのスタイル（いままでのスタイル）">
+                            </div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Email</div>
+                            <div class="formset__input">
+                                <input type="text" name="" value="" size="90" placeholder="デフォルトのスタイル（いままでのスタイル）">
+                            </div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Title</div>
+                            <div class="formset__input">
+                                <input type="text" name="" value="" size="90" placeholder="デフォルトのスタイル（いままでのスタイル）">
+                            </div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">ラジオボタン</div>
+                            <div class="formset__input">
+                                <ul>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="radiotest">
+                                            <span>テキスト</span>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="radiotest">
+                                            <span>テキスト</span>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="radiotest">
+                                            <span>テキスト</span>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">チェックボックス</div>
+                            <div class="formset__input">
+                                <ul>
+                                    <li>
+                                        <label>
+                                            <input type="checkbox" name="checkboxtest[]">
+                                            <span>テキスト</span>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="checkbox" name="checkboxtest[]">
+                                            <span>テキスト</span>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="checkbox" name="checkboxtest[]">
+                                            <span>テキスト</span>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+<!--ボタン系は変更なし-->
+                    <div class="btn formset__btn">
+                        <input type="submit" value="submit2" name="submit2"
+                            onclick="var confirmOK=confirm('submit2 confirm'); return confirmOK;" />
+                        <input type="submit" value="submit1" name="submit1"
+                            onclick="var confirmOK=confirm('submit1 confirm'); return confirmOK;" />
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- 以下共通 -->
+
+<!-- フッター開始 -->
+
+<!-- フッター終了 -->
+<script>
+  objectFitImages();
+</script>
+
+    </div>
+</body>
+
+</html>

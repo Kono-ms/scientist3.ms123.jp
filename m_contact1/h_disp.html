@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+  <script>
+    var h_m2_detail = ([H_M2_DETAIL]);
+    $(document).ready(function () {
+
+      var val = h_m2_detail[[H_M2_ID]];
+      if (val) {
+        $('#M2_NOHIN_TYPE').html(val['M2_NOHIN_TYPE']);
+        $('#M2_PAY_TYPE').html(val['M2_PAY_TYPE']);
+        $('#M2_STUDY_CODE').html(val['M2_STUDY_CODE']);
+        $('#M2_DATE').html(val['M2_DATE']);
+        $('#M2_QUOTE_VALID_UNTIL').html(val['M2_QUOTE_VALID_UNTIL']);
+        $('#M2_DESCRIPTION').html(val['M2_DESCRIPTION']);
+        $('#M2_CURRENCY').html(val['M2_CURRENCY']);
+
+        // detail
+        if (val['detail'] != null && val['detail'].length > 0) {
+          for (var i = 0; i < val['detail'].length; i++) {
+            if (i > 0) {
+              add_detail();
+            }
+            var detail = val['detail'][i];
+            var detail_no = i + 1;
+            $('#M2_DETAIL_ITEM_' + detail_no).html(detail['M2_DETAIL_ITEM']);
+            $('#M2_DETAIL_DESCRIPTION_' + detail_no).html(detail['M2_DETAIL_DESCRIPTION']);
+            $('#M2_DETAIL_PRICE_' + detail_no).html(detail['M2_DETAIL_PRICE']);
+            $('#M2_DETAIL_NOTE_' + detail_no).html(detail['M2_DETAIL_NOTE']);
+          }
+
+        }
+
+        $('#M2_SPECIAL_DISCOUNT').html(val['M2_SPECIAL_DISCOUNT']);
+        $('#M2_SPECIAL_NOTE').html(val['M2_SPECIAL_NOTE']);
+      }
+
+    });
+    var detail_cnt = 1;
+    function add_detail() {
+      detail_cnt++;
+      var html = $('#detail_template').html();
+      html = html.replace(/XXX/g, '' + detail_cnt);
+      var area = $('#add_detail_area').html();
+      area += html;
+      $('#add_detail_area').html(area);
+    }
+  </script>
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <div class="formset">
+            <div class="formset__item">
+              <div class="formset__ttl"><span>Project name</span></div>
+              <div class="formset__input">[D-TITLE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>Supplier</span></div>
+              <div class="formset__input">[M1_VIEW]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>Revise Quotation for Control Number</span></div>
+              <div class="formset__input">[D-H_M2_ID]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>コメント</span></div>
+              <div class="formset__input">[D-H_COMMENT]</div>
+            </div>
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl"><strong>Quotation</strong></div>
+            </div>
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl"><strong>Matters to be confirmed</strong></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Form of 納品</div>
+              <div id="M2_NOHIN_TYPE" class="formset__input">[D-M2_NOHIN_TYPE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Payment Terms</div>
+              <div id="M2_PAY_TYPE" class="formset__input">[D-M2_PAY_TYPE]</div>
+            </div>
+
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl">
+                <strong>Basic items</strong>
+              </div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Study code</div>
+              <div id="M2_STUDY_CODE" class="formset__input">[D-M2_STUDY_CODE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Date</div>
+              <div id="M2_DATE" class="formset__input">[D-M2_DATE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Quote Valid Until</div>
+              <div id="M2_QUOTE_VALID_UNTIL" class="formset__input">[D-M2_QUOTE_VALID_UNTIL]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Description</div>
+              <div id="M2_DESCRIPTION" class="formset__input">[D-M2_DESCRIPTION]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Currency</div>
+              <div id="M2_CURRENCY" class="formset__input">[D-M2_CURRENCY]</div>
+            </div>
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl"><strong>Description</strong></div>
+            </div>
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl2"><strong>Details 1</strong></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Item #</div>
+              <div id="M2_DETAIL_ITEM_1" class="formset__input">[D-M2_DETAIL_ITEM_1]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Description</div>
+              <div id="M2_DETAIL_DESCRIPTION_1" class="formset__input">[D-M2_DETAIL_DESCRIPTION_1]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Price</div>
+              <div id="M2_DETAIL_PRICE_1" class="formset__input">[D-M2_DETAIL_PRICE_1]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Note</div>
+              <div id="M2_DETAIL_NOTE_1" class="formset__input">[D-M2_DETAIL_NOTE_1]</div>
+            </div>
+
+            <div id="add_detail_area"></div>
+
+            <div id="detail_template" style="display:none;">
+              <div id="detail_XXX">
+                <div class="formset__item formset__item--head">
+                  <div class="formset__ttl2"><br><strong>Details XXX</strong></div>
+                </div>
+                <div class="formset__item">
+                  <div class="formset__ttl">Item #</div>
+                  <div id="M2_DETAIL_ITEM_XXX" class="formset__input">[D-M2_DETAIL_ITEM_XXX]</div>
+                </div>
+                <div class="formset__item">
+                  <div class="formset__ttl">Description</div>
+                  <div id="M2_DETAIL_DESCRIPTION_XXX" class="formset__input">[D-M2_DETAIL_DESCRIPTION_XXX]</div>
+                </div>
+                <div class="formset__item">
+                  <div class="formset__ttl">Price</div>
+                  <div id="M2_DETAIL_PRICE_XXX" class="formset__input">[D-M2_DETAIL_PRICE_XXX]</div>
+                </div>
+                <div class="formset__item">
+                  <div class="formset__ttl">Note</div>
+                  <div id="M2_DETAIL_NOTE_XXX" class="formset__input">[D-M2_DETAIL_NOTE_XXX]</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl"><strong></strong></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Special discount</div>
+              <div id="M2_SPECIAL_DISCOUNT" class="formset__input">[D-M2_SPECIAL_DISCOUNT]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Special Note</div>
+              <div id="M2_SPECIAL_NOTE" class="formset__input">[D-M2_SPECIAL_NOTE]</div>
+            </div>
+
+          </div>
+          <form method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="type" value="[TYPE]">
+            <input type="hidden" name="mode" value="back">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="shodan_id" value="[SHODAN_ID]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="word2" value="[WORD2]">
+            <input type="hidden" name="mid_list" value="[MID_LIST]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="H_M2_ID" value="[H_M2_ID]">
+            <input type="hidden" name="H_COMMENT" value="[H_COMMENT]">
+            <div class="btn formset__btn btn--small formset__btn--back">
+              <button type="button" onclick="history.back();">Go back</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer_en.html-->
+  </div>
+</body>
+
+</html>

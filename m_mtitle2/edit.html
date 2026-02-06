@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>タイトルを編集する｜TOTTA</title>
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head2.html--><!-- 研究者側だけValidationを日本語化 -->
+  <script>
+    $(document).ready(function () {
+      if (location.search.indexOf('frame=on') != -1) {
+        $('header').hide();
+        $('.breadcrumb').hide();
+        $('.c-head').hide();
+        $('footer').hide();
+        $('.wrap').css('padding', '0px');
+        $('.edit').css('padding', '0px');
+        $('.container').css('padding', '0px');
+        $('.form-box').css('padding', '3rem');
+      }
+
+      $('#close_btn').on('click', function () {
+        close_popup();
+      });
+
+      if (location.search.indexOf('contact_status=3') != -1) {
+        $('#price_form').hide();
+      }
+
+      $('#price').on('input', function () {
+        var val = $(this).val();
+        $(this).val(val.replace(/[^0-9]+/g, ''));
+      });
+
+
+    });
+    function close_popup() {
+      $('#mask_mcontact', parent.document).hide();
+      $('#popup_mcontact', parent.document).fadeOut();
+    }
+  </script>
+</head>
+
+<body>
+  <div class="wrap sub">
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+
+    <section class="breadcrumb">
+      <ul>
+        <li><span itemprop="itemListElement" itemscope itemtype="http://schema.org/Listitem"><a itemprop="item"
+              href="/"><span itemprop="name">トップ</span></a>
+            <meta itemprop="position" content="1" />
+          </span></li>
+        <li><span itemprop="itemListElement" itemscope itemtype="http://schema.org/Listitem"><a itemprop="item"
+              href="/m_o1/"><span itemprop="name">タイトルを編集する</span></a>
+            <meta itemprop="position" content="2" />
+          </span></li>
+      </ul>
+    </section>
+    <section class="edit">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">タイトルを編集する</h1>
+          <p>メッセージ画面のタイトルの編集をおこないます。</p>
+        </div>
+        [S-ERR]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [E-ERR]
+        <div class="form-box">
+          <form method="post" action="./?etc02=[ETC02]" enctype="multipart/form-data">
+            <input type="hidden" name="mode" value="save">
+            <input type="hidden" name="key" value="[ID]">
+            <input type="hidden" name="sort" value="[SORT]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="page" value="[PAGE]">
+            <input type="hidden" name="lid" value="[LID]">
+            <input type="hidden" name="token" value="[TOKEN]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="ENABLE" value="[ENABLE]">
+            <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+            <input type="hidden" name="ETC01" value="[ETC01]">
+            <input type="hidden" name="ETC02" value="[ETC02]">
+            <input type="hidden" name="ETC03" value="[ETC03]">
+            <input type="hidden" name="ETC04" value="[ETC04]">
+            <input type="hidden" name="ETC05" value="[ETC05]">
+            <input type="hidden" name="ETC06" value="[ETC06]">
+            <input type="hidden" name="ETC07" value="[ETC07]">
+            <input type="hidden" name="ETC08" value="[ETC08]">
+            <input type="hidden" name="ETC09" value="[ETC09]">
+            <input type="hidden" name="ETC10" value="[ETC10]">
+            <input type="hidden" name="ETC11" value="[ETC11]">
+            <input type="hidden" name="ETC12" value="[ETC12]">
+            <input type="hidden" name="ETC13" value="[ETC13]">
+            <input type="hidden" name="ETC14" value="[ETC14]">
+            <input type="hidden" name="ETC15" value="[ETC15]">
+            <input type="hidden" name="ETC16" value="[ETC16]">
+            <input type="hidden" name="ETC17" value="[ETC17]">
+            <input type="hidden" name="ETC18" value="[ETC18]">
+            <input type="hidden" name="ETC19" value="[ETC19]">
+            <input type="hidden" name="ETC20" value="[ETC20]">
+
+            <input type="hidden" name="CONTACT_STATUS" value="[CONTACT_STATUS]">
+
+            <div class="formset" style="padding-bottom:6rem;">
+              <div class="formset__ttl">タイトル</div>
+              <div class="formset__input"><input type="text" name="TITLE" value="[TITLE]" size="30" id="TITLE"></div>
+              <!--
+※以下は最終的に非表示にします
+<div class="formset">
+<tbody>
+<div class="formset__item"><div class="formset__ttl">クリエイターID</div><div class="formset__input"><input type="text" name="MID" value="[MID]" size="30"></div></div>
+<div class="formset__item"><div class="formset__ttl">ユーザーID</div><div class="formset__input"><input type="text" name="MIDT" value="[MIDT]" size="30"></div></div>
+<div class="formset__item"><div class="formset__ttl">提示日時</div><div class="formset__input"><input type="text" name="NEWDATE" value="[NEWDATE]" size="30"></div></div>
+
+</tbody>
+</div>
+-->
+              <input type="hidden" name="MID" value="[MID]">
+              <input type="hidden" name="MIDT" value="[MIDT]">
+              <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+
+              <div style="text-align:center;">
+                <div style="width:254px;margin:0 auto;display:flex;">
+                  <div class="chat__status" style="width:125px;">
+                    <input type="submit" value="登録する" name="submit" class="btn" style="z-index:2;" />
+                  </div>
+                  <div class="chat__status" style="width:125px;">
+                    <input type="button" id="close_btn" name="close_btn" value="Cancellation" class="btn"
+                      style="z-index:2;">
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>タイトルを編集する｜TOTTA</title>
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head.html-->
+  <script>
+    $(document).ready(function () {
+      if (location.search.indexOf('frame=on') != -1) {
+        $('header').hide();
+        $('.breadcrumb').hide();
+        $('.c-head').hide();
+        $('footer').hide();
+        $('.wrap').css('padding', '0px');
+        $('.edit').css('padding', '0px');
+        $('.container').css('padding', '0px');
+        $('.form-box').css('padding', '3rem');
+      }
+
+      $('#close_btn').on('click', function () {
+        close_popup();
+      });
+
+      if (location.search.indexOf('contact_status=3') != -1) {
+        $('#price_form').hide();
+      }
+
+      $('#price').on('input', function () {
+        var val = $(this).val();
+        $(this).val(val.replace(/[^0-9]+/g, ''));
+      });
+
+
+    });
+    function close_popup() {
+      $('#mask_mcontact', parent.document).hide();
+      $('#popup_mcontact', parent.document).fadeOut();
+    }
+  </script>
+</head>
+
+<body>
+  <div class="sub" style="background-color:white;">
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+
+    <section class="breadcrumb">
+      <ul>
+        <li><span itemprop="itemListElement" itemscope itemtype="http://schema.org/Listitem"><a itemprop="item"
+              href="/"><span itemprop="name">top</span></a>
+            <meta itemprop="position" content="1" />
+          </span></li>
+        <li><span itemprop="itemListElement" itemscope itemtype="http://schema.org/Listitem"><a itemprop="item"
+              href="/m_o1/"><span itemprop="name">File status</span></a>
+            <meta itemprop="position" content="2" />
+          </span></li>
+      </ul>
+    </section>
+
+    <!--コンテンツ開始-->
+    <section class="chat-outline bg__gray">
+      <div class="l-container">
+        <div class="c-head2" style="display: flex;justify-content: space-between;">
+          <h1 class="c-head__ttl">File status</h1>
+          [S-FRAME-ON]
+            <a href="javascript:close_popup();">
+              Close
+            </a>
+          [E-FRAME-ON]
+          <!--
+          <div>
+            [S-FRAME-ON]
+            <a href="javascript:close_popup();">
+              Close
+            </a>
+            [E-FRAME-ON]
+            [S-FRAME-OFF]
+            <a href="javascript:history.back();">
+              Go back
+            </a>
+            [E-FRAME-OFF]
+          </div>
+        -->
+        </div>
+
+        [FILESTATUS_LIST]
+
+      </div>
+  </div>
+  </div>
+
+  </div>
+  </form>
+  </div>
+  </div>
+  </section>
+  <!-- 以下共通 -->
+
+  <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

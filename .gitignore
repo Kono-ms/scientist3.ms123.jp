@@ -1,0 +1,149 @@
+############################################
+# OS / Editor / IDE
+############################################
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+############################################
+# Logs / Temp / Cache / Backups
+############################################
+*.log
+*.tmp
+*.temp
+*.cache
+*.bak
+*.old
+*.orig
+*.swp
+*.swo
+
+.cache/
+tmp/
+temp/
+logs/
+
+############################################
+# Secrets / Env (事故防止)
+############################################
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+
+############################################
+# Build artifacts / Dependencies
+############################################
+node_modules/
+dist/
+build/
+out/
+coverage/
+*.map
+
+# Composer (PHP)
+vendor/
+
+############################################
+# Database / Local data
+############################################
+*.sqlite
+*.sqlite3
+*.db
+
+############################################
+# Media / Binary assets (容量削減)
+############################################
+# Images
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.avif
+*.ico
+*.bmp
+*.tif
+*.tiff
+*.heic
+# SVGは必要になる案件も多いので「基本は除外しない」設定にしています。
+# もしSVGも不要なら次の行のコメントを外してください。
+# *.svg
+
+# Documents / Design sources
+*.pdf
+*.ai
+*.psd
+*.sketch
+*.fig
+
+# Audio
+*.mp3
+*.wav
+*.flac
+*.aac
+*.m4a
+*.ogg
+
+# Video
+*.mp4
+*.mov
+*.m4v
+*.avi
+*.mkv
+*.webm
+
+# Archives / Disk images / Installers
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.tgz
+*.bz2
+*.xz
+*.dmg
+*.iso
+*.exe
+*.msi
+
+# Fonts (必要ならコメントアウトして追跡してください)
+*.woff
+*.woff2
+*.ttf
+*.otf
+*.eot
+
+############################################
+# WordPress (該当する場合)
+############################################
+# アップロードは巨大化しやすいので通常はGit管理しない
+wp-content/uploads/
+
+# WPのキャッシュ/バックアップ系（プラグインにより名称は様々）
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup*/
+wp-content/backups*/
+*.wpress
+*.sql
+*.sql.gz
+*.sql.zip
+
+############################################
+# Misc
+############################################
+*.lock

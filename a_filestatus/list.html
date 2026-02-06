@@ -1,0 +1,286 @@
+<script>
+    $(document).ready(function () {
+        var wsize = $(window).width();
+         var hsize = $(window).height();
+        $(".ifrm_mcontact").css("width", (wsize - 40) + "px");
+        $(".ifrm_mcontact").css("height", (hsize - 40) + "px");
+        $(".ifrm_mcontact2").css("width", (wsize - 40) + "px");
+        $(".ifrm_mcontact2").css("height", (hsize - 40) + "px");
+    });
+
+    function open_mcontact2(url) {
+        $('.ifrm_mcontact2').attr('src', url);
+        $('#mask_mcontact2').show();
+        $('#popup_mcontact2').fadeIn();
+    }
+
+      function popup_preview_r(id) {
+        var url="/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=1&key="+id;
+        //console.log('preview url:'+url);
+        if(url==""){
+            return false;
+        }
+        $('.ifrm_mcontact2').attr('src', url);
+        $('#mask_mcontact2').show();
+        $('#popup_mcontact2').fadeIn();
+    }
+    function popup_preview_cb(id) {
+        var url="/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key="+id;
+        //console.log('preview url:'+url);
+        if(url==""){
+            return false;
+        }
+        $('.ifrm_mcontact2').attr('src', url);
+        $('#mask_mcontact2').show();
+        $('#popup_mcontact2').fadeIn();
+    }
+
+//    function popup_preview_r(id) {
+//        var url=document.getElementById('OPT_PREVIEW_LIST_R_'+id).value;
+//        //console.log('preview url:'+url);
+//        if(url==""){
+//            return false;
+//        }
+//        $('.ifrm_mcontact2').attr('src', url);
+//        $('#mask_mcontact2').show();
+//        $('#popup_mcontact2').fadeIn();
+//    }
+//    function popup_preview_cb(id) {
+//        var url=document.getElementById('OPT_PREVIEW_LIST_CB_'+id).value;
+//        //console.log('preview url:'+url);
+//        if(url==""){
+//            return false;
+//        }
+//        $('.ifrm_mcontact2').attr('src', url);
+//        $('#mask_mcontact2').show();
+//        $('#popup_mcontact2').fadeIn();
+//    }
+</script>
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+  <h1>商談詳細管理</h1>
+
+  <ol class="breadcrumb">
+    <li><a href="/admin/"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li>商談詳細管理</li>
+  </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+
+  <div class="row">
+
+    <div class="col-md-8">
+      <div class="box box-default same_height">
+        <div class="box-header with-border">
+          <i class="fa fa-search"></i>
+          <h3 class="box-title">絞り込み検索</h3>
+        </div>
+        <form method="post" action="./">
+          <div class="box-body">
+            <input type="hidden" name="mode" value="list">
+            <input type="hidden" name="sort" value="[SORT]">
+            <input type="hidden" name="page" value="1">
+            <div class="row">
+              <div class="col-sm-12 col-xs-12 col_vam">
+                <label>絞り込みたいキーワードを入力してください。</label>
+                <input type="text" name="word" value="[WORD]" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-sm-4 col-xs-12 col-sm-offset-4">
+                <button name="submit1" value="submit1" type="submit" class="btn btn-block btn-success">検索する</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="box box-default same_height">
+        <div class="box-body">
+          <div class="mb10">
+            <a href="./?mode=new&sort=[SORT]&word=[WORD]&page=[PAGE]" class="btn btn-block btn-warning"><i
+                class="fa fa-plus-square"></i> 新規登録</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="col-xs-12">
+
+      <div class="box box-default">
+        <div class="box-body">
+
+          <table id="table_summary" class="table table-bordered table-hover" summary="表">
+
+            <thead>
+              <tr>
+
+
+                <th>[S-SYODAN]<a href="./?mode=list&lid=[LID]&sort=1&word=[WORD]&page=[PAGE]">商談詳細ID</a>[E-SYODAN]
+                  [S-SYODAN_ASC]<a href="./?mode=list&lid=[LID]&sort=2&word=[WORD]&page=[PAGE]">商談詳細ID▲</a>[E-SYODAN_ASC]
+                  [S-SYODAN_DESC]<a
+                    href="./?mode=list&lid=[LID]&sort=1&word=[WORD]&page=[PAGE]">商談詳細ID▼</a>[E-SYODAN_DESC]</th>
+                <th>
+                  [S-M2]<a href="./?mode=list&lid=[LID]&sort=3&word=[WORD]&page=[PAGE]">研究者</a>[E-M2]
+                  [S-M2_ASC]<a href="./?mode=list&lid=[LID]&sort=4&word=[WORD]&page=[PAGE]">研究者▲</a>[E-M2_ASC]
+                  [S-M2_DESC]<a href="./?mode=list&lid=[LID]&sort=3&word=[WORD]&page=[PAGE]">研究者▼</a>[E-M2_DESC]
+
+                </th>
+                <th>
+                  [S-M1]<a href="./?mode=list&lid=[LID]&sort=5&word=[WORD]&page=[PAGE]">サプライヤー</a>[E-M1]
+                  [S-M1_ASC]<a href="./?mode=list&lid=[LID]&sort=6&word=[WORD]&page=[PAGE]">サプライヤー▲</a>[E-M1_ASC]
+                  [S-M1_DESC]<a href="./?mode=list&lid=[LID]&sort=5&word=[WORD]&page=[PAGE]">サプライヤー▼</a>[E-M1_DESC]
+                </th>
+                <th>
+                  [S-STATUS]<a href="./?mode=list&lid=[LID]&sort=9&word=[WORD]&page=[PAGE]">ステータス</a>[E-STATUS]
+                  [S-STATUS_ASC]<a
+                    href="./?mode=list&lid=[LID]&sort=10&word=[WORD]&page=[PAGE]">ステータス▲</a>[E-STATUS_ASC]
+                  [S-STATUS_DESC]<a
+                    href="./?mode=list&lid=[LID]&sort=9&word=[WORD]&page=[PAGE]">ステータス▼</a>[E-STATUS_DESC]
+
+                </th>
+
+                <th>見積書（CB宛）</th>
+                <th>見積書（研究者宛）</th>
+
+                <th>
+                  [S-EDITDATE]<a href="./?mode=list&lid=[LID]&sort=11&word=[WORD]&page=[PAGE]">更新日時</a>[E-EDITDATE]
+                  [S-EDITDATE_ASC]<a
+                    href="./?mode=list&lid=[LID]&sort=12&word=[WORD]&page=[PAGE]">更新日時▲</a>[E-EDITDATE_ASC]
+                  [S-EDITDATE_DESC]<a
+                    href="./?mode=list&lid=[LID]&sort=11&word=[WORD]&page=[PAGE]">更新日時▼</a>[E-EDITDATE_DESC]
+
+                </th>
+                <th>見積り項目</th>
+
+
+                <th>編集</th>
+                <th>削除</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <meta LIST-START>
+              <tr>
+                <!-- TODO -->
+                <!--
+                <td>[D-SHODAN_ID]</td>
+                -->
+                <td>[D-ID]</td>
+
+                <td>[D-MID2]</td>
+                <td>[D-M1_DVAL01]</td>
+                <td>[D-STATUS]</td>
+                <td>
+                  [S-PREVIEW_LIST_CB]
+                  <a href="javascript:popup_preview_cb([ID]);" id="preview_btn_cb" class="btn btn-default btn-xs">[OPT_PREVIEW_LIST_CB_STR]</a>
+                  <!--
+                  <select name="OPT_PREVIEW_LIST_CB" id="OPT_PREVIEW_LIST_CB_[ID]" class="input_select form-control">
+                    <option value="">▼選択して下さい</option>
+                    [OPT_PREVIEW_LIST_CB]
+                  </select>
+                  <a href="javascript:popup_preview_cb([ID]);" id="preview_btn_cb" class="btn btn-default btn-xs">プレビュー</a>-->
+                  [E-PREVIEW_LIST_CB]
+                </td>
+                <td>
+                  [S-PREVIEW_LIST_R]
+                  <a href="javascript:popup_preview_r([ID]);" id="preview_btn_r" class="btn btn-default btn-xs">[OPT_PREVIEW_LIST_CB_STR]</a>
+                  <!--
+                  <select name="OPT_PREVIEW_LIST_R" id="OPT_PREVIEW_LIST_R_[ID]" class="input_select form-control">
+                    <option value="">▼選択して下さい</option>
+                    [OPT_PREVIEW_LIST_R]
+                  </select>
+                  <a href="javascript:popup_preview_r([ID]);" id="preview_btn_r" class="btn btn-default btn-xs">プレビュー</a>-->
+                  [E-PREVIEW_LIST_R]
+                </td>
+                <td>[D-EDITDATE]</td>
+                <td><a href="/a_filestatus_detail/?mode=list&key=&lid=&sort=&word=商談詳細ID：[D-ID]&page="
+                    class="btn btn-block btn-default btn-xs">見積り詳細</a></td>
+                <td><a href="./?mode=edit&key=[ID]&lid=[LID]&sort=[SORT]&word=[WORD]&page=[PAGE]"
+                    class="btn btn-block btn-default btn-xs"><i class="fa fa-pencil"></i> 編集</a></td>
+                <td><a href="./?mode=delete&key=[ID]&lid=[LID]&sort=[SORT]&word=[WORD]&page=[PAGE]&token=[TOKEN]"
+                    class="btn btn-block btn-default btn-xs" onclick='return confirm("削除してもよろしいですか？");'><i
+                      class="fa fa-trash"></i> 削除</a></td>
+              </tr>
+              <meta LIST-END>
+
+            </tbody>
+          </table>
+
+        </div><!-- /.box-body -->
+      </div><!-- /.box -->
+
+      [PAGING]
+
+    </div><!-- /.col -->
+
+  </div><!-- /.row -->
+</section><!-- /.content -->
+
+
+<style>
+    .popup_mcontact {
+      display: none;
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      width: calc(100% - 40px);
+      height: calc(100% - 40px);
+      z-index: 10002;
+  }
+
+  .mask_mcontact {
+      display: none;
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      background-color: #808080;
+      opacity: 0.5;
+      z-index: 10001;
+  }
+</style>
+<div id="popup_mcontact" class="popup_mcontact">
+    <iframe class="ifrm_mcontact" src="" frameborder="none"></iframe>
+</div>
+<div id="mask_mcontact" class="mask_mcontact"> </div>
+
+<style>
+    .popup_mcontact2 {
+      display: none;
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      width: calc(100% - 40px);
+      height: calc(100% - 40px);
+      z-index: 10002;
+  }
+
+  .mask_mcontact2 {
+      display: none;
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      background-color: #808080;
+      opacity: 0.5;
+      z-index: 10001;
+  }
+</style>
+<div id="popup_mcontact2" class="popup_mcontact">
+    <iframe class="ifrm_mcontact2" src="" frameborder="none"></iframe>
+</div>
+<div id="mask_mcontact2" class="mask_mcontact"> </div>

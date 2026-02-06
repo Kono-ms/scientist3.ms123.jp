@@ -1,0 +1,468 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Change for Information | Scientist3</title>
+  <meta name="description"
+    content="Contact Usのページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+
+    <script>
+        var file_cnt = 1;
+
+        //$(function () { // これだと呼ばれない
+        $(document).ready(function () {
+
+            // history.back時にスクロールさせない
+            if ('scrollRestoration' in window.history) {
+                window.history.scrollRestoration = 'manual';
+            }
+
+            $('#add_file').on('click', function () {
+                if (file_cnt == 1) {
+                    $("#title_div2").css('display', '');
+                    $("#file_div2").css('display', '');
+                    file_cnt = 2;
+                    $('#delete_file').css('display', '');
+                }
+                else if (file_cnt == 2) {
+                    $("#title_div3").css('display', '');
+                    $("#file_div3").css('display', '');
+                    file_cnt = 3;
+                }
+                else if (file_cnt == 3) {
+                    $("#title_div4").css('display', '');
+                    $("#file_div4").css('display', '');
+                    file_cnt = 4;
+                }
+                else if (file_cnt == 4) {
+                    $("#title_div5").css('display', '');
+                    $("#file_div5").css('display', '');
+                    file_cnt = 5;
+                }
+                else if (file_cnt == 5) {
+                    $("#title_div6").css('display', '');
+                    $("#file_div6").css('display', '');
+                    file_cnt = 6;
+                }
+                else if (file_cnt == 6) {
+                    $("#title_div7").css('display', '');
+                    $("#file_div7").css('display', '');
+                    file_cnt = 7;
+                }
+                else if (file_cnt == 7) {
+                    $("#title_div8").css('display', '');
+                    $("#file_div8").css('display', '');
+                    file_cnt = 8;
+                }
+                else if (file_cnt == 8) {
+                    $("#title_div9").css('display', '');
+                    $("#file_div9").css('display', '');
+                    file_cnt = 9;
+                }
+                else if (file_cnt == 9) {
+                    $("#title_div10").css('display', '');
+                    $("#file_div10").css('display', '');
+                    file_cnt = 10;
+                    $('#add_file').css('display', 'none');
+                }
+            });
+            $('#delete_file').on('click', function () {
+                if (file_cnt == 2) {
+                    $("#title_div2").css('display', 'none');
+                    $("#file_div2").css('display', 'none');
+                    file_cnt = 1;
+                    $('#delete_file').css('display', 'none');
+                }
+                else if (file_cnt == 3) {
+                    $("#title_div3").css('display', 'none');
+                    $("#file_div3").css('display', 'none');
+                    file_cnt = 2;
+                }
+                else if (file_cnt == 4) {
+                    $("#title_div4").css('display', 'none');
+                    $("#file_div4").css('display', 'none');
+                    file_cnt = 3;
+                }
+                else if (file_cnt == 5) {
+                    $("#title_div5").css('display', 'none');
+                    $("#file_div5").css('display', 'none');
+                    file_cnt = 4;
+                }
+                else if (file_cnt == 6) {
+                    $("#title_div6").css('display', 'none');
+                    $("#file_div6").css('display', 'none');
+                    file_cnt = 5;
+                }
+                else if (file_cnt == 7) {
+                    $("#title_div7").css('display', 'none');
+                    $("#file_div7").css('display', 'none');
+                    file_cnt = 6;
+                }
+                else if (file_cnt == 8) {
+                    $("#title_div8").css('display', 'none');
+                    $("#file_div8").css('display', 'none');
+                    file_cnt = 7;
+                }
+                else if (file_cnt == 9) {
+                    $("#title_div9").css('display', 'none');
+                    $("#file_div9").css('display', 'none');
+                    file_cnt = 8;
+                }
+                else if (file_cnt == 10) {
+                    $("#title_div10").css('display', 'none');
+                    $("#file_div10").css('display', 'none');
+                    file_cnt = 9;
+                    $('#add_file').css('display', '');
+                }
+            });
+
+            // ロード時にdisplay:noneだとファイルフォームが装飾されない対策
+            // 逆からいく
+            file_cnt = 10;
+            if ($('[name=M1_ETC82]').val() == '') {
+                $('#delete_file').click();
+            }
+            if ($('[name=M1_ETC83]').val() == '') {
+                $('#delete_file').click();
+            }
+            if ($('[name=M1_ETC84]').val() == '') {
+                $('#delete_file').click();
+            }
+            if ($('[name=M1_ETC85]').val() == '') {
+                $('#delete_file').click();
+            }
+            if ($('[name=M1_ETC86]').val() == '') {
+                $('#delete_file').click();
+            }
+            if ($('[name=M1_ETC87]').val() == '') {
+                $('#delete_file').click();
+            }
+            if ($('[name=M1_ETC88]').val() == '') {
+                $('#delete_file').click();
+            }
+            if ($('[name=M1_ETC89]').val() == '') {
+                $('#delete_file').click();
+            }
+            if ($('[name=M1_ETC90]').val() == '') {
+                $('#delete_file').click();
+            }
+
+        });
+    </script>
+
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/about2/">Top</a></li>
+          <li class="breadcrumb__item">Change for Information</li>
+        </ol>
+      </div>
+    </div>
+    <section class="subpage-head">
+      <div class="l-container">
+        <div class="c-head">
+          <h2 class="c-head__ttl">Change for Information</h2>
+        </div>
+      </div>
+    </section>
+    <section class="edit">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">File</h1>
+          <p class="c-head__txt">Edit the supplier profile.</p>
+        </div>
+        <div class="form-box">
+          <form id="form1" method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="mode" value="save">
+            <input type="hidden" name="key" value="[ID]">
+            <input type="hidden" name="ID" value="[ID]">
+
+                    <div class="formset" id="File10">
+
+                        <!--
+                        <p style="font-size: 2rem;font-weight: bold;">Please attach your flyer and image.</p>
+                        -->
+
+
+                        <div class="formset__item" id="title_div1">
+                            <div class="formset__ttl">FileTitle１</div>
+                            <div class="formset__input"><input type="text" name="M1_DTXT09" value="" maxlength="50" size="90">
+                                <br>[D-M1_DTXT09]
+                            </div>
+                        </div>
+
+                        <!--<div class="formset__item">
+                            <div class="formset__ttl">File1<br>
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_DFIL03]" width="200"> Delete <input type="checkbox" accept="application/pdf,image/png,image/gif,image/jpeg" name="DEL_IMAGE_M1_DFIL03"><br><input type="file" name="EP_M1_DFIL03" value="[M1_DFIL03]" size="90"><input type="hidden" name="M1_DFIL03" value="[M1_DFIL03]">
+                            </div>
+                        </div>-->
+
+                        
+                        <div class="formset__item" id="file_div1">
+                            <div class="formset__ttl">File１
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input">[S-M1_DFIL03]<a href="[M1_DFIL03]" download="">Download</a>
+                                　Delete
+                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL03"><br>[E-M1_DFIL03]<input type="file"
+                                    accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL03" value="[M1_DFIL03]"
+                                    size="90"><input type="hidden" name="M1_DFIL03" value="[M1_DFIL03]">
+                            </div>
+                        </div>
+
+
+                        <div class="formset__item" id="title_div2">
+                            <div class="formset__ttl">FileTitle２</div>
+                            <div class="formset__input"><input type="text" name="M1_ETC82" value="" maxlength="50" size="90">
+                                <br>[D-M1_ETC82]
+                            </div>
+                        </div>
+
+                        
+                        <div class="formset__item" id="file_div2">
+                            <div class="formset__ttl">File２
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input">[S-M1_DFIL04]<a href="[M1_DFIL04]" download="">Download</a>
+                                　Delete
+                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL04"><br>[E-M1_DFIL04]<input type="file"
+                                    accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL04" value="[M1_DFIL04]"
+                                    size="90"><input type="hidden" name="M1_DFIL04" value="[M1_DFIL04]">
+                            </div>
+                        </div>
+                        
+
+                        <div class="formset__item" id="title_div3">
+                            <div class="formset__ttl">FileTitle３</div>
+                            <div class="formset__input"><input type="text" name="M1_ETC83" value="" maxlength="50" size="90">
+                                <br>[D-M1_ETC83]
+
+                            </div>
+                        </div>
+
+
+                        <!--
+                        <div class="formset__item" id="file_div3">
+                            <div class="formset__ttl">File３
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input">[S-M1_DFIL05]<a href="[M1_DFIL05]" download="">Download</a>
+                                　Delete
+                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL05"><br>[E-M1_DFIL05]<input type="file"
+                                    accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL05" value="[M1_DFIL05]"
+                                    size="90"><input type="hidden" name="M1_DFIL05" value="[M1_DFIL05]">
+                            </div>
+                        </div>
+                        -->
+
+
+                        <div class="formset__item" id="title_div4">
+                            <div class="formset__ttl">FileTitle４</div>
+                            <div class="formset__input"><input type="text" name="M1_ETC84" value="" maxlength="50" size="90">
+                                <br>[D-M1_ETC84]
+
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="formset__item" id="file_div4">
+                            <div class="formset__ttl">File４
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input">[S-M1_DFIL06]<a href="[M1_DFIL06]" download="">Download</a>
+                                　Delete
+                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL06"><br>[E-M1_DFIL06]<input type="file"
+                                    accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL06" value="[M1_DFIL06]"
+                                    size="90"><input type="hidden" name="M1_DFIL06" value="[M1_DFIL06]">
+                            </div>
+                        </div>
+                        -->
+
+                        <div class="formset__item" id="title_div5">
+                            <div class="formset__ttl">FileTitle５</div>
+                            <div class="formset__input"><input type="text" name="M1_ETC85" value="" maxlength="50" size="90">
+                                <br>[D-M1_ETC85]
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="formset__item" id="file_div5">
+                            <div class="formset__ttl">File５
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input">[S-M1_DFIL07]<a href="[M1_DFIL07]" download="">Download</a>
+                                　Delete
+                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL07"><br>[E-M1_DFIL07]<input type="file"
+                                    accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL07" value="[M1_DFIL07]"
+                                    size="90"><input type="hidden" name="M1_DFIL07" value="[M1_DFIL07]">
+                            </div>
+                        </div>
+                        -->
+
+
+                        <div class="formset__item" id="title_div6">
+                            <div class="formset__ttl">FileTitle６</div>
+                            <div class="formset__input"><input type="text" name="M1_ETC86" value="" maxlength="50" size="90">
+                                <br>[D-M1_ETC86]
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="formset__item" id="file_div6">
+                            <div class="formset__ttl">File６
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input">[S-M1_DFIL08]<a href="[M1_DFIL08]" download="">Download</a>
+                                　Delete
+                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL08"><br>[E-M1_DFIL08]<input type="file"
+                                    accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL08" value="[M1_DFIL08]"
+                                    size="90"><input type="hidden" name="M1_DFIL08" value="[M1_DFIL08]">
+                            </div>
+                        </div>
+                        -->
+
+
+                        <div class="formset__item" id="title_div7">
+                            <div class="formset__ttl">FileTitle７</div>
+                            <div class="formset__input"><input type="text" name="M1_ETC87" value="" maxlength="50" size="90">
+                                <br>[D-M1_ETC87]
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="formset__item" id="file_div7">
+                            <div class="formset__ttl">File７
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input">[S-M1_DFIL09]<a href="[M1_DFIL09]" download="">Download</a>
+                                　Delete
+                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL09"><br>[E-M1_DFIL09]<input type="file"
+                                    accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL09" value="[M1_DFIL09]"
+                                    size="90"><input type="hidden" name="M1_DFIL09" value="[M1_DFIL09]">
+                            </div>
+                        </div>
+                        -->
+
+                        <div class="formset__item" id="title_div8">
+                            <div class="formset__ttl">FileTitle８</div>
+                            <div class="formset__input"><input type="text" name="M1_ETC88" value="" maxlength="50" size="90">
+                                <br>[D-M1_ETC88]
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="formset__item" id="file_div8">
+                            <div class="formset__ttl">File８
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input">[S-M1_DFIL10]<a href="[M1_DFIL10]" download="">Download</a>
+                                　Delete
+                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL10"><br>[E-M1_DFIL10]<input type="file"
+                                    accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL10" value="[M1_DFIL10]"
+                                    size="90"><input type="hidden" name="M1_DFIL10" value="[M1_DFIL10]">
+                            </div>
+                        </div>
+                        -->
+
+
+                        <div class="formset__item" id="title_div9">
+                            <div class="formset__ttl">FileTitle９</div>
+                            <div class="formset__input"><input type="text" name="M1_ETC89" value="" maxlength="50" size="90">
+                                <br>[D-M1_ETC89]
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="formset__item" id="file_div9">
+                            <div class="formset__ttl">File９
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input">[S-M1_ETC04]<a href="[M1_ETC04]" download="">Download</a>
+                                　Delete
+                                <input type="checkbox" name="DEL_IMAGE_M1_ETC04"><br>[E-M1_ETC04]<input type="file"
+                                    accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_ETC04" value="[M1_ETC04]"
+                                    size="90"><input type="hidden" name="M1_ETC04" value="[M1_ETC04]">
+                            </div>
+                        </div>
+                        -->
+
+
+                        <div class="formset__item" id="title_div10">
+                            <div class="formset__ttl">FileTitle１０</div>
+                            <div class="formset__input"><input type="text" name="M1_ETC90" value="" maxlength="50" size="90">
+                                <br>[D-M1_ETC90]
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="formset__item" id="file_div10">
+                            <div class="formset__ttl">File１０
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input">[S-M1_ETC05]<a href="[M1_ETC05]" download="">Download</a>
+                                　Delete
+                                <input type="checkbox" name="DEL_IMAGE_M1_ETC05"><br>[E-M1_ETC05]<input type="file"
+                                    accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_ETC05" value="[M1_ETC05]"
+                                    size="90"><input type="hidden" name="M1_ETC05" value="[M1_ETC05]">
+                            </div>
+                        </div>
+                        -->
+
+                        <div style="display:flex;align-items:end;">
+                            <input type="button" id="add_file" value="add +" class="input-add" style="display:none;" />
+                            <input type="button" id="delete_file" value="delete -" class="input-add" />
+                        </div>
+
+
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">YouTube</div>
+                            <div class="formset__input"><textarea name="M1_DTXT07" cols="70" rows="5"></textarea>
+                                <br>[D-M1_DTXT07]
+                            </div>
+
+                        </div>
+
+                    </div>
+
+              <div class="btn formset__btn">
+                <a onclick="history.back(); return false;" class="btn_prev">Back</a>
+                <input type="submit" value="Send" name="submit2" onclick="return regist();" />
+                <script>
+                  function regist() {
+                    if (confirm('We will now move on to the modification review. Is that okay?')) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  }
+                </script>
+              </div>
+
+
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer_en.html-->
+  </div>
+</body>
+
+</html>

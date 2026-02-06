@@ -1,0 +1,882 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+    <h1>研究者管理</h1>
+
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> Home</li>
+        <li><a href="/a_m2/">研究者管理</a></li>
+        <li>研究者登録・編集</li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+
+
+        <div class="col-xs-12">
+            <div class="box box-warning">
+
+                <div class="box-header">
+                    <h3 class="box-title">登録・編集</h3>
+                </div>
+                <!-- /.box-header -->
+
+                <div class="box-body">
+
+                    [S-ERR]
+                    <div class="alert alert-warning alert-dismissible">
+                        <div class="message_box mb20">
+                            <p><i class="icon fa fa-warning"></i> 入力内容に不備がございますので、内容のご確認をお願いいたします。</p>
+                        </div>
+                        <div class="page_text">
+                            <ul class="error_list">
+                                [ERRMSG]
+                            </ul>
+                        </div>
+                    </div>
+                    [E-ERR]
+
+                    <form method="post" action="./" enctype="multipart/form-data">
+                        <button name="submit" value="submit" type="submit" class="mb20 btn btn-block btn-default"
+                            onclick="var ok=confirm('保存してもよろしいですか？');if (ok) this.form.submit(); return false;"><i
+                                class="fa fa-floppy-o"></i> 保存</button>
+                        <input type="hidden" name="mode" value="save">
+                        <input type="hidden" name="key" value="[ID]">
+                        <input type="hidden" name="sort" value="[SORT]">
+                        <input type="hidden" name="word" value="[WORD]">
+                        <input type="hidden" name="page" value="[PAGE]">
+                        <input type="hidden" name="lid" value="[LID]">
+                        <input type="hidden" name="token" value="[TOKEN]">
+                        <input type="hidden" name="ID" value="[ID]">
+                        <input type="hidden" name="SOCIALID" value="[SOCIALID]">
+                        <input type="hidden" name="M2_ETC01" value="[M2_ETC01]">
+                        <!-- <input type="hidden" name="M2_ETC02" value="[M2_ETC02]"> -->
+                        <input type="hidden" name="M2_ETC03" value="[M2_ETC03]">
+                        <input type="hidden" name="M2_ETC04" value="[M2_ETC04]">
+                        <input type="hidden" name="M2_ETC05" value="[M2_ETC05]">
+                        <input type="hidden" name="M2_ETC06" value="[M2_ETC06]">
+                        <input type="hidden" name="M2_ETC07" value="[M2_ETC07]">
+                        <input type="hidden" name="M2_ETC08" value="[M2_ETC08]">
+                        <input type="hidden" name="M2_ETC09" value="[M2_ETC09]">
+                        <input type="hidden" name="M2_ETC10" value="[M2_ETC10]">
+                        <input type="hidden" name="M2_ETC11" value="[M2_ETC11]">
+                        <input type="hidden" name="M2_ETC12" value="[M2_ETC12]">
+                        <input type="hidden" name="M2_ETC13" value="[M2_ETC13]">
+                        <input type="hidden" name="M2_ETC14" value="[M2_ETC14]">
+                        <input type="hidden" name="M2_ETC15" value="[M2_ETC15]">
+                        <input type="hidden" name="M2_ETC16" value="[M2_ETC16]">
+                        <input type="hidden" name="M2_ETC17" value="[M2_ETC17]">
+                        <input type="hidden" name="M2_ETC18" value="[M2_ETC18]">
+                        <input type="hidden" name="M2_ETC19" value="[M2_ETC19]">
+                        <input type="hidden" name="M2_ETC20" value="[M2_ETC20]">
+                        <input type="hidden" name="MID" value="[MID]">
+                        <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+                        <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+
+
+                        【基本情報】
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                <tr>
+                                    <th>会員ID</th>
+                                    <!--<td><input type="text" name="MID" class="input_w10 form-control" value="[MID]"
+                                            size="90"></td>-->
+                                    <td>[MID]</td>
+
+                                </tr>
+                                <tr>
+                                    <th>研究者ID</th>
+                                    <td>[MID_NEW]</td>
+                                </tr>
+                                <tr>
+                                    <th>メールアドレス</th>
+                                    <td><input type="text" name="EMAIL" class="input_w10 form-control" value="[EMAIL]"
+                                            size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>パスワード</th>
+                                    <td><input type="text" name="PASS" class="input_w10 form-control" value="[PASS]"
+                                            size="90"></td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <th>公開フラグ</th>
+                                    <td>
+                                        <ul>[OPT-ENABLE]</ul>
+                                    </td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <th>登録状態</th>
+                                    <td>
+                                        <ul>[OPT-M2_DRDO01]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>登録日時（利用規約同意日時）</th>
+                                    <!--<td><input type="text" name="NEWDATE" class="input_w10 form-control"
+                                            value="[NEWDATE]" size="90"></td>-->
+                                    <td>[NEWDATE]</td>
+                                </tr>
+                                <tr>
+                                    <th>更新日時</th>
+                                    <!--<td><input type="text" name="EDITDATE" class="input_w10 form-control"
+                                            value="[EDITDATE]" size="90"></td>-->
+                                    <td>[EDITDATE]</td>
+                                </tr>
+                                <tr>
+                                    <th>PF手数料（％）</th>
+                                    <td><input type="text" name="M2_ETC02" class="input_w10 form-control"
+                                            value="[M2_ETC02]" size="90" pattern="^\d+(.\d+)?$"></td>
+                                </tr>
+                                <tr>
+                                    <th>契約フラグ</th>
+                                    <td><select name="M2_DSEL02"
+                                            class="input_select form-control">[OPT-M2_DSEL02]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>決裁者ID</th>
+                                    <td><input type="text" name="M2_DVAL15" class="input_w10 form-control"
+                                            value="[M2_DVAL15]" size="90"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        【表示項目】
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                <tr>
+                                    <th>ニックネーム</th>
+                                    <td><input type="text" name="M2_DVAL01" class="input_w10 form-control"
+                                            value="[M2_DVAL01]" size="90"></td>
+                                </tr>
+                                <!--
+                                <tr>
+                                    <th>氏名</th>
+                                    <td><input type="text" name="M2_DVAL02" class="input_w10 form-control" value="[M2_DVAL02]" size="90"></td>
+                                </tr>
+                                -->
+                                <tr>
+                                    <th>氏名（姓）</th>
+                                    <td><input type="text" name="M2_DVAL16" class="input_w10 form-control"
+                                            value="[M2_DVAL16]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>氏名（名）</th>
+                                    <td><input type="text" name="M2_DVAL17" class="input_w10 form-control"
+                                            value="[M2_DVAL17]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>氏名（FirstName）</th>
+                                    <td><input type="text" name="M2_DVAL18" class="input_w10 form-control"
+                                            value="[M2_DVAL18]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>氏名（LastName）</th>
+                                    <td><input type="text" name="M2_DVAL19" class="input_w10 form-control"
+                                            value="[M2_DVAL19]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>組織名</th>
+                                    <td><input type="text" name="M2_DVAL03" class="input_w10 form-control"
+                                            value="[M2_DVAL03]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>組織名（英語表記）</th>
+                                    <td><input type="text" name="M2_ETC20" class="input_w10 form-control"
+                                            value="[M2_ETC20]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>部署名</th>
+                                    <td><input type="text" name="M2_DVAL04" class="input_w10 form-control"
+                                            value="[M2_DVAL04]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>部署名（英語表記）</th>
+                                    <td><input type="text" name="M2_DVAL21" class="input_w10 form-control"
+                                            value="[M2_DVAL21]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>役職</th>
+                                    <td><input type="text" name="M2_ETC19" class="input_w10 form-control"
+                                            value="[M2_ETC19]" size="90"></td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <th>国</th>
+                                    <td><input type="text" name="M2_DVAL05" class="input_w10 form-control"
+                                            value="[M2_DVAL05]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>郵便番号</th>
+                                    <td><input type="text" name="M2_DVAL06" class="input_w10 form-control"
+                                            value="[M2_DVAL06]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>住所</th>
+                                    <td><input type="text" name="M2_DVAL07" class="input_w10 form-control"
+                                            value="[M2_DVAL07]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>住所（英語表記）</th>
+                                    <td><input type="text" name="M2_DVAL20" class="input_w10 form-control"
+                                            value="[M2_DVAL20]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>TEL</th>
+                                    <td><input type="text" name="M2_DVAL08" class="input_w10 form-control"
+                                            value="[M2_DVAL08]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>FAX</th>
+                                    <td><input type="text" name="M2_DVAL09" class="input_w10 form-control"
+                                            value="[M2_DVAL09]" size="90"></td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <th>メールアドレス</th>
+                                    <td><input type="text" name="M2_DVAL10" class="input_w10 form-control"
+                                            value="[M2_DVAL10]" size="90"></td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <th>システム管理者</th>
+                                    <td><input type="text" name="M2_DVAL11" class="input_w10 form-control"
+                                            value="[M2_DVAL11]" size="90"></td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <th>アカウント種類</th>
+                                    <td>
+                                        <ul>[OPT-M2_DVAL12]</ul>
+                                    </td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <th>企業ID</th>
+                                    <td><input type="text" name="M2_DVAL13" class="input_w10 form-control"
+                                            value="[M2_DVAL13]" size="90"></td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <th>会員種別</th>
+                                    <td>
+                                        <ul>[OPT-M2_DVAL14]</ul>
+                                    </td>
+                                </tr>
+
+
+
+                                <!--
+                                <tr>
+                                    <th>M2_DVAL20-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL20" class="input_w10 form-control" value="[M2_DVAL20]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DVAL21-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL21" class="input_w10 form-control" value="[M2_DVAL21]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DVAL22-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL22" class="input_w10 form-control" value="[M2_DVAL22]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DVAL23-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL23" class="input_w10 form-control" value="[M2_DVAL23]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DVAL24-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL24" class="input_w10 form-control" value="[M2_DVAL24]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DVAL25-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL25" class="input_w10 form-control" value="[M2_DVAL25]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DVAL26-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL26" class="input_w10 form-control" value="[M2_DVAL26]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DVAL27-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL27" class="input_w10 form-control" value="[M2_DVAL27]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DVAL28-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL28" class="input_w10 form-control" value="[M2_DVAL28]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DVAL29-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL29" class="input_w10 form-control" value="[M2_DVAL29]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DVAL30-TITLE</th>
+                                    <td><input type="text" name="M2_DVAL30" class="input_w10 form-control" value="[M2_DVAL30]" size="90"></td>
+                                </tr> -->
+
+                                <tr style="display: none;">
+                                    <th>PRコメント</th>
+                                    <td><textarea name="M2_DTXT01" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[M2_DTXT01]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>ホームページURL</th>
+                                    <td><textarea name="M2_DTXT02" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[M2_DTXT02]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>興味のある研究分野（キーワード）</th>
+                                    <td><textarea name="M2_DTXT03" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[M2_DTXT03]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>アカウント情報（社内メモ）</th>
+                                    <td><textarea name="M2_ETC18" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[M2_ETC18]</textarea></td>
+                                </tr>
+                                <!--
+                                <tr>
+                                    <th>M2_DTXT04-TITLE</th>
+                                    <td><textarea name="M2_DTXT04" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT04]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT05-TITLE</th>
+                                    <td><textarea name="M2_DTXT05" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT05]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT06-TITLE</th>
+                                    <td><textarea name="M2_DTXT06" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT06]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT07-TITLE</th>
+                                    <td><textarea name="M2_DTXT07" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT07]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT08-TITLE</th>
+                                    <td><textarea name="M2_DTXT08" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT08]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT09-TITLE</th>
+                                    <td><textarea name="M2_DTXT09" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT09]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT10-TITLE</th>
+                                    <td><textarea name="M2_DTXT10" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT10]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT11-TITLE</th>
+                                    <td><textarea name="M2_DTXT11" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT11]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT12-TITLE</th>
+                                    <td><textarea name="M2_DTXT12" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT12]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT13-TITLE</th>
+                                    <td><textarea name="M2_DTXT13" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT13]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT14-TITLE</th>
+                                    <td><textarea name="M2_DTXT14" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT14]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT15-TITLE</th>
+                                    <td><textarea name="M2_DTXT15" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT15]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT16-TITLE</th>
+                                    <td><textarea name="M2_DTXT16" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT16]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT17-TITLE</th>
+                                    <td><textarea name="M2_DTXT17" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT17]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT18-TITLE</th>
+                                    <td><textarea name="M2_DTXT18" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT18]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT19-TITLE</th>
+                                    <td><textarea name="M2_DTXT19" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT19]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT20-TITLE</th>
+                                    <td><textarea name="M2_DTXT20" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT20]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT21-TITLE</th>
+                                    <td><textarea name="M2_DTXT21" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT21]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT22-TITLE</th>
+                                    <td><textarea name="M2_DTXT22" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT22]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT23-TITLE</th>
+                                    <td><textarea name="M2_DTXT23" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT23]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT24-TITLE</th>
+                                    <td><textarea name="M2_DTXT24" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT24]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT25-TITLE</th>
+                                    <td><textarea name="M2_DTXT25" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT25]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT26-TITLE</th>
+                                    <td><textarea name="M2_DTXT26" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT26]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT27-TITLE</th>
+                                    <td><textarea name="M2_DTXT27" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT27]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT28-TITLE</th>
+                                    <td><textarea name="M2_DTXT28" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT28]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT29-TITLE</th>
+                                    <td><textarea name="M2_DTXT29" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT29]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DTXT30-TITLE</th>
+                                    <td><textarea name="M2_DTXT30" class="textarea_w10 form-control" cols="70" rows="5">[M2_DTXT30]</textarea></td>
+                                </tr> -->
+
+                                <tr style="display: none;">
+                                    <th>都道府県</th>
+                                    <td><select name="M2_DSEL01"
+                                            class="input_select form-control">[OPT-M2_DSEL01]</select></td>
+                                </tr>
+                                <!-- <tr>
+                                    <th>M2_DSEL02-TITLE</th>
+                                    <td><select name="M2_DSEL02" class="input_select form-control">[OPT-M2_DSEL02]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DSEL03-TITLE</th>
+                                    <td><select name="M2_DSEL03" class="input_select form-control">[OPT-M2_DSEL03]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DSEL04-TITLE</th>
+                                    <td><select name="M2_DSEL04" class="input_select form-control">[OPT-M2_DSEL04]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DSEL05-TITLE</th>
+                                    <td><select name="M2_DSEL05" class="input_select form-control">[OPT-M2_DSEL05]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DSEL06-TITLE</th>
+                                    <td><select name="M2_DSEL06" class="input_select form-control">[OPT-M2_DSEL06]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DSEL07-TITLE</th>
+                                    <td><select name="M2_DSEL07" class="input_select form-control">[OPT-M2_DSEL07]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DSEL08-TITLE</th>
+                                    <td><select name="M2_DSEL08" class="input_select form-control">[OPT-M2_DSEL08]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DSEL09-TITLE</th>
+                                    <td><select name="M2_DSEL09" class="input_select form-control">[OPT-M2_DSEL09]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DSEL10-TITLE</th>
+                                    <td><select name="M2_DSEL10" class="input_select form-control">[OPT-M2_DSEL10]</select></td>
+                                </tr>
+                       
+                                <tr>
+                                    <th>M2_DRDO02-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DRDO02]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DRDO03-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DRDO03]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DRDO04-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DRDO04]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DRDO05-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DRDO05]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DRDO06-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DRDO06]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DRDO07-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DRDO07]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DRDO08-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DRDO08]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DRDO09-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DRDO09]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DRDO10-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DRDO10]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DCHK01-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DCHK01]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DCHK02-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DCHK02]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DCHK03-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DCHK03]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DCHK04-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DCHK04]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DCHK05-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DCHK05]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DCHK06-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DCHK06]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DCHK07-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DCHK07]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DCHK08-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DCHK08]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DCHK09-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DCHK09]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_DCHK10-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_DCHK10]</ul>
+                                    </td>
+                                </tr> -->
+                                <!--DFIL01-->
+                                <!-- [S-NEWDATA]
+                                <tr>
+                                    <th>M2_DFIL01-TITLE</th>
+                                    <td><input type="file" name="EP_M2_DFIL01" value="[M2_DFIL01]" size="90"><input type="hidden" name="M2_DFIL01" value="[M2_DFIL01]"></td>
+                                </tr>[E-NEWDATA] [S-EDITDATA]
+                                <tr>
+                                    <th>M2_DFIL01-TITLE</th>
+                                    <td><img src="[M2_DFIL01]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M2_DFIL01"><br><input type="file" name="EP_M2_DFIL01" value="[M2_DFIL01]" size="90"><input type="hidden" name="M2_DFIL01" value="[M2_DFIL01]"></td>
+                                </tr>[E-EDITDATA] -->
+                                <!--DFIL02-->
+                                <!-- [S-NEWDATA]
+                                <tr>
+                                    <th>M2_DFIL02-TITLE</th>
+                                    <td><input type="file" name="EP_M2_DFIL02" value="[M2_DFIL02]" size="90"><input type="hidden" name="M2_DFIL02" value="[M2_DFIL02]"></td>
+                                </tr>[E-NEWDATA] [S-EDITDATA]
+                                <tr>
+                                    <th>M2_DFIL02-TITLE</th>
+                                    <td><img src="[M2_DFIL02]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M2_DFIL02"><br><input type="file" name="EP_M2_DFIL02" value="[M2_DFIL02]" size="90"><input type="hidden" name="M2_DFIL02" value="[M2_DFIL02]"></td>
+                                </tr>[E-EDITDATA] -->
+                                <!--DFIL03-->
+                                <!-- [S-NEWDATA]
+                                <tr>
+                                    <th>M2_DFIL03-TITLE</th>
+                                    <td><input type="file" name="EP_M2_DFIL03" value="[M2_DFIL03]" size="90"><input type="hidden" name="M2_DFIL03" value="[M2_DFIL03]"></td>
+                                </tr>[E-NEWDATA] [S-EDITDATA]
+                                <tr>
+                                    <th>M2_DFIL03-TITLE</th>
+                                    <td><img src="[M2_DFIL03]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M2_DFIL03"><br><input type="file" name="EP_M2_DFIL03" value="[M2_DFIL03]" size="90"><input type="hidden" name="M2_DFIL03" value="[M2_DFIL03]"></td>
+                                </tr>[E-EDITDATA] -->
+                                <!--DFIL04-->
+                                <!-- [S-NEWDATA]
+                                <tr>
+                                    <th>M2_DFIL04-TITLE</th>
+                                    <td><input type="file" name="EP_M2_DFIL04" value="[M2_DFIL04]" size="90"><input type="hidden" name="M2_DFIL04" value="[M2_DFIL04]"></td>
+                                </tr>[E-NEWDATA] [S-EDITDATA]
+                                <tr>
+                                    <th>M2_DFIL04-TITLE</th>
+                                    <td><img src="[M2_DFIL04]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M2_DFIL04"><br><input type="file" name="EP_M2_DFIL04" value="[M2_DFIL04]" size="90"><input type="hidden" name="M2_DFIL04" value="[M2_DFIL04]"></td>
+                                </tr>[E-EDITDATA] -->
+                                <!--DFIL05-->
+                                <!-- [S-NEWDATA]
+                                <tr>
+                                    <th>M2_DFIL05-TITLE</th>
+                                    <td><input type="file" name="EP_M2_DFIL05" value="[M2_DFIL05]" size="90"><input type="hidden" name="M2_DFIL05" value="[M2_DFIL05]"></td>
+                                </tr>[E-NEWDATA] [S-EDITDATA]
+                                <tr>
+                                    <th>M2_DFIL05-TITLE</th>
+                                    <td><img src="[M2_DFIL05]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M2_DFIL05"><br><input type="file" name="EP_M2_DFIL05" value="[M2_DFIL05]" size="90"><input type="hidden" name="M2_DFIL05" value="[M2_DFIL05]"></td>
+                                </tr>[E-EDITDATA]-->
+                                <!--DFIL06-->
+                                <!-- [S-NEWDATA] 
+                                <tr>
+                                    <th>M2_DFIL06-TITLE</th>
+                                    <td><input type="file" name="EP_M2_DFIL06" value="[M2_DFIL06]" size="90"><input type="hidden" name="M2_DFIL06" value="[M2_DFIL06]"></td>
+                                </tr>[E-NEWDATA] [S-EDITDATA]
+                                <tr>
+                                    <th>M2_DFIL06-TITLE</th>
+                                    <td><img src="[M2_DFIL06]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M2_DFIL06"><br><input type="file" name="EP_M2_DFIL06" value="[M2_DFIL06]" size="90"><input type="hidden" name="M2_DFIL06" value="[M2_DFIL06]"></td>
+                                </tr>[E-EDITDATA] -->
+                                <!--DFIL07-->
+                                <!-- [S-NEWDATA]
+                                <tr>
+                                    <th>M2_DFIL07-TITLE</th>
+                                    <td><input type="file" name="EP_M2_DFIL07" value="[M2_DFIL07]" size="90"><input type="hidden" name="M2_DFIL07" value="[M2_DFIL07]"></td>
+                                </tr>[E-NEWDATA] [S-EDITDATA]
+                                <tr>
+                                    <th>M2_DFIL07-TITLE</th>
+                                    <td><img src="[M2_DFIL07]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M2_DFIL07"><br><input type="file" name="EP_M2_DFIL07" value="[M2_DFIL07]" size="90"><input type="hidden" name="M2_DFIL07" value="[M2_DFIL07]"></td>
+                                </tr>[E-EDITDATA] -->
+                                <!--DFIL08-->
+                                <!-- [S-NEWDATA]
+                                <tr>
+                                    <th>M2_DFIL08-TITLE</th>
+                                    <td><input type="file" name="EP_M2_DFIL08" value="[M2_DFIL08]" size="90"><input type="hidden" name="M2_DFIL08" value="[M2_DFIL08]"></td>
+                                </tr>[E-NEWDATA] [S-EDITDATA]
+                                <tr>
+                                    <th>M2_DFIL08-TITLE</th>
+                                    <td><img src="[M2_DFIL08]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M2_DFIL08"><br><input type="file" name="EP_M2_DFIL08" value="[M2_DFIL08]" size="90"><input type="hidden" name="M2_DFIL08" value="[M2_DFIL08]"></td>
+                                </tr>[E-EDITDATA] -->
+                                <!--DFIL09-->
+                                <!-- [S-NEWDATA]
+                                <tr>
+                                    <th>M2_DFIL09-TITLE</th>
+                                    <td><input type="file" name="EP_M2_DFIL09" value="[M2_DFIL09]" size="90"><input type="hidden" name="M2_DFIL09" value="[M2_DFIL09]"></td>
+                                </tr>[E-NEWDATA] [S-EDITDATA]
+                                <tr>
+                                    <th>M2_DFIL09-TITLE</th>
+                                    <td><img src="[M2_DFIL09]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M2_DFIL09"><br><input type="file" name="EP_M2_DFIL09" value="[M2_DFIL09]" size="90"><input type="hidden" name="M2_DFIL09" value="[M2_DFIL09]"></td>
+                                </tr>[E-EDITDATA] -->
+                                <!--DFIL10-->
+                                <!-- [S-NEWDATA]
+                                <tr>
+                                    <th>M2_DFIL10-TITLE</th>
+                                    <td><input type="file" name="EP_M2_DFIL10" value="[M2_DFIL10]" size="90"><input type="hidden" name="M2_DFIL10" value="[M2_DFIL10]"></td>
+                                </tr>[E-NEWDATA] [S-EDITDATA]
+                                <tr>
+                                    <th>M2_DFIL10-TITLE</th>
+                                    <td><img src="[M2_DFIL10]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M2_DFIL10"><br><input type="file" name="EP_M2_DFIL10" value="[M2_DFIL10]" size="90"><input type="hidden" name="M2_DFIL10" value="[M2_DFIL10]"></td>
+                                </tr>[E-EDITDATA] -->
+                            </tbody>
+                        </table>
+
+                        <!-- 【マッチング項目】
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                <tr>
+                                    <th>M2_MSEL01-TITLE</th>
+                                    <td><select name="M2_MSEL01" class="input_select form-control">[OPT-M2_MSEL01]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MSEL02-TITLE</th>
+                                    <td><select name="M2_MSEL02" class="input_select form-control">[OPT-M2_MSEL02]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MSEL03-TITLE</th>
+                                    <td><select name="M2_MSEL03" class="input_select form-control">[OPT-M2_MSEL03]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MSEL04-TITLE</th>
+                                    <td><select name="M2_MSEL04" class="input_select form-control">[OPT-M2_MSEL04]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MSEL05-TITLE</th>
+                                    <td><select name="M2_MSEL05" class="input_select form-control">[OPT-M2_MSEL05]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MSEL06-TITLE</th>
+                                    <td><select name="M2_MSEL06" class="input_select form-control">[OPT-M2_MSEL06]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MSEL07-TITLE</th>
+                                    <td><select name="M2_MSEL07" class="input_select form-control">[OPT-M2_MSEL07]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MSEL08-TITLE</th>
+                                    <td><select name="M2_MSEL08" class="input_select form-control">[OPT-M2_MSEL08]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MSEL09-TITLE</th>
+                                    <td><select name="M2_MSEL09" class="input_select form-control">[OPT-M2_MSEL09]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MSEL10-TITLE</th>
+                                    <td><select name="M2_MSEL10" class="input_select form-control">[OPT-M2_MSEL10]</select></td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MRDO01-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MRDO01]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MRDO02-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MRDO02]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MRDO03-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MRDO03]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MRDO04-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MRDO04]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MRDO05-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MRDO05]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MRDO06-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MRDO06]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MRDO07-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MRDO07]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MRDO08-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MRDO08]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MRDO09-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MRDO09]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MRDO10-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MRDO10]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MCHK01-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MCHK01]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MCHK02-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MCHK02]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MCHK03-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MCHK03]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MCHK04-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MCHK04]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MCHK05-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MCHK05]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MCHK06-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MCHK06]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MCHK07-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MCHK07]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MCHK08-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MCHK08]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MCHK09-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MCHK09]</ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>M2_MCHK10-TITLE</th>
+                                    <td>
+                                        <ul>[OPT-M2_MCHK10]</ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table> -->
+                        <button name="submit" value="submit" type="submit" class="btn btn-block btn-default"
+                            onclick="var ok=confirm('保存してもよろしいですか？');if (ok) this.form.submit(); return false;"><i
+                                class="fa fa-floppy-o"></i> 保存</button>
+                    </form>
+
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+
+
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->

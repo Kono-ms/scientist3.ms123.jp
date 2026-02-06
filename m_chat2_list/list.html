@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>スレッド一覧｜Scientist3</title>
+    <meta name="description"
+        content="スレッド一覧のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/icon-192x192.png">
+    <link rel="stylesheet" href="/html_a/AdminLTE/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/html_a/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="/html_a/AdminLTE/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/html_a/AdminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/html_a/css/common.css">
+    <!--template=/common/template/head.html-->
+    <script>
+        $(function () { });
+    </script>
+    <style>
+        #main a {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap sub">
+
+        <!--template=/common/template/header.html-->
+
+        <!-- 以上共通 -->
+        <div class="breadcrumb">
+            <div class="l-container">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a href="/">トップ</a></li>
+                    <li class="breadcrumb__item"><a href="/m_message2/">メッセージ一覧</a></li>
+                    <li class="breadcrumb__item">スレッド一覧</li>
+                </ol>
+            </div>
+        </div>
+        <section class="thread">
+            <div class="l-container">
+                <div class="">
+                    <div class="box box-default same_height">
+                        <form method="get" action="./">
+                            <div class="box-body">
+                                <input type="hidden" name="mode" value="list">
+                                <input type="hidden" name="word" value="[WORD]">
+                                <input type="hidden" name="mid1" value="[MID1]">
+                                <input type="hidden" name="mid2" value="[MID2]">
+                                <input type="hidden" name="sort" value="">
+                                <input type="hidden" name="page" value="1">
+                                <input type="hidden" name="word3" value="">
+
+
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-12 col_vam" style="display: flex;">
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=[SORT]&page=1&word3=商談中">商談中[SYODAN_CNT]件</a><span>&nbsp;</span>
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=[SORT]&page=1&word3=見積依頼中">見積依頼中[MIRAI_CNT]件</a><span>&nbsp;</span>
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=[SORT]&page=1&word3=見積提示中">見積提示中[MTEIJI_CNT]件</a><span>&nbsp;</span>
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=[SORT]&page=1&word3=発注済">発注済[HACCHU_CNT]件</a><span>&nbsp;</span>
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=[SORT]&page=1&word3=納品済">納品済[NOHIN_CNT]件</a><span>&nbsp;</span>
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=[SORT]&page=1&word3=請求提示中">請求提示中[SEIKYU_CNT]件</a><span>&nbsp;</span>
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=[SORT]&page=1&word3=入金済">入金済[NYUKIN_CNT]件</a><span>&nbsp;</span>
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=[SORT]&page=1&word3=キャンセル">キャンセル[CANCEL_CNT]件</a>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-12 col_vam">
+                                        <label>メーカー名</label> <input type="text" name="word2" value="[WORD2]"
+                                            class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-sm-4 col-xs-12">
+                                        <button
+                                            onclick="location.href='/m_chat2/?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&etc02=[NEXT_ID]'"
+                                            name="new" type="button" class="btn btn-block btn-info">新規スレッド作成</button>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-12">
+                                        <button name="submit" value="submit" type="submit"
+                                            class="btn btn-block btn-success">検索する</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                [PAGING]
+
+                <div id="main">
+
+                    <div class="box box-default">
+                        <div class="box-body">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <th></th>
+                                    <th>
+                                        [S-S_DATE]
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=1&page=1&word3=[WORD3]">日付</a>
+                                        [E-S_DATE]
+                                        [S-S_DATE_A]
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=2&page=1&word3=[WORD3]">日付▲</a>
+                                        [E-S_DATE_A]
+                                        [S-S_DATE_D]
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=1&page=1&word3=[WORD3]">日付▼</a>
+                                        [E-S_DATE_D]
+                                    </th>
+                                    <th>
+                                        [S-S_MATTER]
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=3&page=1&word3=[WORD3]">案件</a>
+                                        [E-S_MATTER]
+                                        [S-S_MATTER_A]
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=4&page=1&word3=[WORD3]">案件▲</a>
+                                        [E-S_MATTER_A]
+                                        [S-S_MATTER_D]
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=3&page=1&word3=[WORD3]">案件▼</a>
+                                        [E-S_MATTER_D]
+                                    </th>
+                                    <th>
+                                        [S-S_NAME]
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=5&page=1&word3=[WORD3]">メーカー</a>
+                                        [E-S_NAME]
+                                        [S-S_NAME_A]
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=6&page=1&word3=[WORD3]">メーカー▲</a>
+                                        [E-S_NAME_A]
+                                        [S-S_NAME_D]
+                                        <a
+                                            href="./?mode=list&word=[WORD]&mid1=[MID1]&mid2=[MID2]&sort=5&page=1&word3=[WORD3]">メーカー▼</a>
+                                        [E-S_NAME_D]
+                                    </th>
+                                    <th>メッセージ</th>
+                                    <th>状況</th>
+                                </thead>
+                                <tbody>
+                                    <meta LIST-START>
+                                    <tr>
+                                        <td>[STAR]</td>
+                                        <td>[NEWDATE]</td>
+                                        <td><a
+                                                href="/m_chat2/?mode=list&word=[AID]&mid1=[MID1]&mid2=[MID2]&etc02=[MSGID]">[TITLE]
+                                                [S-MIDOKU]<span class="item__badge">未読</span>[E-MIDOKU]</a></td>
+                                        <td><a href="/m_m1/?mode=disp&key=[M1KEY]">[M1NAME]</a></td>
+                                        <td>[COMMENT]</td>
+                                        <td>[STATUS]</td>
+                                    </tr>
+                                    <meta LIST-END>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                [PAGING]
+            </div>
+        </section>
+
+        <!--template=/common/template/flow.html-->
+
+        <!-- 以下共通 -->
+
+        <!--template=/common/template/footer.html-->
+    </div>
+</body>
+
+</html>

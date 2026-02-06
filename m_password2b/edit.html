@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>パスワード再設定｜WEBSITE-NAME</title>
+  <meta name="description"
+    content="M2_TITLEパスワード再設定のページ。WEBSITE-NAMEはM1_TITLEとM2_TITLEを結ぶ新たなマッチングサービスです。M1_TITLEが求めるM2_TITLEと、M2_TITLEが求めるM1_TITLE、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head2.html--><!-- 研究者側だけValidationを日本語化 -->
+  <!-- ogp -->
+  <meta property="og:type" content="article" />
+  <meta property="og:TITLE" content="パスワード再設定｜WEBSITE-NAME" />
+  <meta property="og:description"
+    content="パスワード再設定のページ。WEBSITE-NAMEはM1_TITLEとM2_TITLEを結ぶ新たなマッチングサービスです。M1_TITLEが求めるM2_TITLEと、M2_TITLEが求めるM1_TITLE、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--<meta property="og:image" content="[BASE_URL]/common/images/ogp-top.png">-->
+  <!--<meta property="og:image:alt" content="WEBSITE-NAMEの共有用画像">-->
+  <meta property="og:url" content="[BASE_URL]/login1/" />
+  <meta property="og:site_name" content="WEBSITE-NAME" />
+  <!-- facebook -->
+  <meta property="article:publisher" content="https://www.facebook.com/FB-URL/">
+  <meta property="fb:app_id" content="FB-APPID" />
+  <!-- twitter card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@TW-NAME" />
+
+  <!--バリデーション前処理 -->
+  <script>
+    function go_submit() {
+
+      // NOTE: go_submit()は、バリデーション前に実行したい内容を記載します。（バリデーションは書かない）
+
+      //set_hidden_postarlcode();
+
+      return true;
+    }
+  </script>
+
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">パスワード再設定</li>
+        </ol>
+      </div>
+    </div>
+
+    <section class="login">
+      <div class="l-container">
+        <div class="c-head c-head--center">
+          <p class="c-head__logo">
+            <a href="/"><img src="/common/images/logo.png" width="195" height="44" alt="WEBSITE-NAME" /></a>
+          </p>
+          <h2 class="c-head__ttl">パスワード再設定</h2>
+        </div>
+        <div class="form-box form__compact">
+          <form id="form1" name="form1" method="post" action="./" enctype="multipart/form-data" onsubmit="go_submit()">
+            <input type="hidden" name="mode" value="save">
+            <input type="hidden" name="email" value="[email]">
+            <input type="hidden" name="date" value="[date]">
+            <p>[ERRMSG]</p>
+            <div class="formset">
+              <!--<div class="formset__item">
+                <div class="formset__ttl">
+                  <label>旧パスワード</label>
+                </div>
+                <div class="formset__input">
+                  <input type="password" name="pass1" placeholder="●●●●●●●●●●" required data-jquery-validate-rule="password" />
+                </div>
+              </div>-->
+              <div class="formset__item">
+                <div class="formset__ttl">
+                  <label>パスワード</label>
+                </div>
+                <div class="formset__input">
+                  <input type="password" name="pass2" minlength="8" required id="textPassword" data-jquery-validate-rule="password" />
+                  <span class="fa fa-eye" data-show-pw="#textPassword"></span>
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">
+                  <label>パスワード<br>（確認用）</label>
+                </div>
+                <div class="formset__input">
+                  <input type="password" name="pass3" minlength="8" required id="textPassword2" data-jquery-validate-rule="password, equalTo: #textPassword" />
+                  <span class="fa fa-eye" data-show-pw="#textPassword2"></span>
+                </div>
+              </div>
+              <span style="color: red;display:inline-block;text-align:left;">
+                ※パスワードは8文字以上で、小文字(a-z)、大文字(A-Z)、数字(0-9)、特殊文字(-, *, &amp;, @)を含む必要があります。
+              </span>
+            </div>
+            <div class="btn formset__btn">
+              <button type="submit">送信</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

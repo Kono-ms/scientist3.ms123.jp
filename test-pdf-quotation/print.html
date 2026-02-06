@@ -1,0 +1,483 @@
+<html>
+<head>
+<!--NOTE: TCPDFは空要素で余白調整が必要です。必要な空要素を消さないようにご注意をお願いします。-->
+<style>
+	p {
+		padding: 0;
+		margin: 0;
+	}
+	ol, ul {
+		list-style: none;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+	li {
+		list-style: none;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+	}
+	img {}
+	.tableset {
+		/*font-family: 'KozGoPro-Medium-Acro', 'Kozuka Gothic Pro', Tahoma, Geneva, sans-serif;*/
+		font-family: 'GenShinGothic', 'GenShinGothic-Regular', Tahoma, Geneva, sans-serif;
+	}
+	.tableset__h2 {
+		text-align: center;
+		font-weight: bold;
+		font-size: 1.5em;
+		line-height: 1;
+	}
+	.tableset__hr {
+		line-height: 0.1;
+	}
+	.header__cell-title-01 {
+		width: 16.66%;
+	}
+	.header__cell-title-02 {
+		width: 66.66%;
+	}
+	.header__cell-title-03 {
+		width: 16.66%;
+	}
+
+	/* NOTE: 日本語と英語ではサイズが異なるので注意（流用ができない） */
+	.header__cell-01 {
+		font-size: 0.75em;
+		width: 8.33%;
+	}
+	.header__cell-02 {
+		font-size: 0.75em;
+		width: 62%;
+	}
+	.header__cell-03 {
+		font-size: 0.75em;
+		width: 0.5%;
+	}
+	.header__cell-04 {
+		font-size: 0.75em;
+		width: 16.66%;
+	}
+	.header__cell-05 {
+		font-size: 0.75em;
+		width: 12.5%;
+	}
+
+	/* NOTE: 日本語と英語ではサイズが異なるので注意（流用ができない） */
+	.s3-info__cell-02 {
+		font-size: 0.75em;
+		width: 32%;
+	}
+	.s3-info__cell-03 {
+		font-size: 0.75em;
+		width: 2%;
+	}
+	.s3-info__cell-04 {
+		font-size: 0.75em;
+		width: 32%;
+	}
+	.s3-info__cell-05 {
+		font-size: 0.75em;
+		width: 2%;
+	}
+	.s3-info__cell-06 {
+		font-size: 0.75em;
+		width: 32%;
+	}
+
+	.s3-info__cell-title {
+		line-height: 1.5;
+	}
+	.s3-info__cell-text {
+		line-height: 1.25;
+	}
+	.s3-info__cell-border {
+		line-height: 0.1;
+	}
+	.s3-info__cell-margin-block {
+		line-height: 0.2;
+	}
+
+	/* NOTE:  */
+	.item-table {
+		/* NOTE: 0.75em以上大きくすると多くの場合2ページになる */
+		font-size: 0.75em;
+	}
+	.item-header {
+		/* NOTE: 0.75em以上大きくすると多くの場合2ページになる */
+		font-size: 0.75em;
+	}
+	.item-table__cell-01 {
+		width: 40%;
+	}
+	.item-table__cell-02 {
+		width: 20%;
+	}
+	.item-table__cell-03 {
+		width: 20%;
+	}
+	.item-table__cell-04 {
+		width: 20%;
+	}
+
+	/* NOTE:  */
+	.calc-table {
+		/* NOTE: 0.75em以上大きくすると多くの場合2ページになる */
+		font-size: 0.75em;
+	}
+	.calc-table__cell-01 {
+		font-weight: bold;
+		width: 20%;
+	}
+	.calc-table__cell-02 {
+		width: 80%;
+	}
+</style>
+</head>
+
+<body>
+
+<!--<img src="/common/images/logo-s3-xl.png" alt="">-->
+<!--<img src="/common/images/logo-s3-bg.png" alt="">-->
+
+<table cellspacing="0" cellpadding="0" border="0" summary="header">
+	<tbody>
+		<tr>
+			<td class="tableset__h2 header__cell-title-01"></td>
+			<td class="tableset__h2 header__cell-title-02"></td>
+			<td class="tableset__h2 header__cell-title-03"></td>
+		</tr>
+		<tr>
+			<td class="tableset__h2 header__cell-title-01"><img src="/common/images/logo-s3-xl.png" alt=""></td>
+			<td class="tableset__h2 header__cell-title-02">見積書</td>
+			<td class="tableset__h2 header__cell-title-03"></td>
+		</tr>
+		<tr>
+			<td colspan="3" bgcolor="#D66B01" class="tableset__hr"></td><!--border-bottom-->
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="0" border="0" summary="header">
+	<tbody>
+		<tr>
+			<td colspan="5"></td><!--margin-bottom-->
+		</tr>
+		<tr>
+			<td class="header__cell-01"></td>
+			<td class="header__cell-02"></td>
+			<td class="header__cell-03"></td>
+			<td class="header__cell-04">見積番号:</td>
+			<td class="header__cell-05">XXXXXXXXXX</td>
+		</tr>
+		<tr>
+			<td class="header__cell-01">案件名:</td>
+			<td class="header__cell-02">XXXXXX</td>
+			<td class="header__cell-03"></td>
+			<td class="header__cell-04">見積日:</td>
+			<td class="header__cell-05">2023/6/12</td>
+		</tr>
+		<tr>
+			<td class="header__cell-01">試験番号:</td>
+			<td class="header__cell-02">XXXXX</td>
+			<td class="header__cell-03"></td>
+			<td class="header__cell-04">有効期限:</td>
+			<td class="header__cell-05">2023/7/12</td>
+		</tr>
+		<tr>
+			<td class="header__cell-01"></td>
+			<td class="header__cell-02"></td>
+			<td class="header__cell-03"></td>
+			<td class="header__cell-04">Scientist3管理番号:</td>
+			<td class="header__cell-05">XXXXXXXXXX</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<table cellspacing="0" cellpadding="0" border="0" summary="s3-info">
+	<tbody>
+		<tr>
+			<td class="s3-info__cell-02"></td>
+			<td class="s3-info__cell-03"></td>
+			<td class="s3-info__cell-04"></td>
+			<td class="s3-info__cell-05"></td>
+			<td class="s3-info__cell-06"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-02 s3-info__cell-title">研究者会社名</td>
+			<td class="s3-info__cell-03 s3-info__cell-title"></td>
+			<td class="s3-info__cell-04 s3-info__cell-title">再委託先:</td>
+			<td class="s3-info__cell-05 s3-info__cell-title"></td>
+			<td class="s3-info__cell-06 s3-info__cell-title">コスモ・バイオ株式会社</td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-02 s3-info__cell-border" bgcolor="#aa2c27"></td>
+			<td class="s3-info__cell-03 s3-info__cell-border"></td>
+			<td class="s3-info__cell-04 s3-info__cell-border" bgcolor="#D66B01"></td>
+			<td class="s3-info__cell-05 s3-info__cell-border"></td>
+			<td class="s3-info__cell-06 s3-info__cell-border" bgcolor="#ccc"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-02 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-03 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-04 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-05 s3-info__cell-margin-block"></td>
+			<td class="s3-info__cell-06 s3-info__cell-margin-block"></td>
+		</tr>
+		<tr>
+			<td class="s3-info__cell-02 s3-info__cell-text">研究者名が入ります</td>
+			<td class="s3-info__cell-03 s3-info__cell-text"></td>
+			<td class="s3-info__cell-04 s3-info__cell-text">再委託先住所が入ります</td>
+			<td class="s3-info__cell-05 s3-info__cell-text"></td>
+			<td class="s3-info__cell-06 s3-info__cell-text">〒135-0016 東京都江東区東陽2-2-20<br>TEL:03-5632-9615 / FAX:03-5632-9614</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<!--Start item-->
+<table cellspacing="0" cellpadding="0" border="0" summary="item-header" class="item-header">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+		<tr>
+			<td>１</td>
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="item-body" class="item-table">
+	<tbody>
+		<tr>
+			<td class="item-table__cell-01">品番:</td>
+			<td class="item-table__cell-02">数量:</td>
+			<td class="item-table__cell-03">単価:</td>
+			<td class="item-table__cell-04">合計:</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				詳細:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				備考:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				支払い条件: ご注文時に前払いの請求書を発行いたします。
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!--End item-->
+
+<!--Start item-->
+<table cellspacing="0" cellpadding="0" border="0" summary="item-header" class="item-header">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+		<tr>
+			<td>2</td>
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="item-body" class="item-table">
+	<tbody>
+		<tr>
+			<td class="item-table__cell-01">品番:</td>
+			<td class="item-table__cell-02">数量:</td>
+			<td class="item-table__cell-03">単価:</td>
+			<td class="item-table__cell-04">合計:</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				詳細:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				備考:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				支払い条件: ご注文時に前払いの請求書を発行いたします。
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!--End item-->
+
+<!--Start item-->
+<table cellspacing="0" cellpadding="0" border="0" summary="item-header" class="item-header">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+		<tr>
+			<td>3</td>
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="item-body" class="item-table">
+	<tbody>
+		<tr>
+			<td class="item-table__cell-01">品番:</td>
+			<td class="item-table__cell-02">数量:</td>
+			<td class="item-table__cell-03">単価:</td>
+			<td class="item-table__cell-04">合計:</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				詳細:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				備考:<br>
+				hoge text hoge text hoge text 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">
+				支払い条件: ご注文時に前払いの請求書を発行いたします。
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!--End item-->
+
+
+<!--Start special item-->
+<table cellspacing="0" cellpadding="0" border="0" summary="item-header" class="item-header">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="special" class="item-table">
+	<tbody>
+		<tr>
+			<td>
+				特記事項:<br>
+				特記事項が入ります
+			</td>
+		</tr>
+	</tbody>
+</table>
+<!--End special item-->
+
+
+<!--Start calc-->
+<table cellspacing="0" cellpadding="0" border="0" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+		<tr>
+			<td>サービス費用</td>
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td class="calc-table__cell-01">特別値引き</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+		<tr>
+			<td class="calc-table__cell-01">小計</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+		<tr>
+			<td class="calc-table__cell-01">税率</td>
+			<td class="calc-table__cell-02">10%</td>
+		</tr>
+		<tr>
+			<td class="calc-table__cell-01">消費税</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+	</tbody>
+</table>
+
+<table cellspacing="0" cellpadding="0" border="0" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+		<tr>
+			<td>手数料</td>
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td class="calc-table__cell-01">PF手数料</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+		<tr>
+			<td class="calc-table__cell-01">輸入代行費用</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+		<tr>
+			<td class="calc-table__cell-01">輸出代行費用</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+		<tr>
+			<td class="calc-table__cell-01">特別値引き</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+		<tr>
+			<td class="calc-table__cell-01">小計</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+	</tbody>
+</table>
+
+<table cellspacing="0" cellpadding="0" border="0" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td class="calc-table__cell-01">消費税</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+	</tbody>
+</table>
+
+<table cellspacing="0" cellpadding="0" border="0" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td></td><!--margin-top-->
+		</tr>
+	</tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="calc" class="calc-table">
+	<tbody>
+		<tr>
+			<td class="calc-table__cell-01">合計金額</td>
+			<td class="calc-table__cell-02"></td>
+		</tr>
+	</tbody>
+</table>
+<!--End calc-->
+
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+.page-header{ font-size:22px; }
+
+.main-header .navbar .nav > li > a > .label{ font-size:9px; }
+.main-header .logo{ font-size:20px; }
+
+.content-header > h1{ font-size:24px; }
+.content-header > h1 > small{ font-size:15px; }
+.content-header > .breadcrumb{ font-size:12px; }
+
+.user-panel > .info > a{ font-size:11px; }
+
+.sidebar-menu li.header{ font-size:12px; }
+.sidebar-menu .treeview-menu > li > a{ font-size:14px; }
+
+.sidebar-mini.sidebar-collapse .main-header .logo > .logo-mini{ font-size:17px; }
+
+.nav-tabs.control-sidebar-tabs > li > a .icon{ font-size:16px; }
+
+.control-sidebar-heading{ font-size:16px; }
+.control-sidebar-subheading{ font-size:14px; }
+
+.control-sidebar-menu .menu-info > p{ font-size:11px; }
+
+
+.navbar-nav > .notifications-menu > .dropdown-menu > li.header,.navbar-nav > .messages-menu > .dropdown-menu > li.header,.navbar-nav > .tasks-menu > .dropdown-menu > li.header{ font-size:14px; }
+.navbar-nav > .notifications-menu > .dropdown-menu > li.footer > a,.navbar-nav > .messages-menu > .dropdown-menu > li.footer > a,.navbar-nav > .tasks-menu > .dropdown-menu > li.footer > a{ font-size:12px; }
+
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > h4{ font-size:15px; }
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > h4 > small{ font-size:10px; }
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > p{ font-size:12px; }
+.navbar-nav > .tasks-menu > .dropdown-menu > li .menu > li > a > h3{ font-size:14px; }
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > p{ font-size:17px; }
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > p > small{ font-size:12px; }
+
+.small-box h3{ font-size:38px; }
+.small-box p{ font-size:15px; }
+.small-box p > small{ font-size:13px; }
+.small-box .icon{ font-size:90px; }
+.small-box:hover .icon{ font-size:95px; }
+
+@media (max-width: 767px) {
+	.small-box p{ font-size:12px; }
+}
+
+.box .knob-label{ font-size:12px; }
+.box .overlay > .fa,.overlay-wrapper .overlay > .fa{ font-size:30px; }
+.box-header > .fa,.box-header > .glyphicon,.box-header > .ion,.box-header .box-title{ font-size:17px; }
+
+.btn-box-tool{ font-size:12px; }
+
+.box-comments .text-muted{ font-size:12px; }
+
+.todo-list > li .label{ font-size:9px; }
+
+
+.chat .item > .attachment > h4{ font-size:14px; }
+.chat .item > .attachment > p,.chat .item > .attachment > .filename{ font-size:13px; }
+
+.info-box small{ font-size:14px; }
+.info-box-icon{ font-size:45px; }
+.info-box-number{ font-size:18px; }
+.progress-description,.info-box-text{ font-size:14px; }
+
+.timeline > li > .timeitem > .time{ font-size:12px; }
+.timeline > li > .timeitem > .timeheader{ font-size:16px; }
+.timeline > li > .fa,.timeline > li > .glyphicon,.timeline > li > .ion{ font-size:15px; }
+
+.btn.btn-file > input[type='file']{ font-size:100px; }
+
+
+.btn-app{ font-size:12px; }
+.btn-app > .fa,.btn-app > .glyphicon,.btn-app > .ion{ font-size:20px; }
+.btn-app > .badge{ font-size:10px; }
+
+.nav-tabs-custom > .nav-tabs > li.header{ font-size:20px; }
+
+.direct-chat-info{ font-size:12px; }
+
+.contacts-list-status{ font-size:12px; }
+
+
+.users-list-date{ font-size:12px; }
+
+.carousel-control > .fa{ font-size:40px; }
+
+.widget-user .widget-user-username{ font-size:25px; }
+.widget-user-2 .widget-user-username{ font-size:25px; }
+
+.mailbox-read-info h3{ font-size:20px; }
+.mailbox-read-time{ font-size:13px; }
+.mailbox-attachment-size{ font-size:12px; }
+.mailbox-attachment-icon{ font-size:65px; }
+
+.lockscreen-logo{ font-size:35px; }
+
+.login-logo,.register-logo{ font-size:35px; }
+
+.error-page > .headline{ font-size:100px; }
+
+.error-page > .error-content > h3{ font-size:25px; }
+
+.profile-username{ font-size:21px; }
+
+.btn-social > :first-child{ font-size:1.6em; }
+
+.btn-social.btn-lg > :first-child{ font-size:1.8em; }
+.btn-social.btn-sm > :first-child{ font-size:1.4em; }
+.btn-social.btn-xs > :first-child{ font-size:1.2em; }
+
+.btn-social-icon > :first-child{ font-size:1.6em; }
+.btn-social-icon.btn-lg > :first-child{ font-size:1.8em; }
+.btn-social-icon.btn-sm > :first-child{ font-size:1.4em; }
+.btn-social-icon.btn-xs > :first-child{ font-size:1.2em; }
+
+
+.fc-header-title h2{ font-size:15px; }
+
+.fc-day-number{ font-size:20px; }
+.fc-color-picker > li{ font-size:30px; }
+
+
+.description-block > .description-header{ font-size:16px; }
+
+.text-sm{ font-size:12px; }
+
+.description-block .description-icon{ font-size:16px; }
+.list-header{ font-size:15px; }
+
+.user-block .username{ font-size:16px; }
+.user-block .description{ font-size:13px; }
+.user-block.user-block-sm .username{ font-size:14px; }
+
+

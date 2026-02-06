@@ -1,0 +1,38 @@
+<div class="result-supplier__item">
+
+
+
+  <!--<div class="result-supplier__img"> <a href="/m_search2/?mode=disp&key=[D-O1-ID]"><img src="[D-O1-O1_DFIL01]" alt=""></a></div>-->
+  <div class="result-supplier__desc">
+    <!-- <input type="checkbox" name="chk[]" value="[D-M1-ID]" style="display: block;" /> -->
+    [S-POINT]
+    <!--<div class="result-supplier__rate">マッチ率<span class="result-supplier__point">[POINT]%</span></div>-->
+    [E-POINT]
+    <div class="result-supplier__name">
+      <label>
+        <!-- <input type="checkbox" name="result-supplier__checkbox" /> -->
+        <input type="checkbox" class="chk" name="chk[]" value="[D-M1-ID]" onchange="find_checked('chk');" />
+      </label><!--<img class="result-supplier__logo" src="[D-M1-M1_DFIL02]" alt="[D-M1-M1_DVAL01]">--><!--企業ロゴ-->
+      <p><a href="[D-M1-M1_DVAL14]" target="_blank">[D-M1-M1_DVAL01]</a></p><!--会社名-->
+
+
+      <!--<a class="result-supplier__websiteLink" href="[D-M1-M1_DVAL14]" target="_blank">Webサイトを見る</a>-->
+      <p style="word-break:break-all;max-width:500px;">[D-M1-M1_DTXT03]</p><!--Short Description-->
+    </div>
+    <!--<h3 class="result-supplier__ttl"><a href="/m_search2/?mode=disp&key=[D-O1-ID]">[D-O1-O1_DVAL01]</a></h3>-->
+    <!--<span class="result-supplier__eval">評価：[D-O1_EVAL_AVG]</span>-->
+    <!-- <p class="result-supplier__txt">[D-O1-O1_DTXT01]</p> -->
+    <div class="result-supplier__txt--more"><a href="/m_search2/?mode=disp&key=[D-M1-ID]">もっと見る</a>
+    </div>
+    <!--
+    <div class="result-supplier__btnArea"><a class="result-supplier__btn"
+        href="/m_contact2/?type=問い合わせ&mode=new&m1_id=[D-M1-ID]">お問い合わせ</a></div>
+    -->
+    <div class="result-supplier__btnArea" style="display:flex;">
+      <a class="result-supplier__btn"
+        href="/m_contact2/?type=問い合わせ&mode=new&m1_id=[D-M1-ID]&word=[WORD3]&word2=[WORD2]">お問い合わせ</a>
+      <a class="result-supplier__btn"
+        href="/m_contact2/?type=見積り依頼&mode=new&m1_id=[D-M1-ID]&word=[WORD3]&word2=[WORD2]">見積り依頼</a>
+    </div>
+  </div>
+</div>

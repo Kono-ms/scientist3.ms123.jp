@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Supplier Basic Information｜Scientist3</title>
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/icon-192x192.png">
+    <!--template=/common/template/head.html-->
+    <style>
+        .tab_btn {
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .crawlbtn {
+            color: palevioletred;
+        }
+
+        .formset__input{
+            word-break: break-all
+        }
+    </style>
+    <script>
+        var website_cnt = 1;
+        var bill_cnt = 1;
+        var ship_cnt = 1;
+        var popup_flg = '[POPUP_FLG]';
+        $(function () {
+
+            if (popup_flg == '1') {
+                $('#modal_pop-up').click();
+            }
+
+            //SHIP TOのところに「Enter same information as BILL TO」のボタンを設置して、押すとBILL TOに入力した内容が反映されるようにしたい。
+            $("#shiptobtn1").click(function () {
+                $("[name=M1_DTXT25]").val($("[name=M1_DTXT24]").val());
+                $("[name=M1_DTXT28]").val($("[name=M1_DTXT12]").val());
+                $("[name=M1_ETC10]").val($("[name=M1_DTXT15]").val());
+                $("[name=M1_ETC21]").val($("[name=M1_DTXT18]").val());
+                $("[name=M1_ETC24]").val($("[name=M1_DTXT21]").val());
+                $("[name=M1_DSEL07]").val($("[name=M1_DSEL04]").val().replace('M1_DSEL04:', 'M1_DSEL07:'));
+
+                $("[name=M1_DTXT26]").val($("[name=M1_DTXT10]").val());
+                $("[name=M1_DTXT29]").val($("[name=M1_DTXT13]").val());
+                $("[name=M1_ETC11]").val($("[name=M1_DTXT16]").val());
+                $("[name=M1_ETC22]").val($("[name=M1_DTXT19]").val());
+                $("[name=M1_ETC25]").val($("[name=M1_DTXT22]").val());
+                $("[name=M1_DSEL08]").val($("[name=M1_DSEL05]").val().replace('M1_DSEL05:', 'M1_DSEL08:'));
+
+                $("[name=M1_DTXT27]").val($("[name=M1_DTXT11]").val());
+                $("[name=M1_DTXT30]").val($("[name=M1_DTXT14]").val());
+                $("[name=M1_ETC12]").val($("[name=M1_DTXT17]").val());
+                $("[name=M1_ETC23]").val($("[name=M1_DTXT20]").val());
+                $("[name=M1_ETC26]").val($("[name=M1_DTXT23]").val());
+                $("[name=M1_DSEL09]").val($("[name=M1_DSEL06]").val().replace('M1_DSEL06:', 'M1_DSEL09:'));
+
+            });
+
+
+            // history.back時にスクロールさせない
+            if ('scrollRestoration' in window.history) {
+                window.history.scrollRestoration = 'manual';
+            }
+
+            /*
+            let param = '[PARAM]';
+            filedCtl(param);
+            */
+
+            // add button
+            $('#addbtn1a').click(function () {
+                $(this).addClass('is--active');
+                $("#billto1").css('display', '');
+            });
+            $('#addbtn2a').click(function () {
+                $(this).addClass('is--active');
+                $("#billto2").css('display', '');
+            });
+            $('#addbtn1b').click(function () {
+                $(this).addClass('is--active');
+                $("#shipto1").css('display', '');
+            });
+            $('#addbtn2b').click(function () {
+                $(this).addClass('is--active');
+                $("#shipto2").css('display', '');
+            });
+
+            // informationのService Website
+            $('#addbtnSW1a').click(function () {
+                let nextid = $(this).data("id");
+                $(this).addClass('is--active');
+                $("#" + nextid).css('display', '');
+                let nextid2 = $(this).data("id2");
+                $("#" + nextid2).css('display', '');
+            });
+            $('#addbtnSW2a').click(function () {
+                let nextid = $(this).data("id");
+                $(this).addClass('is--active');
+                $("#" + nextid).css('display', '');
+                let nextid2 = $(this).data("id2");
+                $("#" + nextid2).css('display', '');
+            });
+            $('#addbtnSW3a').click(function () {
+                let nextid = $(this).data("id");
+                $(this).addClass('is--active');
+                $("#" + nextid).css('display', '');
+                let nextid2 = $(this).data("id2");
+                $("#" + nextid2).css('display', '');
+            });
+            $('#addbtnSW4a').click(function () {
+                let nextid = $(this).data("id");
+                $(this).addClass('is--active');
+                $("#" + nextid).css('display', '');
+                let nextid2 = $(this).data("id2");
+                $("#" + nextid2).css('display', '');
+            });
+
+            // Service website add & delete
+            $('#add_website').on('click', function () {
+                if (website_cnt == 1) {
+                    $("#M1_ETC27").css('display', '');
+                    $("#M1_ETC92").css('display', '');
+                    website_cnt = 2;
+                    $('#delete_website').css('display', '');
+                }
+                else if (website_cnt == 2) {
+                    $("#M1_ETC28").css('display', '');
+                    $("#M1_ETC93").css('display', '');
+                    website_cnt = 3;
+                }
+                else if (website_cnt == 3) {
+                    $("#M1_ETC29").css('display', '');
+                    $("#M1_ETC94").css('display', '');
+                    website_cnt = 4;
+                }
+                else if (website_cnt == 4) {
+                    $("#M1_ETC30").css('display', '');
+                    $("#M1_ETC95").css('display', '');
+                    website_cnt = 5;
+                    $('#add_website').css('display', 'none');
+                }
+            });
+            $('#delete_website').on('click', function () {
+                if (website_cnt == 2) {
+                    $("#M1_ETC27").css('display', 'none');
+                    $("#M1_ETC92").css('display', 'none');
+                    website_cnt = 1;
+                    $('#delete_website').css('display', 'none');
+                }
+                else if (website_cnt == 3) {
+                    $("#M1_ETC28").css('display', 'none');
+                    $("#M1_ETC93").css('display', 'none');
+                    website_cnt = 2;
+                }
+                else if (website_cnt == 4) {
+                    $("#M1_ETC29").css('display', 'none');
+                    $("#M1_ETC94").css('display', 'none');
+                    website_cnt = 3;
+                }
+                else if (website_cnt == 5) {
+                    $("#M1_ETC30").css('display', 'none');
+                    $("#M1_ETC95").css('display', 'none');
+                    website_cnt = 4;
+                    $('#add_website').css('display', '');
+                }
+            });
+            if ($('[name=M1_ETC27]').val() != '') {
+                $('#add_website').click();
+            }
+            if ($('[name=M1_ETC28]').val() != '') {
+                $('#add_website').click();
+            }
+            if ($('[name=M1_ETC29]').val() != '') {
+                $('#add_website').click();
+            }
+            if ($('[name=M1_ETC30]').val() != '') {
+                $('#add_website').click();
+            }
+
+            // BILL TO add & delete
+            $('#add_bill').on('click', function () {
+                if (bill_cnt == 1) {
+                    $("#billto1").css('display', '');
+                    bill_cnt = 2;
+                    $('#delete_bill').css('display', '');
+                }
+                else if (bill_cnt == 2) {
+                    $("#billto2").css('display', '');
+                    bill_cnt = 3;
+                    $('#add_bill').css('display', 'none');
+                }
+            });
+            $('#delete_bill').on('click', function () {
+                if (bill_cnt == 2) {
+                    $("#billto1").css('display', 'none');
+                    bill_cnt = 1;
+                    $('#delete_bill').css('display', 'none');
+                }
+                else if (bill_cnt == 3) {
+                    $("#billto2").css('display', 'none');
+                    bill_cnt = 2;
+                    $('#add_bill').css('display', '');
+                }
+            });
+            if ($('[name=M1_DTXT10]').val() != '') {
+                $('#add_bill').click();
+            }
+            if ($('[name=M1_DTXT11]').val() != '') {
+                $('#add_bill').click();
+            }
+
+            // SHIP TO add & delete
+            $('#add_ship').on('click', function () {
+                if (ship_cnt == 1) {
+                    $("#shipto1").css('display', '');
+                    ship_cnt = 2;
+                    $('#delete_ship').css('display', '');
+                }
+                else if (ship_cnt == 2) {
+                    $("#shipto2").css('display', '');
+                    ship_cnt = 3;
+                    $('#add_ship').css('display', 'none');
+                }
+            });
+            $('#delete_ship').on('click', function () {
+                if (ship_cnt == 2) {
+                    $("#shipto1").css('display', 'none');
+                    ship_cnt = 1;
+                    $('#delete_ship').css('display', 'none');
+                }
+                else if (ship_cnt == 3) {
+                    $("#shipto2").css('display', 'none');
+                    ship_cnt = 2;
+                    $('#add_ship').css('display', '');
+                }
+            });
+            if ($('[name=M1_DTXT26]').val() != '') {
+                $('#add_ship').click();
+            }
+            if ($('[name=M1_DTXT27]').val() != '') {
+                $('#add_ship').click();
+            }
+
+
+            // Billing Address add & delete
+            $('#add_address').on('click', function () {
+                if (address_cnt == 1) {
+                    $("#billing_address_2").css('display', '');
+                    address_cnt = 2;
+                    $('#delete_address').css('display', '');
+                }
+                else if (address_cnt == 2) {
+                    $("#billing_address_3").css('display', '');
+                    address_cnt = 3;
+                    $('#add_address').css('display', 'none');
+                }
+            });
+            $('#delete_address').on('click', function () {
+                if (address_cnt == 2) {
+                    $("#billing_address_2").css('display', 'none');
+                    address_cnt = 1;
+                    $('#delete_address').css('display', 'none');
+                }
+                else if (address_cnt == 3) {
+                    $("#billing_address_3").css('display', 'none');
+                    address_cnt = 2;
+                    $('#add_address').css('display', '');
+                }
+            });
+            if ($('[name=M1_ETC106]').val() != '') {
+                $('#add_address').click();
+            }
+            if ($('[name=M1_ETC115]').val() != '') {
+                $('#add_address').click();
+            }
+
+
+
+            // $('#M1_ETC08').blur(function () {
+            //     $('#url').val($('#M1_ETC08').val());
+            // });
+            $('.crawlbtn').click(function () {
+
+                if (confirm('クロールしてよろしいですか？\nURLを保存しているか確認してください。')) {
+                    $('#crawl_form').submit();
+                }
+            });
+
+            $('.tab_btn').click(function () {
+                let param = $(this).val();
+                filedCtl(param);
+            });
+
+            function filedCtl(param) {
+                $("#Company_information").css('display', 'none');
+                $("#Banking_details").css('display', 'none');
+                $("#Agreements").css('display', 'none');
+                $("#Agreements2").css('display', 'none');
+                $("#Signature").css('display', 'none');
+                $("#Commercial_Due_Dilig").css('display', 'none');
+                $("#File10").css('display', 'none');
+                try {
+
+                    switch (param) {
+                        case "Company_information":
+                            $("#Company_information").css('display', '');
+                            $("#Company_information").parent.addClass("active")
+                            break;
+                        case "Banking_details":
+                            $("#Banking_details").css('display', '');
+                            break;
+                        case "Agreements":
+                            $("#Agreements").css('display', '');
+                            break;
+                        case "Signature":
+                            $("#Signature").css('display', '');
+                            break;
+                        case "Commercial_Due_Dilig":
+                            $("#Commercial_Due_Dilig").css('display', '');
+                            break;
+                        case "File10":
+                            $("#File10").css('display', '');
+                            break;
+                        default:
+                            $("#Company_information").css('display', '');
+                            break;
+                    }
+                } catch (e) {
+
+                }
+            }
+        });
+
+    </script>
+</head>
+
+<body>
+    <div class="wrap sub">
+        <!--template=/common/template/header.html-->
+
+        <!-- 以上共通 -->
+        <div class="breadcrumb">
+            <div class="l-container">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a href="/about2/">Top</a></li>
+                    <li class="breadcrumb__item">Supplier Basic Information</li>
+                </ol>
+            </div>
+        </div>
+        <section class="subpage-head">
+            <div class="l-container">
+                <div class="c-head">
+                    <h1 class="c-head__ttl">Confirmation</h1>
+                    [S-HON_REGIST]
+                    <p class="c-head__txt">Edit the supplier profile.</p>
+                    [E-HON_REGIST]
+                </div>
+            </div>
+        </section>
+        <section class="innerTab">
+            <div class="l-container">
+                <ul class="innerTab-flex">
+                    <!-- <li class="innerTab__item">[S-STANDARD]<a href="/m_message1/" class="active">Opportunity List</a>[S-MIDOKU]<span class="item__badge">[MIDOKU]</span>[E-MIDOKU][E-STANDARD]</li> -->
+                    <!--template=/common/template/m1tab1.html-->
+                </ul>
+            </div>
+        </section>
+        <section class="innerTab">
+            <div class="l-container">
+                <ul class="innerTab-flex">
+                    <!--template=/common/template/m1tab2.html-->
+                </ul>
+            </div>
+        </section>
+        <section class="edit">
+            <div class="l-container">
+                <div class="c-head">
+                    <h1 class="c-head__ttl">Confirmation</h1>
+                    <!--
+                    [S-KARI_REGIST]
+                    <p class="c-head__txt">
+                        You are now provisionally registered.
+                        To start making transactions, you need to complete the main registration.<br>
+                        Enter the following information to start the screening process.
+                    </p>
+                    [E-KARI_REGIST]
+                    [S-SHINSA_REGIST]
+                    <p class="c-head__txt">
+                        The review is currently in progress. Please wait until the review is complete.
+                    </p>
+                    [E-SHINSA_REGIST]
+                    [S-HON_REGIST]
+                    <p class="c-head__txt">Edit the supplier profile.</p>
+                    [E-HON_REGIST]
+                    -->
+                </div>
+                [S-ERR]
+                <div class="error_01">
+                    <div class="head_01">
+                        <div class="right">
+                            <div class="box">&nbsp;</div>
+                        </div>
+                        <div class="left">&nbsp;</div>
+                    </div>
+                    <div class="body">
+                        <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" style="width:203px;height:28px;"
+                                alt="入力内容に不備があります。" />
+                        </p>
+                        <p class="mLft10">[ERRMSG]</p>
+                    </div>
+                    <div class="foot_01">
+                        <div class="right">
+                            <div class="box">&nbsp;</div>
+                        </div>
+                        <div class="left">&nbsp;</div>
+                    </div>
+                </div>
+                [E-ERR]
+                <form method="post" id="form1" action="./" enctype="multipart/form-data">
+                    <input type="hidden" id="mode" name="mode" value="save">
+                    <input type="hidden" id="btnmode" name="btnmode" value="draft">
+
+                    <input type="hidden" name="key" value="[ID]">
+                    <input type="hidden" name="sort" value="[SORT]">
+                    <input type="hidden" name="word" value="[WORD]">
+                    <input type="hidden" name="page" value="[PAGE]">
+                    <input type="hidden" name="lid" value="[LID]">
+                    <input type="hidden" name="token" value="[TOKEN]">
+                    <input type="hidden" name="param" value="[PARAM]">
+                    <input type="hidden" name="ID" value="[ID]">
+                    <input type="hidden" name="MID" value="[MID]">
+                    <input type="hidden" name="EMAIL" value="[EMAIL]">
+                    <input type="hidden" name="PASS" value="[PASS]">
+                    <input type="hidden" name="SOCIALID" value="[SOCIALID]">
+
+                    <input type="hidden" name="M1_DVAL04" value="[M1_DVAL04]">
+                    <input type="hidden" name="M1_DVAL05" value="[M1_DVAL05]">
+                    <!-- <input type="hidden" name="M1_DVAL06" value="[M1_DVAL06]"> -->
+                    <!-- <input type="hidden" name="M1_DVAL07" value="[M1_DVAL07]"> -->
+                    <input type="hidden" name="M1_DVAL08" value="[M1_DVAL08]">
+                    <input type="hidden" name="M1_DVAL09" value="[M1_DVAL09]">
+                    <input type="hidden" name="M1_DVAL10" value="[M1_DVAL10]">
+                    <input type="hidden" name="M1_DTXT01" value="[M1_DTXT01]">
+                    <input type="hidden" name="M1_DTXT02" value="[M1_DTXT02]">
+
+                    <input type="hidden" name="M1_DTXT07" value="[M1_DTXT07]">
+                    <input type="hidden" name="M1_DTXT08" value="[M1_DTXT08]">
+                    <input type="hidden" name="M1_DTXT09" value="[M1_DTXT09]">
+                    <!-- <input type="hidden" name="M1_DTXT10" value="[M1_DTXT10]"> -->
+                    <input type="hidden" name="M1_DSEL01" value="[M1_DSEL01]">
+                    <input type="hidden" name="M1_DSEL02" value="[M1_DSEL02]">
+                    <input type="hidden" name="M1_DSEL03" value="[M1_DSEL03]">
+                    <!-- <input type="hidden" name="M1_DSEL04" value="[M1_DSEL04]">
+                    <input type="hidden" name="M1_DSEL05" value="[M1_DSEL05]">
+                    <input type="hidden" name="M1_DSEL06" value="[M1_DSEL06]"> -->
+                    <!-- <input type="hidden" name="M1_DSEL07" value="[M1_DSEL07]">
+                    <input type="hidden" name="M1_DSEL08" value="[M1_DSEL08]">
+                    <input type="hidden" name="M1_DSEL09" value="[M1_DSEL09]"> -->
+                    <input type="hidden" name="M1_DSEL10" value="[M1_DSEL10]">
+                    <input type="hidden" name="M1_DRDO01" value="[M1_DRDO01]">
+                    <input type="hidden" name="M1_DRDO02" value="[M1_DRDO02]">
+                    <input type="hidden" name="M1_DRDO03" value="[M1_DRDO03]">
+                    <input type="hidden" name="M1_DRDO04" value="[M1_DRDO04]">
+                    <input type="hidden" name="M1_DRDO05" value="[M1_DRDO05]">
+                    <input type="hidden" name="M1_DRDO06" value="[M1_DRDO06]">
+                    <input type="hidden" name="M1_DRDO07" value="[M1_DRDO07]">
+                    <input type="hidden" name="M1_DRDO08" value="[M1_DRDO08]">
+                    <input type="hidden" name="M1_DRDO09" value="[M1_DRDO09]">
+                    <input type="hidden" name="M1_DRDO10" value="[M1_DRDO10]">
+                    <input type="hidden" name="M1_DCHK01[]" value="[M1_DCHK01]">
+                    <input type="hidden" name="M1_DCHK02" value="[M1_DCHK02]">
+                    <input type="hidden" name="M1_DCHK03" value="[M1_DCHK03]">
+                    <input type="hidden" name="M1_DCHK04" value="[M1_DCHK04]">
+                    <input type="hidden" name="M1_DCHK05" value="[M1_DCHK05]">
+                    <input type="hidden" name="M1_DCHK06" value="[M1_DCHK06]">
+                    <input type="hidden" name="M1_DCHK07" value="[M1_DCHK07]">
+                    <input type="hidden" name="M1_DCHK08" value="[M1_DCHK08]">
+                    <input type="hidden" name="M1_DCHK09" value="[M1_DCHK09]">
+                    <input type="hidden" name="M1_DCHK10" value="[M1_DCHK10]">
+                    <input type="hidden" name="M1_DFIL01" value="[M1_DFIL01]">
+
+                    <input type="hidden" name="M1_MSEL01" value="[M1_MSEL01]">
+                    <input type="hidden" name="M1_MSEL02" value="[M1_MSEL02]">
+                    <input type="hidden" name="M1_MSEL03" value="[M1_MSEL03]">
+                    <input type="hidden" name="M1_MSEL04" value="[M1_MSEL04]">
+                    <input type="hidden" name="M1_MSEL05" value="[M1_MSEL05]">
+                    <input type="hidden" name="M1_MSEL06" value="[M1_MSEL06]">
+                    <input type="hidden" name="M1_MSEL07" value="[M1_MSEL07]">
+                    <input type="hidden" name="M1_MSEL08" value="[M1_MSEL08]">
+                    <input type="hidden" name="M1_MSEL09" value="[M1_MSEL09]">
+                    <input type="hidden" name="M1_MSEL10" value="[M1_MSEL10]">
+                    <input type="hidden" name="M1_MRDO01" value="[M1_MRDO01]">
+                    <input type="hidden" name="M1_MRDO02" value="[M1_MRDO02]">
+                    <input type="hidden" name="M1_MRDO03" value="[M1_MRDO03]">
+                    <input type="hidden" name="M1_MRDO04" value="[M1_MRDO04]">
+                    <input type="hidden" name="M1_MRDO05" value="[M1_MRDO05]">
+                    <input type="hidden" name="M1_MRDO06" value="[M1_MRDO06]">
+                    <input type="hidden" name="M1_MRDO07" value="[M1_MRDO07]">
+                    <input type="hidden" name="M1_MRDO08" value="[M1_MRDO08]">
+                    <input type="hidden" name="M1_MRDO09" value="[M1_MRDO09]">
+                    <input type="hidden" name="M1_MRDO10" value="[M1_MRDO10]">
+                    <input type="hidden" name="M1_MCHK01" value="[M1_MCHK01]">
+                    <input type="hidden" name="M1_MCHK02" value="[M1_MCHK02]">
+                    <input type="hidden" name="M1_MCHK03" value="[M1_MCHK03]">
+                    <input type="hidden" name="M1_MCHK04" value="[M1_MCHK04]">
+                    <input type="hidden" name="M1_MCHK05" value="[M1_MCHK05]">
+                    <input type="hidden" name="M1_MCHK06" value="[M1_MCHK06]">
+                    <input type="hidden" name="M1_MCHK07" value="[M1_MCHK07]">
+                    <input type="hidden" name="M1_MCHK08" value="[M1_MCHK08]">
+                    <input type="hidden" name="M1_MCHK09" value="[M1_MCHK09]">
+                    <input type="hidden" name="M1_MCHK10" value="[M1_MCHK10]">
+                    <input type="hidden" name="ENABLE" value="[ENABLE]">
+                    <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+                    <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+                    <input type="hidden" name="M1_ETC01" value="[M1_ETC01]">
+                    <input type="hidden" name="M1_ETC02" value="[M1_ETC02]">
+                    <input type="hidden" name="M1_ETC03" value="[M1_ETC03]">
+
+                    <input type="hidden" name="M1_ETC06" value="[M1_ETC06]">
+                    <input type="hidden" name="M1_ETC07[]" value="[M1_ETC07]">
+                    <!-- <input type="hidden" name="M1_ETC08" value="[M1_ETC08]">
+                    <input type="hidden" name="M1_ETC09" value="[M1_ETC09]"> -->
+                    <!-- <input type="hidden" name="M1_ETC10" value="[M1_ETC10]">
+                    <input type="hidden" name="M1_ETC11" value="[M1_ETC11]">
+                    <input type="hidden" name="M1_ETC12" value="[M1_ETC12]"> -->
+                    <input type="hidden" name="M1_ETC13" value="[M1_ETC13]">
+                    <input type="hidden" name="M1_ETC14" value="[M1_ETC14]">
+                    <input type="hidden" name="M1_ETC15[]" value="[M1_ETC15]">
+                    <input type="hidden" name="M1_ETC16" value="[M1_ETC16]">
+                    <input type="hidden" name="M1_ETC17" value="[M1_ETC17]">
+                    <input type="hidden" name="M1_ETC18" value="[M1_ETC18]">
+                    <input type="hidden" name="M1_ETC19" value="[M1_ETC19]">
+                    <input type="hidden" name="M1_ETC20" value="[M1_ETC20]">
+                    <input type="hidden" name="M1_ETC39" value="[M1_ETC39]">
+                    <input type="hidden" name="M1_ETC40" value="[M1_ETC40]">
+
+                    <input type="hidden" name="M1_DVAL11" value="[M1_DVAL11]">
+                    <input type="hidden" name="M1_DVAL12" value="[M1_DVAL12]">
+                    <input type="hidden" name="M1_DVAL13" value="[M1_DVAL13]">
+
+                    <input type="hidden" name="M1_DVAL22" value="[M1_DVAL22]">
+                    <input type="hidden" name="M1_DVAL23" value="[M1_DVAL23]">
+                    <input type="hidden" name="M1_DVAL24" value="[M1_DVAL24]">
+                    <!-- <input type="hidden" name="M1_DVAL25" value="[M1_DVAL25]"> -->
+                    <input type="hidden" name="M1_DVAL26" value="[M1_DVAL26]">
+                    <input type="hidden" name="M1_DVAL27" value="[M1_DVAL27]">
+                    <input type="hidden" name="M1_DVAL28" value="[M1_DVAL28]">
+                    <input type="hidden" name="M1_DVAL29" value="[M1_DVAL29]">
+                    <input type="hidden" name="M1_DVAL30" value="[M1_DVAL30]">
+                    <!-- <input type="hidden" name="M1_DTXT11" value="[M1_DTXT11]">
+                    <input type="hidden" name="M1_DTXT12" value="[M1_DTXT12]">
+                    <input type="hidden" name="M1_DTXT13" value="[M1_DTXT13]">
+                    <input type="hidden" name="M1_DTXT14" value="[M1_DTXT14]">
+                    <input type="hidden" name="M1_DTXT15" value="[M1_DTXT15]">
+                    <input type="hidden" name="M1_DTXT16" value="[M1_DTXT16]">
+                    <input type="hidden" name="M1_DTXT17" value="[M1_DTXT17]">
+                    <input type="hidden" name="M1_DTXT18" value="[M1_DTXT18]">
+                    <input type="hidden" name="M1_DTXT19" value="[M1_DTXT19]">
+                    <input type="hidden" name="M1_DTXT20" value="[M1_DTXT20]">
+                    <input type="hidden" name="M1_DTXT21" value="[M1_DTXT21]">
+                    <input type="hidden" name="M1_DTXT22" value="[M1_DTXT22]">
+                    <input type="hidden" name="M1_DTXT23" value="[M1_DTXT23]"> -->
+                    <!-- <input type="hidden" name="M1_DTXT24" value="[M1_DTXT24]"> -->
+                    <!-- <input type="hidden" name="M1_DTXT25" value="[M1_DTXT25]">
+                    <input type="hidden" name="M1_DTXT26" value="[M1_DTXT26]">
+                    <input type="hidden" name="M1_DTXT27" value="[M1_DTXT27]">
+                    <input type="hidden" name="M1_DTXT28" value="[M1_DTXT28]"> -->
+                    <!-- <input type="hidden" name="M1_DTXT29" value="[M1_DTXT29]">
+                    <input type="hidden" name="M1_DTXT30" value="[M1_DTXT30]"> -->
+                    <input type="hidden" name="M1_ETC50" value="[M1_ETC50]">
+                    <input type="hidden" name="M1_ETC51" value="[M1_ETC51]">
+                    <input type="hidden" name="M1_ETC52" value="[M1_ETC52]">
+                    <input type="hidden" name="M1_ETC53" value="[M1_ETC53]">
+                    <input type="hidden" name="M1_ETC54" value="[M1_ETC54]">
+                    <input type="hidden" name="M1_ETC55" value="[M1_ETC55]">
+                    <input type="hidden" name="M1_ETC56" value="[M1_ETC56]">
+                    <input type="hidden" name="M1_ETC57" value="[M1_ETC57]">
+                    <input type="hidden" name="M1_ETC58" value="[M1_ETC58]">
+                    <input type="hidden" name="M1_ETC59" value="[M1_ETC59]">
+                    <input type="hidden" name="M1_ETC60" value="[M1_ETC60]">
+                    <input type="hidden" name="M1_ETC61" value="[M1_ETC61]">
+                    <input type="hidden" name="M1_ETC62" value="[M1_ETC62]">
+                    <input type="hidden" name="M1_ETC63" value="[M1_ETC63]">
+                    <input type="hidden" name="M1_ETC64" value="[M1_ETC64]">
+                    <input type="hidden" name="M1_ETC65" value="[M1_ETC65]">
+                    <input type="hidden" name="M1_ETC66" value="[M1_ETC66]">
+                    <input type="hidden" name="M1_ETC67" value="[M1_ETC67]">
+                    <input type="hidden" name="M1_ETC68" value="[M1_ETC68]">
+                    <input type="hidden" name="M1_ETC69" value="[M1_ETC69]">
+                    <input type="hidden" name="M1_ETC70" value="[M1_ETC70]">
+                    <input type="hidden" name="M1_ETC71" value="[M1_ETC71]">
+                    <input type="hidden" name="M1_ETC72" value="[M1_ETC72]">
+                    <input type="hidden" name="M1_ETC73" value="[M1_ETC73]">
+                    <input type="hidden" name="M1_ETC74" value="[M1_ETC74]">
+                    <input type="hidden" name="M1_ETC75" value="[M1_ETC75]">
+                    <input type="hidden" name="M1_ETC76" value="[M1_ETC76]">
+                    <input type="hidden" name="M1_ETC77[]" value="[M1_ETC77]">
+                    <input type="hidden" name="M1_ETC78[]" value="[M1_ETC78]">
+                    <input type="hidden" name="M1_ETC79" value="[M1_ETC79]">
+                    <input type="hidden" name="M1_ETC80" value="[M1_ETC80]">
+                    <input type="hidden" name="M1_ETC81" value="[M1_ETC81]">
+                    <input type="hidden" name="M1_ETC82" value="[M1_ETC82]">
+                    <input type="hidden" name="M1_ETC83" value="[M1_ETC83]">
+                    <input type="hidden" name="M1_ETC84" value="[M1_ETC84]">
+                    <input type="hidden" name="M1_ETC85" value="[M1_ETC85]">
+                    <input type="hidden" name="M1_ETC86" value="[M1_ETC86]">
+                    <input type="hidden" name="M1_ETC87" value="[M1_ETC87]">
+                    <input type="hidden" name="M1_ETC88" value="[M1_ETC88]">
+                    <input type="hidden" name="M1_ETC89" value="[M1_ETC89]">
+                    <input type="hidden" name="M1_ETC90" value="[M1_ETC90]">
+
+                    <input type="hidden" name="M1_ETC96" value="[M1_ETC96]">
+                    <input type="hidden" name="M1_ETC97" value="[M1_ETC97]">
+                    <input type="hidden" name="M1_ETC98" value="[M1_ETC98]">
+                    <input type="hidden" name="M1_ETC99" value="[M1_ETC99]">
+
+                    <!--
+                    <div class="formset">
+                        <div class="formset__item">
+                            <div class="formset__ttl">会員ID</div>
+                            <div class="formset__input">[MID]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">メールアドレス</div>
+                            <div class="formset__input"><input type="text" name="EMAIL" value="[EMAIL]" size="90"></div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">パスワード</div>
+                            <div class="formset__input"><input type="text" name="PASS" value="[PASS]" size="90"></div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl"><span>公開依頼</span></div>
+                            <div class="formset__input"><input id="ENABLE_REQUEST" type="checkbox" name="ENABLE_REQUEST" value="管理者に公開依頼する"><label for="ENABLE_REQUEST">管理者に公開依頼する</label>
+                            </div>
+                        </div>
+                    </div>
+-->
+
+
+                    <!--NOTE: 2024.03.28 remove -->
+                    <!--form group Billing Address-->
+                    <!--form group Banking Details-->
+                    <!--General Accounting Contact-->
+                    <!--Remittance Contact-->
+                    <!--Tax forms-->
+
+                    <!--
+                    <div style="color:red;text-align:center;">
+                        If you want to change the registered information, save it after changing it.
+                    </div>
+                    -->
+
+                    <div class="formset" id="Company_information">
+
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>Profile</strong></div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">Member ID</div>
+                            <div class="formset__input">[MID]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Email</div>
+                            <div class="formset__input">[EMAIL]</div>
+                        </div>
+
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">Company Name<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">[M1_DVAL01]</div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl"><span>First Name</span><span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_DVAL22]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl"><span>Last Name</span><span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_DVAL23]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl"><span>Job Title</span><span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_DVAL24]</div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">Your Phone Number (numbers only)<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">(+[M1_ETC97])[M1_DVAL07]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Country<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">[D-M1_DVAL04]</div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">Time Zone<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">[D-M1_DSEL03]</div>
+                        </div>
+
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>Company Information</strong></div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Company Website<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">[M1_DVAL14]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Main Phone Number (numbers only)<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">[M1_DVAL15]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Number of Employees<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_DVAL16]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Company Size<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">[D-M1_DVAL17]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Year Established<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_DVAL18]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Short Description<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_DTXT03]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Keywords (comma separated)<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_DTXT04]</div>
+                        </div>
+                        <!--
+                        <div class="formset__item">
+                            <div class="formset__ttl">Laboratories (one per line)<span
+                                    class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">[M1_DTXT05]</div>
+                        </div>
+                        -->
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">Logo
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_DFIL02]" width="200"></div>
+                        </div>
+
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>Head Office Location</strong></div>
+                        </div>
+
+                        <!--1つめ-->
+                        <div class="formset__item">
+                            <div class="formset__ttl">Organization Name<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_ETC128]</div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">Address Line 1<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_ETC129]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Address Line 2<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_ETC130]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">City/Province<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_ETC131]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">ZIP/Postal Code<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_ETC132]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Country<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">[D-M1_ETC133]</div>
+                        </div>
+
+
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>Service Website</strong></div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Service Website<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">[M1_ETC08]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Service Introduction<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_ETC91]</div>
+                        </div>
+                        <!--2つめ-->
+                        <div class="formset__item" id="M1_ETC27" style="display: none;">
+                            <div class="formset__ttl">Service Website</div>
+                            <div class="formset__input">[M1_ETC27]</div>
+                        </div>
+                        <div class="formset__item" id="M1_ETC92" style="display: none;">
+                            <div class="formset__ttl">Service Introduction
+                            </div>
+                            <div class="formset__input">[M1_ETC92]</div>
+                        </div>
+
+                        <!--
+                        <input type="button" name="addbtnSW2a" data-id="M1_ETC28" data-id2="M1_ETC93" id="addbtnSW2a"
+                            value="add +" class="input-add" />
+                        -->
+                        <!--3つめ-->
+                        <div class="formset__item" id="M1_ETC28" style="display: none;">
+                            <div class="formset__ttl">Service Website</div>
+                            <div class="formset__input">[M1_ETC28]</div>
+                        </div>
+                        <div class="formset__item" id="M1_ETC93" style="display: none;">
+                            <div class="formset__ttl">Service Introduction
+                            </div>
+                            <div class="formset__input">[M1_ETC93]</div>
+                        </div>
+                        <!--
+                        <input type="button" name="addbtnSW3a" data-id="M1_ETC29" data-id2="M1_ETC94" id="addbtnSW3a"
+                            value="add +" class="input-add" />
+                        -->
+                        <!--4つめ-->
+                        <div class="formset__item" id="M1_ETC29" style="display: none;">
+                            <div class="formset__ttl">Service Website</div>
+                            <div class="formset__input">[M1_ETC29]</div>
+                        </div>
+                        <div class="formset__item" id="M1_ETC94" style="display: none;">
+                            <div class="formset__ttl">Service Introduction
+                            </div>
+                            <div class="formset__input">[M1_ETC94]</div>
+                        </div>
+                        <!--
+                        <input type="button" name="addbtnSW4a" data-id="M1_ETC30" data-id2="M1_ETC95" id="addbtnSW4a"
+                            value="add +" class="input-add" />
+                        -->
+                        <!--4つめ-->
+                        <div class="formset__item" id="M1_ETC30" style="display: none;">
+                            <div class="formset__ttl">Service Website</div>
+                            <div class="formset__input">[M1_ETC30]</div>
+                        </div>
+                        <div class="formset__item" id="M1_ETC95" style="display: none;">
+                            <div class="formset__ttl">Service Introduction
+                            </div>
+                            <div class="formset__input">[M1_ETC95]</div>
+                        </div>
+
+                        <!-- <div class="formset__item">
+                            <div class="formset__ttl">BILL TO:<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">
+                                <input type="text" required id="M1_DVAL06" name="M1_DVAL06" value="[M1_DVAL06]"
+                                    size="90">
+
+
+
+                            </div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">ship to<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">
+                                <input type="text" required id="M1_DVAL25" name="M1_DVAL25" value="[M1_DVAL25]"
+                                    size="90">
+
+
+
+                            </div>
+                        </div> -->
+
+                        <!--
+                        <p class="formset__lead">BILL TO</p>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Organization name<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">
+                                <input type="text" name="M1_DTXT24" required value="[M1_DTXT24]" size="90">
+                            </div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">Address Line 1<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">
+                                <input type="text" class="strlengthchk" name="M1_DTXT12" required value="[M1_DTXT12]" size="90" data-length="40" maxlength="40">
+<span id="M1_DTXT12_length" style="display:block;"></span>
+                            </div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Address Line 2<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">
+                                <input type="text" name="M1_DTXT15" required value="[M1_DTXT15]" size="90">
+                            </div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">City/Province<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">
+                                <input type="text" name="M1_DTXT18" required value="[M1_DTXT18]" size="90">
+                            </div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">ZIP/Postal code<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">
+                                <input type="text" name="M1_DTXT21" required value="[M1_DTXT21]" size="90">
+                            </div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">Country<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input"><select name="M1_DSEL04" required
+                                    class="input_select form-control">[OPT-M1_DSEL04]</select></div>
+                        </div>
+
+                        <div id="billto1" style="display: none;">
+                            <div class="formset__item">
+                                <div class="formset__ttl">Organization name</div>
+                                <div class="formset__input">
+                                    <input type="text" name="M1_DTXT10" value="[M1_DTXT10]" size="90">
+                                </div>
+                            </div>
+
+                            <div class="formset__item">
+                                <div class="formset__ttl">Address Line 1</div>
+                                <div class="formset__input">
+                                    <input type="text" class="strlengthchk" name="M1_DTXT13" value="[M1_DTXT13]" size="90" data-length="40" maxlength="40">
+<span id="M1_DTXT13_length" style="display:block;"></span>
+                                </div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">Address Line 2</div>
+                                <div class="formset__input">
+                                    <input type="text" name="M1_DTXT16" value="[M1_DTXT16]" size="90">
+                                </div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">City/Province</div>
+                                <div class="formset__input">
+                                    <input type="text" name="M1_DTXT19" value="[M1_DTXT19]" size="90">
+                                </div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">ZIP/Postal code</div>
+                                <div class="formset__input">
+                                    <input type="text" name="M1_DTXT22" value="[M1_DTXT22]" size="90">
+                                </div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">Country</div>
+                                <div class="formset__input"><select name="M1_DSEL05"
+                                        class="input_select form-control">[OPT-M1_DSEL05]</select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="billto2" style="display: none;">
+                            <div class="formset__item">
+                                <div class="formset__ttl">Organization name</div>
+                                <div class="formset__input">
+                                    <input type="text" name="M1_DTXT11" value="[M1_DTXT11]" size="90">
+                                </div>
+                            </div>
+
+                            <div class="formset__item">
+                                <div class="formset__ttl">Address Line 1</div>
+                                <div class="formset__input">
+                                    <input type="text" class="strlengthchk" name="M1_DTXT14" value="[M1_DTXT14]" size="90" data-length="40" maxlength="40">
+<span id="M1_DTXT14_length" style="display:block;"></span>
+                                </div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">Address Line 2</div>
+                                <div class="formset__input">
+                                    <input type="text" name="M1_DTXT17" value="[M1_DTXT17]" size="90">
+                                </div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">City/Province</div>
+                                <div class="formset__input">
+                                    <input type="text" name="M1_DTXT20" value="[M1_DTXT20]" size="90">
+                                </div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">ZIP/Postal code</div>
+                                <div class="formset__input">
+                                    <input type="text" name="M1_DTXT23" value="[M1_DTXT23]" size="90">
+                                </div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">Country</div>
+                                <div class="formset__input"><select name="M1_DSEL06"
+                                        class="input_select form-control">[OPT-M1_DSEL06]</select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display:flex;align-items:end;">
+                            <input type="button" id="add_bill" value="add +" class="input-add" />
+                            <input type="button" id="delete_bill" value="delete -" class="input-add"
+                                style="display:none;" />
+                        </div>
+                        -->
+
+
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>SHIP TO (where to send the customer's samples)</strong></div>
+                        </div>
+
+                        <!--1つめ-->
+                        <div class="formset__item">
+                            <div class="formset__ttl">Organization Name<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_DTXT25]</div>
+                        </div>
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">Address Line 1<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_DTXT28]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Address Line 2<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_ETC10]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">City/Province<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_ETC21]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">ZIP/Postal Code<span class="formset__must">Mandatory</span>
+                            </div>
+                            <div class="formset__input">[M1_ETC24]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Country<span class="formset__must">Mandatory</span></div>
+                            <div class="formset__input">[D-M1_DSEL07]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Explanation
+                            </div>
+                            <div class="formset__input">[M1_ETC125]</div>
+                        </div>
+                        <!--
+                        <input type="button" name="addbtn1b" id="addbtn1b" value="add +" class="input-add" />
+                        -->
+
+                        <!--2つめ-->
+                        <div id="shipto1" style="display: none;">
+                            <div class="formset__item">
+                                <div class="formset__ttl">Organization Name</div>
+                                <div class="formset__input">[M1_DTXT26]</div>
+                            </div>
+
+                            <div class="formset__item">
+                                <div class="formset__ttl">Address Line 1</div>
+                                <div class="formset__input">[M1_DTXT29]</div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">Address Line 2</div>
+                                <div class="formset__input">[M1_ETC11]</div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">City/Province</div>
+                                <div class="formset__input">[M1_ETC22]</div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">ZIP/Postal Code</div>
+                                <div class="formset__input">[M1_ETC25]</div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">Country</div>
+                                <div class="formset__input">[D-M1_DSEL08]</div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">Explanation
+                                </div>
+                                <div class="formset__input">[M1_ETC126]</div>
+                            </div>
+                            <!--
+                            <input type="button" name="addbtn2b" id="addbtn2b" value="add +" class="input-add" />
+                            -->
+                        </div>
+
+
+                        <!--3つめ-->
+                        <div id="shipto2" style="display: none;">
+                            <div class="formset__item">
+                                <div class="formset__ttl">Organization Name</div>
+                                <div class="formset__input">[M1_DTXT27]</div>
+                            </div>
+
+                            <div class="formset__item">
+                                <div class="formset__ttl">Address Line 1</div>
+                                <div class="formset__input">[M1_DTXT30]</div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">Address Line 2</div>
+                                <div class="formset__input">[M1_ETC12]</div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">City/Province</div>
+                                <div class="formset__input">[M1_ETC23]</div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">ZIP/Postal Code</div>
+                                <div class="formset__input">[M1_ETC26]</div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">Country</div>
+                                <div class="formset__input">[D-M1_DSEL09]</div>
+                            </div>
+                            <div class="formset__item">
+                                <div class="formset__ttl">Explanation
+                                </div>
+                                <div class="formset__input">[M1_ETC127]</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="formset">
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>Billing Address</strong></div>
+                        </div>
+
+                        <!-- 1つ目 -->
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__input col--1">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Organization Name<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC31]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Name<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC32]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Attention (Optional)</span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC33]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Address Line 1<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC34]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Address Line 2<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC35]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>City/Region<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC36]</div>
+                                </div>
+                            </div>
+                            <!--NOTE: 2col start-->
+                            <div class="formset__input col--2">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>State/Province<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC37]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Zip/Postal Code<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC38]</div>
+                                </div>
+                            </div>
+                            <!--NOTE: 2col end-->
+                            <div class="formset__input col--1">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Country<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[D-M1_DSEL10]</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2つ目 -->
+                        <div class="formset__item style--like-adminLTE" id="billing_address_2" style="margin-top:60px;display: none;">
+                            <div class="formset__input col--1">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Organization Name<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC106]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Name<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC107]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Attention (Optional)</span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC108]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Address Line 1<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC109]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Address Line 2<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC110]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>City/Region<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC111]</div>
+                                </div>
+                            </div>
+                            <!--NOTE: 2col start-->
+                            <div class="formset__input col--2">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>State/Province<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC112]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Zip/Postal Code<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC112]</div>
+                                </div>
+                            </div>
+                            <!--NOTE: 2col end-->
+                            <div class="formset__input col--1">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Country<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[D-M1_ETC114]</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3つ目 -->
+                        <div class="formset__item style--like-adminLTE" id="billing_address_3" style="margin-top:60px;display: none;">
+                            <div class="formset__input col--1">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Organization Name<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC115]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Name<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC116]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Attention (Optional)</span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC117]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Address Line 1<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC118]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Address Line 2<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC119]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>City/Region<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC120]</div>
+                                </div>
+                            </div>
+                            <!--NOTE: 2col start-->
+                            <div class="formset__input col--2">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>State/Province<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC121]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Zip/Postal Code<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC122]</div>
+                                </div>
+                            </div>
+                            <!--NOTE: 2col end-->
+                            <div class="formset__input col--1">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Country<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[D-M1_ETC123]</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!--form group Banking Details-->
+                    <div class="formset">
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>Banking Details</strong></div>
+                        </div>
+
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__input col--2">
+                                <div class="formset__input-child">
+
+                                    <label class="formset__input-child-label">
+                                        <span>Country<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[D-M1_ETC39]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Currency<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[D-M1_ETC40]</div>
+
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Bank name<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC41]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Account name<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC42]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Bank branch<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC100]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Bank address<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC101]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Account Number or IBAN<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC43]</div>
+                                </div>
+                            </div>
+                            <div class="formset__input col--1">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>ABA(Routing) number<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC44]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>SWIFT/BIC code<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC45]</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__input col--2">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Intermediary Bank name</span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC102]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Intermediary Bank branch</span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC103]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Intermediary Bank address</span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC104]</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__ttl" style="display:block;">
+                                適格請求書発行事業者登録番号（Japanese Campanies Only）
+                            </div>
+                            <div class="formset__input col--2">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>登録番号</span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC105]</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__ttl" style="display:block;">Supporting documentation for
+                                this banking
+                                information</div>
+                            <div class="formset__input col--1">
+                                [S-M1_ETC46]
+                                <div class="formset__input-child">
+                                    <a href="[M1_ETC46]" download="">Download</a>
+                                </div>
+                                [E-M1_ETC46]
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--General Accounting Contact-->
+                    <div class="formset">
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>General Accounting Contact</strong></div>
+                        </div>
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__input col--3">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Name<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC47]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Email<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC48]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Title<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_ETC49]</div>
+                                </div>
+                            </div>
+                            <div class="formset__input col--1">
+                                <div class="formset__input-child">
+                                    <!--<label class="formset__input-child-label">
+                                        <span>Use different contact information for purchase orders</span>
+                                    </label>-->
+                                    <div class="formset__input-child-body">[D-M1_DCHK01]</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--Remittance Contact-->
+                    <div class="formset">
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>Remittance Contact</strong></div>
+                        </div>
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__input col--3">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Name<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_DRDO02]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Email<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_DRDO03]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Title<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_DRDO04]</div>
+                                </div>
+                            </div>
+                            <div class="formset__input col--2">
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Tax ID<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_DRDO05]</div>
+                                </div>
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>D-U-N-S<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[M1_DRDO07]</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--Tax forms-->
+                    <div class="formset">
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>Tax forms</strong></div>
+                        </div>
+
+                        <div class="formset__item style--like-adminLTE">
+                            <div class="formset__input col--2">
+
+                                <!--Form Type-->
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Form Type<span class="formset__must">Mandatory</span></span>
+                                    </label>
+                                    <div class="formset__input-child-body">[D-M1_DRDO08]</div>
+                                </div>
+                                <!--/Form Type-->
+
+                                <!--Files-->
+                                <div class="formset__input-child">
+                                    <label class="formset__input-child-label">
+                                        <span>Files<span class="formset__must">Mandatory</span><small class="formset__note">(.pdf, .png, .gif, or
+                                                .jpg)</small></span>
+                                    </label>
+                                    <div class="formset__input-child-body">
+
+                                        [S-M1_DRDO06]
+                                        <!--
+                                    <a href="[M1_DRDO06]" download="">Download</a>
+                                    -->
+                                        <div class="formset__input"><img src="[M1_DRDO06]" width="200"></div>
+                                        [E-M1_DRDO06]
+
+                                    </div>
+                                </div>
+                                <!--/Files-->
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table_agree_02">
+                        <thead>
+                            <tr>
+                                <th colspan="5">Signed Document</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Document</th>
+                                <th>Signed On</th>
+                                <th>Signed By</th>
+                                <th>Legal Entity</th>
+                                <!--
+                                <th>Actions</th>
+                                -->
+                            </tr>
+                            [S-AGREEMENT_SIGNED]
+                            <tr>
+                                [S-SIGN-EN]
+                                <td>Scientist<span class="txt_up">3</span> Terms of Service for Suppliers</td>
+                                [E-SIGN-EN]
+                                [S-SIGN-JP]
+                                <td>Scientist<span class="txt_up">3</span> サプライヤー向けサービス規約</td>
+                                [E-SIGN-JP]
+                                <td>[M1_ETC96]</td>
+                                <td>[M1_ETC81]<br>[M1_ETC80]</td>
+                                <td>[M1_ETC79]</td>
+                                <!--
+                                <td>
+                                    [S-SIGN-EN]
+                                    <a href="./?param=Agreements2j" target="_blank">View</a>
+                                    [E-SIGN-EN]
+                                    [S-SIGN-JP]
+                                    <a href="./?param=Agreements2j" target="_blank">View</a>
+                                    [E-SIGN-JP]
+
+                                    [S-SIGN-EN]
+                                    <a href="./?param=Agreements2e&print=on" target="_blank">Download </a>
+                                    [E-SIGN-EN]
+                                    [S-SIGN-JP]
+                                    <a href="./?param=Agreements2j&print=on" target="_blank">Download </a>
+                                    [E-SIGN-JP]
+
+
+
+                                    <a href="./?mode=torikesi&token=[TOKEN]&param=Agreements"
+                                        onclick='return confirm("Revoke？");'>Revoke</a>
+                                </td>
+                                -->
+                            </tr>
+                            [E-AGREEMENT_SIGNED]
+                        </tbody>
+                    </table>
+
+
+                    <div class="formset">
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>File</strong></div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">FileTitle１</div>
+                            <div class="formset__input">[M1_DTXT09]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">File1
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_DFIL03]" width="200"></div>
+                        </div>
+
+                        [S-M1_ETC82]
+                        <div class="formset__item">
+                            <div class="formset__ttl">FileTitle2</div>
+                            <div class="formset__input">[M1_ETC82]</div>
+                        </div>
+                        [E-M1_ETC82]
+                        [S-M1_DFIL04]
+                        <div class="formset__item">
+                            <div class="formset__ttl">File2
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_DFIL04]" width="200"></div>
+                        </div>
+                        [E-M1_DFIL04]
+
+                        [S-M1_ETC83]
+                        <div class="formset__item">
+                            <div class="formset__ttl">FileTitle3</div>
+                            <div class="formset__input">[M1_ETC83]</div>
+                        </div>
+                        [E-M1_ETC83]
+                        [S-M1_DFIL05]
+                        <div class="formset__item">
+                            <div class="formset__ttl">File3
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_DFIL05]" width="200"></div>
+                        </div>
+                        [E-M1_DFIL05]
+
+                        [S-M1_ETC84]
+                        <div class="formset__item">
+                            <div class="formset__ttl">FileTitle4</div>
+                            <div class="formset__input">[M1_ETC84]</div>
+                        </div>
+                        [E-M1_ETC84]
+                        [S-M1_DFIL06]
+                        <div class="formset__item">
+                            <div class="formset__ttl">File4
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_DFIL06]" width="200"></div>
+                        </div>
+                        [E-M1_DFIL06]
+
+                        [S-M1_ETC85]
+                        <div class="formset__item">
+                            <div class="formset__ttl">FileTitle5</div>
+                            <div class="formset__input">[M1_ETC85]</div>
+                        </div>
+                        [E-M1_ETC85]
+                        [S-M1_DFIL07]
+                        <div class="formset__item">
+                            <div class="formset__ttl">File5
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_DFIL07]" width="200"></div>
+                        </div>
+                        [E-M1_DFIL07]
+
+                        [S-M1_ETC86]
+                        <div class="formset__item">
+                            <div class="formset__ttl">FileTitle6</div>
+                            <div class="formset__input">[M1_ETC86]</div>
+                        </div>
+                        [E-M1_ETC86]
+                        [S-M1_DFIL08]
+                        <div class="formset__item">
+                            <div class="formset__ttl">File6
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_DFIL08]" width="200"></div>
+                        </div>
+                        [E-M1_DFIL08]
+
+                        [S-M1_ETC87]
+                        <div class="formset__item">
+                            <div class="formset__ttl">FileTitle7</div>
+                            <div class="formset__input">[M1_ETC87]</div>
+                        </div>
+                        [E-M1_ETC87]
+                        [S-M1_DFIL09]
+                        <div class="formset__item">
+                            <div class="formset__ttl">File7
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_DFIL09]" width="200"></div>
+                        </div>
+                        [E-M1_DFIL09]
+
+                        [S-M1_ETC88]
+                        <div class="formset__item">
+                            <div class="formset__ttl">FileTitle8</div>
+                            <div class="formset__input">[M1_ETC88]</div>
+                        </div>
+                        [E-M1_ETC88]
+                        [S-M1_DFIL10]
+                        <div class="formset__item">
+                            <div class="formset__ttl">File8
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_DFIL10]" width="200"></div>
+                        </div>
+                        [E-M1_DFIL10]
+
+                        [S-M1_ETC89]
+                        <div class="formset__item">
+                            <div class="formset__ttl">FileTitle9</div>
+                            <div class="formset__input">[M1_ETC89]</div>
+                        </div>
+                        [E-M1_ETC89]
+                        [S-M1_ETC04]
+                        <div class="formset__item">
+                            <div class="formset__ttl">File9
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_ETC04]" width="200"></div>
+                        </div>
+                        [E-M1_ETC04]
+
+                        [S-M1_ETC90]
+                        <div class="formset__item">
+                            <div class="formset__ttl">FileTitle10</div>
+                            <div class="formset__input">[M1_ETC90]</div>
+                        </div>
+                        [E-M1_ETC90]
+                        [S-M1_ETC05]
+                        <div class="formset__item">
+                            <div class="formset__ttl">File10
+                                <small class="formset__note">(.pdf, .png, .gif, or .jpg)</small>
+                            </div>
+                            <div class="formset__input"><img src="[M1_ETC05]" width="200"></div>
+                        </div>
+                        [E-M1_ETC05]
+
+                        <div class="formset__item">
+                            <div class="formset__ttl">YouTube</div>
+                            <div class="formset__input">[M1_DTXT07]</div>
+                        </div>
+                    </div>
+
+                    <div class="formset">
+                        <div class="formset__item formset__item--head head--fill">
+                            <div class="formset__ttl"><strong>Category</strong></div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (1st level)</div>
+                            <div class="formset__input">[M1_ETC17]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (2st level)</div>
+                            <div class="formset__input">[M1_ETC18]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (3st level)</div>
+                            <div class="formset__input">[M1_ETC19]</div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (4st level)</div>
+                            <div class="formset__input">[M1_ETC20]</div>
+                        </div>
+
+                        [S-M1_DRDO09]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (1st level)</div>
+                            <div class="formset__input">[M1_DRDO09]</div>
+                        </div>
+                        [E-M1_DRDO09]
+                        [S-M1_DRDO10]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (2st level)</div>
+                            <div class="formset__input">[M1_DRDO10]</div>
+                        </div>
+                        [E-M1_DRDO10]
+                        [S-M1_DCHK02]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (3st level)</div>
+                            <div class="formset__input">[M1_DCHK02]</div>
+                        </div>
+                        [E-M1_DCHK02]
+                        [S-M1_DCHK03]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (4st level)</div>
+                            <div class="formset__input">[M1_DCHK03]</div>
+                        </div>
+                        [E-M1_DCHK03]
+
+                        [S-M1_DCHK04]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (1st level)</div>
+                            <div class="formset__input">[M1_DCHK04]</div>
+                        </div>
+                        [E-M1_DCHK04]
+                        [S-M1_DCHK05]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (2st level)</div>
+                            <div class="formset__input">[M1_DCHK05]</div>
+                        </div>
+                        [E-M1_DCHK05]
+                        [S-M1_DCHK06]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (3st level)</div>
+                            <div class="formset__input">[M1_DCHK06]</div>
+                        </div>
+                        [E-M1_DCHK06]
+                        [S-M1_DCHK07]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (4st level)</div>
+                            <div class="formset__input">[M1_DCHK07]</div>
+                        </div>
+                        [E-M1_DCHK07]
+
+                        [S-M1_DCHK08]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (1st level)</div>
+                            <div class="formset__input">[M1_DCHK08]</div>
+                        </div>
+                        [E-M1_DCHK08]
+                        [S-M1_DCHK09]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (2st level)</div>
+                            <div class="formset__input">[M1_DCHK09]</div>
+                        </div>
+                        [E-M1_DCHK09]
+                        [S-M1_DCHK10]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (3st level)</div>
+                            <div class="formset__input">[M1_DCHK10]</div>
+                        </div>
+                        [E-M1_DCHK10]
+                        [S-M1_ETC13]
+                        <div class="formset__item">
+                            <div class="formset__ttl">Category (4st level)</div>
+                            <div class="formset__input">[M1_ETC13]</div>
+                        </div>
+                        [E-M1_ETC13]
+                    </div>
+
+                    <div class="btn formset__btn" style="display:block;">
+                        <input type="submit" value="Request for review" name="submit1" onclick="return sinsa();" />
+                        <br>
+                        <input type="submit" value="Back" name="submit2" onclick="return regist3();" style="background:var(--c-color-site-red);" />
+                        <!--<input type="button" value="Back" name="submit2" onclick="histroy:back();" style="background:var(--c-color-site-red);" />-->
+                        <script>
+                            function regist3() {
+                                if (confirm('Would you like to save what you have done so far?')) {
+                                    document.getElementById('btnmode').value = 'back';
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                            function sinsa() {
+                                if (confirm('We will now move on to the main-registration review. Is that okay?')) {
+                                    document.getElementById('mode').value = 'shinsa';
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+
+                        </script>
+                        <script>
+                             //仮登録以外では審査ボタンを出さない
+
+                            var m1_status = $('input[name="M1_DRDO01"]').val();
+
+                            if (m1_status != 'M1_DRDO01:仮登録中') {
+                                $('input[name="submit1"]').css('display','none');
+                            };
+                        </script>
+                        <!--
+                        　<a href="javascript:shinsa_irai('[PARAM]');">Request for review</a>
+                        <br>審査依頼を行う前に必ず登録情報を保存してください -->
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- 以下共通 -->
+
+        <!--template=/common/template/footer_en.html-->
+        <form id="crawl_form" method="post" action="./?param=[PARAM]" enctype="multipart/form-data">
+            <input type="hidden" name="mode" value="crawl">
+
+            <input type="hidden" id="url" name="url" value="[M1_ETC08]">
+
+            <input type="hidden" name="key" value="[ID]">
+            <input type="hidden" name="sort" value="[SORT]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="page" value="[PAGE]">
+            <input type="hidden" name="lid" value="[LID]">
+            <input type="hidden" name="token" value="[TOKEN]">
+            <input type="hidden" name="param" value="[PARAM]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="MID" value="[MID]">
+
+        </form>
+    </div>
+
+    <!-- ポップアップ -->
+    <!--
+    <label class="modal_open" for="modal_pop-up">Proceed to registration</label>
+    -->
+    <input type="checkbox" id="modal_pop-up">
+    <div class="modal_overlay">
+        <div class="modal">
+            <label class="modal_close" for="modal_pop-up">×</label>
+            <h2>Please complete the main registration</h2>
+            <p>To complete main registration, you need enter the information.</p>
+            <ul>
+                <li>
+                    <img src="/common/images/icon_guide-01.png" alt="">
+                    <p>Company information</p>
+                </li>
+                <li>
+                    <img src="/common/images/icon_guide-07.png" alt="">
+                    <p>Banking Details</p>
+                </li>
+                <li>
+                    <img src="/common/images/icon_guide-02.png" alt="">
+                    <p>Agreemeants</p>
+                </li>
+                <li>
+                    <img src="/common/images/icon_guide-03.png" alt="">
+                    <p>Category</p>
+                </li>
+            </ul>
+            <div class="btn_ok"><a href="javascript:$('#modal_pop-up').click();">OK</a></div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

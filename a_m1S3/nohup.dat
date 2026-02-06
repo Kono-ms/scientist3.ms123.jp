@@ -1,0 +1,2 @@
+
+Warning: mysqli_connect(): Headers and client library minor version mismatch. Headers:50564 Library:100148 in /home/scientist3/scientist3.ms123.jp/public_html/crawl/crawl_proc.php on line 170

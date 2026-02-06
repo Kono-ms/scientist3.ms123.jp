@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Test</title>
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/icon-192x192.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/common/css/import.css" />
+    <link rel="stylesheet" href="/common/css/jquery.bxslider.css" />
+    <script src="/common/js/jquery-1.11.0.min.js"></script> 
+    <script src="/common/js/jquery.bxslider.js"></script> 
+    <script src="/common/js/ofi.min.js"></script> 
+    <script src="/common/js/common.js"></script> 
+
+</head>
+
+<body>
+    <div class="wrap sub">
+        <section class="edit">
+            <div class="l-container">
+                <div class="c-head">
+                    <h1 class="c-head__ttl">Test</h1>
+                    <p class="c-head__txt">Edit the supplier profile.</p>
+                </div>
+                <form method="post" id="form1" action="javascript:void(0)" enctype="multipart/form-data">                    
+                    <div class="formset">
+                        <div class="formset__item">
+                            <div class="formset__ttl">Saved s.gif</div>
+                            <div class="formset__input"><img src="/a_m1/data/s.gif" width="200" alt=""> Delete <input
+                                    type="checkbox" name="DEL_IMAGE_M1_DFIL01"><br><input type="file"
+                                    name="EP_M1_DFIL01" value="/a_m1/data/s.gif" size="90"><input type="hidden"
+                                    name="M1_DFIL01" value="/a_m1/data/s.gif">
+                            </div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Saved file name</div>
+                            <div class="formset__input"><img src="/a_m1/data/s.gif" width="200" alt=""> Delete <input
+                                    type="checkbox" name="DEL_IMAGE_M1_DFIL02"><br><input type="file"
+                                    name="EP_M1_DFIL02" value="/a_m1/data/test.png" size="90"><input type="hidden"
+                                    name="M1_DFIL02" value="/a_m1/data/s.gif">
+                            </div>
+                        </div>
+                        <div class="formset__item">
+                            <div class="formset__ttl">Empty</div>
+                            <div class="formset__input"><img src="/a_m1/data/s.gif" width="200" alt=""> Delete <input
+                                    type="checkbox" name="DEL_IMAGE_M1_DFIL02"><br><input type="file"
+                                    name="EP_M1_DFIL02" value="" size="90"><input type="hidden"
+                                    name="M1_DFIL02" value="/a_m1/data/s.gif">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn formset__btn">
+                        <input type="submit" value="Save draft" name="submit2" />
+                        <input type="submit" value="Request for review" name="submit1"
+                            onclick="var ok=confirm('現状の入力内容で保存をして審査依頼を行います？');if (ok) document.getElementById('mode').value='shinsa';document.getElementById('form1').submit(); return false;" />
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- 以下共通 -->
+
+<!-- フッター開始 -->
+
+<!-- フッター終了 -->
+<script>
+  objectFitImages();
+</script>
+
+    </div>
+</body>
+
+</html>

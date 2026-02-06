@@ -1,0 +1,96 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+<h1>請求詳細管理</h1>
+
+<ol class="breadcrumb">
+<li><i class="fa fa-dashboard"></i> Home</li>
+<li><a href="/a_invoice_detail/">請求詳細管理</a></li>
+<li>請求詳細登録・編集</li>
+</ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+<div class="row">
+
+
+<div class="col-xs-12">
+<div class="box box-warning">
+
+<div class="box-header">
+<h3 class="box-title">登録・編集</h3>
+</div><!-- /.box-header -->
+
+<div class="box-body">
+
+[S-ERR]
+<div class="alert alert-warning alert-dismissible">
+<div class="message_box mb20">
+<p><i class="icon fa fa-warning"></i> 入力内容に不備がございますので、内容のご確認をお願いいたします。</p>
+</div>
+<div class="page_text">
+<ul class="error_list">
+[ERRMSG]
+</ul>
+</div>
+</div>
+[E-ERR]
+
+<form  method="post" action="./" enctype="multipart/form-data">
+<input type="hidden" name="mode" value="save">
+<input type="hidden" name="key" value="[ID]">
+<input type="hidden" name="sort" value="[SORT]">
+<input type="hidden" name="word" value="[WORD]">
+<input type="hidden" name="page" value="[PAGE]">
+<input type="hidden" name="lid" value="[LID]">
+<input type="hidden" name="token" value="[TOKEN]">
+<input type="hidden" name="ID" value="[ID]">
+<input type="hidden" name="ENABLE" value="[ENABLE]">
+<input type="hidden" name="NEWDATE" value="[NEWDATE]">
+<input type="hidden" name="EDITDATE" value="[EDITDATE]">
+<input type="hidden" name="ETC01" value="[ETC01]">
+<input type="hidden" name="ETC02" value="[ETC02]">
+<input type="hidden" name="ETC03" value="[ETC03]">
+<input type="hidden" name="ETC04" value="[ETC04]">
+<input type="hidden" name="ETC05" value="[ETC05]">
+<input type="hidden" name="ETC06" value="[ETC06]">
+<input type="hidden" name="ETC07" value="[ETC07]">
+<input type="hidden" name="ETC08" value="[ETC08]">
+<input type="hidden" name="ETC09" value="[ETC09]">
+<input type="hidden" name="ETC10" value="[ETC10]">
+<input type="hidden" name="ETC11" value="[ETC11]">
+<input type="hidden" name="ETC12" value="[ETC12]">
+<input type="hidden" name="ETC13" value="[ETC13]">
+<input type="hidden" name="ETC14" value="[ETC14]">
+<input type="hidden" name="ETC15" value="[ETC15]">
+<input type="hidden" name="ETC16" value="[ETC16]">
+<input type="hidden" name="ETC17" value="[ETC17]">
+<input type="hidden" name="ETC18" value="[ETC18]">
+<input type="hidden" name="ETC19" value="[ETC19]">
+<input type="hidden" name="ETC20" value="[ETC20]">
+
+
+<table id="table_summary" class="table table-bordered table_edit" summary="表">
+<tbody>
+<tr><th>請求ID</th><td><input type="text" name="IID" class="input_w10 form-control" value="[IID]" size="90"></td></tr>
+<tr><th>詳細項目</th><td><textarea name="ITEM" class="textarea_w10 form-control" cols="70" rows="5">[ITEM]</textarea></td></tr>
+<tr><th>通貨金額</th><td><input type="text" name="QUANTITY" class="input_w10 form-control" value="[QUANTITY]" size="90"></td></tr>
+<tr><th>通貨単位</th><td><select name="UNIT" class="input_select form-control">[OPT-UNIT]</select></td></tr>
+<tr><th>日本円</th><td><input type="text" name="PRICE" class="input_w10 form-control" value="[PRICE]" size="90"></td></tr>
+<tr><th>備考</th><td><textarea name="ETC" class="textarea_w10 form-control" cols="70" rows="5">[ETC]</textarea></td></tr>
+
+</tbody>
+</table>
+<button name="submit" value="submit" type="submit" class="btn btn-block btn-default" onclick="var ok=confirm('保存してもよろしいですか？');if (ok) this.form.submit(); return false;"><i class="fa fa-floppy-o"></i> 保存</button>
+</form>
+
+
+</div><!-- /.box-body -->
+</div><!-- /.box -->
+
+
+</div><!-- /.col -->
+</div><!-- /.row -->
+</section><!-- /.content -->

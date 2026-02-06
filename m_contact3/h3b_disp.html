@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <div class="formset">
+            <div class="formset__item">
+              <div class="formset__ttl"><span>案件名</span></div>
+              <div class="formset__input">[D-TITLE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>サプライヤー</span></div>
+              <div class="formset__input">[M1_VIEW]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>メッセージ</span><span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-H3B_MESSAGE]</div>
+            </div>
+          </div>
+          <form method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="type" value="[TYPE]">
+            <input type="hidden" name="mode" value="back">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="shodan_id" value="[SHODAN_ID]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="word2" value="[WORD2]">
+            <input type="hidden" name="mid_list" value="[MID_LIST]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="H3B_MESSAGE" value="[H3B_MESSAGE]">
+            <div class="btn formset__btn btn--small formset__btn--back">
+              <button type="button" onclick="history.back();">戻る</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>商談進捗表｜Scientist3</title>
+  <meta name="description"
+    content="商談進捗表のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head.html-->
+  <script>
+    $(function () {
+
+      $('#submit1').click(function () {
+        //お問い合わせ
+
+        let chks = $('[name="chk[]"]:checked');
+        if (chks.length == 0) {
+          alert("選択してください。");
+          return false;
+        }
+        let chkstr = "";
+        $(chks).map(function () {
+          if (chkstr != "") {
+            chkstr = chkstr + ",";
+          }
+          chkstr = chkstr + $(this).val();
+        });
+
+        // alert(chkstr);
+        $('.chk').val(chkstr);
+        $('#form1').submit();
+      });
+
+      $('#submit2').click(function () {
+        //一括見積もり
+
+        let chks = $('[name="chk[]"]:checked');
+        if (chks.length == 0) {
+          alert("選択してください。");
+          return false;
+        }
+        let chkstr = "";
+        $(chks).map(function () {
+          if (chkstr != "") {
+            chkstr = chkstr + ",";
+          }
+          chkstr = chkstr + $(this).val();
+        });
+
+        $('.chk').val(chkstr);
+        $('#form2').submit();
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header2.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">商談進捗表</li>
+        </ol>
+      </div>
+    </div>
+    <section class="innerTab">
+      <div class="l-container">
+        <ul class="innerTab-flex">
+          <li class="innerTab__item"><a href="/m_search2/">サプライヤーを探す</a></li>
+          <li class="innerTab__item">[S-STANDARD]<a href="/m_message2/">商談一覧</a>[S-MIDOKU]<span
+              class="item__badge">[MIDOKU]</span>[E-MIDOKU][E-STANDARD]</li>
+          <li class="innerTab__item"><a href="/m_schedule2/" class="active">商談進捗表</a></li>
+          <li class="innerTab__item"><a href="/m_draft2/">下書き一覧</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="result schedule">
+      <table>
+        <tbody>
+          <tr>
+            <th>商談ID</th>
+            <th>品番</th>
+            <th>前払い</th>
+            <th>サプライヤー名</th>
+            <th>ステータス</th>
+            <th>見積り書</th>
+            <th>発注書</th>
+            <th>納品書</th>
+            <th>請求書</th>
+          </tr>
+          <meta LIST-START>
+          <meta LIST-END>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <div class="pagination__list"> [PAGING] </div>
+      </div>
+    </section>
+
+    <!--template=/common/template/flow.html-->
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+
+  </div>
+</body>
+
+</html>

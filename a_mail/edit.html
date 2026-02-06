@@ -1,0 +1,103 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+    <h1>メール管理</h1>
+
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> Home</li>
+        <li><a href="/a_mail/">メール管理</a></li>
+        <li>メール登録・編集</li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+
+
+        <div class="col-xs-12">
+            <div class="box box-warning">
+
+                <div class="box-header">
+                    <h3 class="box-title">登録・編集</h3>
+                </div><!-- /.box-header -->
+
+                <div class="box-body">
+
+                    [S-ERR]
+                    <div class="alert alert-warning alert-dismissible">
+                        <div class="message_box mb20">
+                            <p><i class="icon fa fa-warning"></i> 入力内容に不備がございますので、内容のご確認をお願いいたします。</p>
+                        </div>
+                        <div class="page_text">
+                            <ul class="error_list">
+                                [ERRMSG]
+                            </ul>
+                        </div>
+                    </div>
+                    [E-ERR]
+
+                    <form method="post" action="./" enctype="multipart/form-data">
+                        <input type="hidden" name="mode" value="save">
+                        <input type="hidden" name="key" value="[ID]">
+                        <input type="hidden" name="sort" value="[SORT]">
+                        <input type="hidden" name="word" value="[WORD]">
+                        <input type="hidden" name="page" value="[PAGE]">
+                        <input type="hidden" name="lid" value="[LID]">
+                        <input type="hidden" name="token" value="[TOKEN]">
+                        <input type="hidden" name="ID" value="[ID]">
+                        <input type="hidden" name="SENDER" value="[SENDER]">
+
+
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                <tr>
+                                <tr>
+                                    <th>通し番号</th>
+                                    <td><input type="text" name="NUMBER" class="/*input_w10*/ form-control"
+                                            value="[NUMBER]" size="90"></td>
+                                </tr>
+                                    <th>メール（キー）</th>
+                                    <td>
+
+                                        [S-NEWDATA]
+                                        <select name="MAILNAME"
+                                            class="input_select form-control">[OPT-MAILNAME]</select>[E-NEWDATA]
+                                        [S-EDITDATA]
+                                        [D-MAILNAME]
+                                        <input type="hidden" name="MAILNAME" value="[MAILNAME]">
+                                        [E-EDITDATA]
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>メールタイトル</th>
+                                    <td><input type="text" name="TITLE" class="/*input_w10*/ form-control"
+                                            value="[TITLE]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>メール本文</th>
+                                    <td><textarea name="BODY" class="/*textarea_w10*/ form-control" cols="70"
+                                            rows="20">[BODY]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>通知タイミング</th>
+                                    <td><textarea name="COMMENT" class="/*textarea_w10*/ form-control" cols="70"
+                                            rows="5">[COMMENT]</textarea></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <button name="submit" value="submit" type="submit" class="btn btn-block btn-default"
+                            onclick="var ok=confirm('この内容で保存しますか？');if (ok) this.form.submit(); return false;"><i
+                                class="fa fa-floppy-o"></i> 保存</button>
+                    </form>
+
+
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</section><!-- /.content -->

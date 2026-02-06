@@ -1,0 +1,860 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+
+  <style>
+    body {
+      background: white;
+    }
+
+    th,
+    td {
+      border: solid 1px;
+      height: 50px;
+      padding: 4px;
+    }
+
+    table {
+      border-collapse: collapse;
+      /* セルの線を重ねる */
+    }
+
+    /* 
+    wkhtmltopdfもしくは、JSでブラウザにPDFを出力させるのが良いと思います。
+    
+    ※　wkhtmltopdfはwebkit系のレンダリングエンジンらしいので、古いCSSですがある程度融通の効くCSSが使えるらしいです。
+    ※　JSはサーバーに残せません。
+    */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+    }
+
+    /* wrapper */
+    .recipe {
+      font-size: 1em;
+      font-family: serif;
+      line-height: 1.75;
+      padding: 3em;
+    }
+
+    /* download */
+    .recipe-dl {
+      position: absolute;
+      left: 1em;
+      top: 1em;
+    }
+
+    .recipe-dl--btn {
+      display: inline-block;
+      border: solid 1px #cb000b;
+      background: #cb000b;
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 0.75em;
+      font-feature-settings: 'palt';
+      font-weight: 500;
+      line-height: 1;
+      white-space: nowrap;
+      text-decoration: none;
+      padding: 1em 2em;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+
+    .recipe-dl--btn:hover,
+    .recipe-dl--btn:focus {
+      border: solid 1px #cb000b;
+      background: #cb000b;
+      color: #fff;
+      opacity: 0.7;
+    }
+
+    .recipe-dl--notes {
+      color: #cb000b;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: sans-serif;
+      word-break: break-all;
+      line-height: 1.666;
+      max-width: 260px;
+      margin-top: 1em;
+    }
+
+    @media print {
+      .recipe-dl {
+        display: none;
+      }
+    }
+
+    /* h1 */
+    .recipe-title {
+      font-size: 2em;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+    }
+
+    /* header */
+    .recipe-header {
+      text-align: right;
+      max-width: 12em;
+      margin-left: auto;
+    }
+
+    .recipe-no {
+      font-size: 0.875em;
+      font-weight: 500;
+      white-space: nowrap;
+      text-decoration: underline;
+    }
+
+    .recipe-date {
+      font-size: 0.875em;
+      font-weight: 500;
+      white-space: nowrap;
+      text-decoration: underline;
+    }
+
+    .recipe-addressee {
+      display: table;
+      border-bottom: solid 2px;
+      font-size: 1.5em;
+      font-weight: 700;
+      text-align: right;
+      /* max-width: 24em; */
+      width: 100%;
+    }
+
+    .recipe-addressee select {
+      box-shadow: none;
+      border-radius: 4px;
+      border: solid 1px transparent;
+      background: transparent;
+      font-size: inherit;
+      font-family: inherit;
+      font-weight: inherit;
+      letter-spacing: -0.025ex;
+      max-width: 800px;
+      margin: 0;
+      padding: 0;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .recipe-addressee select:hover,
+    .recipe-addressee select:focus {
+      border-color: #ccc;
+      background: #f1f1f1;
+    }
+
+    .recipe-addressee select+* {
+      margin-left: 1em;
+    }
+
+    @media print {
+      .recipe-addressee select {
+        border: none;
+        -webkit-appearance: none;
+        appearance: none;
+      }
+    }
+
+    /* body */
+    .topwrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 5rem;
+    }
+
+    .left_contents {
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .right_contents {
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .recipe-item {}
+
+    .recipe-item--name {
+      border-bottom: solid 2px;
+      font-size: 0.875em;
+      font-weight: 500;
+      margin: 2rem 0 1em;
+    }
+
+    .recipe-item--the-items {
+      display: flex;
+      justify-content: flex-start;
+      font-size: 0.875em;
+      font-weight: 500;
+      padding: 1em 0 0;
+    }
+
+    .recipe-item--the-items>span {
+      display: block;
+      text-align: left;
+    }
+
+    .recipe-item--the-items> :first-child {
+      white-space: nowrap;
+      text-align: right;
+      width: 14em;
+    }
+
+    .recipe-item--the-items> :last-child {
+      width: 100%;
+    }
+
+    .recipe-item--price {
+      border-bottom: solid 2px;
+      font-size: 1.5em;
+      font-weight: 700;
+      margin: 0 0 2px;
+    }
+
+    .recipe-item--desc {
+      border-top: solid 1px;
+      font-size: 1em;
+      font-weight: 500;
+      padding: 1em 0 0;
+    }
+
+    .recipe-item--desc b {
+      font-weight: 700;
+    }
+
+    .recipe-item--msg {
+      font-size: 0.875em;
+      font-weight: 500;
+    }
+
+    /* footer */
+    .recipe-footer {
+      display: flex;
+      display: -webkit-box;
+      /* wkhtmltopdfなら可能 NOTE: https://stackoverflow.com/questions/57020675/using-flex-css-with-wkhtmltopdf */
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      -webkit-box-pack: justify;
+      /* wkhtmltopdfなら可能 NOTE: https://stackoverflow.com/questions/57020675/using-flex-css-with-wkhtmltopdf */
+      align-items: stretch;
+      align-content: stretch;
+      margin: 10px 0 0;
+    }
+
+    .recipe-details {
+      padding-top: 48px;
+      width: 100%;
+    }
+
+    .recipe-details p {
+      width: 100%;
+      border-bottom: 1px #ccc solid;
+    }
+
+    p.recipe-details--title {
+      border-bottom: #000 3px double;
+      font-size: 0.875em;
+      font-weight: 500;
+    }
+
+    .recipe-details--tax {
+      border-bottom: solid 1px;
+      font-size: 0.875em;
+      font-weight: 500;
+      margin-top: 1em;
+    }
+
+    .recipe-details--payment {
+      border-bottom: solid 2px;
+      font-size: 0.875em;
+      font-weight: 500;
+      margin-top: 1em;
+    }
+
+
+    .recipe-profile {
+      padding-top: 48px;
+      position: relative;
+      /* width: calc(100% - 24em); */
+
+    }
+
+    .recipe-profile>* {
+      position: relative;
+      z-index: 5;
+    }
+
+    .recipe-profile--img {
+      width: 120px;
+      height: auto;
+      position: absolute;
+      left: 85%;
+      top: 97%;
+      z-index: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .recipe-profile--logo {
+      width: 120px;
+      height: auto;
+      position: absolute;
+      left: -1em;
+      top: 50%;
+      z-index: 1;
+      transform: translate(-100%, -50%);
+    }
+
+    .recipe-profile--name {
+      font-size: 1.25em;
+      font-weight: 700;
+    }
+
+    .recipe-profile--address {
+      display: flex;
+      justify-content: flex-start;
+      font-size: 0.875em;
+      font-weight: 500;
+    }
+
+    .recipe-profile--address>span {
+      display: block;
+      text-align: left;
+    }
+
+    .recipe-profile--address> :first-child {
+      width: 6.5em;
+      text-align: right;
+    }
+
+    .recipe-profile--address> :last-child {
+      width: 100%;
+    }
+
+    .recipe-profile--id {
+      font-size: 0.875em;
+      font-weight: 500;
+      margin-top: 1em;
+    }
+
+    .recipe-profile--id>span {
+      display: block;
+    }
+  </style>
+
+  <script>
+    $(document).ready(function () {
+
+      $('header').hide();
+      $('.breadcrumb').hide();
+      $('footer').hide();
+
+      if (location.search.indexOf('frame=on') != -1) {
+        $('header').hide();
+        $('.breadcrumb').hide();
+        $('.c-head').hide();
+        $('footer').hide();
+        $('.wrap').css('padding', '0px');
+        $('.edit').css('padding', '0px');
+        $('.container').css('padding', '0px');
+        $('.form-box').css('padding', '3rem');
+      }
+
+      $('#close_btn').on('click', function () {
+        close_popup();
+      });
+
+      
+      //var subtotal = 0;
+      //$('.detail_price').each(function(key, val) {
+      //  var val = 0;
+      //  if(!isNaN($(this).html())) {
+      //    val = parseFloat($(this).html());
+      //  }
+      //  subtotal += val;
+      //});
+      //var discount = 0;
+      //if(!isNaN($('#discount').html())) {
+      //  discount = $('#discount').html();
+      //}
+      //if(discount > 0) {
+      //  discount = -discount;
+      //}
+      //subtotal += discount;
+      //var tax = parseFloat(subtotal * 0.1);
+      //var total = subtotal + tax;
+      //$('#discount').html(discount);
+      //$('#syokei_all').html(subtotal);
+      //$('#syohizei').html(tax);
+      //$('#sum_all').html(total);
+      
+
+      var subtotal = 0;
+      $('.detail_price').each(function(key, val) {
+        var val = 0;
+        if(!isNaN($(this).html()) && $(this).html()!="") {
+          val = parseFloat($(this).html());
+        }
+        subtotal += val;
+      });
+      var discount = 0;
+      if(!isNaN($('#discount').html()) && $('#discount').html()!="") {
+        discount = parseFloat($('#discount').html());
+      }
+      if(discount > 0) {
+        discount = -discount;
+      }
+      
+      //special discountの仕様変更でコメントアウト
+      //subtotal += discount;
+      //
+      //↓↓新仕様↓↓
+      //Price(サプライヤー原価)=Quantity*UNIT PRICE-Special discountに変更。
+      //（実際のカラムだと：M2_DETAIL_PRICE=M2_DETAIL_QUANTITY*M2_DETAIL_UNIT_PRICE-M2_DETAIL_SP_DISCOUNT）
+ 
+      var tax = parseFloat(subtotal * 0.1);
+      var total = subtotal + tax;
+      $('#discount').html(discount);
+      $('#syokei_all').html(subtotal);
+      $('#syohizei').html(tax);
+      $('#sum_all').html(total);
+    });
+    function close_popup() {
+      $('#mask_mcontact2', parent.document).hide();
+      $('#popup_mcontact2', parent.document).fadeOut();
+    }
+  </script>
+  <script>
+    // calc by js
+    // 2024.04.15 項目が実際と大きく異なるため不使用とさせていただきました
+    $(function () {
+
+      /*
+      function tani() {
+        let tani1 = $("[name='ETC23']").val().replace('ETC23:', '');
+        let tani2 = $("[name='ETC27']").val().replace('ETC27:', '');
+        let tani3 = $("[name='ETC31']").val().replace('ETC31:', '');
+        let tani4 = $("[name='ETC35']").val().replace('ETC35:', '');
+        let tani5 = $("[name='ETC39']").val().replace('ETC39:', '');
+        let tani6 = $("[name='ETC43']").val().replace('ETC43:', '');
+        let tani7 = $("[name='ETC47']").val().replace('ETC47:', '');
+        let tani8 = $("[name='ETC51']").val().replace('ETC51:', '');
+        let tani9 = $("[name='ETC55']").val().replace('ETC55:', '');
+        let tani10 = $("[name='ETC59']").val().replace('ETC59:', '');
+
+        //円/個　⇒　数量枠後ろの単位は「個」
+        //円/時間　⇒　数量枠後ろの単位は「時間」
+        //円/分　⇒　数量枠後ろの単位は「分」
+
+        // console.log("tani1:" + tani1);
+        // console.log("getTani2_1:" + getTani2(tani1));
+        $("#tani1").text(getTani2(tani1));
+        $("#tani2").text(getTani2(tani2));
+        $("#tani3").text(getTani2(tani3));
+        $("#tani4").text(getTani2(tani4));
+        $("#tani5").text(getTani2(tani5));
+        $("#tani6").text(getTani2(tani6));
+        $("#tani7").text(getTani2(tani7));
+        $("#tani8").text(getTani2(tani8));
+        $("#tani9").text(getTani2(tani9));
+        $("#tani10").text(getTani2(tani10));
+      }
+
+      function getTani2(sel) {
+        let val = sel;
+        switch (sel) {
+          case "円/個":
+          case "個/円":
+            val = "個";
+            break;
+          case "円/時間":
+          case "時間/円":
+            val = "時間";
+            break;
+          case "円/分":
+          case "分/円":
+            val = "分";
+            break;
+        }
+        return val;
+
+      }
+      tani();
+
+
+      function sumcalc() {
+        let gokei = 0;
+
+        let tanka1 = convnum($("input[name='ETC22']").val());
+        let kosu1 = convnum($("input[name='ETC24']").val());
+        let tanka2 = convnum($("input[name='ETC26']").val());
+        let kosu2 = convnum($("input[name='ETC28']").val());
+        let tanka3 = convnum($("input[name='ETC30']").val());
+        let kosu3 = convnum($("input[name='ETC32']").val());
+        let tanka4 = convnum($("input[name='ETC34']").val());
+        let kosu4 = convnum($("input[name='ETC36']").val());
+        let tanka5 = convnum($("input[name='ETC38']").val());
+        let kosu5 = convnum($("input[name='ETC40']").val());
+        let tanka6 = convnum($("input[name='ETC42']").val());
+        let kosu6 = convnum($("input[name='ETC44']").val());
+        let tanka7 = convnum($("input[name='ETC46']").val());
+        let kosu7 = convnum($("input[name='ETC48']").val());
+        let tanka8 = convnum($("input[name='ETC50']").val());
+        let kosu8 = convnum($("input[name='ETC52']").val());
+        let tanka9 = convnum($("input[name='ETC54']").val());
+        let kosu9 = convnum($("input[name='ETC56']").val());
+        let tanka10 = convnum($("input[name='ETC58']").val());
+        let kosu10 = convnum($("input[name='ETC60']").val());
+
+
+
+        sum1 = tanka1 * kosu1;
+        sum2 = tanka2 * kosu2;
+        sum3 = tanka3 * kosu3;
+        sum4 = tanka4 * kosu4;
+        sum5 = tanka5 * kosu5;
+        sum6 = tanka6 * kosu6;
+        sum7 = tanka7 * kosu7;
+        sum8 = tanka8 * kosu8;
+        sum9 = tanka9 * kosu9;
+        sum10 = tanka10 * kosu10;
+
+        gokei = sum1 + sum2 + sum3 + sum4 + sum5 + sum6 + sum7 + sum8 + sum9 + sum10;
+
+        $("#sum1").text(sum1.toLocaleString());
+        $("#sum2").text(sum2.toLocaleString());
+        $("#sum3").text(sum3.toLocaleString());
+        $("#sum4").text(sum4.toLocaleString());
+        $("#sum5").text(sum5.toLocaleString());
+        $("#sum6").text(sum6.toLocaleString());
+        $("#sum7").text(sum7.toLocaleString());
+        $("#sum8").text(sum8.toLocaleString());
+        $("#sum9").text(sum9.toLocaleString());
+        $("#sum10").text(sum10.toLocaleString());
+        $("#sum_all").text(gokei.toLocaleString());
+
+        // $syohizei = Math.floor(parseFloat($gokei) * 0.1); //切り捨て
+        let zeinuki = Math.ceil(parseFloat(gokei) / 1.1); //税抜き金額（切り上げ）四捨五入のがいいのだろうか・・？
+        let syohizei = parseFloat(gokei) - zeinuki;
+        $("#syohizei").text(syohizei.toLocaleString());
+        $("#syokei_all").text(zeinuki.toLocaleString());
+
+
+      }
+
+      function convnum(val) {
+        let rtn = 0;
+        try {
+          rtn = parseInt(val);
+        } catch (e) {
+
+        }
+        if (isNaN(rtn)) {
+          rtn = 0;
+        }
+        return rtn;
+      }
+      sumcalc();
+      */
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $('#close_btn').on('click', function () {
+        close_popup();
+      });
+    });
+    function close_popup() {
+      $('#mask_mcontact2', parent.document).hide();
+      $('#popup_mcontact2', parent.document).fadeOut();
+    }
+  </script>
+</head>
+
+<body>
+
+
+  <div class="recipe">
+    <div class="recipe-dl">
+      <label class="recipe-dl--btn"
+        onclick="javascript:print();window.opener.location.reload();window.close();">Download</label>
+      <p class="recipe-dl--notes">
+        Please make sure to close this page after downloading. (Returning to the previous page will prevent automatic
+        issuance of the estimate.)
+      </p>
+    </div>
+    <div style="text-align: right;">
+      <a href="javascript:close_popup();">
+        Close
+      </a>
+    </div>
+    <h1 class="recipe-title">[PAGE_TITLE]</h1>
+    <!--<div class="recipe-header">
+      <p class="recipe-no">
+        No.[M2_ID]（Version[M2_VERSION]）
+      </p>
+      <p class="recipe-date">Date [D-M2_DATE]</p>
+    </div>-->
+    <div class="recipe-header">
+      <p class="recipe-no">
+        [MITSU_SCNO]
+        <!--No.[D-M2_QUOTE_NO]--><!--Quote No.-->
+      </p>
+      <p class="recipe-date">Date [D-M2_DATE]</p>
+    </div>
+    <div class="topwrap">
+      <div class="left_contents">
+        <div class="recipe-addressee">
+          Name
+        </div>
+        <!--
+        <div class="recipe-item">
+          <p class="recipe-item--name">Project name：[D-TITLE]</p>
+          <p class="recipe-item--the-items"><span>Time for payment：</span><span>[ETC12]</span></p>
+          <p class="recipe-item--the-items"><span>Form of 納品：</span><span>[D-M2_NOHIN_TYPE]</span></p>
+          <p class="recipe-item--the-items"><span>Payment Terms：</span><span>[D-M2_PAY_TYPE]</span></p>
+          <p class="recipe-item--the-items"><span>Currency：</span><span>[D-M2_CURRENCY]</span></p>
+          <p class="recipe-item--the-items"><span>Quote Valid Until：</span><span>[D-M2_QUOTE_VALID_UNTIL]</span></p>
+          <p class="recipe-item--the-items"><span>Study code：</span><span>[D-M2_STUDY_CODE]</span></p>
+          <p class="recipe-item--the-items"><span>Description：</span><span>[D-M2_DESCRIPTION]</span></p>
+        </div>
+        -->
+        <div class="recipe-item">
+          <p class="recipe-item--name">Project name：[D-TITLE]</p>
+          <p class="recipe-item--the-items"><span>Time for payment：</span><span>[D-M2_PAY_TYPE]</span></p>
+          <p class="recipe-item--the-items"><span>Form of 納品：</span><span>[D-M2_NOHIN_TYPE]</span></p>
+          <p class="recipe-item--the-items"><span>Payment Terms：</span><span>[D-M2_PAY_TYPE]</span></p>
+          <p class="recipe-item--the-items"><span>Currency：</span><span>[D-M2_CURRENCY]</span></p>
+          <p class="recipe-item--the-items"><span>Quote Valid Until：</span><span>[D-M2_QUOTE_VALID_UNTIL]</span></p>
+          <p class="recipe-item--the-items"><span>Study code：</span><span>[D-M2_STUDY_CODE]</span></p>
+          <p class="recipe-item--the-items"><span>Description：</span><span>[D-M2_DESCRIPTION]</span></p>
+        </div>
+      </div>
+      <!--
+      <div class="right_contents">
+        <div class="recipe-profile">
+          <p class="recipe-profile--name">[M1_VIEW]</p>
+          <p class="recipe-profile--address">
+            <span>Address：</span><span>[D-M1-M1_DVAL11][D-M1-M1_MSEL01][D-M1-M1_DTXT01]</span></p>
+          <p class="recipe-profile--address"><span>TEL：</span><span>[D-M1-M1_DVAL03]</span></p>
+          <p class="recipe-profile--id"><span>Invoice Registration Number：</span><span>[D-M1-M1_DVAL12]</span></p>
+          <img src="/common/images/logo.png" width="200" class="recipe-profile--logo">
+          <img src="/common/images/20210921_kakuin.png" width="200" class="recipe-profile--img">
+        </div>
+      </div>-->
+      <div class="right_contents">
+        <div class="recipe-profile">
+          <p class="recipe-profile--name">[M1_VIEW]<!--会社名 Supplier--></p>
+          <p class="recipe-profile--address">
+            <span>Address：</span><span>[PDF_ADDRESS2]</span></p>
+          <p class="recipe-profile--address"><span>TEL：</span><span>[D-M1-M1_DVAL07]</span></p>
+          <p class="recipe-profile--id"><span>Invoice Registration Number：</span><span>[D-M1-M1_DVAL12]</span></p>
+          <img src="/common/images/logo.png" width="200" class="recipe-profile--logo"><!--会社ロゴ-->
+          <img src="/common/images/20210921_kakuin.png" width="200" class="recipe-profile--img"><!--印影-->
+        </div>
+      </div>
+    </div>
+
+    <div class="recipe-footer">
+      <div class="recipe-details">
+        <input type="hidden" name="ETC23" value="[ETC23]" />
+        <input type="hidden" name="ETC27" value="[ETC27]" />
+        <input type="hidden" name="ETC31" value="[ETC31]" />
+        <input type="hidden" name="ETC35" value="[ETC35]" />
+        <input type="hidden" name="ETC39" value="[ETC39]" />
+        <input type="hidden" name="ETC43" value="[ETC43]" />
+        <input type="hidden" name="ETC47" value="[ETC47]" />
+        <input type="hidden" name="ETC51" value="[ETC51]" />
+        <input type="hidden" name="ETC55" value="[ETC55]" />
+        <input type="hidden" name="ETC59" value="[ETC59]" />
+
+        <div class="formset__item">
+          <table style="width:100%">
+            <tbody>
+              <!-- 正しい項目に修正 -->
+              <!--
+              <tr>
+                <th style="width:70%">Product name</th>
+                <th style="width:10%">quantity</th>
+                <th style="width:10%">unit price</th>
+                <th>price</th>
+              </tr>
+              -->
+              <tr>
+                <th style="width:10%">Item</th>
+                <th style="width:40%">Description</th>
+                <th style="width:40%">Note</th>
+                <th>price</th>
+                <th>Special Discount</th>
+              </tr>
+
+              <!-- DETAIL_AREAをデザインにあわせたADD_DETAIL_AREA2を用意 -->
+              [ADD_DETAIL_AREA2]
+
+              <!--
+              [S-ETC21]
+              <tr>
+                <input type="hidden" name="ETC22" value="[ETC22]">
+                <input type="hidden" name="ETC24" value="[ETC24]">
+                <td>[ETC21]</td>
+                <td style="text-align:right">[ETC24]</td>
+                <td style="text-align:right">[ETC22]</td>
+                <td style="text-align:right"><span id="sum1"></span></td>
+              </tr>
+              [E-ETC21]
+
+              [S-ETC25]
+              <tr>
+                <input type="hidden" name="ETC26" value="[ETC26]">
+                <input type="hidden" name="ETC28" value="[ETC28]">
+                <td>[ETC25]</td>
+                <td style="text-align:right">[ETC28]</td>
+                <td style="text-align:right">[ETC26]</td>
+                <td style="text-align:right"><span id="sum2"></span></td>
+              </tr>
+              [E-ETC25]
+
+              [S-ETC29]
+              <tr>
+                <input type="hidden" name="ETC30" value="[ETC30]">
+                <input type="hidden" name="ETC32" value="[ETC32]">
+                <td>[ETC29]</td>
+                <td style="text-align:right">[ETC32]</td>
+                <td style="text-align:right">[ETC30]</td>
+                <td style="text-align:right"><span id="sum3"></span></td>
+              </tr>
+              [E-ETC29]
+
+              [S-ETC33]
+              <tr>
+                <input type="hidden" name="ETC34" value="[ETC34]">
+                <input type="hidden" name="ETC36" value="[ETC36]">
+                <td>[ETC33]</td>
+                <td style="text-align:right">[ETC36]</td>
+                <td style="text-align:right">[ETC34]</td>
+                <td style="text-align:right"><span id="sum4"></span></td>
+              </tr>
+              [E-ETC33]
+
+              [S-ETC37]
+              <tr>
+                <input type="hidden" name="ETC38" value="[ETC38]">
+                <input type="hidden" name="ETC40" value="[ETC40]">
+                <td>[ETC37]</td>
+                <td style="text-align:right">[ETC40]</td>
+                <td style="text-align:right">[ETC38]</td>
+                <td style="text-align:right"><span id="sum5"></span></td>
+              </tr>
+              [E-ETC37]
+
+              [S-ETC41]
+              <tr>
+                <input type="hidden" name="ETC42" value="[ETC42]">
+                <input type="hidden" name="ETC44" value="[ETC44]">
+                <td>[ETC41]</td>
+                <td style="text-align:right">[ETC44]</td>
+                <td style="text-align:right">[ETC42]</td>
+                <td style="text-align:right"><span id="sum6"></span></td>
+              </tr>
+              [E-ETC41]
+              [S-ETC45]
+              <tr>
+                <input type="hidden" name="ETC46" value="[ETC46]">
+                <input type="hidden" name="ETC48" value="[ETC48]">
+                <td>[ETC45]</td>
+                <td style="text-align:right">[ETC48]</td>
+                <td style="text-align:right">[ETC46]</td>
+                <td style="text-align:right"><span id="sum7"></span></td>
+              </tr>
+              [E-ETC45]
+              [S-ETC49]
+              <tr>
+                <input type="hidden" name="ETC50" value="[ETC50]">
+                <input type="hidden" name="ETC52" value="[ETC52]">
+                <td>[ETC49]</td>
+                <td style="text-align:right">[ETC52]</td>
+                <td style="text-align:right">[ETC50]</td>
+                <td style="text-align:right"><span id="sum8"></span></td>
+              </tr>
+              [E-ETC49]
+
+              [S-ETC53]
+              <tr>
+                <input type="hidden" name="ETC54" value="[ETC54]">
+                <input type="hidden" name="ETC56" value="[ETC56]">
+                <td>[ETC53]</td>
+                <td style="text-align:right">[ETC56]</td>
+                <td style="text-align:right">[ETC54]</td>
+                <td style="text-align:right"><span id="sum9"></span></td>
+              </tr>
+              [E-ETC53]
+
+              [S-ETC57]
+              <tr>
+                <input type="hidden" name="ETC58" value="[ETC58]">
+                <input type="hidden" name="ETC60" value="[ETC60]">
+                <td>[ETC57]</td>
+                <td style="text-align:right">[ETC60]</td>
+                <td style="text-align:right">[ETC58]</td>
+                <td style="text-align:right"><span id="sum10"></span></td>
+              </tr>
+              [E-ETC57]
+              -->
+
+              <!--calc by jsに含まれておりませんので実装をお願いします-->
+              <tr>
+                <td colspan="3">Special discount included above.</td>
+                <!--<td style="text-align:right" id="discount">[D-M2_SPECIAL_DISCOUNT]</td>-->
+                <td style="text-align:right" id="discount">[SUM_M2_DETAIL_SP_DISCOUNT]</td>
+              </tr>
+              <tr>
+                <td colspan="4">[D-M2_SPECIAL_NOTE]</td>
+              </tr>
+              <!--/calc by jsに含まれておりませんので実装をお願いします-->
+
+              <tr>
+                <td colspan="3">Subtotal</td>
+                <td style="text-align:right" id="syokei_all">0</td>
+              </tr>
+              <tr>
+                <td colspan="3">Tax</td>
+                <td style="text-align:right" id="syohizei">0</td>
+              </tr>
+              <tr>
+                <td colspan="3">Total</td>
+                <td style="text-align:right" id="sum_all">0</td>
+              </tr>
+
+            </tbody>
+          </table>
+
+          <br>
+          [S-SERVICE_FEE_AREA][SERVICE_FEE_AREA][E-SERVICE_FEE_AREA]
+
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

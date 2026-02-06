@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project nameProject nameのメッセージ一覧｜Scientist3</title>
+  <meta name="description"
+    content="商談の一覧のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <link rel="stylesheet" href="/html_a/AdminLTE/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="/html_a/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="/html_a/AdminLTE/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="/html_a/AdminLTE/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="/html_a/css/common.css">
+  <!--template=/common/template/head.html-->
+
+  <script>
+    // 商談トグルボタン（イベント）
+    // NOTE: 2023.09.22 既存の関数の改修
+    function msg_toggle_click(e) {
+      let $title = $(e.target);
+      if ($title.hasClass('is--active')) {
+        // NOTE: アコーディオンが開いている場合にクリックされた時
+        // 任意のコード
+        console.log('イベント:商談アコーディオンを閉じました');
+      } else {
+        // NOTE: アコーディオンが閉じている場合にクリックされた時
+        // 任意のコード
+        console.log('イベント:商談アコーディオンを開きました');
+      }
+    }
+  </script>
+
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item"><a href="/m_message1/"></a>Opportunity List</li>
+          <li class="breadcrumb__item">Project nameProject nameのメッセージ一覧</li>
+        </ol>
+      </div>
+    </div>
+    <!--<section class="subpage-head">
+    <div class="l-container">
+      <div class="c-head">
+        <h1 class="c-head__ttl">Project name</h1>
+        <p class="c-head__txt">メッセージのやり取りをしているResearchers[RECCOUNT]件</p>
+      </div>
+    </div>
+  </section>-->
+    <section class="innerTab">
+      <div class="l-container">
+        <ul class="innerTab-flex">
+          <li class="innerTab__item">[S-STANDARD]<a href="/m_message1/" class="active">Opportunity
+              List</a>[S-MIDOKU]<span class="item__badge">[MIDOKU]</span>[E-MIDOKU][E-STANDARD]</li>
+          <li class="innerTab__item"><a href="">Basic Information</a></li>
+          <li class="innerTab__item"><a href="">財務情報</a></li>
+          <li class="innerTab__item"><a href="">サービス情報</a></li>
+          <li class="innerTab__item"><a href="">契約状況</a></li>
+        </ul>
+      </div>
+    </section>
+    <section class="result">
+      <div class="l-container">
+
+        <div class="c-head type--lightblue-left-border">
+          <h2 class="c-head__ttl">
+            <div class="item--ttl">Project name</div>
+            <div class="shodan__item-status"><span>ステータス</span><b>はりぼて</b></div>
+          </h2>
+          <!--<p class="c-head__txt">全[RECCOUNT]件中、[START]〜[END]件を表示</p>-->
+        </div>
+        <div class="result-supplier__list">
+
+          <div class="msg__list msg__list--header">
+            <div class="msg__item">
+              <label class="msg__item-title">
+                <p class="item--id">案件ID</p>
+                <p class="item--date">作成日</p>
+                <p class="item--date">最終更新日</p>
+                <p class="item--name">担当者</p>
+                <p class="item--partner">Supplier</p>
+                <p class="item--func"></p>
+              </label>
+            </div>
+          </div>
+
+          <div class="msg__list">
+            <!--<meta LIST-START>-->
+            <div class="msg__item" data-acc="">
+              <label class="msg__item-title" onclick="msg_toggle_click(event);" data-acc-title>
+                <p class="item--id">3290</p>
+                <p class="item--date">2023/12/31</p>
+                <p class="item--date">2023/12/31</p>
+                <p class="item--name">担当者</p>
+                <p class="item--partner">Supplier</p>
+                <nav class="item--func">
+                  <div class="btn--small btn--blue"><a href=""
+                      class="ui-link-icon ui-link-icon--add"><span>新規取引</span></a></div>
+                </nav>
+              </label>
+              <div class="msg__item-body" data-acc-body>test
+              </div>
+            </div>
+            <!--<meta LIST-END>-->
+          </div>
+          <!-- /.msg__list -->
+
+
+        </div>
+        <!--/.result-supplier__list-->
+        <div class="pagination">
+          <div class="pagination__list">[PAGING]</div>
+        </div>
+      </div>
+    </section>
+
+    <!--template=/common/template/flow.html-->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

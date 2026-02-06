@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>金額を提示する｜TOTTA</title>
+<link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" href="/icon-192x192.png">
+<!--template=/common/template/head.html-->
+<script>
+$(document).ready(function () {
+  if(parent.document) {
+    $('header').hide();
+    $('.breadcrumb').hide();
+    $('.c-head').hide();
+    $('footer').hide();
+    $('.wrap').css('padding', '0px');
+    $('.edit').css('padding', '0px');
+    $('.container').css('padding', '0px');
+    $('.form-box').css('padding', '3rem');
+ 
+    // 2021.01.14 yamamoto 買い手側もステータス提示できるようにするためURLを動的生成化
+    var page_name = 'm_chat1';
+    if(location.search.indexOf('side=2') != -1) {
+      page_name = 'm_chat2';
+    }
+    parent.document.location.href = '/' + page_name + '/?mode=list&word=[MID]-[MIDT]&mid1=[MID]&mid2=[MIDT]&etc02=[ETC02]';
+    //$('.ifrm', parent.document)[0].contentDocument.location.reload();
+    //close_popup();
+  }
+});
+function close_popup() {
+  $('#mask_mcontact', parent.document).hide();
+  $('#popup_mcontact', parent.document).fadeOut();
+}
+
+</script>
+</head>
+<body>
+<div class="wrap sub"> 
+  <!--template=/common/template/header.html--> 
+  
+  <!-- 以上共通 -->
+  
+  <div class="breadcrumb">
+    <ul>
+      <li><span itemprop="itemListElement" itemscope itemtype="http://schema.org/Listitem"><a itemprop="item" href="/"><span itemprop="name">トップ</span></a>
+        <meta itemprop="position" content="1" />
+        </span></li>
+      <li><span itemprop="itemListElement" itemscope itemtype="http://schema.org/Listitem"><a itemprop="item" href="/m_o1/"><span itemprop="name">金額を提示する</span></a>
+        <meta itemprop="position" content="2" />
+        </span></li>
+    </ul>
+  </section>
+  <section class="edit">
+    <div class="l-container">
+      <div class="c-head">
+        <h1 class="c-head__ttl">金額を提示する</h1>
+        <p>金額の提示が完了しました。お客様からのオファーをお待ち下さい。</p>
+      </div>
+    </div>
+  </section>
+  <!-- 以下共通 --> 
+  
+  <!--template=/common/template/footer.html--> 
+</div>
+</body>
+</html>

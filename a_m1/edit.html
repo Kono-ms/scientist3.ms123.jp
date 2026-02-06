@@ -1,0 +1,2764 @@
+
+
+<style>
+	th {
+		width: 300px;
+		max-width: 300px;
+	}
+	@media screen and (max-width:767px) {
+		th {
+			width: auto;
+			max-width: none;
+		}
+	}
+</style>
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+	<h1>サプライヤー管理</h1>
+
+	<ol class="breadcrumb">
+		<li><i class="fa fa-dashboard"></i> Home</li>
+		<li><a href="/a_m1/">サプライヤー管理</a></li>
+		<li>サプライヤー登録・編集</li>
+	</ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+
+		<div class="col-md-4 col-xs-12">
+			<div class="box box-default same_height">
+				<div class="box-body">
+					<form method="post" id="historyform" action="./">
+						<input type="hidden" name="mode" value="edit">
+						<input type="hidden" name="key" value="[ID]">
+						<input type="hidden" name="sort" value="[SORT]">
+						<input type="hidden" name="word" value="[WORD]">
+						<input type="hidden" name="page" value="[PAGE]">
+						<input type="hidden" name="lid" value="[LID]">
+						<input type="hidden" name="token" value="[TOKEN]">
+						<input type="hidden" name="ID" value="[ID]">
+						<div class="row row--flex">
+							<label class="col-md-4 col-xs-12 col-vam" for="input-historyform">バージョン</label>
+							<div class="col-md-8 col-xs-12">
+								<select name="version" id="input-historyform" onchange="document.getElementById('historyform').submit();" class="form-control">
+									[OPT-VERSION]
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8 col-xs-12">
+			<div class="box box-default same_height">
+				<div class="box-body">
+					<div class="row row--flex">
+						<label class="col-md-4 col-xs-12 col-vam">ログ</label>
+						<div class="col-md-8 col-xs-12">
+							[CHANGE_LOG]
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-xs-12">
+			<div class="box box-warning">
+
+				<div class="box-header">
+					<h3 class="box-title">登録・編集</h3>
+				</div><!-- /.box-header -->
+
+				<div class="box-body">
+
+						[S-ERR]
+						<div class="alert alert-warning alert-dismissible">
+							<div class="message_box mb20">
+								<p><i class="icon fa fa-warning"></i> 入力内容に不備がございますので、内容のご確認をお願いいたします。</p>
+								<div class="page_text">
+									<ul class="error_list">
+										[ERRMSG]
+									</ul>
+								</div>
+							</div>
+						</div>
+						[E-ERR]
+
+
+
+						<form method="post" action="./" enctype="multipart/form-data">
+							<button name="submit" value="submit" type="submit" class="mb20 btn btn-block btn-default" onclick=" var
+								ok=confirm('この内容で保存しますか？');if (ok) this.form.submit(); return false;"><i class="fa fa-floppy-o"></i> 保存</button>
+							<input type="hidden" name="mode" value="save">
+							<input type="hidden" name="key" value="[ID]">
+							<input type="hidden" name="sort" value="[SORT]">
+							<input type="hidden" name="word" value="[WORD]">
+							<input type="hidden" name="page" value="[PAGE]">
+							<input type="hidden" name="lid" value="[LID]">
+							<input type="hidden" name="token" value="[TOKEN]">
+							<input type="hidden" name="version" value="[VERSION]">
+							<input type="hidden" name="ID" value="[ID]">
+							<input type="hidden" name="SOCIALID" value="[SOCIALID]">
+							<input type="hidden" name="M1_ETC01" value="[M1_ETC01]">
+							<!-- <input type="hidden" name="M1_ETC02" value="[M1_ETC02]"> -->
+							<!-- <input type="hidden" name="M1_ETC03" value="[M1_ETC03]"> -->
+							<!-- <input type="hidden" name="M1_ETC04" value="[M1_ETC04]"> -->
+							<!-- <input type="hidden" name="M1_ETC05" value="[M1_ETC05]"> -->
+							<!-- <input type="hidden" name="M1_ETC06" value="[M1_ETC06]"> -->
+							<!-- <input type="hidden" name="M1_ETC07[]" value="[M1_ETC07]"> -->
+							<input type="hidden" name="M1_DRDO01" value="[M1_DRDO01]">
+
+
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">1. Basic Information</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+										<tr>
+											<th>MID[S-MID_NEW]<span class="new-item">
+											[new]</span>[E-MID_NEW]</th>
+											<td><input type="text" name="MID" class="input_w10 form-control" value="[MID]" size="90"></td>
+										</tr>
+										<tr>
+											<th>サプライヤーID</th>
+											<td>[MID_NEW]</td>
+										</tr>
+										<tr>
+											<th>メールアドレス[S-EMAIL_NEW]<span class="new-item">
+											[new]</span>[E-EMAIL_NEW]</th>
+											<td><input type="text" name="EMAIL" class="input_w10 form-control" value="[EMAIL]" size="90" required></td>
+										</tr>
+										<tr>
+											<th>パスワード[S-PASS_NEW]<span class="new-item">
+											[new]</span>[E-PASS_NEW]</th>
+											<td><input type="text" name="PASS" class="input_w10 form-control" value="[PASS]" size="90" required>
+											</td>
+										</tr>
+										<tr>
+											<th>登録状態[S-M1_DRDO01_NEW]<span class="new-item">
+											[new]</span>[E-M1_DRDO01_NEW]</th>
+											<td>
+												<ul>[OPT-M1_DRDO01]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>公開フラグ[S-ENABLE_NEW]<span class="new-item">
+											[new]</span>[E-ENABLE_NEW]</th>
+											<td>
+												<ul>[OPT-ENABLE]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>登録日時[S-NEWDATE_NEW]<span class="new-item">
+											[new]</span>[E-NEWDATE_NEW]</th>
+											<td><input type="text" name="NEWDATE" class="input_w10 form-control" value="[NEWDATE]" size="90"></td>
+										</tr>
+										<tr>
+											<th>更新日時[S-EDITDATE_NEW]<span class="new-item">
+											[new]</span>[E-EDITDATE_NEW]</th>
+											<td><input type="text" name="EDITDATE" class="input_w10 form-control" value="[EDITDATE]" size="90">
+											</td>
+
+										</tr>
+										<tr>
+											<th>利用規約に同意した日時（仮登録）[S-M1_DTXT08_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT08_NEW]</th>
+											<td>
+
+												<input type="text" name="M1_DTXT08" class="input_w10 form-control" value="[M1_DTXT08]" size="90">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
+
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">2. Profile</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+										<tr>
+											<th>Company name[S-M1_DVAL01_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL01_NEW]</th>
+											<td><input type="text" name="M1_DVAL01" class="input_w10 form-control" value="[M1_DVAL01]" size="90" required></td>
+										</tr>
+										<!-- <tr>
+										<th>Website</th>
+										<td><input type="text" name="M1_DVAL14"
+												class="input_w10 form-control" value="[M1_DVAL14]"
+												size="90"></td>
+									</tr> -->
+										<tr>
+											<th>First name[S-M1_DVAL22_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL22_NEW]</th>
+											<td><input type="text" name="M1_DVAL22" class="input_w10 form-control" value="[M1_DVAL22]" size="90" required</td>
+										</tr>
+										<tr>
+											<th>Last name[S-M1_DVAL23_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL23_NEW]</th>
+											<td><input type="text" name="M1_DVAL23" class="input_w10 form-control" value="[M1_DVAL23]" size="90" required></td>
+										</tr>
+										<tr>
+											<th>Job title[S-M1_DVAL24_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL24_NEW]</th>
+											<td><input type="text" name="M1_DVAL24" class="input_w10 form-control" value="[M1_DVAL24]" size="90" required></td>
+										</tr>
+										<tr>
+											<th>Phone[S-M1_DVAL07_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL07_NEW]</th>
+											<td>
+												<select id="phone_country_number" name="M1_ETC97" class="input_select form-control" required>[OPT-M1_ETC97]</select>
+
+
+												<input type="text" name="M1_DVAL07" class="input_w10 form-control" value="[M1_DVAL07]" size="90">
+
+												<script src="../phone_country_number.js"></script>
+												<script>
+													var phone_country_number_val = '[M1_ETC97]';
+													$(document).ready(function () {
+														for (var x in phone_country_number_list) {
+															var selected = '';
+															var code = phone_country_number_list[x][1];
+															var name = phone_country_number_list[x][2];
+															if (code == phone_country_number_val) {
+																selected = ' selected ';
+															}
+															var html = '<option value="' + code + '" ' + selected + '>' + name + '(+' + code + ')' + '</option>';
+															$('#phone_country_number').append(html);
+														}
+													});
+												</script>
+											</td>
+										</tr>
+										<tr>
+											<th>Country[S-M1_DVAL04_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL04_NEW]</th>
+											<td><select name="M1_DVAL04" class="input_select form-control" required>[OPT-M1_DVAL04]</select>
+											</td>
+
+										</tr>
+
+										<tr>
+											<th>Time zone[S-M1_DSEL03_NEW]<span class="new-item">
+											[new]</span>[E-M1_DSEL03_NEW]</th>
+											<td><select name="M1_DSEL03" class="input_select form-control" required>[OPT-M1_DSEL03]</select>
+											</td>
+
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
+
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">3. Company Information (基本情報)</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+										<tr>
+											<th>Company Website[S-M1_DVAL14_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL14_NEW]</th>
+											<td><input type="text" name="M1_DVAL14" class="input_w10 form-control" value="[M1_DVAL14]" size="90" required></td>
+										</tr>
+										<tr>
+											<th>CEO / Exective Director[S-M1_ETC99_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC99_NEW]</th>
+											<td><input type="text" name="M1_ETC99" class="input_w10 form-control" value="[M1_ETC99]" size="90"></td>
+										</tr>
+										<tr>
+											<th>Main Phone Number [S-M1_DVAL15_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL15_NEW]</th>
+											<td><input type="text" name="M1_DVAL15" class="input_w10 form-control" value="[M1_DVAL15]" size="90"></td>
+										</tr>
+										<tr>
+											<th>Number of Employees[S-M1_DVAL16_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL16_NEW]
+											</th>
+											<td><input type="number" name="M1_DVAL16" class="input_w10 form-control" value="[M1_DVAL16]" size="90"></td>
+										</tr>
+										<tr>
+											<th>Company Size[S-M1_DVAL17_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL17_NEW]</th>
+											<td><select name="M1_DVAL17" class="input_select form-control">[OPT-M1_DVAL17]</select>
+											</td>
+										</tr>
+										<tr>
+											<th>Year Established[S-M1_DVAL18_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL18_NEW]</th>
+											<td><input type="number" name="M1_DVAL18" class="input_w10 form-control" value="[M1_DVAL18]" size="90"></td>
+										</tr>
+										<tr>
+											<th>Short Description[S-M1_DTXT03_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT03_NEW]</th>
+											<td><textarea name="M1_DTXT03" class="textarea_w10 form-control" cols="70" rows="5">[M1_DTXT03]</textarea></td>
+										</tr>
+										<tr>
+											<th>Keywords (comma
+												separated)[S-M1_DTXT04_NEW]<span class="new-item">
+												[new]</span>[E-M1_DTXT04_NEW]
+											</th>
+											<td><textarea name="M1_DTXT04" class="textarea_w10 form-control" cols="70" rows="5">[M1_DTXT04]</textarea></td>
+										</tr>
+										<!--
+										<tr>
+											<th>Laboratories (one per line)[S-M1_DTXT05_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT05_NEW]
+											</th>
+											<td><textarea name="M1_DTXT05" class="textarea_w10 form-control"
+													cols="70" rows="5">[M1_DTXT05]</textarea></td>
+										</tr>
+										-->
+										[S-NEWDATA]
+										<tr>
+											<th>logo[S-M1_DFIL02_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL02_NEW]</th>
+											<td><input type="file" name="EP_M1_DFIL02" value="[M1_DFIL02]" size="90"><input type="hidden" name="M1_DFIL02" value="[M1_DFIL02]"></td>
+										</tr>
+										[E-NEWDATA]
+										[S-EDITDATA]
+										<tr>
+											<th>logo[S-M1_DFIL02_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL02_NEW]</th>
+											<td><img src="[M1_DFIL02]" width="200"> 削除 <input type="checkbox" name="DEL_IMAGE_M1_DFIL02"><br><input type="file" name="EP_M1_DFIL02" value="[M1_DFIL02]" size="90"><input type="hidden" name="M1_DFIL02" value="[M1_DFIL02]">
+											</td>
+										</tr>
+										[E-EDITDATA]
+										<tr>
+											<th colspan="2">Head Office Location</th>
+										</tr>
+										<tr>
+											<th>Organization name[S-M1_ETC128_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC128_NEW]</th>
+											<td><input type="text" name="M1_ETC128" class="input_w10 form-control" value="[M1_ETC128]" size="90"></td>
+										</tr>
+										<tr>
+											<th>Address Line 1[S-M1_ETC129_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC129_NEW]</th>
+
+											<td><input type="text" name="M1_ETC129" class="input_w10 form-control" value="[M1_ETC129]" size="90"></td>
+										</tr>
+										<tr>
+											<th>Address Line 2[S-M1_ETC130_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC130_NEW]</th>
+											<td><input type="text" name="M1_ETC130" class="input_w10 form-control" value="[M1_ETC130]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>City/Province[S-M1_ETC131_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC131_NEW]</th>
+											<td><input type="text" name="M1_ETC131" class="input_w10 form-control" value="[M1_ETC131]" size="90">
+											</td>
+
+										</tr>
+										<tr>
+											<th>ZIP/Postal code[S-M1_ETC132_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC132_NEW]</th>
+											<td><input type="text" name="M1_ETC132" class="input_w10 form-control" value="[M1_ETC132]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Country[S-M1_ETC133_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC133_NEW]</th>
+											<td><select name="M1_ETC133" class="input_select form-control">[OPT-M1_ETC133]</select>
+											</td>
+										</tr>
+
+									</tbody>
+								</table>
+								</div>
+							</div>
+
+<!--
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">4. Locations for</h3></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit" data-acc-body>
+									<tbody>
+										<tr>
+											<th>BILL TO:[S-M1_DVAL06_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL06_NEW]</th>
+											<td><input type="text" name="M1_DVAL06"
+													class="input_w10 form-control" value="[M1_DVAL06]"
+													size="90"></td>
+										</tr>
+										<tr>
+											<th>ship to[S-M1_DVAL25_NEW]<span class="new-item">
+											[new]</span>[E-M1_DVAL25_NEW]</th>
+											<td><input type="text" name="M1_DVAL25"
+													class="input_w10 form-control" value="[M1_DVAL25]"
+													size="90"></td>
+										</tr>
+
+									</tbody>
+								</table>
+								</div>
+							</div>
+-->
+
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">Company information (基本情報以外)</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+<!--
+										<tr>
+											<th colspan="2">Service Website</th>
+										</tr>
+-->
+<!--No.1 (default)-->
+										<tr>
+											<th>Service Website[S-M1_ETC08_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC08_NEW]</th>
+											<td><input type="text" name="M1_ETC08" class="input_w10 form-control" value="[M1_ETC08]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Service introduction[S-M1_ETC91_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC91_NEW]</th>
+											<td><input type="text" name="M1_ETC91" class="input_w10 form-control" value="[M1_ETC91]" size="90">
+											</td>
+										</tr>
+<!--No.2～No.5-->
+<!--No.2-->
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">Service Website No.2</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>Service Website[S-M1_ETC27_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC27_NEW]</th>
+																	<td><input type="text" name="M1_ETC27" class="input_w10 form-control" value="[M1_ETC27]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Service introduction[S-M1_ETC92_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC92_NEW]</th>
+																	<td><input type="text" name="M1_ETC92" class="input_w10 form-control" value="[M1_ETC92]" size="90">
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+
+											</td>
+										</tr>
+<!--No.3-->
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">Service Website No.3</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>Service Website[S-M1_ETC28_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC28_NEW]</th>
+																	<td><input type="text" name="M1_ETC28" class="input_w10 form-control" value="[M1_ETC28]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Service introduction[S-M1_ETC93_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC93_NEW]</th>
+																	<td><input type="text" name="M1_ETC93" class="input_w10 form-control" value="[M1_ETC93]" size="90">
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+
+											</td>
+										</tr>
+<!--No.4-->
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">Service Website No.4</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>Service Website[S-M1_ETC29_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC29_NEW]</th>
+																	<td><input type="text" name="M1_ETC29" class="input_w10 form-control" value="[M1_ETC29]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Service introduction[S-M1_ETC94_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC94_NEW]</th>
+																	<td><input type="text" name="M1_ETC94" class="input_w10 form-control" value="[M1_ETC94]" size="90">
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+
+											</td>
+										</tr>
+<!--No.5-->
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">Service Website No.5</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>Service Website[S-M1_ETC30_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC30_NEW]</th>
+																	<td><input type="text" name="M1_ETC30" class="input_w10 form-control" value="[M1_ETC30]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Service introduction[S-M1_ETC95_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC95_NEW]</th>
+																	<td><input type="text" name="M1_ETC95" class="input_w10 form-control" value="[M1_ETC95]" size="90">
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+<!--// No.2～No.5-->
+
+
+
+										<tr style="display: none;">
+											<th colspan="2">BILL TO</th>
+										</tr>
+										<tr style="display: none;">
+											<th>Organization name[S-M1_DTXT24_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT24_NEW]</th>
+											<td><input type="text" name="M1_DTXT24" class="input_w10 form-control" value="[M1_DTXT24]" size="90"></td>
+										</tr>
+										<tr style="display: none;">
+											<th>Address Line 1[S-M1_DTXT12_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT12_NEW]</th>
+
+											<td><input type="text" name="M1_DTXT12" class="input_w10 form-control" value="[M1_DTXT12]" size="90"></td>
+										</tr>
+										<tr style="display: none;">
+											<th>Address Line 2[S-M1_DTXT15_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT15_NEW]</th>
+											<td><input type="text" name="M1_DTXT15" class="input_w10 form-control" value="[M1_DTXT15]" size="90"></td>
+										</tr>
+										<tr style="display: none;">
+											<th>City/Province[S-M1_DTXT18_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT18_NEW]</th>
+											<td><input type="text" name="M1_DTXT18" class="input_w10 form-control" value="[M1_DTXT18]" size="90">
+											</td>
+
+										</tr>
+										<tr style="display: none;">
+											<th>ZIP/Postal code[S-M1_DTXT21_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT21_NEW]</th>
+											<td><input type="text" name="M1_DTXT21" class="input_w10 form-control" value="[M1_DTXT21]" size="90">
+											</td>
+										</tr>
+										<tr style="display: none;">
+											<th>Country[S-M1_DSEL04_NEW]<span class="new-item">
+											[new]</span>[E-M1_DSEL04_NEW]</th>
+											<td><select name="M1_DSEL04" class="input_select form-control">[OPT-M1_DSEL04]</select>
+											</td>
+										</tr>
+
+										<tr style="display: none;">
+											<th>Organization name[S-M1_DTXT10_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT10_NEW]</th>
+											<td><input type="text" name="M1_DTXT10" class="input_w10 form-control" value="[M1_DTXT10]" size="90"></td>
+										</tr>
+										<tr style="display: none;">
+											<th>Address Line 1[S-M1_DTXT13_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT13_NEW]</th>
+
+											<td><input type="text" name="M1_DTXT13" class="input_w10 form-control" value="[M1_DTXT13]" size="90"></td>
+										</tr>
+										<tr style="display: none;">
+											<th>Address Line 2[S-M1_DTXT16_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT16_NEW]</th>
+											<td><input type="text" name="M1_DTXT16" class="input_w10 form-control" value="[M1_DTXT16]" size="90"></td>
+										</tr>
+										<tr style="display: none;">
+											<th>City/Province[S-M1_DTXT19_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT19_NEW]</th>
+											<td><input type="text" name="M1_DTXT19" class="input_w10 form-control" value="[M1_DTXT19]" size="90">
+											</td>
+
+										</tr>
+										<tr style="display: none;">
+											<th>ZIP/Postal code[S-M1_DTXT22_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT22_NEW]</th>
+											<td><input type="text" name="M1_DTXT22" class="input_w10 form-control" value="[M1_DTXT22]" size="90">
+											</td>
+										</tr>
+										<tr style="display: none;">
+											<th>Country[S-M1_DSEL05_NEW]<span class="new-item">
+											[new]</span>[E-M1_DSEL05_NEW]</th>
+											<td><select name="M1_DSEL05" class="input_select form-control">[OPT-M1_DSEL05]</select>
+											</td>
+										</tr>
+
+										<tr style="display: none;">
+											<th>Organization name[S-M1_DTXT11_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT11_NEW]</th>
+											<td><input type="text" name="M1_DTXT11" class="input_w10 form-control" value="[M1_DTXT11]" size="90"></td>
+										</tr>
+										<tr style="display: none;">
+											<th>Address Line 1[S-M1_DTXT14_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT14_NEW]</th>
+
+											<td><input type="text" name="M1_DTXT14" class="input_w10 form-control" value="[M1_DTXT14]" size="90"></td>
+										</tr>
+										<tr style="display: none;">
+											<th>Address Line 2[S-M1_DTXT17_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT17_NEW]</th>
+											<td><input type="text" name="M1_DTXT17" class="input_w10 form-control" value="[M1_DTXT17]" size="90"></td>
+										</tr>
+										<tr style="display: none;">
+											<th>City/Province[S-M1_DTXT20_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT20_NEW]</th>
+											<td><input type="text" name="M1_DTXT20" class="input_w10 form-control" value="[M1_DTXT20]" size="90">
+											</td>
+
+										</tr>
+										<tr style="display: none;">
+											<th>ZIP/Postal code[S-M1_DTXT23_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT23_NEW]</th>
+											<td><input type="text" name="M1_DTXT23" class="input_w10 form-control" value="[M1_DTXT23]" size="90">
+											</td>
+										</tr>
+										<tr style="display: none;">
+											<th>Country[S-M1_DSEL06_NEW]<span class="new-item">
+											[new]</span>[E-M1_DSEL06_NEW]</th>
+											<td><select name="M1_DSEL06" class="input_select form-control">[OPT-M1_DSEL06]</select>
+											</td>
+										</tr>
+										<tr>
+											<th colspan="2">SHIP TO</th>
+										</tr>
+										<tr>
+											<th>Organization name[S-M1_DTXT25_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT25_NEW]</th>
+											<td><input type="text" name="M1_DTXT25" class="input_w10 form-control" value="[M1_DTXT25]" size="90"></td>
+										</tr>
+										<tr>
+											<th>Address Line 1[S-M1_DTXT28_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT28_NEW]</th>
+
+											<td><input type="text" name="M1_DTXT28" class="input_w10 form-control" value="[M1_DTXT28]" size="90"></td>
+										</tr>
+										<tr>
+											<th>Address Line 2[S-M1_ETC10_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC10_NEW]</th>
+											<td><input type="text" name="M1_ETC10" class="input_w10 form-control" value="[M1_ETC10]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>City/Province[S-M1_ETC21_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC21_NEW]</th>
+											<td><input type="text" name="M1_ETC21" class="input_w10 form-control" value="[M1_ETC21]" size="90">
+											</td>
+
+										</tr>
+										<tr>
+											<th>ZIP/Postal code[S-M1_ETC24_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC24_NEW]</th>
+											<td><input type="text" name="M1_ETC24" class="input_w10 form-control" value="[M1_ETC24]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Country[S-M1_DSEL07_NEW]<span class="new-item">
+											[new]</span>[E-M1_DSEL07_NEW]</th>
+											<td><select name="M1_DSEL07" class="input_select form-control">[OPT-M1_DSEL07]</select>
+											</td>
+										</tr>
+										<tr>
+											<th>Explanation[S-M1_ETC125_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC125_NEW]</th>
+											<td><textarea name="M1_ETC125" class="textarea_w10 form-control" cols="70" rows="5">[M1_ETC125]</textarea></td>
+											</td>
+										</tr>
+
+
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">SHIP TO No.2</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>Organization name[S-M1_DTXT26_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DTXT26_NEW]</th>
+																	<td><input type="text" name="M1_DTXT26" class="input_w10 form-control" value="[M1_DTXT26]" size="90"></td>
+																</tr>
+																<tr>
+																	<th>Address Line 1[S-M1_DTXT29_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DTXT29_NEW]</th>
+
+																	<td><input type="text" name="M1_DTXT29" class="input_w10 form-control" value="[M1_DTXT29]" size="90"></td>
+																</tr>
+																<tr>
+																	<th>Address Line 2[S-M1_ETC11_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC11_NEW]</th>
+																	<td><input type="text" name="M1_ETC11" class="input_w10 form-control" value="[M1_ETC11]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>City/Province[S-M1_ETC22_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC22_NEW]</th>
+																	<td><input type="text" name="M1_ETC22" class="input_w10 form-control" value="[M1_ETC22]" size="90">
+																	</td>
+
+																</tr>
+																<tr>
+																	<th>ZIP/Postal code[S-M1_ETC25_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC25_NEW]</th>
+																	<td><input type="text" name="M1_ETC25" class="input_w10 form-control" value="[M1_ETC25]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Country[S-M1_DSEL08_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DSEL08_NEW]</th>
+																	<td><select name="M1_DSEL08" class="input_select form-control">[OPT-M1_DSEL08]</select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>Explanation[S-M1_ETC126_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC126_NEW]</th>
+																	<td><textarea name="M1_ETC126" class="textarea_w10 form-control" cols="70" rows="5">[M1_ETC126]</textarea>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">SHIP TO No.3</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>Organization name[S-M1_DTXT27_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DTXT27_NEW]</th>
+																	<td><input type="text" name="M1_DTXT27" class="input_w10 form-control" value="[M1_DTXT27]" size="90"></td>
+																</tr>
+																<tr>
+																	<th>Address Line 1[S-M1_DTXT30_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DTXT30_NEW]</th>
+
+																	<td><input type="text" name="M1_DTXT30" class="input_w10 form-control" value="[M1_DTXT30]" size="90"></td>
+																</tr>
+																<tr>
+																	<th>Address Line 2[S-M1_ETC12_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC12_NEW]</th>
+																	<td><input type="text" name="M1_ETC12" class="input_w10 form-control" value="[M1_ETC12]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>City/Province[S-M1_ETC23_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC23_NEW]</th>
+																	<td><input type="text" name="M1_ETC23" class="input_w10 form-control" value="[M1_ETC23]" size="90">
+																	</td>
+
+																</tr>
+																<tr>
+																	<th>ZIP/Postal code[S-M1_ETC26_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC26_NEW]</th>
+																	<td><input type="text" name="M1_ETC26" class="input_w10 form-control" value="[M1_ETC26]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Country[S-M1_DSEL09_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DSEL09_NEW]</th>
+																	<td><select name="M1_DSEL09" class="input_select form-control">[OPT-M1_DSEL09]</select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>Explanation[S-M1_ETC127_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC127_NEW]</th>
+																	<td><textarea name="M1_ETC127" class="textarea_w10 form-control" cols="70" rows="5">[M1_ETC127]</textarea>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
+
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">Banking Details</h3>
+									<i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+										<tr>
+											<th colspan="2">Billing Address 1</th>
+										</tr>
+										<tr>
+											<th>Organization Name[S-M1_ETC31_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC31_NEW]</th>
+											<td><input type="text" name="M1_ETC31" class="input_w10 form-control" value="[M1_ETC31]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Name[S-M1_ETC32_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC32_NEW]
+											</th>
+											<td><input type="text" name="M1_ETC32" class="input_w10 form-control" value="[M1_ETC32]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Attention (Optional)[S-M1_ETC33_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC33_NEW]</th>
+											<td><input type="text" name="M1_ETC33" class="input_w10 form-control" value="[M1_ETC33]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Address Line 1[S-M1_ETC34_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC34_NEW]</th>
+											<td><input type="text" name="M1_ETC34" maxlength="40" class="input_w10 form-control" value="[M1_ETC34]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Address Line 2[S-M1_ETC35_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC35_NEW]</th>
+											<td><input type="text" name="M1_ETC35" class="input_w10 form-control" value="[M1_ETC35]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>City/Province[S-M1_ETC36_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC36_NEW]</th>
+											<td><input type="text" name="M1_ETC36" class="input_w10 form-control" value="[M1_ETC36]" size="90">
+											</td>
+										</tr>
+										<!--<tr>
+											<th>State/Province[S-M1_ETC37_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC37_NEW]</th>
+											<td><input type="text" name="M1_ETC37" class="input_w10 form-control" value="[M1_ETC37]" size="90">
+											</td>
+										</tr>-->
+										<tr>
+											<th>Zip/Postal Code[S-M1_ETC38_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC38_NEW]</th>
+											<td><input type="text" name="M1_ETC38" class="input_w10 form-control" value="[M1_ETC38]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Country[S-M1_DSEL10_NEW]<span class="new-item">
+											[new]</span>[E-M1_DSEL10_NEW]</th>
+											<td><select name="M1_DSEL10" class="input_select form-control">[OPT-M1_DSEL10]</select>
+											</td>
+										</tr>
+
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">Billing Address 2</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>Organization Name[S-M1_ETC106_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC106_NEW]</th>
+																	<td><input type="text" name="M1_ETC106" class="input_w10 form-control" value="[M1_ETC106]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Name[S-M1_ETC107_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC107_NEW]
+																	</th>
+																	<td><input type="text" name="M1_ETC107" class="input_w10 form-control" value="[M1_ETC107]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Attention (Optional)[S-M1_ETC108_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC108_NEW]
+																	</th>
+																	<td><input type="text" name="M1_ETC108" class="input_w10 form-control" value="[M1_ETC108]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Address Line 1[S-M1_ETC109_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC109_NEW]</th>
+																	<td><input type="text" name="M1_ETC109" class="input_w10 form-control" value="[M1_ETC109]" maxlength="40" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Address Line 2[S-M1_ETC110_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC110_NEW]</th>
+																	<td><input type="text" name="M1_ETC110" class="input_w10 form-control" value="[M1_ETC110]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>City/Province[S-M1_ETC111_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC111_NEW]</th>
+																	<td><input type="text" name="M1_ETC111" class="input_w10 form-control" value="[M1_ETC111]" size="90">
+																	</td>
+																</tr>
+																<!--<tr>
+																	<th>State/Province[S-M1_ETC112_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC112_NEW]</th>
+																	<td><input type="text" name="M1_ETC112" class="input_w10 form-control" value="[M1_ETC112]" size="90">
+																	</td>
+																</tr>-->
+																<tr>
+																	<th>Zip/Postal Code[S-M1_ETC113_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC113_NEW]</th>
+																	<td><input type="text" name="M1_ETC113" class="input_w10 form-control" value="[M1_ETC113]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Country[S-M1_ETC114_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC114_NEW]</th>
+																	<td><select name="M1_ETC114" class="input_select form-control">[OPT-M1_ETC114]</select>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">Billing Address 3</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>Organization Name[S-M1_ETC115_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC115_NEW]</th>
+																	<td><input type="text" name="M1_ETC115" class="input_w10 form-control" value="[M1_ETC115]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Name[S-M1_ETC116_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC116_NEW]
+																	</th>
+																	<td><input type="text" name="M1_ETC116" class="input_w10 form-control" value="[M1_ETC116]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Attention (Optional)[S-M1_ETC117_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC117_NEW]
+																	</th>
+																	<td><input type="text" name="M1_ETC117" class="input_w10 form-control" value="[M1_ETC117]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Address Line 1[S-M1_ETC118_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC118_NEW]</th>
+																	<td><input type="text" name="M1_ETC118" class="input_w10 form-control" value="[M1_ETC118]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Address Line 2[S-M1_ETC119_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC119_NEW]</th>
+																	<td><input type="text" name="M1_ETC119" class="input_w10 form-control" value="[M1_ETC119]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>City/Province[S-M1_ETC120_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC120_NEW]</th>
+																	<td><input type="text" name="M1_ETC120" class="input_w10 form-control" value="[M1_ETC120]" size="90">
+																	</td>
+																</tr>
+																<!--<tr>
+																	<th>State/Province[S-M1_ETC121_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC121_NEW]</th>
+																	<td><input type="text" name="M1_ETC121" class="input_w10 form-control" value="[M1_ETC121]" size="90">
+																	</td>
+																</tr>-->
+																<tr>
+																	<th>Zip/Postal Code[S-M1_ETC122_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC122_NEW]</th>
+																	<td><input type="text" name="M1_ETC122" class="input_w10 form-control" value="[M1_ETC122]" size="90">
+																	</td>
+																</tr>
+																<tr>
+																	<th>Country[S-M1_ETC123_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC123_NEW]</th>
+																	<td><select name="M1_ETC123" class="input_select form-control">[OPT-M1_ETC123]</select>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+
+
+<!--Banking Details child table-->
+										<tr>
+											<td colspan="2">
+
+						<div class="box box-pale-color panel" data-acc>
+							<div class="box-header with-border" data-acc-title><h3 class="box-title">Banking Details</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+							<div class="box-body" data-acc-body>
+							<table class="table table-bordered table_edit">
+								<tbody>
+									<tr>
+										<th>Country[S-M1_ETC39_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC39_NEW]</th>
+										<td><select name="M1_ETC39" class="input_select form-control">[OPT-M1_ETC39]</select>
+										</td>
+									</tr>
+
+
+									<tr>
+										<th>Currency[S-M1_ETC40_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC40_NEW]</th>
+										<td><select name="M1_ETC40" class="input_select form-control">[OPT-M1_ETC40]</select>
+										</td>
+									</tr>
+									<tr>
+										<th>Bank name[S-M1_ETC41_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC41_NEW]</th>
+										<td><input type="text" name="M1_ETC41" class="input_w10 form-control" value="[M1_ETC41]" size="90">
+										</td>
+									</tr>
+									<tr>
+										<th>Account name[S-M1_ETC42_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC42_NEW]</th>
+										<td><input type="text" name="M1_ETC42" class="input_w10 form-control" value="[M1_ETC42]" size="90">
+										</td>
+									</tr>
+									<tr>
+										<th>Bank branch[S-M1_ETC100_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC100_NEW]</th>
+										<td><input type="text" name="M1_ETC100" class="input_w10 form-control" value="[M1_ETC100]" size="90">
+										</td>
+									</tr>
+									<tr>
+										<th>Bank address[S-M1_ETC101_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC101_NEW]</th>
+										<td><input type="text" name="M1_ETC101" class="input_w10 form-control" value="[M1_ETC101]" size="90">
+										</td>
+									</tr>
+									<tr>
+										<th>Account number or IBAN[S-M1_ETC43_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC43_NEW]</th>
+										<td><input type="text" name="M1_ETC43" class="input_w10 form-control" value="[M1_ETC43]" size="90">
+										</td>
+									</tr>
+									<tr>
+										<th>ABA(Routing) number[S-M1_ETC44_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC44_NEW]</th>
+										<td><input type="text" name="M1_ETC44" class="input_w10 form-control" value="[M1_ETC44]" size="90">
+										</td>
+									</tr>
+									<tr>
+										<th>SWIFT/BIC code[S-M1_ETC45_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC45_NEW]</th>
+										<td><input type="text" name="M1_ETC45" class="input_w10 form-control" value="[M1_ETC45]" size="90">
+										</td>
+									</tr>
+
+									<tr>
+										<th>Intermediary Bank name[S-M1_ETC102_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC102_NEW]
+										</th>
+										<td><input type="text" name="M1_ETC102" class="input_w10 form-control" value="[M1_ETC102]" size="90">
+										</td>
+									</tr>
+									<tr>
+										<th>Intermediary Bank
+											branch[S-M1_ETC103_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC103_NEW]</th>
+										<td><input type="text" name="M1_ETC103" class="input_w10 form-control" value="[M1_ETC103]" size="90">
+										</td>
+									</tr>
+									<tr>
+										<th>Intermediary Bank
+											address[S-M1_ETC104_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC104_NEW]</th>
+										<td><input type="text" name="M1_ETC104" class="input_w10 form-control" value="[M1_ETC104]" size="90">
+										</td>
+									</tr>
+									<tr>
+										<th>適格請求書発行事業者登録番号（Japanese Companies
+											Only）[S-M1_ETC105_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC105_NEW]</th>
+										<td><input type="text" name="M1_ETC105" class="input_w10 form-control" value="[M1_ETC105]" size="90">
+										</td>
+									</tr>
+									[S-NEWDATA]
+									<tr>
+										<th>File[S-M1_ETC46_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC46_NEW]</th>
+										<td><input type="file" accept=".pdf" name="EP_M1_ETC46" value="[M1_ETC46]" size="90"><input type="hidden" name="M1_ETC46" value="[M1_ETC46]"></td>
+
+									</tr>
+									[E-NEWDATA]
+									[S-EDITDATA]
+									<tr>
+										<th>File[S-M1_ETC46_NEW]<span class="new-item">
+										[new]</span>[E-M1_ETC46_NEW]</th>
+										<td>[S-M1_ETC46]<a href="[M1_ETC46]" download="">ダウンロード</a> 削除
+											<input type="checkbox" name="DEL_IMAGE_M1_ETC46"><br>[E-M1_ETC46]<input type="file" accept=".pdf" name="EP_M1_ETC46" value="[M1_ETC46]" size="90"><input type="hidden" name="M1_ETC46" value="[M1_ETC46]">
+
+										</td>
+									</tr>
+									[E-EDITDATA]
+								</tbody>
+							</table>
+							</div>
+						</div>
+
+											</td>
+										</tr>
+<!--/Banking Details child table-->
+
+										<tr>
+											<th colspan="2">General Accounting Contact</th>
+										</tr>
+										<tr>
+											<th>Name[S-M1_ETC47_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC47_NEW]</th>
+											<td><input type="text" name="M1_ETC47" class="input_w10 form-control" value="[M1_ETC47]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Email[S-M1_ETC48_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC48_NEW]</th>
+											<td><input type="text" name="M1_ETC48" class="input_w10 form-control" value="[M1_ETC48]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Title[S-M1_ETC49_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC49_NEW]</th>
+											<td><input type="text" name="M1_ETC49" class="input_w10 form-control" value="[M1_ETC49]" size="90">
+											</td>
+										</tr>
+
+										<tr>
+											<th>Use different contact information for purchase
+												orders[S-M1_DCHK01_NEW]<span class="new-item">
+												[new]</span>[E-M1_DCHK01_NEW]</th>
+											<td>
+												<ul>[OPT-M1_DCHK01]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th colspan="2">Remittance Contact</th>
+										</tr>
+										<tr>
+											<th>Name[S-M1_DRDO02_NEW]<span class="new-item">
+											[new]</span>[E-M1_DRDO02_NEW]
+											</th>
+											<td><input type="text" name="M1_DRDO02" class="input_w10 form-control" value="[M1_DRDO02]" size="90">
+											</td>
+
+										</tr>
+
+										<tr>
+											<th>Email[S-M1_DRDO03_NEW]<span class="new-item">
+											[new]</span>[E-M1_DRDO03_NEW]
+											</th>
+											<td><input type="text" name="M1_DRDO03" class="input_w10 form-control" value="[M1_DRDO03]" size="90">
+											</td>
+
+										</tr>
+										<tr>
+											<th>Title[S-M1_DRDO04_NEW]<span class="new-item">
+											[new]</span>[E-M1_DRDO04_NEW]
+											</th>
+											<td><input type="text" name="M1_DRDO04" class="input_w10 form-control" value="[M1_DRDO04]" size="90">
+											</td>
+
+										</tr>
+										<tr>
+											<th>Tax ID[S-M1_DRDO05_NEW]<span class="new-item">
+											[new]</span>[E-M1_DRDO05_NEW]</th>
+											<td><input type="text" name="M1_DRDO05" class="input_w10 form-control" value="[M1_DRDO05]" size="90">
+											</td>
+
+										</tr>
+										<tr>
+											<th>D-U-N-S[S-M1_DRDO07_NEW]<span class="new-item">
+											[new]</span>[E-M1_DRDO07_NEW]</th>
+											<td><input type="text" name="M1_DRDO07" class="input_w10 form-control" value="[M1_DRDO07]" size="90">
+											</td>
+
+										</tr>
+										<tr>
+											<th colspan="2">Tax forms</th>
+										</tr>
+										<tr>
+											<th>Form Type[S-M1_DRDO08_NEW]<span class="new-item">
+											[new]</span>[E-M1_DRDO08_NEW]</th>
+											<td>
+												<ul>[OPT-M1_DRDO08]</ul>
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>Upload a new tax form[S-M1_DRDO06_NEW]<span class="new-item">
+											[new]</span>[E-M1_DRDO06_NEW]
+											</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_DRDO06" value="[M1_DRDO06]" size="90"><input type="hidden" name="M1_DRDO06" value="[M1_DRDO06]"></td>
+
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>Upload a new tax form[S-M1_DRDO06_NEW]<span class="new-item">
+											[new]</span>[E-M1_DRDO06_NEW]
+											</th>
+											<td>[S-M1_DRDO06]<a href="[M1_DRDO06]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_DRDO06"><br>[E-M1_DRDO06]<input type="file" accept=".pdf" name="EP_M1_DRDO06" value="[M1_DRDO06]" size="90"><input type="hidden" name="M1_DRDO06" value="[M1_DRDO06]">
+
+											</td>
+										</tr>[E-EDITDATA]
+									</tbody>
+								</table>
+								</div>
+							</div>
+
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">Agreements</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+										<tr>
+											<th>Agree1[S-M1_ETC77_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC77_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC77]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>Agree2[S-M1_ETC78_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC78_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC78]</ul>
+											</td>
+										</tr>
+
+										<tr>
+											<th>legal Entity Name[S-M1_ETC79_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC79_NEW]</th>
+											<td><input type="text" name="M1_ETC79" class="input_w10 form-control" value="[M1_ETC79]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Job title[S-M1_ETC80_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC80_NEW]</th>
+											<td><input type="text" name="M1_ETC80" class="input_w10 form-control" value="[M1_ETC80]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>Signature[S-M1_ETC81_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC81_NEW]</th>
+											<td><input type="text" name="M1_ETC81" class="input_w10 form-control" value="[M1_ETC81]" size="90">
+											</td>
+										</tr>
+
+
+										<tr>
+											<th>Date[S-M1_ETC96_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC96_NEW]</th>
+											<td><input type="text" name="M1_ETC96" class="input_w10 form-control" value="[M1_ETC96]" size="90">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
+
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">File</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+										<tr>
+											<th>ファイルのタイトル１[S-M1_DTXT09_NEW]<span class="new-item">
+											[new]</span>[E-M1_DTXT09_NEW]</th>
+											<td>
+												<input type="text" name="M1_DTXT09" class="input_w10 form-control" value="[M1_DTXT09]" size="90">
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>ファイル１[S-M1_DFIL03_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL03_NEW]
+											</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_DFIL03" value="[M1_DFIL03]" size="90"><input type="hidden" name="M1_DFIL03" value="[M1_DFIL03]">
+												<br>
+												<ul>[OPT-M1_MCHK01]</ul>
+											</td>
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>ファイル１[S-M1_DFIL03_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL03_NEW]
+											</th>
+											<td>[S-M1_DFIL03]<a href="[M1_DFIL03]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_DFIL03"><br>[E-M1_DFIL03]<input type="file" accept=".pdf" name="EP_M1_DFIL03" value="[M1_DFIL03]" size="90"><input type="hidden" name="M1_DFIL03" value="[M1_DFIL03]">
+												<br>
+												<ul>[OPT-M1_MCHK01]</ul>
+											</td>
+										</tr>[E-EDITDATA]
+
+										<tr>
+											<th>ファイルのタイトル２[S-M1_ETC82_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC82_NEW]</th>
+											<td>
+												<input type="text" name="M1_ETC82" class="input_w10 form-control" value="[M1_ETC82]" size="90">
+
+
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>ファイル２[S-M1_DFIL04_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL04_NEW]
+											</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_DFIL04" value="[M1_DFIL04]" size="90"><input type="hidden" name="M1_DFIL04" value="[M1_DFIL04]"></td>
+											<br>
+											<ul>[OPT-M1_MCHK02]</ul>
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>ファイル２[S-M1_DFIL04_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL04_NEW]
+											</th>
+											<td>[S-M1_DFIL04]<a href="[M1_DFIL04]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_DFIL04"><br>[E-M1_DFIL04]<input type="file" accept=".pdf" name="EP_M1_DFIL04" value="[M1_DFIL04]" size="90"><input type="hidden" name="M1_DFIL04" value="[M1_DFIL04]">
+												<br>
+												<ul>[OPT-M1_MCHK02]</ul>
+											</td>
+										</tr>[E-EDITDATA]
+
+										<tr>
+											<th>ファイルのタイトル３</th>
+											<td><input type="text" name="M1_ETC83" class="input_w10 form-control" value="[M1_ETC83]" size="90">
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>ファイル３[S-M1_DFIL05_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL05_NEW]
+											</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_DFIL05" value="[M1_DFIL05]" size="90"><input type="hidden" name="M1_DFIL05" value="[M1_DFIL05]"></td>
+											<br>
+											<ul>[OPT-M1_MCHK03]</ul>
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>ファイル３[S-M1_DFIL05_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL05_NEW]
+											</th>
+											<td>[S-M1_DFIL05]<a href="[M1_DFIL05]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_DFIL05"><br>[E-M1_DFIL05]<input type="file" accept=".pdf" name="EP_M1_DFIL05" value="[M1_DFIL05]" size="90"><input type="hidden" name="M1_DFIL05" value="[M1_DFIL05]">
+												<br>
+												<ul>[OPT-M1_MCHK03]</ul>
+											</td>
+										</tr>[E-EDITDATA]
+
+										<tr>
+											<th>ファイルのタイトル４[S-M1_ETC84_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC84_NEW]</th>
+											<td><input type="text" name="M1_ETC84" class="input_w10 form-control" value="[M1_ETC84]" size="90">
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>ファイル４[S-M1_DFIL06_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL06_NEW]
+											</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_DFIL06" value="[M1_DFIL06]" size="90"><input type="hidden" name="M1_DFIL06" value="[M1_DFIL06]"></td>
+											<br>
+											<ul>[OPT-M1_MCHK04]</ul>
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>ファイル４[S-M1_DFIL06_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL06_NEW]
+											</th>
+											<td>[S-M1_DFIL06]<a href="[M1_DFIL06]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_DFIL06"><br>[E-M1_DFIL06]<input type="file" accept=".pdf" name="EP_M1_DFIL06" value="[M1_DFIL06]" size="90"><input type="hidden" name="M1_DFIL06" value="[M1_DFIL06]">
+												<br>
+												<ul>[OPT-M1_MCHK04]</ul>
+											</td>
+										</tr>[E-EDITDATA]
+
+										<tr>
+											<th>ファイルのタイトル５[S-M1_ETC85_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC85_NEW]</th>
+											<td><input type="text" name="M1_ETC85" class="input_w10 form-control" value="[M1_ETC85]" size="90">
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>ファイル５[S-M1_DFIL07_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL07_NEW]
+											</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_DFIL07" value="[M1_DFIL07]" size="90"><input type="hidden" name="M1_DFIL07" value="[M1_DFIL07]"></td>
+											<br>
+											<ul>[OPT-M1_MCHK05]</ul>
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>ファイル５[S-M1_DFIL07_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL07_NEW]
+											</th>
+											<td>[S-M1_DFIL07]<a href="[M1_DFIL07]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_DFIL07"><br>[E-M1_DFIL07]<input type="file" accept=".pdf" name="EP_M1_DFIL07" value="[M1_DFIL07]" size="90"><input type="hidden" name="M1_DFIL07" value="[M1_DFIL07]">
+												<br>
+												<ul>[OPT-M1_MCHK05]</ul>
+											</td>
+										</tr>[E-EDITDATA]
+
+										<tr>
+											<th>ファイルのタイトル６[S-M1_ETC86_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC86_NEW]</th>
+											<td><input type="text" name="M1_ETC86" class="input_w10 form-control" value="[M1_ETC86]" size="90">
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>ファイル６[S-M1_DFIL08_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL08_NEW]
+											</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_DFIL08" value="[M1_DFIL08]" size="90"><input type="hidden" name="M1_DFIL08" value="[M1_DFIL08]"></td>
+											<br>
+											<ul>[OPT-M1_MCHK06]</ul>
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>ファイル６[S-M1_DFIL08_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL08_NEW]
+											</th>
+											<td>[S-M1_DFIL08]<a href="[M1_DFIL08]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_DFIL08"><br>[E-M1_DFIL08]<input type="file" accept=".pdf" name="EP_M1_DFIL08" value="[M1_DFIL08]" size="90"><input type="hidden" name="M1_DFIL08" value="[M1_DFIL08]">
+												<br>
+												<ul>[OPT-M1_MCHK06]</ul>
+											</td>
+										</tr>[E-EDITDATA]
+
+										<tr>
+											<th>ファイルのタイトル７[S-M1_ETC87_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC87_NEW]</th>
+											<td><input type="text" name="M1_ETC87" class="input_w10 form-control" value="[M1_ETC87]" size="90">
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>ファイル７[S-M1_DFIL09_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL09_NEW]
+											</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_DFIL09" value="[M1_DFIL09]" size="90"><input type="hidden" name="M1_DFIL09" value="[M1_DFIL09]"></td>
+											<br>
+											<ul>[OPT-M1_MCHK07]</ul>
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>ファイル７[S-M1_DFIL09_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL09_NEW]</th>
+											<td>[S-M1_DFIL09]<a href="[M1_DFIL09]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_DFIL09"><br>[E-M1_DFIL09]<input type="file" accept=".pdf" name="EP_M1_DFIL09" value="[M1_DFIL09]" size="90"><input type="hidden" name="M1_DFIL09" value="[M1_DFIL09]">
+												<br>
+												<ul>[OPT-M1_MCHK07]</ul>
+											</td>
+										</tr>[E-EDITDATA]
+
+										<tr>
+											<th>ファイルのタイトル８[S-M1_ETC88_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC88_NEW]</th>
+											<td><input type="text" name="M1_ETC88" class="input_w10 form-control" value="[M1_ETC88]" size="90">
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>ファイル８[S-M1_DFIL10_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL10_NEW]</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_DFIL10" value="[M1_DFIL10]" size="90"><input type="hidden" name="M1_DFIL10" value="[M1_DFIL10]"></td>
+											<br>
+											<ul>[OPT-M1_MCHK08]</ul>
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>ファイル８[S-M1_DFIL10_NEW]<span class="new-item">
+											[new]</span>[E-M1_DFIL10_NEW]</th>
+											<td>[S-M1_DFIL10]<a href="[M1_DFIL10]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_DFIL10"><br>[E-M1_DFIL10]<input type="file" accept=".pdf" name="EP_M1_DFIL10" value="[M1_DFIL10]" size="90"><input type="hidden" name="M1_DFIL10" value="[M1_DFIL10]">
+												<br>
+												<ul>[OPT-M1_MCHK08]</ul>
+											</td>
+										</tr>[E-EDITDATA]
+
+										<tr>
+											<th>ファイルのタイトル９[S-M1_ETC89_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC89_NEW]</th>
+											<td><input type="text" name="M1_ETC89" class="input_w10 form-control" value="[M1_ETC89]" size="90">
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>ファイル９[S-M1_ETC04_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC04_NEW]</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_ETC04" value="[M1_ETC04]" size="90"><input type="hidden" name="M1_ETC04" value="[M1_ETC04]"></td>
+											<br>
+											<ul>[OPT-M1_MCHK09]</ul>
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>ファイル９[S-M1_ETC04_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC04_NEW]</th>
+											<td>[S-M1_ETC04]<a href="[M1_ETC04]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_ETC04"><br>[E-M1_ETC04]<input type="file" accept=".pdf" name="EP_M1_ETC04" value="[M1_ETC04]" size="90"><input type="hidden" name="M1_ETC04" value="[M1_ETC04]">
+												<br>
+												<ul>[OPT-M1_MCHK09]</ul>
+											</td>
+										</tr>[E-EDITDATA]
+
+										<tr>
+											<th>ファイルのタイトル１０[S-M1_ETC90_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC90_NEW]</th>
+											<td><input type="text" name="M1_ETC90" class="input_w10 form-control" value="[M1_ETC90]" size="90">
+											</td>
+										</tr>
+										[S-NEWDATA]<tr>
+											<th>ファイル１０[S-M1_ETC05_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC05_NEW]</th>
+											<td><input type="file" accept=".pdf" name="EP_M1_ETC05" value="[M1_ETC05]" size="90"><input type="hidden" name="M1_ETC05" value="[M1_ETC05]"></td>
+											<br>
+											<ul>[OPT-M1_MCHK10]</ul>
+										</tr>[E-NEWDATA]
+										[S-EDITDATA]<tr>
+											<th>ファイル１０[S-M1_ETC05_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC05_NEW]</th>
+											<td>[S-M1_ETC05]<a href="[M1_ETC05]" download="">ダウンロード</a> 削除
+												<input type="checkbox" name="DEL_IMAGE_M1_ETC05"><br>[E-M1_ETC05]<input type="file" accept=".pdf" name="EP_M1_ETC05" value="[M1_ETC05]" size="90"><input type="hidden" name="M1_ETC05" value="[M1_ETC05]">
+												<br>
+												<ul>[OPT-M1_MCHK10]</ul>
+											</td>
+										</tr>[E-EDITDATA]
+										<tr>
+											<th>Youtube動画[S-M1_ETC15_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC15_NEW]</th>
+											<td><textarea name="M1_DTXT07" class="textarea_w10 form-control" cols="70" rows="5">[M1_DTXT07]</textarea>
+												<br>
+												<ul>[OPT-M1_ETC15]</ul>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
+
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">Category</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+										<tr>
+											<th>カテゴリー(第1階層)[S-M1_ETC17_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC17_NEW]</th>
+											<td><select id="cate1a" name="M1_ETC17" class="input_select form-control"></select>
+											</td>
+										</tr>
+										<tr>
+											<th>カテゴリー(第2階層)[S-M1_ETC18_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC18_NEW]</th>
+											<td><select id="cate2a" name="M1_ETC18" class="input_select form-control"></select>
+											</td>
+										</tr>
+										<tr>
+											<th>カテゴリー(第3階層)[S-M1_ETC19_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC19_NEW]</th>
+											<td><select id="cate3a" name="M1_ETC19" class="input_select form-control"></select>
+											</td>
+										</tr>
+										<tr>
+											<th>カテゴリー(第4階層)[S-M1_ETC20_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC20_NEW]</th>
+											<td><select id="cate4a" name="M1_ETC20" class="input_select form-control"></select>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">Category 2</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>カテゴリー(第1階層)[S-M1_DRDO09_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DRDO09_NEW]</th>
+																	<td><select id="cate1b" name="M1_DRDO09" class="input_select form-control"></select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>カテゴリー(第2階層)[S-M1_DRDO10_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DRDO10_NEW]</th>
+																	<td><select id="cate2b" name="M1_DRDO10" class="input_select form-control"></select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>カテゴリー(第3階層)[S-M1_DCHK02_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DCHK02_NEW]</th>
+																	<td><select id="cate3b" name="M1_DCHK02" class="input_select form-control"></select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>カテゴリー(第4階層)[S-M1_DCHK03_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DCHK03_NEW]</th>
+																	<td><select id="cate4b" name="M1_DCHK03" class="input_select form-control"></select>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">Category 3</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>カテゴリー(第1階層)[S-M1_DCHK04_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DCHK04_NEW]</th>
+																	<td><select id="cate1c" name="M1_DCHK04" class="input_select form-control"></select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>カテゴリー(第2階層)[S-M1_DCHK05_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DCHK05_NEW]</th>
+																	<td><select id="cate2c" name="M1_DCHK05" class="input_select form-control"></select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>カテゴリー(第3階層)[S-M1_DCHK06_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DCHK06_NEW]</th>
+																	<td><select id="cate3c" name="M1_DCHK06" class="input_select form-control"></select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>カテゴリー(第4階層)[S-M1_DCHK07_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DCHK07_NEW]</th>
+																	<td><select id="cate4c" name="M1_DCHK07" class="input_select form-control"></select>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<div class="box box-pale-color panel" data-acc>
+													<div class="box-header with-border" data-acc-title><h3 class="box-title">Category 4</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+													<div class="box-body" data-acc-body>
+														<table class="table table-bordered table_edit">
+															<tbody>
+																<tr>
+																	<th>カテゴリー(第1階層)[S-M1_DCHK08_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DCHK08_NEW]</th>
+																	<td><select id="cate1d" name="M1_DCHK08" class="input_select form-control"></select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>カテゴリー(第2階層)[S-M1_DCHK09_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DCHK09_NEW]</th>
+																	<td><select id="cate2d" name="M1_DCHK09" class="input_select form-control"></select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>カテゴリー(第3階層)[S-M1_DCHK10_NEW]<span class="new-item">
+																	[new]</span>[E-M1_DCHK10_NEW]</th>
+																	<td><select id="cate3d" name="M1_DCHK10" class="input_select form-control"></select>
+																	</td>
+																</tr>
+																<tr>
+																	<th>カテゴリー(第4階層)[S-M1_ETC13_NEW]<span class="new-item">
+																	[new]</span>[E-M1_ETC13_NEW]</th>
+																	<td><select id="cate4d" name="M1_ETC13" class="input_select form-control"></select>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
+
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">Commercial Due Diligence</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+										<tr>
+											<th colspan="2">General</th>
+										</tr>
+										<tr>
+											<th>1. What is your organization
+												name?[S-M1_MSEL01_NEW]<span class="new-item">
+												[new]</span>[E-M1_MSEL01_NEW]</th>
+											<td>
+												<input type="text" name="M1_MSEL01" class="input_w10 form-control" value="[M1_MSEL01]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>2. Location[S-M1_MSEL02_NEW]<span class="new-item">
+											[new]</span>[E-M1_MSEL02_NEW]</th>
+											<td>
+												<input type="text" name="M1_MSEL02" class="input_w10 form-control" value="[M1_MSEL02]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>3. Contact name[S-M1_MSEL03_NEW]<span class="new-item">
+											[new]</span>[E-M1_MSEL03_NEW]</th>
+											<td>
+												<input type="text" name="M1_MSEL03" class="input_w10 form-control" value="[M1_MSEL03]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>4. Contact phone number[S-M1_MSEL04_NEW]<span class="new-item">
+											[new]</span>[E-M1_MSEL04_NEW]
+											</th>
+											<td>
+												<input type="text" name="M1_MSEL04" class="input_w10 form-control" value="[M1_MSEL04]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th>5. Contact email
+												address[S-M1_MSEL05_NEW]<span class="new-item">
+												[new]</span>[E-M1_MSEL05_NEW]
+											</th>
+											<td>
+												<input type="text" name="M1_MSEL05" class="input_w10 form-control" value="[M1_MSEL05]" size="90">
+											</td>
+										</tr>
+
+										<tr>
+											<th colspan="2">Financial</th>
+										</tr>
+
+										<tr>
+											<th>Are you willing to share basic financial information on your
+												company to demonstrate good financial
+												health?[S-M1_MRDO01_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO01_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MRDO01]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>Please provide an explanation as to why this information
+												will
+												not be provided which can be shared with
+												clients.[S-M1_MRDO06_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO06_NEW]</th>
+											<td><input type="text" name="M1_MSEL06" class="input_w10 form-control" value="[M1_MSEL06]" size="90">
+											</td>
+										</tr>
+										<tr>
+											<th colspan="2">Confidentiality</th>
+										</tr>
+
+										<tr>
+											<th>1. Have you had any significant incidents relating to breach
+												of
+												confidentiality and/or non-permitted communications that
+												have occurred in the last 5
+												years?[S-M1_MRDO02_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO02_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MRDO02]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>2. Do you have policies and/or processes that relate to the
+												protection
+												and governance of confidential information and/or
+												the communication of product specific and scientific
+												information?[S-M1_MRDO03_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO03_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MRDO03]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>3. Do you at least once a year communicate and train your
+												employees on
+												these policies and
+												processes?[S-M1_MRDO04_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO04_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MRDO04]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>4. Is there a formal process to report and manage
+												confidentiality
+												related and/or non-permitted communication
+												incidents?[S-M1_MRDO05_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO05_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MRDO05]</ul>
+											</td>
+										</tr>
+
+										<tr>
+											<th colspan="2">Data Privacy</th>
+										</tr>
+										<tr>
+											<th>1. Do you or do you expect to handle personal data in
+												regards to
+												the
+												services offered over this
+												platform?[S-M1_MRDO06_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO06_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MRDO06]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>2. Will you process customer's Personal Data for your own
+												purposes (i.e.
+												purposes which benefit your company as opposed
+												to those purposes which the customer will instruct as part
+												of
+												providing
+												the service/goods)?[S-M1_MRDO07_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO07_NEW]
+											</th>
+											<td>
+												<ul>[OPT-M1_MRDO07]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>3. Does your company have an established governance
+												structure in
+												place
+												with respect to data privacy and security which
+												will ensure that the customer is able to comply with its
+												legal
+												requirements under applicable data privacy laws and
+												regulations?[S-M1_MRDO08_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO08_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MRDO08]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>4. Does your company have a privacy policy in place which
+												your
+												staff
+												must adhere to?[S-M1_MRDO09_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO09_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MRDO09]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>5. Does your company have a process in place to ensure that
+												any
+												defined
+												retention period(s) and deletion/destruction
+												requirements which the customer may request could be
+												actioned?[S-M1_MRDO10_NEW]<span class="new-item">
+												[new]</span>[E-M1_MRDO10_NEW]
+											</th>
+											<td>
+												<ul>[OPT-M1_MRDO10]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>6. Does your company provide regular training and awareness
+												to
+												your
+												staff around their data privacy and information
+												security obligations?[S-M1_MSEL07_NEW]<span class="new-item">
+												[new]</span>[E-M1_MSEL07_NEW]
+											</th>
+											<td>
+												<ul>[OPT-M1_MSEL07]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>7. In the last five years has your company suffered a loss,
+												leak
+												and/or
+												unauthorised access to Personal Data or had an
+												enquiry or investigation by relevant supervisory authorities
+												(or
+												your
+												existing customers) for breach of information
+												handling?[S-M1_MSEL08_NEW]<span class="new-item">
+												[new]</span>[E-M1_MSEL08_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MSEL08]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>8. Has your company established an incident response plan
+												that
+												addresses
+												incidents involving Personal Data and which
+												involves notifying the
+												customer?[S-M1_MSEL09_NEW]<span class="new-item">
+												[new]</span>[E-M1_MSEL09_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MSEL09]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>9. Are there access controls in place to ensure that only
+												the
+												minimum
+												number of people have access to the customer's
+												Personal Data and only where they have a legitimate business
+												need as
+												part of the customer's
+												contract?[S-M1_MSEL10_NEW]<span class="new-item">
+												[new]</span>[E-M1_MSEL10_NEW]</th>
+											<td>
+												<ul>[OPT-M1_MSEL10]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>10. If any Personal Data be maintained on your company's
+												premises, or at
+												an authorised representative facility or if any
+												Personal Data be held outside of its country of origin
+												either by
+												your
+												company or a supplier authorised representative/
+												sub-processor, does your company or a supplier authorised
+												representative/ sub-processor hold independent security
+												accreditation from recognised industry groups? (for example
+												ISO27001)?[S-M1_DVAL13_NEW]<span class="new-item">
+												[new]</span>[E-M1_DVAL13_NEW]</th>
+											<td>
+												<ul>[OPT-M1_DVAL13]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th colspan="2">Employment Principles</th>
+										</tr>
+										<tr>
+											<th>1. Has your company had a breach of local Employment
+												law/human
+												rights in
+												any of the countries in which you
+												operate?[S-M1_ETC50_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC50_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC50]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>2. Do you have formal process/policies or recognised
+												practices
+												that
+												ensures no discrimination takes place on the basis
+												of an employee’s race, gender, colour, age, religion, sexual
+												orientation, ethnic belonging, disability, religion,
+												political affiliation, union membership or marital status,
+												ensuring that
+												an individuals rights and dignity are preserved
+												at all times?[S-M1_ETC51_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC51_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC51]</ul>
+											</td>
+										</tr>
+
+										<tr>
+											<th>3. Do you have a formal process/policies or recognised
+												practices
+												that
+												makes clear that decisions around recruitment,
+												development and promotion are made on the basis of ability,
+												merit and
+												performance?[S-M1_ETC52_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC52_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC52]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>4. Do you use or have you ever used forced, bonded,
+												indentured
+												labour or
+												involuntary prison
+												labour?[S-M1_ETC53_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC53_NEW]
+											</th>
+											<td>
+												<ul>[OPT-M1_ETC53]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>5. Do you have a formal policy/contract to ensure you pay
+												all
+												employees
+												according to applicable wage laws including
+												minimum wages, overtime hours, overtime rates of pay and
+												mandated
+												benefits?[S-M1_ETC54_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC54_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC54]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>6. Do you have a formal policy or recognised practice which
+												states your
+												commitment to respect the rights of employees,
+												as defined in local laws to freely join, or not join labour
+												unions, seek
+												representation or employees
+												councils?[S-M1_ETC55_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC55_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC55]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th colspan="2">IT/IS</th>
+										</tr>
+										<tr>
+											<th>1. Does the organization identify, document and implement
+												acceptable use
+												rules for information and
+												assets?[S-M1_ETC56_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC56_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC56]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>2. Is user access to the newtwork services monitored and
+												provisioned by
+												the organization?[S-M1_ETC57_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC57_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC57]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>3. Does the organization have a clear policy governing the
+												use
+												of
+												removable media?[S-M1_ETC58_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC58_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC58]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>4. Does the organization have a policy governing the
+												destruction
+												of
+												data, both physical and digital, at the end of its
+												retention period, including computer hard drives at employee
+												separation
+												and when hardware is
+												replaced?[S-M1_ETC59_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC59_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC59]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>5. Does the organization identify and document all relevant
+												legislative,
+												statutory, regulatory, and contractual
+												requirements?[S-M1_ETC60_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC60_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC60]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>6. Have information security roles (capabilities and
+												decision
+												rights)
+												been defined for internal and external
+												users?[S-M1_ETC61_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC61_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC61]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>7. Are security education, trainng and awareness programs
+												established
+												for all users?[S-M1_ETC62_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC62_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC62]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>8. Does the organization's top management establish an
+												information
+												security policy that is appropriate to the purpose of
+												the organization?[S-M1_ETC63_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC63_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC63]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>9. Does the organization perform information security risk
+												assessments
+												at planned intervals or when significant changes
+												are proposed?[S-M1_ETC64_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC64_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC64]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>10. Does the organization conduct internal audits at planned
+												intervals?[S-M1_ETC65_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC65_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC65]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>11. Does the organization adopt policies and supporting
+												security
+												measures to manage the risks introduced by the use of
+												mobile devices?[S-M1_ETC66_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC66_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC66]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>12. Are privacy risk assessments performed
+												periodically?[S-M1_ETC67_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC67_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC67]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>13. Is a firewall installed at all connections from an
+												internal
+												network
+												to other internal or external
+												networks?[S-M1_ETC68_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC68_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC68]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>14. Does the organization regularly test the backup copies
+												of
+												information, software and system images in accordance with
+												an agreed backup policy?[S-M1_ETC69_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC69_NEW]
+											</th>
+											<td>
+												<ul>[OPT-M1_ETC69]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>15. Is electronic data encrypted at rest (network storage,
+												backups,
+												etc.)?[S-M1_ETC70_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC70_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC70]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>16. Is electronic data encrypted in transit (TLS enabled for
+												emails,
+												etc.)?[S-M1_ETC71_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC71_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC71]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>17. Does the organization log the activities performed by
+												system
+												administrator and system
+												operators?[S-M1_ETC72_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC72_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC72]</ul>
+											</td>
+										</tr>
+
+										<tr>
+											<th>18. Does the organization implement procedures to control
+												the
+												installation of software on operational
+												systems?[S-M1_ETC73_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC73_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC73]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>19. Has the organization been accredited by any external
+												organizations (e.g.
+												SOC/ISO)?[S-M1_ETC74_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC74_NEW]
+											</th>
+											<td>
+												<ul>[OPT-M1_ETC74]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>20. Does the organization implement physical access to
+												controls
+												to
+												facilities where information assets are generated or
+												stored?[S-M1_ETC75_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC75_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC75]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>21. Does the organization have a policy to notify
+												Scientist.com
+												and your
+												Clients of incidents in your IT environment
+												(especially security incidents) that may compromise
+												Scientist.com or
+												customer information?[S-M1_ETC76_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC76_NEW]
+											</th>
+											<td>
+												<ul>[OPT-M1_ETC76]</ul>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
+
+
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">アカウント情報（社内メモ）</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+										<th>アカウント情報（社内メモ）[S-M1_ETC98_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC98_NEW]</th>
+											<td><textarea name="M1_ETC98" class="textarea_w10 form-control" cols="70" rows="5">[M1_ETC98]</textarea></td>
+									</tbody>
+								</table>
+								</div>
+							</div>
+
+<!--
+							<div class="box box-pale-color panel" data-acc>
+								<div class="box-header with-border" data-acc-title><h3 class="box-title">Others</h3><i class="fa fa-fw fa-sort-down pull-right"></i></div>
+								<div class="box-body" data-acc-body>
+								<table class="table table-bordered table_edit">
+									<tbody>
+										<tr>
+											<th>検索ワード[S-M1_ETC09_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC09_NEW]</th>
+											<td><textarea name="M1_ETC09" class="textarea_w10 form-control"
+													cols="70" rows="5">[M1_ETC09]</textarea></td>
+										</tr>
+										<tr>
+											<th>通貨単位[S-M1_ETC03_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC03_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC03]</ul>
+											</td>
+										</tr>
+
+										<tr>
+											<th>登録状態[S-M1_DRDO01_NEW]<span class="new-item">
+											[new]</span>[E-M1_DRDO01_NEW]</th>
+											<td>
+												<ul>[OPT-M1_DRDO01]</ul>
+											</td>
+										</tr>
+										<tr>
+											<th>登録状態補足[S-M1_ETC14_NEW]<span class="new-item">
+											[new]</span>[E-M1_ETC14_NEW]</th>
+											<td><textarea name="M1_ETC14" class="textarea_w10 form-control"
+													cols="70" rows="5">[M1_ETC14]</textarea></td>
+										</tr>
+										<tr>
+											<th>I have read and agree to the policies and procedures
+												outlined by
+												scientist3[S-M1_ETC07_NEW]<span class="new-item">
+												[new]</span>[E-M1_ETC07_NEW]</th>
+											<td>
+												<ul>[OPT-M1_ETC07]</ul>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								</div>
+							</div>
+-->
+
+							<script>
+								var cate_list = ([CATE_LIST]);
+								var cate1a_val = '[CATE1a_VAL]';
+								var cate2a_val = '[CATE2a_VAL]';
+								var cate3a_val = '[CATE3a_VAL]';
+								var cate4a_val = '[CATE4a_VAL]';
+								var cate1b_val = '[CATE1b_VAL]';
+								var cate2b_val = '[CATE2b_VAL]';
+								var cate3b_val = '[CATE3b_VAL]';
+								var cate4b_val = '[CATE4b_VAL]';
+								var cate1c_val = '[CATE1c_VAL]';
+								var cate2c_val = '[CATE2c_VAL]';
+								var cate3c_val = '[CATE3c_VAL]';
+								var cate4c_val = '[CATE4c_VAL]';
+								var cate1d_val = '[CATE1d_VAL]';
+								var cate2d_val = '[CATE2d_VAL]';
+								var cate3d_val = '[CATE3d_VAL]';
+								var cate4d_val = '[CATE4d_VAL]';
+								$(document).ready(function () {
+									$('#cate1a').on('change', function () {
+										cate1a_val = $('#cate1a').val();
+										cate1a_change();
+									});
+									$('#cate2a').on('change', function () {
+										cate2a_val = $('#cate2a').val();
+										cate2a_change();
+									});
+									$('#cate3a').on('change', function () {
+										cate3a_val = $('#cate3a').val();
+										cate3a_change();
+									});
+									$('#cate4a').on('change', function () {
+										cate4a_val = $('#cate4a').val();
+										cate4a_change();
+									});
+
+									$('#cate1b').on('change', function () {
+										cate1b_val = $('#cate1b').val();
+										cate1b_change();
+									});
+									$('#cate2b').on('change', function () {
+										cate2b_val = $('#cate2b').val();
+										cate2b_change();
+									});
+									$('#cate3b').on('change', function () {
+										cate3b_val = $('#cate3b').val();
+										cate3b_change();
+									});
+									$('#cate4b').on('change', function () {
+										cate4b_val = $('#cate4b').val();
+										cate4b_change();
+									});
+
+									$('#cate1c').on('change', function () {
+										cate1c_val = $('#cate1c').val();
+										cate1c_change();
+									});
+									$('#cate2c').on('change', function () {
+										cate2c_val = $('#cate2c').val();
+										cate2c_change();
+									});
+									$('#cate3c').on('change', function () {
+										cate3c_val = $('#cate3c').val();
+										cate3c_change();
+									});
+									$('#cate4c').on('change', function () {
+										cate4c_val = $('#cate4c').val();
+										cate4c_change();
+									});
+									$('#cate1d').on('change', function () {
+										cate1d_val = $('#cate1d').val();
+										cate1d_change();
+									});
+									$('#cate2d').on('change', function () {
+										cate2d_val = $('#cate2d').val();
+										cate2d_change();
+									});
+									$('#cate3d').on('change', function () {
+										cate3d_val = $('#cate3d').val();
+										cate3d_change();
+									});
+									$('#cate4d').on('change', function () {
+										cate4d_val = $('#cate4d').val();
+										cate4d_change();
+									});
+
+									cate1a_change();
+									cate1b_change();
+									cate1c_change();
+									cate1d_change();
+								});
+								function cate1a_change() {
+									var html = '<option value=""></option>';
+									for (var x in cate_list) {
+										var selected = '';
+										if (cate1a_val == x) {
+											selected = ' selected ';
+										}
+										html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+									}
+									$('#cate1a').html(html);
+									cate2a_change();
+								}
+								function cate2a_change() {
+									var html = '<option value=""></option>';
+									if (cate_list[cate1a_val] == undefined) {
+										cate1a_val = '';
+										cate2a_val = '';
+										cate3a_val = '';
+										cate4a_val = '';
+										$('#cate2a').html('');
+										$('#cate3a').html('');
+										$('#cate4a').html('');
+										return;
+									}
+									else {
+										for (var x in cate_list[cate1a_val]) {
+											var selected = '';
+											if (cate2a_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate2a').html(html);
+									cate3a_change();
+								}
+								function cate3a_change() {
+									var html = '<option value=""></option>';
+									console.log('cate3a_change:cate1a ' + cate1a_val);
+									console.log('cate3a_change:cage2 ' + cate2a_val);
+									console.log('cate3a_change:cage2 ' + cate_list[cate1a_val][cate2a_val]);
+									if (cate_list[cate1a_val][cate2a_val] == undefined) {
+										console.log('cate3a_change:then ');
+										cate2a_val = '';
+										cate3a_val = '';
+										cate4a_val = '';
+										$('#cate3a').html('');
+										$('#cate4a').html('');
+										return;
+									}
+									else {
+										console.log('cate3a_change:else ');
+										for (var x in cate_list[cate1a_val][cate2a_val]) {
+											var selected = '';
+											if (cate3a_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate3a').html(html);
+									cate4a_change();
+								}
+								function cate4a_change() {
+									var html = '<option value=""></option>';
+									if (cate_list[cate1a_val][cate2a_val][cate3a_val] == undefined) {
+										cate3a_val = '';
+										cate4a_val = '';
+										$('#cate4a').html('');
+										return;
+									}
+									else {
+										for (var x in cate_list[cate1a_val][cate2a_val][cate3a_val]) {
+											var selected = '';
+											if (cate4a_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate4a').html(html);
+								}
+
+								function cate1b_change() {
+									var html = '<option value=""></option>';
+									for (var x in cate_list) {
+										var selected = '';
+										if (cate1b_val == x) {
+											selected = ' selected ';
+										}
+										html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+									}
+									$('#cate1b').html(html);
+									cate2b_change();
+								}
+								function cate2b_change() {
+									var html = '<option value=""></option>';
+									if (cate_list[cate1b_val] == undefined) {
+										cate1b_val = '';
+										cate2b_val = '';
+										cate3b_val = '';
+										cate4b_val = '';
+										$('#cate2b').html('');
+										$('#cate3b').html('');
+										$('#cate4b').html('');
+										return;
+									}
+									else {
+
+										for (var x in cate_list[cate1b_val]) {
+											// console.log("cate2b_change:" + x);
+											var selected = '';
+											if (cate2b_val == x) {
+												selected = ' selected ';
+												// console.log("cate2b_val_select:" + cate2b_val);
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									// console.log("cate2b_change:" + html);
+									$('#cate2b').html(html);
+									cate3b_change();
+								}
+								function cate3b_change() {
+									var html = '<option value=""></option>';
+									console.log('cate3b_change:cate1b ' + cate1b_val);
+									console.log('cate3b_change:cage2 ' + cate2b_val);
+									console.log('cate3b_change:cage2 ' + cate_list[cate1b_val][cate2b_val]);
+									if (cate_list[cate1b_val][cate2b_val] == undefined) {
+										console.log('cate3b_change:then ');
+										cate2b_val = '';
+										cate3b_val = '';
+										cate4b_val = '';
+										$('#cate3b').html('');
+										$('#cate4b').html('');
+										return;
+									}
+									else {
+										console.log('cate3b_change:else ');
+										for (var x in cate_list[cate1b_val][cate2b_val]) {
+											var selected = '';
+											if (cate3b_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate3b').html(html);
+									cate4b_change();
+								}
+								function cate4b_change() {
+									var html = '<option value=""></option>';
+									if (cate_list[cate1b_val][cate2b_val][cate3b_val] == undefined) {
+										cate3b_val = '';
+										cate4b_val = '';
+										$('#cate4b').html('');
+										return;
+									}
+									else {
+										for (var x in cate_list[cate1b_val][cate2b_val][cate3b_val]) {
+											var selected = '';
+											if (cate4b_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate4b').html(html);
+								}
+								function cate1c_change() {
+									var html = '<option value=""></option>';
+									for (var x in cate_list) {
+										var selected = '';
+										if (cate1c_val == x) {
+											selected = ' selected ';
+										}
+										html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+									}
+									$('#cate1c').html(html);
+									cate2c_change();
+								}
+								function cate2c_change() {
+									var html = '<option value=""></option>';
+									if (cate_list[cate1c_val] == undefined) {
+										cate1c_val = '';
+										cate2c_val = '';
+										cate3c_val = '';
+										cate4c_val = '';
+										$('#cate2c').html('');
+										$('#cate3c').html('');
+										$('#cate4c').html('');
+										return;
+									}
+									else {
+										for (var x in cate_list[cate1c_val]) {
+											var selected = '';
+											if (cate2c_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate2c').html(html);
+									cate3c_change();
+								}
+								function cate3c_change() {
+									var html = '<option value=""></option>';
+									console.log('cate3c_change:cate1c ' + cate1c_val);
+									console.log('cate3c_change:cage2 ' + cate2c_val);
+									console.log('cate3c_change:cage2 ' + cate_list[cate1c_val][cate2c_val]);
+									if (cate_list[cate1c_val][cate2c_val] == undefined) {
+										console.log('cate3c_change:then ');
+										cate2c_val = '';
+										cate3c_val = '';
+										cate4c_val = '';
+										$('#cate3c').html('');
+										$('#cate4c').html('');
+										return;
+									}
+									else {
+										console.log('cate3c_change:else ');
+										for (var x in cate_list[cate1c_val][cate2c_val]) {
+											var selected = '';
+											if (cate3c_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate3c').html(html);
+									cate4c_change();
+								}
+								function cate4c_change() {
+									var html = '<option value=""></option>';
+									if (cate_list[cate1c_val][cate2c_val][cate3c_val] == undefined) {
+										cate3c_val = '';
+										cate4c_val = '';
+										$('#cate4c').html('');
+										return;
+									}
+									else {
+										for (var x in cate_list[cate1c_val][cate2c_val][cate3c_val]) {
+											var selected = '';
+											if (cate4c_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate4c').html(html);
+								}
+								function cate1d_change() {
+									var html = '<option value=""></option>';
+									for (var x in cate_list) {
+										var selected = '';
+										if (cate1d_val == x) {
+											selected = ' selected ';
+										}
+										html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+									}
+									$('#cate1d').html(html);
+									cate2d_change();
+								}
+								function cate2d_change() {
+									var html = '<option value=""></option>';
+									if (cate_list[cate1d_val] == undefined) {
+										cate1d_val = '';
+										cate2d_val = '';
+										cate3d_val = '';
+										cate4d_val = '';
+										$('#cate2d').html('');
+										$('#cate3d').html('');
+										$('#cate4d').html('');
+										return;
+									}
+									else {
+										for (var x in cate_list[cate1d_val]) {
+											var selected = '';
+											if (cate2d_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate2d').html(html);
+									cate3d_change();
+								}
+								function cate3d_change() {
+									var html = '<option value=""></option>';
+									console.log('cate3d_change:cate1d ' + cate1d_val);
+									console.log('cate3d_change:cage2 ' + cate2d_val);
+									console.log('cate3d_change:cage2 ' + cate_list[cate1d_val][cate2d_val]);
+									if (cate_list[cate1d_val][cate2d_val] == undefined) {
+										console.log('cate3d_change:then ');
+										cate2d_val = '';
+										cate3d_val = '';
+										cate4d_val = '';
+										$('#cate3d').html('');
+										$('#cate4d').html('');
+										return;
+									}
+									else {
+										console.log('cate3d_change:else ');
+										for (var x in cate_list[cate1d_val][cate2d_val]) {
+											var selected = '';
+											if (cate3d_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate3d').html(html);
+									cate4d_change();
+								}
+								function cate4d_change() {
+									var html = '<option value=""></option>';
+									if (cate_list[cate1d_val][cate2d_val][cate3d_val] == undefined) {
+										cate3d_val = '';
+										cate4d_val = '';
+										$('#cate4d').html('');
+										return;
+									}
+									else {
+										for (var x in cate_list[cate1d_val][cate2d_val][cate3d_val]) {
+											var selected = '';
+											if (cate4d_val == x) {
+												selected = ' selected ';
+											}
+											html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+										}
+									}
+									$('#cate4d').html(html);
+								}
+							</script>
+
+							<input type="hidden" name="M1_ETC97" value="[M1_ETC97]">
+							<!--<input type="hidden" name="M1_ETC98" value="[M1_ETC98]">-->
+							<!--<input type="hidden" name="M1_ETC99" value="[M1_ETC99]">-->
+
+							[S-OLDDATA][E-OLDDATA]
+							[S-LATESTDATA]
+							<button name="submit" value="submit" type="submit" class="btn btn-block btn-default" onclick="var ok=confirm('この内容で保存しますか？');if (ok) this.form.submit(); return false;"><i class="fa fa-floppy-o"></i> 保存</button>
+							[E-LATESTDATA]
+						</form>
+
+
+				</div><!-- /.box-body -->
+			</div><!-- /.box -->
+
+
+		</div><!-- /.col -->
+	</div><!-- /.row -->
+</section><!-- /.content -->

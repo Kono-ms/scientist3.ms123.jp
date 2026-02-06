@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Supplier Basic Information｜Scientist3</title>
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/icon-192x192.png">
+    <!--template=/common/template/head.html-->
+    <style>
+        .tab_btn {
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        $(function () {
+            // history.back時にスクロールさせない
+            if ('scrollRestoration' in window.history) {
+                window.history.scrollRestoration = 'manual';
+            }
+
+            let param = '[PARAM]';
+            filedCtl(param);
+
+            $('.tab_btn').click(function () {
+                let param = $(this).val();
+                filedCtl(param);
+            });
+
+
+            function filedCtl(param) {
+                $("#Company_information").css('display', 'none');
+                $("#Banking_details").css('display', 'none');
+                $("#Agreements").css('display', 'none');
+                $("#Agreements2").css('display', 'none');
+                $("#Signature").css('display', 'none');
+                $("#Commercial_Due_Dilig").css('display', 'none');
+                $("#File10").css('display', 'none');
+                switch (param) {
+                    case "Company_information":
+                        $("#Company_information").css('display', '');
+                        break;
+                    case "Banking_details":
+                        $("#Banking_details").css('display', '');
+                        break;
+                    case "Agreements":
+                        $("#Agreements").css('display', '');
+                        break;
+                    case "Agreements2":
+                        $("#Agreements2").css('display', '');
+                        break;
+                    case "TSSAen":
+                        $("#Agreements").css('display', '');
+                        break;
+                    case "Signature":
+                        $("#Signature").css('display', '');
+                        break;
+                    case "Commercial_Due_Dilig":
+                        $("#Commercial_Due_Dilig").css('display', '');
+                        break;
+                    case "File10":
+                        $("#File10").css('display', '');
+                        break;
+                    default:
+                        $("#Company_information").css('display', '');
+                        break;
+                }
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="wrap sub">
+        <!--template=/common/template/header.html-->
+
+        <!-- 以上共通 -->
+        <div class="breadcrumb">
+            <div class="l-container">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a href="/about2/">Top</a></li>
+                    <li class="breadcrumb__item">Supplier Basic Information</li>
+                </ol>
+            </div>
+        </div>
+        <section class="subpage-head">
+            <div class="l-container">
+                <div class="c-head">
+                    <h1 class="c-head__ttl">Agreements</h1>
+
+                </div>
+            </div>
+        </section>
+        <section class="innerTab">
+            <div class="l-container">
+                <ul class="innerTab-flex">
+                    <!-- <li class="innerTab__item">[S-STANDARD]<a href="/m_message1/" class="active">Opportunity List</a>[S-MIDOKU]<span class="item__badge">[MIDOKU]</span>[E-MIDOKU][E-STANDARD]</li> -->
+                    <!--template=/common/template/m1tab1.html-->
+                </ul>
+            </div>
+        </section>
+        <section class="innerTab">
+            <div class="l-container">
+                <ul class="innerTab-flex">
+                    <!--template=/common/template/m1tab2.html-->
+                </ul>
+            </div>
+        </section>
+
+        <section class="edit">
+            <div class="l-container">
+                <div class="c-head">
+                    <h1 class="c-head__ttl">Agreements</h1>
+
+                </div>
+
+
+                <!--No315start-->
+                <div>
+                    <h2>Scientist<span class="txt_up">3</span> Terms of Supplier Service Agreements_English_20240418</h2>
+
+                </div>
+                <!--No315end-->
+
+            </div>
+        </section>
+        <!-- 以下共通 -->
+
+        <!--template=/common/template/footer_en.html-->
+    </div>
+</body>
+
+</html>

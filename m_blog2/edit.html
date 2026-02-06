@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>記事情報登録・編集｜Scientist3</title>
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head2.html--><!-- 研究者側だけValidationを日本語化 -->
+</head>
+
+<body>
+  <div class="wrap sub">
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item"><a href="/m_blog2/">記事管理</a></li>
+          <li>記事情報登録・編集</li>
+        </ol>
+      </div>
+    </div>
+
+    <section class="edit">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">記事情報登録</h1>
+          <p class="c-head__txt">記事情報の編集をおこないます。</p>
+        </div>
+        [S-ERR]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [E-ERR]
+        <div class="form-box">
+          <form method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="mode" value="save">
+            <input type="hidden" name="key" value="[ID]">
+            <input type="hidden" name="sort" value="[SORT]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="page" value="[PAGE]">
+            <input type="hidden" name="lid" value="[LID]">
+            <input type="hidden" name="token" value="[TOKEN]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="MID" value="[MID]">
+            <input type="hidden" name="OID" value="[OID]">
+            <input type="hidden" name="O2_ETC01" value="[O2_ETC01]">
+            <input type="hidden" name="O2_ETC02" value="[O2_ETC02]">
+            <input type="hidden" name="O2_ETC03" value="[O2_ETC03]">
+            <input type="hidden" name="O2_ETC04" value="[O2_ETC04]">
+            <input type="hidden" name="O2_ETC05" value="[O2_ETC05]">
+            <input type="hidden" name="O2_ETC06" value="[O2_ETC06]">
+            <input type="hidden" name="O2_ETC07" value="[O2_ETC07]">
+            <input type="hidden" name="O2_ETC08" value="[O2_ETC08]">
+            <input type="hidden" name="O2_ETC09" value="[O2_ETC09]">
+            <input type="hidden" name="O2_ETC10" value="[O2_ETC10]">
+            <input type="hidden" name="O2_ETC11" value="[O2_ETC11]">
+            <input type="hidden" name="O2_ETC12" value="[O2_ETC12]">
+            <input type="hidden" name="O2_ETC13" value="[O2_ETC13]">
+            <input type="hidden" name="O2_ETC14" value="[O2_ETC14]">
+            <input type="hidden" name="O2_ETC15" value="[O2_ETC15]">
+            <input type="hidden" name="O2_ETC16" value="[O2_ETC16]">
+            <input type="hidden" name="O2_ETC17" value="[O2_ETC17]">
+            <input type="hidden" name="O2_ETC18" value="[O2_ETC18]">
+            <input type="hidden" name="O2_ETC19" value="[O2_ETC19]">
+            <input type="hidden" name="O2_ETC20" value="[O2_ETC20]">
+
+            <div class="formset">
+              <div class="formset__item">
+                <div class="formset__ttl">記事タイトル</div>
+                <div class="formset__input"><input type="text" name="O2_DVAL01" value="[O2_DVAL01]" size="90"></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">投稿日</div>
+                <div class="formset__input"><input type="text" name="O2_DVAL02" value="[O2_DVAL02]" size="90"></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">タグ</div>
+                <div class="formset__input"><input type="text" name="O2_DVAL03" value="[O2_DVAL03]" size="90"></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">コメント</div>
+                <div class="formset__input"><textarea name="O2_DTXT01" cols="70" rows="10">[O2_DTXT01]</textarea></div>
+              </div>
+              <!--DFIL01-->
+              [S-NEWDATA]<div class="formset__item">
+                <div class="formset__ttl">写真１</div>
+                <div class="formset__input"><input type="file" name="EP_O2_DFIL01" value="[O2_DFIL01]" size="90"><input
+                    type="hidden" name="O2_DFIL01" value="[O2_DFIL01]"></div>
+              </div>[E-NEWDATA]
+              [S-EDITDATA]<div class="formset__item">
+                <div class="formset__ttl">写真１</div>
+                <div class="formset__input"><img src="[O2_DFIL01]" width="200"><input type="checkbox"
+                    name="DEL_IMAGE_O2_DFIL01"><span class="txt-delete">削除</span><br><input type="file"
+                    name="EP_O2_DFIL01" value="[O2_DFIL01]" size="90"><input type="hidden" name="O2_DFIL01"
+                    value="[O2_DFIL01]"></div>
+              </div>[E-EDITDATA]
+              <!--DFIL02-->
+              [S-NEWDATA]<div class="formset__item">
+                <div class="formset__ttl">写真２</div>
+                <div class="formset__input"><input type="file" name="EP_O2_DFIL02" value="[O2_DFIL02]" size="90"><input
+                    type="hidden" name="O2_DFIL02" value="[O2_DFIL02]"></div>
+              </div>[E-NEWDATA]
+              [S-EDITDATA]<div class="formset__item">
+                <div class="formset__ttl">写真２</div>
+                <div class="formset__input"><img src="[O2_DFIL02]" width="200"><input type="checkbox"
+                    name="DEL_IMAGE_O2_DFIL02"><span class="txt-delete">削除</span><br><input type="file"
+                    name="EP_O2_DFIL02" value="[O2_DFIL02]" size="90"><input type="hidden" name="O2_DFIL02"
+                    value="[O2_DFIL02]"></div>
+              </div>[E-EDITDATA]
+              <!--DFIL03-->
+              [S-NEWDATA]<div class="formset__item">
+                <div class="formset__ttl">写真３</div>
+                <div class="formset__input"><input type="file" name="EP_O2_DFIL03" value="[O2_DFIL03]" size="90"><input
+                    type="hidden" name="O2_DFIL03" value="[O2_DFIL03]"></div>
+              </div>[E-NEWDATA]
+              [S-EDITDATA]<div class="formset__item">
+                <div class="formset__ttl">写真３</div>
+                <div class="formset__input"><img src="[O2_DFIL03]" width="200"><input type="checkbox"
+                    name="DEL_IMAGE_O2_DFIL03"><span class="txt-delete">削除</span><br><input type="file"
+                    name="EP_O2_DFIL03" value="[O2_DFIL03]" size="90"><input type="hidden" name="O2_DFIL03"
+                    value="[O2_DFIL03]"></div>
+              </div>[E-EDITDATA]
+            </div>
+            <div class="box_btn">
+              <div class="btn">
+                <input type="submit" value="この内容で保存する" name="submit"
+                  onclick="var ok=confirm('May I save it？');if (ok) this.form.submit(); return false;" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

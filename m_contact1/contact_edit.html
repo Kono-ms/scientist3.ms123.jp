@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+  <script>
+    function go_preview() {
+      $('[name=mode]').val('preview');
+      document.form1.submit();
+    }
+    function go_save() {
+      $('[name=mode]').val('saveconf2');
+      document.form1.submit();
+    }
+  </script>
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <form id="form1" name="form1" method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="type" value="[TYPE]">
+            <input type="hidden" name="mode" value="saveconf">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="shodan_id" value="[SHODAN_ID]">
+            <input type="hidden" name="sort" value="[SORT]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="word2" value="[WORD2]">
+            <input type="hidden" name="m1_id" value="[M1_ID]">
+            <input type="hidden" name="page" value="[PAGE]">
+            <input type="hidden" name="lid" value="[LID]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="TMP04" value="[TMP04]">
+            <input type="hidden" name="TMP05" value="[TMP05]">
+            <input type="hidden" name="TMP06" value="[TMP06]">
+            <input type="hidden" name="TMP07" value="[TMP07]">
+            <input type="hidden" name="TMP08" value="[TMP08]">
+            <input type="hidden" name="TMP09" value="[TMP09]">
+            <input type="hidden" name="TMP10" value="[TMP10]">
+            <input type="hidden" name="ENABLE" value="[ENABLE]">
+            <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+            <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+            <input type="hidden" name="MID1_LIST" value="[MID1_LIST]">
+            <div class="formset">
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>検索条件</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"></div>
+                <div class="formset__input">
+                  [WORD_VIEW]
+                </div>
+              </div>
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>Supplier</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"></div>
+                <div class="formset__input">
+                  [M1_VIEW]
+                </div>
+              </div>
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>Description</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Date of contact</div>
+                <div class="formset__input">
+                  [NEWDATE]
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Project name<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <input class="txt_w35p" type="text" name="TITLE" value="[D-TITLE]" placeholder="" required />
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Content of contact<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <textarea class="textarea_w73p" cols="40" rows="8" name="COMMENT" placeholder=""
+                    required>[D-COMMENT]</textarea>
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">添付ファイル</div>
+                <div class="formset__input">
+                  <input class="txt_w35p" type="file" name="FILE" value="[D-FILE]" placeholder="" />
+                  <input class="txt_w35p" type="file" name="FILE2" value="[D-FILE2]" placeholder="" />
+                  <input class="txt_w35p" type="file" name="FILE3" value="[D-FILE3]" placeholder="" />
+                  <input class="txt_w35p" type="file" name="FILE4" value="[D-FILE4]" placeholder="" />
+                  <input class="txt_w35p" type="file" name="FILE5" value="[D-FILE5]" placeholder="" />
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Desired date for response</div>
+                <div class="formset__input">
+                  <input class="txt_w35p" type="date" name="KIGEN" value="[D-KIGEN]" placeholder="" />
+                </div>
+              </div>
+              <div class="btn formset__btn">
+                <input type="submit" value="To confirm" />
+              </div>
+              <button type="button" onclick="go_preview();">プレビュー</button>
+              <button type="button" onclick="go_save();">保存</button>
+              <button type="button" onclick="history.back();">Go back</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer_en.html-->
+  </div>
+</body>
+
+</html>

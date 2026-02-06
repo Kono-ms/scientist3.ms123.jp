@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head><!--m2 edit-->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+  <script>
+
+    window.AddDetailCurrentCnt = 1;// 現在のアイテム数
+    var detail_cnt = 1;// アイテムの発行済み添え字
+
+    var PaymentTerms="";
+
+    var h_m2_detail = ([H_M2_DETAIL]);
+
+    var m2_quote_no = '[M2_QUOTE_NO]';
+    var m2_study_code = '[M2_STUDY_CODE]';
+    var m2_date = '[M2_DATE]';
+    var m2_quote_valid_until = '[M2_QUOTE_VALID_UNTIL]';
+    var m2_description = '[M2_DESCRIPTION]';
+    var m2_currency = '[M2_CURRENCY]';
+    //M2_SPECIAL_DISCOUNT廃止でコメントアウト
+    //var m2_special_discount = '[M2_SPECIAL_DISCOUNT]';
+    var m2_special_note = '[M2_SPECIAL_NOTE]';
+
+    var m2_nohin_type = '[M2_NOHIN_TYPE]';
+    var m2_pay_type = '[M2_PAY_TYPE]';
+
+    var post_detail = ([POST_DETAIL]);
+
+    console.log("post_detail.length:"+post_detail.length);
+
+    $(document).ready(function () {
+      $('select[name=H_M2_ID]').on('change', function () {
+        detail_cnt = 1;
+        $('#add_detail_area').html('');
+
+        console.log("h_m2_idセレクトボックス");
+        var val = h_m2_detail[$(this).val()];
+        if (val) {
+          $('#m2_title').val(val['TITLE']);
+          $('#m2_price').val(val['PRICE']);
+          $('#m2_comment').val(val['COMMENT']);
+
+          if (val['M2_NOHIN_TYPE'].indexOf('data') != -1) {
+            $('#M2_NOHIN_TYPE_1').prop('checked', true);
+          }
+          else {
+            $('#M2_NOHIN_TYPE_1').prop('checked', false);
+          }
+
+          if (val['M2_NOHIN_TYPE'].indexOf('Goods') != -1) {
+            $('#M2_NOHIN_TYPE_2').prop('checked', true);
+          }
+          else {
+            $('#M2_NOHIN_TYPE_2').prop('checked', false);
+          }
+
+          if (val['M2_PAY_TYPE'].indexOf('Once') != -1) {
+            $('#M2_PAY_TYPE_1').prop('checked', true);
+          }
+          else {
+            $('#M2_PAY_TYPE_1').prop('checked', false);
+          }
+
+          if (val['M2_PAY_TYPE'].indexOf('Split') != -1) {
+            $('#M2_PAY_TYPE_2').prop('checked', true);
+          }
+          else {
+            $('#M2_PAY_TYPE_2').prop('checked', false);
+          }
+
+          if (val['M2_PAY_TYPE'].indexOf('Milestone') != -1) {
+            $('#M2_PAY_TYPE_3').prop('checked', true);
+          }
+          else {
+            $('#M2_PAY_TYPE_3').prop('checked', false);
+          }
+
+          $('input[name=M2_QUOTE_NO]').val(val['M2_QUOTE_NO']);
+          $('input[name=M2_STUDY_CODE]').val(val['M2_STUDY_CODE']);
+          $('input[name=M2_DATE]').val(val['M2_DATE']);
+          $('input[name=M2_QUOTE_VALID_UNTIL]').val(val['M2_QUOTE_VALID_UNTIL']);
+          $('input[name=M2_DESCRIPTION]').val(val['M2_DESCRIPTION']);
+          $('select[name=M2_CURRENCY]').val(val['M2_CURRENCY']);
+
+          // detail
+          if (val['detail'] != null && val['detail'].length > 0) {
+            for (var i = 0; i < val['detail'].length; i++) {
+              if (i > 0) {
+                add_detail(true);
+              }
+              var detail = val['detail'][i];
+              var detail_no = i + 1;
+              $('#M2_DETAIL_ITEM_' + detail_no).val(detail['M2_DETAIL_ITEM']);
+              $('#M2_DETAIL_DESCRIPTION_' + detail_no).val(detail['M2_DETAIL_DESCRIPTION']);
+              $('#M2_DETAIL_QUANTITY_' + detail_no).val(detail['M2_DETAIL_QUANTITY']);
+              $('#M2_DETAIL_UNIT_PRICE_' + detail_no).val(detail['M2_DETAIL_UNIT_PRICE']);
+              $('#M2_DETAIL_SP_DISCOUNT_' + detail_no).val(detail['M2_DETAIL_SP_DISCOUNT']);
+              $('#M2_DETAIL_PRICE_' + detail_no).val(detail['M2_DETAIL_PRICE']);
+              $('#M2_DETAIL_PRICE_SPAN_' + detail_no).text(detail['M2_DETAIL_PRICE']);
+              $('#M2_DETAIL_NOTE_' + detail_no).val(detail['M2_DETAIL_NOTE']);
+              $('#M2_SPECIAL_NOTE_TMP_' + detail_no).val(detail['M2_SPECIAL_NOTE_TMP']);
+            }
+
+          }
+
+          //M2_SPECIAL_DISCOUNT廃止でコメントアウト
+          //$('input[name=M2_SPECIAL_DISCOUNT]').val(val['M2_SPECIAL_DISCOUNT']);
+          $('textarea[name=M2_SPECIAL_NOTE]').val(val['M2_SPECIAL_NOTE']);
+        }
+        else {
+          $('#m2_title').val('');
+          $('#m2_price').val('');
+          $('#m2_comment').val('');
+
+          /*
+          $('#M2_NOHIN_TYPE_1').prop('checked', false);
+          $('#M2_NOHIN_TYPE_2').prop('checked', false);
+          $('#M2_PAY_TYPE_1').prop('checked', false);
+          $('#M2_PAY_TYPE_2').prop('checked', false);
+          */
+          if (m2_nohin_type.indexOf('data') != -1) {
+            $('#M2_NOHIN_TYPE_1').prop('checked', true);
+          }
+          else {
+            $('#M2_NOHIN_TYPE_1').prop('checked', false);
+          }
+
+          if (m2_nohin_type.indexOf('Goods') != -1) {
+            $('#M2_NOHIN_TYPE_2').prop('checked', true);
+          }
+          else {
+            $('#M2_NOHIN_TYPE_2').prop('checked', false);
+          }
+
+          if (m2_pay_type.indexOf('Once') != -1) {
+            $('#M2_PAY_TYPE_1').prop('checked', true);
+          }
+          else {
+            $('#M2_PAY_TYPE_1').prop('checked', false);
+          }
+
+          if (m2_pay_type.indexOf('Split') != -1) {
+            $('#M2_PAY_TYPE_2').prop('checked', true);
+          }
+          else {
+            $('#M2_PAY_TYPE_2').prop('checked', false);
+          }
+
+          if (m2_pay_type.indexOf('Milestone') != -1) {
+            $('#M2_PAY_TYPE_3').prop('checked', true);
+          }
+          else {
+            $('#M2_PAY_TYPE_3').prop('checked', false);
+          }
+
+          $('input[name=M2_QUOTE_NO]').val(m2_quote_no);
+          $('input[name=M2_STUDY_CODE]').val(m2_study_code);
+          $('input[name=M2_DATE]').val(m2_date);
+          $('input[name=M2_QUOTE_VALID_UNTIL]').val(m2_quote_valid_until);
+          $('input[name=M2_DESCRIPTION]').val(m2_description);
+          $('select[name=M2_CURRENCY]').val(m2_currency);
+
+
+          if (post_detail.length == 0) {
+            $('#M2_DETAIL_ITEM_1').val('');
+            $('#M2_DETAIL_DESCRIPTION_1').val('');
+            $('#M2_DETAIL_QUANTITY_1').val('');
+            $('#M2_DETAIL_UNIT_PRICE').val('');
+            $('#M2_DETAIL_SP_DISCOUNT').val('');
+            $('#M2_DETAIL_PRICE_1').val('');
+            $('#M2_DETAIL_PRICE_SPAN_1').text('');
+            $('#M2_DETAIL_NOTE_1').val('');
+            $('#M2_SPECIAL_NOTE_TMP_1').val('');
+
+            $('#add_detail_area').html('');
+          }
+          else {
+            for (var i = 0; i < post_detail.length; i++) {
+              if (i > 0) {
+                add_detail(true);
+              }
+              var detail_no = i + 1;
+              $('#M2_DETAIL_ITEM_' + detail_no).val(post_detail[i]['M2_DETAIL_ITEM']);
+              $('#M2_DETAIL_DESCRIPTION_' + detail_no).val(post_detail[i]['M2_DETAIL_DESCRIPTION']);
+              $('#M2_DETAIL_QUANTITY_' + detail_no).val(post_detail[i]['M2_DETAIL_QUANTITY']);
+              $('#M2_DETAIL_UNIT_PRICE_' + detail_no).val(post_detail[i]['M2_DETAIL_UNIT_PRICE']);
+              $('#M2_DETAIL_SP_DISCOUNT_' + detail_no).val(post_detail[i]['M2_DETAIL_SP_DISCOUNT']);
+              $('#M2_DETAIL_PRICE_' + detail_no).val(post_detail[i]['M2_DETAIL_PRICE']);
+              $('#M2_DETAIL_PRICE_SPAN_' + detail_no).text(post_detail[i]['M2_DETAIL_PRICE']);
+              $('#M2_DETAIL_NOTE_' + detail_no).val(post_detail[i]['M2_DETAIL_NOTE']);
+              $('#M2_SPECIAL_NOTE_TMP_' + detail_no).val(post_detail[i]['M2_SPECIAL_NOTE_TMP']);
+              
+              if(post_detail[i]['MAEBARAI']=='YES' && m2_pay_type=='Milestone'){
+                $('#MAEBARAI_' + detail_no).prop('checked', true);
+
+              }else if(post_detail[i]['MAEBARAI']=='YES' && m2_pay_type=='Once'){
+                $('#MAEBARAI_FORONCE').prop('checked', true);
+              }
+
+              //console.log('post_detail(m2_nohin_type):'+i+':'+post_detail[i]['M2_NOHIN_TYPE_TMP']);
+              if( (post_detail[i]['M2_NOHIN_TYPE_TMP']=='data' 
+                || post_detail[i]['M2_NOHIN_TYPE_TMP']=='Data')
+                && m2_pay_type=='Milestone' ){
+                $('#M2_NOHIN_TYPE_TMP1_' + detail_no).prop('checked', true);
+              
+              }else if( (post_detail[i]['M2_NOHIN_TYPE_TMP']=='goods' 
+                || post_detail[i]['M2_NOHIN_TYPE_TMP']=='Goods') 
+                && m2_pay_type=='Milestone' ){
+                $('#M2_NOHIN_TYPE_TMP2_' + detail_no).prop('checked', true);
+              }
+
+              if( m2_pay_type=='Split' ){
+                $('#M2_DETAIL_SPLIT_PART_' + detail_no).val(post_detail[i]['M2_DETAIL_SPLIT_PART']);
+              }
+
+
+            }
+          }
+          //M2_SPECIAL_DISCOUNT廃止でコメントアウト
+          //$('input[name=M2_SPECIAL_DISCOUNT]').val(m2_special_discount);
+          $('textarea[name=M2_SPECIAL_NOTE]').val(m2_special_note);
+        }
+      });
+
+      $('select[name=H_M2_ID]').change();
+
+      //見積り修正等の値がすでに入ってる場合にページを開いたときの自動計算部分の表示
+      for(var i=1; i <= post_detail.length; i++){
+        get_total_price(i);
+      }
+
+      auto_cal_currency();
+
+    });
+
+
+    function go_preview() {
+      $('[name=mode]').val('preview');
+      document.form1.submit();
+    }
+    function go_save() {
+      $('[name=mode]').val('saveconf2');
+      document.form1.submit();
+    }
+    function go_submit() {
+      var c1 = $('#M2_NOHIN_TYPE_1').prop('checked');
+      var c2 = $('#M2_NOHIN_TYPE_2').prop('checked');
+      if (!c1 && !c2) {
+        alert('Form of 納品を選択して下さい');
+        return false;
+      }
+      document.form1.submit();
+    }
+
+
+    function add_detail(flg) {
+      detail_cnt++;
+      window.AddDetailCurrentCnt++;
+      var html = $('#detail_template').html();
+      html = html.replace(/XXX/g, '' + detail_cnt);
+
+      if (!flg) {
+        var reg = new RegExp('\\[D-M2_DETAIL_ITEM_' + detail_cnt + '\\]');
+        html = html.replace(reg, '');
+        var reg = new RegExp('\\[M2_DETAIL_DESCRIPTION_' + detail_cnt + '\\]');
+        html = html.replace(reg, '');
+         var reg = new RegExp('\\[D-M2_DETAIL_QUANTITY_' + detail_cnt + '\\]');
+        html = html.replace(reg, '');
+         var reg = new RegExp('\\[D-M2_DETAIL_UNIT_PRICE_' + detail_cnt + '\\]');
+        html = html.replace(reg, '');
+         var reg = new RegExp('\\[D-M2_DETAIL_SP_DISCOUNT_' + detail_cnt + '\\]');
+        html = html.replace(reg, '');
+        var reg = new RegExp('\\[D-M2_DETAIL_PRICE_' + detail_cnt + '\\]');
+        html = html.replace(reg, '');
+        var reg = new RegExp('\\[M2_DETAIL_NOTE_' + detail_cnt + '\\]');
+        html = html.replace(reg, '');
+        var reg = new RegExp('\\[M2_SPECIAL_NOTE_TMP_' + detail_cnt + '\\]');
+        html = html.replace(reg, '');
+      }
+      $('#add_detail_area').append(html);
+      //Payment Termsで「Milestone」が選択されてたら、
+      //Add an itemで追加されるアイテムも「分割割り当て」プルダウンを非表示の状態にする。
+      //バックグラウンドへはconfig画面でわたす。
+      handleRadioChange_paymentTerms();
+      //handleRadioChange_paymentTerms(document.getElementById('M2_PAY_TYPE_2'));
+      // 2025.09.22 カウンターを変更
+      $('#form1 [name="ADD_DETAIL_COUNT"]').val(window.AddDetailCurrentCnt);
+    }
+
+
+    function delete_detail(detail_no) {
+      $('#detail_' + detail_no).html('');
+      // 2025.09.22 カウンターを変更
+      window.AddDetailCurrentCnt--;
+      $('#form1 [name="ADD_DETAIL_COUNT"]').val(window.AddDetailCurrentCnt);
+      console.log('window.AddDetailCurrentCnt '+window.AddDetailCurrentCnt);
+
+      handleRadioChange_paymentTerms();
+    }
+
+    function get_total_price(d_no){
+      var quantity=document.getElementById('M2_DETAIL_QUANTITY_'+d_no).value;
+      var unit_price=document.getElementById('M2_DETAIL_UNIT_PRICE_'+d_no).value;
+      var sp_discount=document.getElementById('M2_DETAIL_SP_DISCOUNT_'+d_no).value;
+      var total_price;
+      
+      //sp_discountは必須ではない
+      if(isNaN(sp_discount) || sp_discount==""){
+          sp_discount=0;
+      }
+
+      if(isNaN(quantity) || isNaN(unit_price) || quantity=="" || unit_price==""){
+         console.log("数値ではない");
+         total_price="";
+      }else{
+         console.log("数値です");
+         total_price=quantity*unit_price-sp_discount;
+      }
+      document.getElementById('M2_DETAIL_PRICE_'+d_no).value=total_price;
+      document.getElementById('M2_DETAIL_PRICE_SPAN_'+d_no).innerText=total_price;
+      
+      console.log("quantity:"+quantity);
+      console.log("unit_price:"+unit_price);
+      console.log("total_price:"+total_price);
+
+      auto_cal();
+      auto_cal_currency();
+
+    }
+
+    function auto_cal(){
+      //M2_SPECIAL_DISCOUNT廃止でコメントアウト
+      //var special_discount=document.getElementById('M2_SPECIAL_DISCOUNT').value;
+      //if(isNaN(special_discount) || special_discount==""){
+      //   console.log("special_discountは数値ではない");
+      //   special_discount=0;
+      //}
+
+      var d_price=Array();
+      console.log("detail_cnt:"+detail_cnt);
+      for (var i = 1; i <= detail_cnt; i++) {
+        d_price.push(document.getElementById('M2_DETAIL_PRICE_'+i).value);
+        console.log(i+":"+document.getElementById('M2_DETAIL_PRICE_'+i).value);
+      }
+      console.log(d_price);
+
+      var a1_subtotal=0;
+      for (var i = 0; i < d_price.length; i++) {
+        a1_subtotal=a1_subtotal+Number(d_price[i]);
+      }
+      //M2_SPECIAL_DISCOUNT廃止でコメントアウト
+      //a1_subtotal=a1_subtotal-special_discount;
+      console.log("a1_subtotal:"+a1_subtotal);
+
+      //
+      //国内サプライヤー10%,海外サプライヤー0%。
+      //DAT_M1のM1_DVAL04="M1_DVAL04:Japan"のとき、国内サプライヤー。
+      //
+      var a2_tax_rate=[A2_TAX_RATE];
+      console.log("a2_tax_rate:"+a2_tax_rate);
+
+      var a3_sales_tax=a1_subtotal*a2_tax_rate/100;
+      console.log("a3_sales_tax:"+a3_sales_tax);
+
+      var a4_total=a1_subtotal+a3_sales_tax;
+      console.log("a4_total:"+a4_total);
+      
+      //document.getElementById('auto_1').value=a1_subtotal;
+      document.getElementById('auto_1_disp').innerText=a1_subtotal;
+      //document.getElementById('auto_2').value=a2_tax_rate;
+      document.getElementById('auto_2_disp').innerText=a2_tax_rate;
+      //document.getElementById('auto_3').value=a3_sales_tax;
+      document.getElementById('auto_3_disp').innerText=a3_sales_tax;
+      //document.getElementById('auto_4').value=a4_total;
+      document.getElementById('auto_4_disp').innerText=a4_total;
+
+
+      //マイルストーンの時の各アイテムごとの表示
+       for (var i = 0; i < d_price.length; i++) {
+          document.getElementById('auto_1_disp_'+(i+1)).innerText=d_price[i];
+          document.getElementById('auto_2_disp_'+(i+1)).innerText=a2_tax_rate;
+          document.getElementById('auto_3_disp_'+(i+1)).innerText=d_price[i]*a2_tax_rate/100;
+          document.getElementById('auto_4_disp_'+(i+1)).innerText=Number(d_price[i]) + (d_price[i] * a2_tax_rate / 100);
+       }
+
+      auto_cal_currency();
+
+    }
+
+    function auto_cal_currency(){
+      //通貨の表示
+      var currencySelect = document.getElementsByName('M2_CURRENCY')[0];
+      var selectedValue = currencySelect.value;
+      var targetSpans = document.getElementsByClassName('auto_currency_disp');
+      for (var i = 0; i < targetSpans.length; i++) {
+          targetSpans[i].textContent = selectedValue.replace("M2_CURRENCY:", "");
+      }
+    }
+
+
+    //SHIP TOセレクトボックス
+    var m2_ship_to = ([M2_SHIP_TO]);
+    $(document).ready(function () {
+      $('select[name=select_ship_to]').on('change', function () {
+        console.log("ship to");
+        var m2_ship_to_val = m2_ship_to[$(this).val()];
+        if (m2_ship_to_val) {
+          $('#M2_SHIP_TO_SPT_1').html(m2_ship_to_val['M2_SHIP_TO_SPT_1']);
+          $('#M2_SHIP_TO_SPT_2').html(m2_ship_to_val['M2_SHIP_TO_SPT_2']);
+          $('#M2_SHIP_TO_SPT_3').html(m2_ship_to_val['M2_SHIP_TO_SPT_3']);
+          $('#M2_SHIP_TO_SPT_4').html(m2_ship_to_val['M2_SHIP_TO_SPT_4']);
+          $('#M2_SHIP_TO_SPT_5').html(m2_ship_to_val['M2_SHIP_TO_SPT_5']);
+          $('#M2_SHIP_TO_SPT_6').html(m2_ship_to_val['M2_SHIP_TO_SPT_6']);
+          
+        }
+        else {
+          $('#M2_SHIP_TO_SPT_1').html('');
+          $('#M2_SHIP_TO_SPT_2').html('');
+          $('#M2_SHIP_TO_SPT_3').html('');
+          $('#M2_SHIP_TO_SPT_4').html('');
+          $('#M2_SHIP_TO_SPT_5').html('');
+          $('#M2_SHIP_TO_SPT_6').html('');
+        }
+      });
+      $('select[name=select_ship_to]').change();
+    });
+    
+
+    function fill_ship_to(){
+      var m2_ship_to = ([M2_SHIP_TO]);
+      var selected_no=document.getElementById('select_ship_to').value;
+      if(selected_no!=""){
+        document.getElementById('M2_SHIP_TO_SPT_1').value=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_1"];
+        document.getElementById('M2_SHIP_TO_SPT_2').value=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_2"];
+        document.getElementById('M2_SHIP_TO_SPT_3').value=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_3"];
+        document.getElementById('M2_SHIP_TO_SPT_4').value=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_4"];
+        document.getElementById('M2_SHIP_TO_SPT_5').value=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_5"];
+        document.getElementById('M2_SHIP_TO_SPT_6').value=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_6"];
+
+        //document.getElementById('M2_SHIP_TO_SPT_1_SPAN').innerText=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_1"];
+        //document.getElementById('M2_SHIP_TO_SPT_2_SPAN').innerText=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_2"];
+        //document.getElementById('M2_SHIP_TO_SPT_3_SPAN').innerText=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_3"];
+        //document.getElementById('M2_SHIP_TO_SPT_4_SPAN').innerText=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_4"];
+        //document.getElementById('M2_SHIP_TO_SPT_5_SPAN').innerText=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_5"];
+        //document.getElementById('M2_SHIP_TO_SPT_6_SPAN').innerText=m2_ship_to[selected_no]["M2_SHIP_TO_SPT_6"];
+
+      }
+    }
+
+
+    //BILL TOセレクトボックス
+
+    var m2_bill_to = ([M2_BILL_TO]);
+    $(document).ready(function () {
+      $('select[name=select_bill_to]').on('change', function () {
+        console.log("bill to");
+        var m2_bill_to_val = m2_bill_to[$(this).val()];
+        if (m2_bill_to_val) {
+          $('#M2_BILL_TO_SPT_1').html(m2_bill_to_val['M2_BILL_TO_SPT_1']);
+          $('#M2_BILL_TO_SPT_2').html(m2_bill_to_val['M2_BILL_TO_SPT_2']);
+          $('#M2_BILL_TO_SPT_3').html(m2_bill_to_val['M2_BILL_TO_SPT_3']);
+          $('#M2_BILL_TO_SPT_4').html(m2_bill_to_val['M2_BILL_TO_SPT_4']);
+          $('#M2_BILL_TO_SPT_5').html(m2_bill_to_val['M2_BILL_TO_SPT_5']);
+          $('#M2_BILL_TO_SPT_6').html(m2_bill_to_val['M2_BILL_TO_SPT_6']);
+          
+        }
+        else {
+          $('#M2_BILL_TO_SPT_1').html('');
+          $('#M2_BILL_TO_SPT_2').html('');
+          $('#M2_BILL_TO_SPT_3').html('');
+          $('#M2_BILL_TO_SPT_4').html('');
+          $('#M2_BILL_TO_SPT_5').html('');
+          $('#M2_BILL_TO_SPT_6').html('');
+        }
+      });
+      $('select[name=select_bill_to]').change();
+    });
+    
+
+    function fill_bill_to(){
+      var m2_bill_to = ([M2_BILL_TO]);
+      var selected_no=document.getElementById('select_bill_to').value;
+      if(selected_no!=""){
+        document.getElementById('M2_BILL_TO_SPT_1').value=m2_bill_to[selected_no]["M2_BILL_TO_SPT_1"];
+        document.getElementById('M2_BILL_TO_SPT_2').value=m2_bill_to[selected_no]["M2_BILL_TO_SPT_2"];
+        document.getElementById('M2_BILL_TO_SPT_3').value=m2_bill_to[selected_no]["M2_BILL_TO_SPT_3"];
+        document.getElementById('M2_BILL_TO_SPT_4').value=m2_bill_to[selected_no]["M2_BILL_TO_SPT_4"];
+        document.getElementById('M2_BILL_TO_SPT_5').value=m2_bill_to[selected_no]["M2_BILL_TO_SPT_5"];
+        document.getElementById('M2_BILL_TO_SPT_6').value=m2_bill_to[selected_no]["M2_BILL_TO_SPT_6"];
+
+        //document.getElementById('M2_BILL_TO_SPT_1_SPAN').innerText=m2_bill_to[selected_no]["M2_BILL_TO_SPT_1"];
+        //document.getElementById('M2_BILL_TO_SPT_2_SPAN').innerText=m2_bill_to[selected_no]["M2_BILL_TO_SPT_2"];
+        //document.getElementById('M2_BILL_TO_SPT_3_SPAN').innerText=m2_bill_to[selected_no]["M2_BILL_TO_SPT_3"];
+        //document.getElementById('M2_BILL_TO_SPT_4_SPAN').innerText=m2_bill_to[selected_no]["M2_BILL_TO_SPT_4"];
+        //document.getElementById('M2_BILL_TO_SPT_5_SPAN').innerText=m2_bill_to[selected_no]["M2_BILL_TO_SPT_5"];
+        //document.getElementById('M2_BILL_TO_SPT_6_SPAN').innerText=m2_bill_to[selected_no]["M2_BILL_TO_SPT_6"];
+
+      }
+    }
+
+
+    //Payment Termsで「Milestone」が選択されてたら、
+    //Add an itemで追加されるアイテムも「分割割り当て」プルダウンを非表示の状態にする。
+    //バックグラウンドへはconfig画面でわたす。
+    // NOTE: 2025.09.22 セレクタが見つからない時に停止することを回避
+    function handleRadioChange_paymentTerms(radio) {
+      try{
+        console.log("Payment Termsを操作した");
+
+        //PaymentTerms=radio.value;
+        let radio1=document.getElementById('M2_PAY_TYPE_1');
+        let radio2=document.getElementById('M2_PAY_TYPE_2');
+        let radio3=document.getElementById('M2_PAY_TYPE_3');
+
+        console.log("radio3:"+radio3.value);
+        console.log("radio3 checked:"+radio3.checked);
+        //console.log("radio2:"+radio2.value);
+        //console.log("radio2 checked:"+radio2.checked);
+        //console.log("radio3:"+radio3.value);
+        //console.log("radio3 checked:"+radio3.checked);
+        
+        if (radio2.value === 'Split' && radio2.checked) {
+          for(var i=1; i<=detail_cnt; i++){
+            if(document.getElementById('M2_DETAIL_SPLIT_PART_AREA_'+i)!=null){
+              document.getElementById('M2_DETAIL_SPLIT_PART_AREA_'+i).style.display = 'block';
+            }
+          }
+        }else{
+          for(var i=1; i<=detail_cnt; i++){
+            if(document.getElementById('M2_DETAIL_SPLIT_PART_AREA_'+i)!=null){
+              document.getElementById('M2_DETAIL_SPLIT_PART_AREA_'+i).style.display = 'none';
+            }
+          }
+        }
+
+        if(radio3.value === 'Milestone' && radio3.checked){
+          for(var i=1; i<=detail_cnt; i++){
+            if(document.getElementById('FORM_OF_DELIVERY_AT_MILE_AREA_'+i)!=null){
+              document.getElementById('FORM_OF_DELIVERY_AT_MILE_AREA_'+i).style.display = 'block';
+            }
+          }
+        }else{
+          for(var i=1; i<=detail_cnt; i++){
+            if(document.getElementById('FORM_OF_DELIVERY_AT_MILE_AREA_'+i)!=null){
+              document.getElementById('FORM_OF_DELIVERY_AT_MILE_AREA_'+i).style.display = 'none';
+            }
+          }
+        }
+
+
+        //if( (radio1.value === 'Once' && radio1.checked) ||
+        //    (radio3.value === 'Milestone' && radio3.checked) ){
+        //  console.log("area1");
+        //  for(var i=1; i<=detail_cnt; i++){
+        //    if(document.getElementById('MAEBARAI_AREA_'+i)!=null){
+        //      document.getElementById('MAEBARAI_AREA_'+i).style.display = 'block';
+        //    }
+        //  }
+        //}
+        if( radio1.value === 'Once' && radio1.checked ){
+          console.log("area1");
+          for(var i=1; i<=detail_cnt; i++){
+            if(document.getElementById('MAEBARAI_AREA_'+i)!=null){
+              document.getElementById('MAEBARAI_AREA_'+i).style.display = 'none';
+              if(document.getElementById('MAEBARAI_'+i)!=null){
+                document.getElementById('MAEBARAI_'+i).checked=false;
+              }
+            }
+            if(document.getElementById('auto_area_'+i)!=null){
+              document.getElementById('auto_area_'+i).style.display = 'none';
+            }
+          }
+
+          if(document.getElementById('MAEBARAI_AREA_FORONCE')!=null){
+            document.getElementById('MAEBARAI_AREA_FORONCE').style.display = 'block';
+          }
+
+        }else if( radio3.value === 'Milestone' && radio3.checked ){
+          console.log("area1");
+          for(var i=1; i<=detail_cnt; i++){
+            if(document.getElementById('MAEBARAI_AREA_'+i)!=null){
+              document.getElementById('MAEBARAI_AREA_'+i).style.display = 'block';
+            }
+            if(document.getElementById('auto_area_'+i)!=null){
+              document.getElementById('auto_area_'+i).style.display = 'block';
+            }
+          }
+
+          if(document.getElementById('MAEBARAI_AREA_FORONCE')!=null){
+              document.getElementById('MAEBARAI_AREA_FORONCE').style.display = 'none';
+              if(document.getElementById('MAEBARAI_FORONCE')!=null){
+                document.getElementById('MAEBARAI_FORONCE').checked=false;
+              }
+          }
+
+        }else{
+          console.log("area2");
+          for(var i=1; i<=detail_cnt; i++){
+            if(document.getElementById('MAEBARAI_AREA_'+i)!=null){
+              document.getElementById('MAEBARAI_AREA_'+i).style.display = 'none';
+              if(document.getElementById('MAEBARAI_'+i)!=null){
+                document.getElementById('MAEBARAI_'+i).checked=false;
+              }
+            }
+            if(document.getElementById('auto_area_'+i)!=null){
+              document.getElementById('auto_area_'+i).style.display = 'none';
+            }
+          }
+
+          if(document.getElementById('MAEBARAI_AREA_FORONCE')!=null){
+              document.getElementById('MAEBARAI_AREA_FORONCE').style.display = 'none';
+              if(document.getElementById('MAEBARAI_FORONCE')!=null){
+                document.getElementById('MAEBARAI_FORONCE').checked=false;
+              }
+          }
+
+        }
+        
+
+        //Special noteエリアの表示、非表示
+        if(radio1.value === 'Once' && radio1.checked){
+          if(document.getElementById('special_note_area')!=null){
+            document.getElementById('special_note_area').style.display = 'block';
+          }
+
+        }else if(radio2.value === 'Split' && radio2.checked){
+          if(document.getElementById('special_note_area')!=null){
+            document.getElementById('special_note_area').style.display = 'block';
+          }
+
+        }else if(radio3.value === 'Milestone' && radio3.checked){
+          if(document.getElementById('special_note_area')!=null){
+            document.getElementById('special_note_area').style.display = 'none';
+          }
+          if(document.getElementById('M2_SPECIAL_NOTE')!=null){
+            document.getElementById('M2_SPECIAL_NOTE').value = '';
+          }
+        }
+
+
+        //マイルストーン時用に用意されたアイテム毎のSpecial Noteエリアの表示非表示
+
+        if(radio1.value === 'Once' && radio1.checked){
+          for(var i=1; i<=detail_cnt; i++){
+            if(document.getElementById('M2_SPECIAL_NOTE_TMP_AREA_'+i)!=null){
+              document.getElementById('M2_SPECIAL_NOTE_TMP_AREA_'+i).style.display = 'none';
+              document.getElementById('M2_SPECIAL_NOTE_TMP_'+i).value='';
+            } 
+          }
+
+        }else if(radio2.value === 'Split' && radio2.checked){
+          for(var i=1; i<=detail_cnt; i++){
+            if(document.getElementById('M2_SPECIAL_NOTE_TMP_AREA_'+i)!=null){
+              document.getElementById('M2_SPECIAL_NOTE_TMP_AREA_'+i).style.display = 'none';
+              document.getElementById('M2_SPECIAL_NOTE_TMP_'+i).value='';
+            } 
+          }
+        
+        }else if(radio3.value === 'Milestone' && radio3.checked){
+          for(var i=1; i<=detail_cnt; i++){
+            if(document.getElementById('M2_SPECIAL_NOTE_TMP_AREA_'+i)!=null){
+              document.getElementById('M2_SPECIAL_NOTE_TMP_AREA_'+i).style.display = 'block';
+            } 
+          }
+          
+        }
+
+
+
+/*
+        if(radio1.value === 'Once' && radio1.checked){
+          console.log("area1");
+          for(var i=1; i<=detail_cnt; i++){
+            document.getElementById('FORM_OF_DELIVERY_AT_MILE_AREA_'+i).style.display = 'block';
+            if(document.getElementById('MAEBARAI_AREA_'+i)!=null){
+              document.getElementById('MAEBARAI_AREA_'+i).style.display = 'block';
+            }
+          }
+        }else{
+          console.log("area2");
+          for(var i=1; i<=detail_cnt; i++){
+            document.getElementById('FORM_OF_DELIVERY_AT_MILE_AREA_'+i).style.display = 'none';
+            if(document.getElementById('MAEBARAI_AREA_'+i)!=null){
+              document.getElementById('MAEBARAI_AREA_'+i).style.display = 'none';
+            }
+          }
+        }
+
+        if (radio2.value === 'Split' && radio2.checked) {
+          for(var i=1; i<=detail_cnt; i++){
+            document.getElementById('M2_DETAIL_SPLIT_PART_AREA_'+i).style.display = 'block';
+          }
+        }else{
+          for(var i=1; i<=detail_cnt; i++){
+            document.getElementById('M2_DETAIL_SPLIT_PART_AREA_'+i).style.display = 'none';
+          }
+        }
+
+        if(radio3.value === 'Milestone' && radio3.checked){
+          for(var i=1; i<=detail_cnt; i++){
+            document.getElementById('FORM_OF_DELIVERY_AT_MILE_AREA_'+i).style.display = 'block';
+            if(document.getElementById('MAEBARAI_AREA_'+i)!=null){
+              document.getElementById('MAEBARAI_AREA_'+i).style.display = 'block';
+            }
+          }
+        }else{
+          for(var i=1; i<=detail_cnt; i++){
+            document.getElementById('FORM_OF_DELIVERY_AT_MILE_AREA_'+i).style.display = 'none';
+            if(document.getElementById('MAEBARAI_AREA_'+i)!=null){
+              document.getElementById('MAEBARAI_AREA_'+i).style.display = 'none';
+            }
+          }
+        }
+*/
+
+
+      }catch(e){console.log('handleRadioChange_paymentTerms Error', e.message)}
+    }
+
+    $(document).ready(function () {
+      handleRadioChange_paymentTerms();
+      //handleRadioChange_paymentTerms(document.getElementById('M2_PAY_TYPE_2'));
+    });
+  </script>
+
+  <script>
+    // M2_PAY_TYPE
+    // NOTE: 2025.09.22 name="M2_PAY_TYPE"が変更されたときに動的にルールを切り替える
+    $('[type="radio"][name="M2_PAY_TYPE"]').on('change', function() {
+      console.log('%cM2_PAY_TYPE on change','color: yellow; font-weight: bold');
+      let val = $(this).val();
+      if (val === 'Split') {
+        // valueが「Split」のときだけルールを追加
+        $('#form1 [name="ADD_DETAIL_COUNT"]').rules('add', {
+          minlength: 2,
+          messages: {
+            minlength: "アイテムは最低２つ以上必要です"
+          }
+        });
+      } else {
+        // valueが「Split」以外ではルールを付けない
+        $('#form1 [name="ADD_DETAIL_COUNT"]').rules('remove');
+      }
+    });
+
+    $(document).on('change', '[name="ADD_DETAIL_COUNT"]', function() {
+      console.log('%cADD_DETAIL_COUNT on change','color: blue; font-weight: bold');
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+
+        <div class="form-box">
+          <form id="form1" name="form1" method="post" action="./" enctype="multipart/form-data"
+            onsubmit="go_submit();return false;">
+            <input type="hidden" name="type" value="[TYPE]">
+            <input type="hidden" name="mode" value="saveconf">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="shodan_id" value="[SHODAN_ID]">
+            <input type="hidden" name="sort" value="[SORT]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="word2" value="[WORD2]">
+            <input type="hidden" name="mid_list" value="[MID_LIST]">
+            <input type="hidden" name="m1_id" value="[M1_ID]">
+            <input type="hidden" name="page" value="[PAGE]">
+            <input type="hidden" name="lid" value="[LID]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="TMP04" value="[TMP04]">
+            <input type="hidden" name="TMP05" value="[TMP05]">
+            <input type="hidden" name="TMP06" value="[TMP06]">
+            <input type="hidden" name="TMP07" value="[TMP07]">
+            <input type="hidden" name="TMP08" value="[TMP08]">
+            <input type="hidden" name="TMP09" value="[TMP09]">
+            <input type="hidden" name="TMP10" value="[TMP10]">
+            <input type="hidden" name="ENABLE" value="[ENABLE]">
+            <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+            <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+            <input type="hidden" name="MID1_LIST" value="[MID1_LIST]">
+            <div class="formset">
+
+              <!--<div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>修正する見積書を選択</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <select name="H_M2_ID" class="input_select">
+                    <option value=""></option>
+                    [H_M2_LIST]
+                  </select>
+                </div>
+              </div>-->
+
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>Project name</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"></div>
+                <div class="formset__input">
+                  [D-TITLE]
+                </div>
+              </div>
+
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>Supplier</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"></div>
+                <div class="formset__input">
+                  [M1_VIEW]
+                </div>
+              </div>
+              <!--
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>Description</strong></div>
+              </div>
+              -->
+
+              <div id="upd_mode" class="formset__item" style="[UPD_MODE_SHOW]">
+                <div class="formset__ttl">Revise Quotation for Control Number<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <select name="H_M2_ID" class="input_select">
+                    <option value=""></option>
+                    [H_M2_LIST]
+                  </select>
+                </div>
+              </div>
+
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>Matters to be confirmed</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Form of Delivery<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <ul>
+                    <li>
+                      <input id="M2_NOHIN_TYPE_1" type="checkbox"
+                          name="M2_NOHIN_TYPE[]" value="data" required [D-M1_NOHIN_TYPE_data] />
+                      <label for="M2_NOHIN_TYPE_1">Data</label>
+                    </li>
+                    <li>
+                      <input id="M2_NOHIN_TYPE_2" type="checkbox"
+                          name="M2_NOHIN_TYPE[]" value="Goods" required [D-M1_NOHIN_TYPE_Goods] />
+                      <label for="M2_NOHIN_TYPE_2">Goods</label>
+                    </li>
+                  </ul>
+                  <!--<p>
+                    <input id="M2_NOHIN_TYPE_1" type="checkbox" name="M2_NOHIN_TYPE[]" value="data"
+                      [D-M1_NOHIN_TYPE_data] />Data
+                    <input id="M2_NOHIN_TYPE_2" type="checkbox" name="M2_NOHIN_TYPE[]" value="Goods"
+                      [D-M1_NOHIN_TYPE_Goods] />Goods
+                  </p>-->
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Payment Terms<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <ul>
+                    <li>
+                      <input id="M2_PAY_TYPE_1" type="radio"
+                          name="M2_PAY_TYPE" value="Once" required [D-M1_PAY_TYPE_Once] onchange="handleRadioChange_paymentTerms(this);">
+                      <label for="M2_PAY_TYPE_1">All at once</label>
+                    </li>
+                    <li>
+                      <input id="M2_PAY_TYPE_2" type="radio"
+                          name="M2_PAY_TYPE" value="Split" required [D-M1_PAY_TYPE_Split] onchange="handleRadioChange_paymentTerms(this);">
+                      <label for="M2_PAY_TYPE_2">Split</label>
+                    </li>
+                    <li>
+                      <input id="M2_PAY_TYPE_3" type="radio"
+                          name="M2_PAY_TYPE" value="Milestone" required [D-M1_PAY_TYPE_Milestone] onchange="handleRadioChange_paymentTerms(this);">
+                      <label for="M2_PAY_TYPE_3">Mile Stone</label>
+                    </li>
+                  </ul>
+                  <!--<p>
+                    <input id="M2_PAY_TYPE_1" type="radio" name="M2_PAY_TYPE" value="Once" required
+                      [D-M1_PAY_TYPE_Once] onchange="handleRadioChange_paymentTerms(this);" />All at once
+                    　<input id="M2_PAY_TYPE_2" type="radio" name="M2_PAY_TYPE" value="Split" required
+                      [D-M1_PAY_TYPE_Split] onchange="handleRadioChange_paymentTerms(this);" />Split
+                      <input id="M2_PAY_TYPE_3" type="radio" name="M2_PAY_TYPE" value="Milestone" required
+                      [D-M1_PAY_TYPE_Split] onchange="handleRadioChange_paymentTerms(this);" />Mile Stone
+                  </p>-->
+                </div>
+              </div>
+              <div class="formset__item" id="MAEBARAI_AREA_FORONCE">
+                <div class="formset__ttl">前払い対象にする<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <p>
+                    <input id="MAEBARAI_FORONCE" type="checkbox" name="MAEBARAI[1]" value="YES"/>前払い
+                  </p>
+                </div>
+              </div>
+              <!--見積りステータスは自動入力に仕様変更-->
+              <!--
+              <div class="formset__item">
+                <div class="formset__ttl">見積ステータス<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <select name="M_STATUS" class="input_select">
+                    [OPT-M_STATUS]
+                  </select>
+                </div>
+              </div>
+              -->
+
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl">
+                  <strong>Basic items</strong>
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Quote No.<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <input type="text" name="M2_QUOTE_NO" value="[D-M2_QUOTE_NO]" placeholder="" />
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Study code</div>
+                <div class="formset__input">
+                  <input type="text" name="M2_STUDY_CODE" value="[D-M2_STUDY_CODE]" placeholder="" />
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Date<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <input type="date" name="M2_DATE" value="[D-M2_DATE]" placeholder="" required />
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Quote Valid Until<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <input type="date" name="M2_QUOTE_VALID_UNTIL" value="[D-M2_QUOTE_VALID_UNTIL]"
+                    placeholder="" required />
+                </div>
+              </div>
+              <!--
+              <div class="formset__item">
+                <div class="formset__ttl">Description<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <input type="text" name="M2_DESCRIPTION" value="[D-M2_DESCRIPTION]" placeholder=""
+                    required />
+                </div>
+              </div>-->
+              <div class="formset__item">
+                <div class="formset__ttl">Currency<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <!--
+                  <select name="M2_CURRENCY" class="input_select">
+                    <option value=""></option>
+                    <option value="CURRENCY1">CURRENCY1</option>
+                    <option value="CURRENCY2">CURRENCY2</option>
+                    <option value="CURRENCY3">CURRENCY3</option>
+                  </select>
+                  -->
+                  
+                  <select name="M2_CURRENCY" class="input_select" onchange="auto_cal_currency();">
+                    [OPT-M2_CURRENCY-M1_ETC40]
+                  </select>
+                </div>
+              </div>
+
+              <div class="formset__item formset__item--head">
+                <div class="formset__ttl"><strong>Description</strong></div>
+              </div>
+              <div class="formset__item formset__item--head head--flex head--center head--simple">
+                <div class="formset__ttl"><strong>Details 1</strong></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Item #</div>
+                <div class="formset__input">
+                  <input id="M2_DETAIL_ITEM_1" type="text" name="M2_DETAIL_ITEM[]"
+                    value="[D-M2_DETAIL_ITEM_1]" placeholder="" />
+                </div>
+              </div>
+              <!--
+              <div class="formset__item">
+                <div class="formset__ttl">分割割り当て (工事中)(仮：テスト用)</div>
+                <div class="formset__input">
+                  <ul>
+                    <li>
+                      <input id="M2_DETAIL_SPLIT_PART_FIRST_1" type="radio" name="M2_DETAIL_SPLIT_PART[1]" value="Part1">
+                      <label for="M2_DETAIL_SPLIT_PART_FIRST_1">Part1</label>
+                    </li>
+                    <li>
+                      <input id="M2_DETAIL_SPLIT_PART_SECOND_1" type="radio" name="M2_DETAIL_SPLIT_PART[1]" value="Part2">
+                      <label for="M2_DETAIL_SPLIT_PART_SECOND_1">Part2</label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              -->
+              <input type="hidden" name="ItemNo[]" value="1">
+              <div class="formset__item" id="MAEBARAI_AREA_1">
+                <div class="formset__ttl">前払い対象にする<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <p>
+                    <input id="MAEBARAI_1" type="checkbox" name="MAEBARAI[1]" value="YES"/>前払い
+                  </p>
+                </div>
+              </div>
+              <div class="formset__item" id="M2_DETAIL_SPLIT_PART_AREA_1">
+                <div class="formset__ttl">支払いタイミング<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <select id="M2_DETAIL_SPLIT_PART_1" name="M2_DETAIL_SPLIT_PART[]" class="input_select">
+                    <option value="Part1">前払い</option>
+                    <option value="Part2">後払い</option>
+                  </select>
+                </div>
+              </div>
+              <div class="formset__item" id="FORM_OF_DELIVERY_AT_MILE_AREA_1">
+                <div class="formset__ttl">Form of Delivery<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <ul>
+                    <li>
+                      <input id="M2_NOHIN_TYPE_TMP1_1" type="radio" name="M2_NOHIN_TYPE_TMP[1]" value="data">
+                      <label for="M2_NOHIN_TYPE_TMP1_1">Data</label>
+                    </li>
+                    <li>
+                      <input id="M2_NOHIN_TYPE_TMP2_1" type="radio" name="M2_NOHIN_TYPE_TMP[1]" value="Goods">
+                      <label for="M2_NOHIN_TYPE_TMP2_1">Goods</label>
+                    </li>
+                  </ul>
+                  <!--
+                  <input id="M2_NOHIN_TYPE_TMP1_1" type="radio" name="M2_NOHIN_TYPE_TMP[1]" value="data"/> Data
+                  <input id="M2_NOHIN_TYPE_TMP2_1" type="radio" name="M2_NOHIN_TYPE_TMP[1]" value="Goods"/> Goods
+                  -->
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Description<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <textarea id="M2_DETAIL_DESCRIPTION_1" cols="40" rows="8"
+                    name="M2_DETAIL_DESCRIPTION[]" placeholder="" required>[M2_DETAIL_DESCRIPTION_1]</textarea>
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Quantity<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <input id="M2_DETAIL_QUANTITY_1" type="text" name="M2_DETAIL_QUANTITY[]"
+                    value="[D-M2_DETAIL_QUANTITY_1]" placeholder="" onchange="get_total_price('1');" required />
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Unit Price<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <input id="M2_DETAIL_UNIT_PRICE_1" type="text" name="M2_DETAIL_UNIT_PRICE[]"
+                    value="[D-M2_DETAIL_UNIT_PRICE_1]" placeholder="" onchange="get_total_price('1');" required />
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Special discount</div>
+                <div class="formset__input">
+                  <input type="text" name="M2_DETAIL_SP_DISCOUNT[]" id="M2_DETAIL_SP_DISCOUNT_1" value="[D-M2_DETAIL_SP_DISCOUNT_1]" 
+                    onchange="get_total_price('1');" placeholder="" />
+                  <span class="auto_currency_disp"></span>
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Price<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <span id="M2_DETAIL_PRICE_SPAN_1">[D-M2_DETAIL_PRICE_1]</span>
+                  <input type="hidden" id="M2_DETAIL_PRICE_1" name="M2_DETAIL_PRICE[]"
+                    value="[D-M2_DETAIL_PRICE_1]" placeholder="" />
+                  <span class="auto_currency_disp"></span>
+                  <!--<input id="M2_DETAIL_PRICE_1" type="text" name="M2_DETAIL_PRICE[]"
+                    value="[D-M2_DETAIL_PRICE_1]" placeholder="" required />-->
+                </div>
+              </div>
+
+              <div class="formset__item" id="M2_SPECIAL_NOTE_TMP_AREA_1">
+                <div class="formset__ttl">Special Note1</div>
+                <div class="formset__input">
+                  <textarea cols="40" rows="8" id="M2_SPECIAL_NOTE_TMP_1" name="M2_SPECIAL_NOTE_TMP[1]"
+                    placeholder="">[M2_SPECIAL_NOTE_TMP_1]</textarea>
+                </div>
+              </div>
+
+              <div id="auto_area_1">
+                <div class="formset__item">
+                  <div class="formset__ttl">Subtotal1</div>
+                  <div class="formset__input">
+                    <!--Total Price - Special discount-->
+                    <span id="auto_1_disp_1"></span>
+                    <span class="auto_currency_disp"></span>
+                  </div>
+                </div>
+                 <div class="formset__item">
+                  <div class="formset__ttl">Tax Rate1</div>
+                  <div class="formset__input">
+                    <!--国内サプライヤー10%,海外サプライヤー0%-->
+                    <span id="auto_2_disp_1"></span>
+                    %
+                  </div>
+                </div>
+                 <div class="formset__item">
+                  <div class="formset__ttl">Sales Tax1</div>
+                  <div class="formset__input">
+                    <!--Subtotal * Tax Rate-->
+                    <span id="auto_3_disp_1"></span>
+                    <span class="auto_currency_disp"></span>
+                  </div>
+                </div>
+                 <div class="formset__item">
+                  <div class="formset__ttl">Total1</div>
+                  <div class="formset__input">
+                    <!--Subtotal + Sales Tax-->
+                    <span id="auto_4_disp_1"></span>
+                    <span class="auto_currency_disp"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">Deliverable</div>
+                <div class="formset__input">
+                  <p>Please provide details of deliverables in the "Deliverable".</p>
+                  <textarea id="M2_DETAIL_NOTE_1" cols="40" rows="8" name="M2_DETAIL_NOTE[]"
+                    placeholder="">[M2_DETAIL_NOTE_1]</textarea>
+                </div>
+              </div>
+
+              <hr />
+
+              <div id="add_detail_area" class="formset__add-area"></div>
+
+              <!--item template-->
+              <div id="detail_template" style="display:none;">
+                <div id="detail_XXX">
+                  <div class="formset__func">
+                    <a href="javascript:delete_detail(XXX);" class="input-add">
+                      <span>Details XXX Delete</span>
+                    </a>
+                  </div>
+                  <div class="formset__item formset__item--head head--flex head--center head--simple">
+                    <div class="formset__ttl"><strong>Details XXX</strong></div>
+                  </div>
+                  <div class="formset__item">
+                    <div class="formset__ttl">Item #</div>
+                    <div class="formset__input">
+                      <input id="M2_DETAIL_ITEM_XXX" type="text" name="M2_DETAIL_ITEM[]"
+                        value="[D-M2_DETAIL_ITEM_XXX]" placeholder="" />
+                    </div>
+                  </div>
+                  <!--
+                  <div class="formset__item">
+                  <div class="formset__ttl">分割割り当て (工事中)(仮：テスト用)</div>
+                    <div class="formset__input">
+                      <ul>
+                        <li>
+                          <input id="M2_DETAIL_SPLIT_PART_FIRST_XXX" type="radio" name="M2_DETAIL_SPLIT_PART[XXX]" value="Part1">
+                          <label for="M2_DETAIL_SPLIT_PART_FIRST_XXX">Part1</label>
+                        </li>
+                        <li>
+                          <input id="M2_DETAIL_SPLIT_PART_SECOND_XXX" type="radio" name="M2_DETAIL_SPLIT_PART[XXX]" value="Part2">
+                          <label for="M2_DETAIL_SPLIT_PART_SECOND_XXX">Part2</label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  -->
+                  <!--
+                  <div class="formset__item" id="MAEBARAI_AREA_XXX">
+                    <div class="formset__ttl">前払い対象にする<span class="formset__must">Mandatory</span></div>
+                    <div class="formset__input">
+                      <p>
+                        <input id="MAEBARAI_XXX" type="checkbox" name="MAEBARAI[]" value="PartXXX"/>前払い
+                      </p>
+                    </div>
+                  </div>
+                  -->
+                  <input type="hidden" name="ItemNo[]" value="XXX">
+                  <div class="formset__item" id="MAEBARAI_AREA_XXX">
+                    <div class="formset__ttl">前払い対象にする<span class="formset__must">Mandatory</span></div>
+                    <div class="formset__input">
+                      <p>
+                        <input id="MAEBARAI_XXX" type="checkbox" name="MAEBARAI[XXX]" value="YES"/>前払い
+                      </p>
+                    </div>
+                  </div>
+                  <div class="formset__item" id="M2_DETAIL_SPLIT_PART_AREA_XXX">
+                    <div class="formset__ttl">支払いタイミング<span class="formset__must">Mandatory</span></div>
+                    <div class="formset__input">
+                      <select id="M2_DETAIL_SPLIT_PART_XXX" name="M2_DETAIL_SPLIT_PART[]" class="input_select">
+                        <option value="">選択して下さい</option>
+                        <option value="Part1">前払い</option>
+                        <option value="Part2">後払い</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="formset__item" id="FORM_OF_DELIVERY_AT_MILE_AREA_XXX">
+                    <div class="formset__ttl">Form of Delivery<span class="formset__must">Mandatory</span></div>
+                    <div class="formset__input">
+                       <ul>
+                         <li>
+                           <input id="M2_NOHIN_TYPE_TMP1_XXX" type="radio" name="M2_NOHIN_TYPE_TMP[XXX]" value="data">
+                           <label for="M2_NOHIN_TYPE_TMP1_XXX">Data</label>
+                         </li>
+                         <li>
+                           <input id="M2_NOHIN_TYPE_TMP2_XXX" type="radio" name="M2_NOHIN_TYPE_TMP[XXX]" value="Goods">
+                           <label for="M2_NOHIN_TYPE_TMP2_XXX">Goods</label>
+                         </li>
+                       </ul>
+                       <!--
+                       <input id="M2_NOHIN_TYPE_TMP1_XXX" type="radio" name="M2_NOHIN_TYPE_TMP[XXX]" value="data"/> Data
+                       <input id="M2_NOHIN_TYPE_TMP2_XXX" type="radio" name="M2_NOHIN_TYPE_TMP[XXX]" value="Goods"/> Goods
+                       -->
+                    </div>
+                  </div>
+                  <div class="formset__item">
+                    <div class="formset__ttl">Description<span class="formset__must">Mandatory</span></div>
+                    <div class="formset__input">
+                      <textarea id="M2_DETAIL_DESCRIPTION_XXX" cols="40" rows="8"
+                        name="M2_DETAIL_DESCRIPTION[]" placeholder="" required>[M2_DETAIL_DESCRIPTION_XXX]</textarea>
+                    </div>
+                  </div>
+                  <div class="formset__item">
+                    <div class="formset__ttl">Quantity<span class="formset__must">Mandatory</span></div>
+                    <div class="formset__input">
+                      <input id="M2_DETAIL_QUANTITY_XXX" type="text" name="M2_DETAIL_QUANTITY[]"
+                        value="[D-M2_DETAIL_QUANTITY_XXX]" placeholder="" onchange="get_total_price('XXX');" required />
+                    </div>
+                  </div>
+                  <div class="formset__item">
+                    <div class="formset__ttl">Unit Price<span class="formset__must">Mandatory</span></div>
+                    <div class="formset__input">
+                      <input id="M2_DETAIL_UNIT_PRICE_XXX" type="text" name="M2_DETAIL_UNIT_PRICE[]"
+                        value="[D-M2_DETAIL_UNIT_PRICE_XXX]" placeholder="" onchange="get_total_price('XXX');" required />
+                        <span class="auto_currency_disp"></span>
+                    </div>
+                  </div>
+                  <div class="formset__item">
+                    <div class="formset__ttl">Special discount</div>
+                    <div class="formset__input">
+                      <input id="M2_DETAIL_SP_DISCOUNT_XXX" type="text" name="M2_DETAIL_SP_DISCOUNT[]"
+                        value="[D-M2_DETAIL_SP_DISCOUNT_XXX]" placeholder="" onchange="get_total_price('XXX');" />
+                    </div>
+                  </div>
+                  <div class="formset__item">
+                    <div class="formset__ttl">Price<span class="formset__must">Mandatory</span></div>
+                    <div class="formset__input">
+                      <span id="M2_DETAIL_PRICE_SPAN_XXX">[D-M2_DETAIL_PRICE_XXX]</span>
+                      <input id="M2_DETAIL_PRICE_XXX" type="hidden" name="M2_DETAIL_PRICE[]"
+                        value="[D-M2_DETAIL_PRICE_XXX]" placeholder="" required />
+                      <span class="auto_currency_disp"></span>
+                      <!--<input id="M2_DETAIL_PRICE_XXX" type="text" name="M2_DETAIL_PRICE[]"
+                        value="[D-M2_DETAIL_PRICE_XXX]" placeholder="" required />-->
+                    </div>
+                  </div>
+
+                  <div class="formset__item" id="M2_SPECIAL_NOTE_TMP_AREA_XXX">
+                    <div class="formset__ttl">Special NoteXXX</div>
+                    <div class="formset__input">
+                      <textarea cols="40" rows="8" id="M2_SPECIAL_NOTE_TMP_XXX" name="M2_SPECIAL_NOTE_TMP[XXX]"
+                      placeholder="">[M2_SPECIAL_NOTE_TMP_XXX]</textarea>
+                    </div>
+                  </div>
+
+                  <div id="auto_area_XXX">
+                    <div class="formset__item">
+                      <div class="formset__ttl">SubtotalXXX</div>
+                      <div class="formset__input">
+                        <!--Total Price - Special discount-->
+                        <span id="auto_1_disp_XXX"></span>
+                        <span class="auto_currency_disp"></span>
+                      </div>
+                    </div>
+                    <div class="formset__item">
+                      <div class="formset__ttl">Tax RateXXX</div>
+                      <div class="formset__input">
+                        <!--国内サプライヤー10%,海外サプライヤー0%-->
+                        <span id="auto_2_disp_XXX"></span>
+                        %
+                      </div>
+                    </div>
+                    <div class="formset__item">
+                      <div class="formset__ttl">Sales TaXXXx</div>
+                      <div class="formset__input">
+                        <!--Subtotal * Tax Rate-->
+                        <span id="auto_3_disp_XXX"></span>
+                        <span class="auto_currency_disp"></span>
+                      </div>
+                    </div>
+                    <div class="formset__item">
+                      <div class="formset__ttl">TotalXXX</div>
+                      <div class="formset__input">
+                        <!--Subtotal + Sales Tax-->
+                        <span id="auto_4_disp_XXX"></span>
+                        <span class="auto_currency_disp"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="formset__item">
+                    <div class="formset__ttl">Deliverable</div>
+                    <div class="formset__input">
+                      <p>Please provide details of deliverables in the "Deliverable".</p>
+                      <textarea id="M2_DETAIL_NOTE_XXX" cols="40" rows="8" name="M2_DETAIL_NOTE[]"
+                        placeholder="">[M2_DETAIL_NOTE_XXX]</textarea>
+                    </div>
+                  </div>
+                  <br>
+                  <hr />
+                </div>
+              </div>
+              <!--/item template-->
+
+              <div class="formset__func">
+                <div class="input-add" onClick="add_detail(false)">
+                  <input type="number" name="ADD_DETAIL_COUNT" value="1" readonly><span>Add an item</span>
+                </div>
+              </div>
+
+              <hr />
+
+              <!--M2_SPECIAL_DISCOUNT廃止でコメントアウト-->
+              <!--
+              <div class="formset__item">
+                <div class="formset__ttl">Special discount</div>
+                <div class="formset__input">
+                  <input type="text" name="M2_SPECIAL_DISCOUNT" id="M2_SPECIAL_DISCOUNT" value="[D-M2_SPECIAL_DISCOUNT]" onchange="auto_cal();" 
+                    placeholder="" />
+                </div>
+              </div>
+              -->
+              <div class="formset__item" id="special_note_area">
+                <div class="formset__ttl">Special Note</div>
+                <div class="formset__input">
+                  <textarea cols="40" rows="8" id="M2_SPECIAL_NOTE" name="M2_SPECIAL_NOTE"
+                    placeholder="">[M2_SPECIAL_NOTE]</textarea>
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Subtotal</div>
+                <div class="formset__input">
+                  <!--Total Price - Special discount-->
+                  <span id="auto_1_disp"></span>
+                  <input type="hidden" id="auto_1" value="">
+                  <span class="auto_currency_disp"></span>
+                </div>
+              </div>
+               <div class="formset__item">
+                <div class="formset__ttl">Tax Rate</div>
+                <div class="formset__input">
+                  <!--国内サプライヤー10%,海外サプライヤー0%-->
+                  <span id="auto_2_disp"></span>
+                  <input type="hidden" id="auto_2" value="">
+                  %
+                </div>
+              </div>
+               <div class="formset__item">
+                <div class="formset__ttl">Sales Tax</div>
+                <div class="formset__input">
+                  <!--Subtotal * Tax Rate-->
+                  <span id="auto_3_disp"></span>
+                  <input type="hidden" id="auto_3" value="">
+                  <span class="auto_currency_disp"></span>
+                </div>
+              </div>
+               <div class="formset__item">
+                <div class="formset__ttl">Total</div>
+                <div class="formset__input">
+                  <!--Subtotal + Sales Tax-->
+                  <span id="auto_4_disp"></span>
+                  <input type="hidden" id="auto_4" value="">
+                  <span class="auto_currency_disp"></span>
+                </div>
+              </div>
+
+              <hr />
+
+              <div class="formset__item">
+                <div class="formset__ttl">Please choose address you registered.(SHIP TO)
+                  <span class="formset__must">Mandatory</span>
+                </div>
+                <div class="formset__input">
+                  <select id="select_ship_to" name="" class="input_select" onchange="fill_ship_to();">
+                    <option value="">選択して下さい</option>
+                    <option value="v1">登録済みのSHIP TO1</option>
+                    <option value="v2">登録済みのSHIP TO2</option>
+                    <option value="v3">登録済みのSHIP TO3</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">Organization Name</div>
+                <div class="formset__input">
+                  <span id="M2_SHIP_TO_SPT_1_SPAN">[D-M2_SHIP_TO_SPT_1]</span>
+                  <!--<input type="hidden" name="M2_SHIP_TO_SPT_1" id="M2_SHIP_TO_SPT_1" value="[D-M2_SHIP_TO_SPT_1]" />-->
+                  <input type="text" name="M2_SHIP_TO_SPT_1" id="M2_SHIP_TO_SPT_1" value="[D-M2_SHIP_TO_SPT_1]" placeholder="" />
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">Address Line 1</div>
+                <div class="formset__input">
+                  <span id="M2_SHIP_TO_SPT_2_SPAN">[D-M2_SHIP_TO_SPT_2]</span>
+                  <!--<input type="hidden" name="M2_SHIP_TO_SPT_2" id="M2_SHIP_TO_SPT_2" value="[D-M2_SHIP_TO_SPT_2]" />-->
+                  <input type="text" name="M2_SHIP_TO_SPT_2" id="M2_SHIP_TO_SPT_2" value="[D-M2_SHIP_TO_SPT_2]" placeholder="" />
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">Address Line 2</div>
+                <div class="formset__input">
+                  <span id="M2_SHIP_TO_SPT_3_SPAN">[D-M2_SHIP_TO_SPT_3]</span>
+                  <!--<input type="hidden" name="M2_SHIP_TO_SPT_3" id="M2_SHIP_TO_SPT_3" value="[D-M2_SHIP_TO_SPT_3]" />-->
+                  <input type="text" name="M2_SHIP_TO_SPT_3" id="M2_SHIP_TO_SPT_3" value="[D-M2_SHIP_TO_SPT_3]" placeholder="" />
+                </div>
+              </div>
+
+               <div class="formset__item">
+                <div class="formset__ttl">City/Province</div>
+                <div class="formset__input">
+                  <span id="M2_SHIP_TO_SPT_4_SPAN">[D-M2_SHIP_TO_SPT_4]</span>
+                  <!--<input type="hidden" name="M2_SHIP_TO_SPT_4" id="M2_SHIP_TO_SPT_4" value="[D-M2_SHIP_TO_SPT_4]" />-->
+                  <input type="text" name="M2_SHIP_TO_SPT_4" id="M2_SHIP_TO_SPT_4" value="[D-M2_SHIP_TO_SPT_4]" placeholder="" />
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">ZIP/Postal Code</div>
+                <div class="formset__input">
+                 <span id="M2_SHIP_TO_SPT_5_SPAN">[D-M2_SHIP_TO_SPT_5]</span>
+                  <!--<input type="hidden" name="M2_SHIP_TO_SPT_5" id="M2_SHIP_TO_SPT_5" value="[D-M2_SHIP_TO_SPT_5]" />-->
+                  <input type="text" name="M2_SHIP_TO_SPT_5" id="M2_SHIP_TO_SPT_5" value="[D-M2_SHIP_TO_SPT_5]" placeholder="" />
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">Country</div>
+                <div class="formset__input">
+                  <span id="M2_SHIP_TO_SPT_6_SPAN">[D-M2_SHIP_TO_SPT_6]</span>
+                  <!--<input type="hidden" name="M2_SHIP_TO_SPT_6" id="M2_SHIP_TO_SPT_6" value="[D-M2_SHIP_TO_SPT_6]" />-->
+                  <input type="text" name="M2_SHIP_TO_SPT_6" id="M2_SHIP_TO_SPT_6" value="[D-M2_SHIP_TO_SPT_6]" placeholder="" />
+                </div>
+              </div>
+
+              <hr />
+
+              <div class="formset__item">
+                <div class="formset__ttl">Please choose address you registered.(BILL TO)
+                  <span class="formset__must">Mandatory</span>
+                </div>
+                <div class="formset__input">
+                  <select id="select_bill_to" name="" class="input_select" onchange="fill_bill_to();">
+                    <option value="">選択して下さい</option>
+                    <option value="v1">登録済みのBILL TO1</option>
+                    <option value="v2">登録済みのBILL TO2</option>
+                    <option value="v3">登録済みのBILL TO3</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">Organization Name</div>
+                <div class="formset__input">
+                  <span id="M2_BILL_TO_SPT_1_SPAN">[D-M2_BILL_TO_SPT_1]</span>
+                  <!--<input type="hidden" name="M2_BILL_TO_SPT_1" id="M2_BILL_TO_SPT_1" value="[D-M2_BILL_TO_SPT_1]" />-->
+                  <input type="text" name="M2_BILL_TO_SPT_1" id="M2_BILL_TO_SPT_1" value="[D-M2_BILL_TO_SPT_1]" placeholder="" />
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">Address Line 1</div>
+                <div class="formset__input">
+                  <span id="M2_BILL_TO_SPT_2_SPAN">[D-M2_BILL_TO_SPT_2]</span>
+                  <!--<input type="hidden" name="M2_BILL_TO_SPT_2" id="M2_BILL_TO_SPT_2" value="[D-M2_BILL_TO_SPT_2]" />-->
+                  <input type="text" name="M2_BILL_TO_SPT_2" id="M2_BILL_TO_SPT_2" value="[D-M2_BILL_TO_SPT_2]" placeholder="" />
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">Address Line 2</div>
+                <div class="formset__input">
+                  <span id="M2_BILL_TO_SPT_3_SPAN">[D-M2_BILL_TO_SPT_3]</span>
+                  <!--<input type="hidden" name="M2_BILL_TO_SPT_3" id="M2_BILL_TO_SPT_3" value="[D-M2_BILL_TO_SPT_3]" />-->
+                  <input type="text" name="M2_BILL_TO_SPT_3" id="M2_BILL_TO_SPT_3" value="[D-M2_BILL_TO_SPT_3]" placeholder="" />
+                </div>
+              </div>
+
+               <div class="formset__item">
+                <div class="formset__ttl">City/Province</div>
+                <div class="formset__input">
+                  <span id="M2_BILL_TO_SPT_4_SPAN">[D-M2_BILL_TO_SPT_4]</span>
+                  <!--<input type="hidden" name="M2_BILL_TO_SPT_4" id="M2_BILL_TO_SPT_4" value="[D-M2_BILL_TO_SPT_4]" />-->
+                  <input type="text" name="M2_BILL_TO_SPT_4" id="M2_BILL_TO_SPT_4" value="[D-M2_BILL_TO_SPT_4]" placeholder="" />
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">ZIP/Postal Code</div>
+                <div class="formset__input">
+                 <span id="M2_BILL_TO_SPT_5_SPAN">[D-M2_BILL_TO_SPT_5]</span>
+                  <!--<input type="hidden" name="M2_BILL_TO_SPT_5" id="M2_BILL_TO_SPT_5" value="[D-M2_BILL_TO_SPT_5]" />-->
+                  <input type="text" name="M2_BILL_TO_SPT_5" id="M2_BILL_TO_SPT_5" value="[D-M2_BILL_TO_SPT_5]" placeholder="" />
+                </div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl">Country</div>
+                <div class="formset__input">
+                  <span id="M2_BILL_TO_SPT_6_SPAN">[D-M2_BILL_TO_SPT_6]</span>
+                  <!--<input type="hidden" name="M2_BILL_TO_SPT_6" id="M2_BILL_TO_SPT_6" value="[D-M2_BILL_TO_SPT_6]" />-->
+                  <input type="text" name="M2_BILL_TO_SPT_6" id="M2_BILL_TO_SPT_6" value="[D-M2_BILL_TO_SPT_6]" placeholder="" />
+                </div>
+              </div>
+
+              <div class="btn formset__btn">
+                <input type="submit" value="To confirm" />
+              </div>
+              <button type="button" onclick="window.close();">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer_en.html-->
+  </div>
+</body>
+
+</html>

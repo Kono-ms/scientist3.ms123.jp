@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>パスワード再設定（研究者様用）｜Scientist3</title>
+<meta name="description" content="パスワード再設定（研究者様用）。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+<!--template=/common/template/head2.html--><!-- 研究者側だけValidationを日本語化 -->
+
+</head>
+
+<body>
+<div class="wrap sub"> 
+  <!--template=/common/template/header.html--> 
+  
+  <!-- 以上共通 -->  <div class="breadcrumb">
+    <div class="l-container">
+      <ol class="breadcrumb__list">
+        <li class="breadcrumb__item"><a href="/">トップ</a></li>
+        <li class="breadcrumb__item"><a href="/login2/">ログイン</a></li>
+        <li>パスワード再設定（研究者様用）</li>
+      </ol>
+    </div>
+  </div>
+  <section class="forget">
+    <div class="l-container">
+      <div class="c-head">
+        <p class="c-head__logo"><a href="/"><img src="/common/images/logo.png" width="195" height="44" alt="Scientist3" /></a></p>
+        <h2 class="c-head__ttl">パスワード再設定（研究者様用）</h2>
+        <p class="c-head__txt">会員登録されているメールアドレスをご記入ください。<br>パスワード再設定用のリンクを送信します。</p>
+      </div>
+      <div class="form-box form__compact">
+        <form  method="post" action="./" enctype="multipart/form-data">
+          <input type="hidden" name="mode" value="saveconf">
+          <input type="hidden" name="key" value="[ID]">
+          <input type="hidden" name="sort" value="[SORT]">
+          <input type="hidden" name="word" value="[WORD]">
+          <input type="hidden" name="page" value="[PAGE]">
+          <input type="hidden" name="lid" value="[LID]">
+          <input type="hidden" name="token" value="[TOKEN]">
+          <input type="hidden" name="ID" value="[ID]">
+          <input type="hidden" name="MID" value="[MID]">
+          <input type="hidden" name="ENABLE" value="[ENABLE]">
+          <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+          <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+          <div class="formset">
+            <div class="formset__item">
+              <div class="formset__ttl"><span>
+                <label for="login_email">メールアドレス</label>
+                </span></div>
+              <div class="formset__input"><input type="email" name="id" placeholder="taro@gmail.com" required/>
+                [S-ERR]
+                <div class="error">[ERRMSG]</div>
+                [E-ERR]</div>
+            </div>
+          <div class="btn formset__btn">
+            <button type="submit">メールを送信する</button>
+          </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <!-- 以下共通 --> 
+  
+  <!--template=/common/template/footer.html--> 
+</div>
+</body>
+</html>

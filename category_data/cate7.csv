@@ -1,0 +1,503 @@
+"第一階層","第二階層","第三階層","第四階層"
+"Human Biospecimen","Biofluid Biopsy","Liquid Biopsy",""
+"","","Human Fixed Tissue","Arthritis Human Fixed Tissue
+Asthma Human Fixed Tissue
+Bladder Cancer Human Fixed Tissue
+Brain Cancer Human Fixed Tissue
+Breast Cancer Human Fixed Tissue
+Cardiovascular Disease (CVD) Human Fixed Tissue
+Cervical Cancer Human Fixed Tissue
+Colon Cancer Human Fixed Tissue
+Esophageal Cancer Human Fixed Tissue
+Granuloma Human Fixed Tissue
+HBS: Human Biological Samples
+Head and Neck Cancer Human Fixed Tissue
+Intestinal Cancer Human Fixed Tissue
+Kidney Cancer Human Fixed Tissue
+Leukemia Human Fixed Tissue
+Lipoma Human Fixed Tissue
+Lung Cancer Human Fixed Tissue
+Lymphoma Human Fixed Tissue
+Melanoma Human Fixed Tissue
+Ovarian Cancer Human Fixed Tissue
+Pancreatic Cancer Human Fixed Tissue
+Prostate Cancer Human Fixed Tissue
+Rectal Cancer Human Fixed Tissue
+Sarcoma Human Fixed Tissue
+Stomach Cancer Human Fixed Tissue
+Testicular Cancer Human Fixed Tissue
+Thyroid Cancer Human Fixed Tissue
+Uterine Cancer Human Fixed Tissue"
+"","","Human Mononuclear Cells","Alzheimer's Peripheral Blood Mononuclear Cells (PBMCs)
+Asthma Human Peripheral Blood Mononuclear Cells (PBMCs)
+Bone Marrow Mononuclear Cells
+Celiac Disease Peripheral Blood Mononuclear Cells (PBMCs)
+Cord Blood Mononuclear Cells
+Crohn's Disease Peripheral Blood Mononuclear Cells (PBMCs)
+Dialysis Human Peripheral Blood Mononuclear Cells (PBMCs)
+Fibromyalgia Human Peripheral Blood Mononuclear Cells (PBMCs)
+HBS: Human Biological Samples
+Human Peripheral Blood Mononuclear Cells (PBMCs)
+Huntington's Human Peripheral Blood Mononuclear Cells (PBMCs)
+Leukemia Human Mononuclear Cells
+Leukopaks
+Multiple Sclerosis Human Peripheral Blood Mononuclear Cells (PBMCs)
+Non-Hodgkin's Lymphoma Human Mononuclear Cells
+Parkinson's Human Peripheral Blood Mononuclear Cells (PBMCs)
+Psoriasis Peripheral Blood Mononuclear Cells (PBMCs)
+Rheumatoid Arthritis Human Peripheral Blood Mononuclear Cells (PBMCs)
+Schizophrenia Human Peripheral Blood Mononuclear Cells (PBMCs)
+Sjogren's Syndrome Peripheral Blood Mononuclear Cells (PBMCs)
+Spondylitis Peripheral Blood Mononuclear Cells (PBMCs)
+Systemic Lupus Erythematosus (SLE) Human Peripheral Blood Mononuclear Cells (PBMCs)
+Type 1 Diabetes Human Peripheral Blood Mononuclear Cells (PBMCs)
+Ulcerative Colitis Peripheral Blood Mononuclear Cells (PBMCs)"
+"","Human Platelets","Celiac Disease Human Platelets
+Crohn's Disease Human Platelets
+HBS: Human Biological Samples
+Hepatitis B Virus (HBV)-infected Human Platelets
+Hepatitis C Virus (HCV)-infected Human Platelets
+Human Buffy Coats
+Human Immunodeficiency Virus (HIV)-infected Platelets
+Human Papilloma Virus (HPV)-infected Platelets
+Human Platelets
+Psoriasis Human Platelets
+Rheumatoid Arthritis Human Platelets
+Systemic Lupus Erythematosus (SLE) Human Platelets",""
+"","Human Platelets","Celiac Disease Human Platelets
+Crohn's Disease Human Platelets
+HBS: Human Biological Samples
+Hepatitis B Virus (HBV)-infected Human Platelets
+Hepatitis C Virus (HCV)-infected Human Platelets
+Human Buffy Coats
+Human Immunodeficiency Virus (HIV)-infected Platelets
+Human Papilloma Virus (HPV)-infected Platelets
+Human Platelets
+Psoriasis Human Platelets
+Rheumatoid Arthritis Human Platelets
+Systemic Lupus Erythematosus (SLE) Human Platelets",""
+"","Human Serum","Alzheimer's Human Serum
+Amyotrophic Lateral Sclerosis (ALS) Human Serum
+Arthritis Human Serum
+Asthma Human Serum
+Atopic Dermatitis Human Serum
+Benign Prostatic Hyperplasia (BPH) Human Serum
+Bipolar Disorder Human Serum
+Bladder Cancer Human Serum
+Brain Cancer Human Serum
+Breast Cancer Human Serum
+Cervical Cancer Human Serum
+Chronic Obstructive Pulmonary Disease (COPD) Human Serum
+Colon Cancer Human Serum
+Colon Polyps Human Serum
+Customized Human Serum
+Cystic Fibrosis Human Serum
+Dementia Human Serum
+Esophageal Cancer Human Serum
+Granuloma Human Serum
+HBS: Human Biological Samples
+Hepatic Injury Human Serum
+Hypertension Human Serum
+Inflammatory Bowel Disease (IBD) Human Serum
+Kidney Cancer Human Serum
+Large Intestine Cancer Human Serum
+Leukemia Human Serum
+Lipoma Human Serum
+Liver Cancer Human Serum
+Lung Cancer Human Serum
+Lymphoma Human Serum
+Macular Degeneration Human Serum
+Major Depression Human Serum
+Melanoma Human Serum
+Mild Cognitive Impairment (MCI) Human Serum
+Multiple Sclerosis Human Serum
+Myelodysplastic Syndrome (MDS) Human Serum
+Non-Hodgkin's Lymphoma Human Serum
+Osteoporosis Human Serum
+Ovarian Cancer Human Serum
+Pancreatic Cancer Human Serum
+Parkinson's Human Serum
+Pregnancy Human Serum
+Prostate Cancer Human Serum
+Psoriasis Human Serum
+Rectal Cancer Human Serum
+Rheumatoid Arthritis Human Serum
+Sarcoma Human Serum
+Schizophrenia Human Serum
+Stomach Cancer Human Serum
+Stroke Human Serum
+Systemic Lupus Erythematosus (SLE) Human Serum
+Thyroid Cancer Human Serum
+Triple Negative Breast Cancer (TNBC) Serum
+Type 1 Diabetes Human Serum
+Type 2 Diabetes Human Serum
+Ulcerative Colitis Human Serum
+Uterine Cancer Human Serum",""
+"","Human Biofluids","Allergy Rhinitis Human Biofluids
+Alzheimer's Human Biofluids
+Amyotrophic Lateral Sclerosis (ALS) Human Biofluids
+Asthma Human Biofluids
+Asthma Human Sputum
+Bipolar Disorder Human Biofluids
+Brain Cancer Human Biofluids
+Breast Cancer Human Biofluids
+Chronic Obstructive Pulmonary Disease (COPD) Human Biofluids
+Chronic Obstructive Pulmonary Disease (COPD) Human Sputum
+Colorectal Cancer Human Biofluids
+Cystic Fibrosis (CF) Human Biofluids
+Cystic Fibrosis Human Biofluids
+Esophageal Cancer Human Biofluids
+HBS: Human Biological Samples
+Herpes Simplex Virus (HSV)-infected Human Swab
+Human Amniotic Fluid
+Human Aqueous Humor
+Human Ascites
+Human Bile
+Human Breast Milk
+Human Bronchial Lavage
+Human Cerebrospinal Fluid
+Human Gastric Fluid
+Human Immunodeficiency Virus (HIV)-infected Biofluids
+Human Immunodeficiency Virus(HIV)-infected Swab
+Human Nasal and Throat Swabs
+Human Nasal Fluid
+Human Papilloma Virus (HPV)-infected Swab
+Human Saliva
+Human Semen
+Human Serum
+Human Sputum
+Human Synovial Fluid
+Human Tears
+Human Urine
+Human Vaginal Fluid
+Human Vitreous Humor
+Leukemia Human Biofluids
+Lung Cancer Human Biofluids
+Lymphoma Human Biofluids
+Mild Cognitive Impairment (MCI) Human Biofluids
+Multiple Sclerosis (MS) Human Biofluids
+Pancreatic Cancer Human Biofluids
+Parkinson's Human Biofluids
+Pregnancy Human Urine
+Prostate Cancer Human Biofluids
+Pseudomonas Aeruginosa Human Biofluids
+Psoriasis Human Biofluids
+Rheumatoid Arthritis Human Biofluids
+Sarcoma Human Biofluids
+Schizophrenia Human Biofluids
+Sepsis Human Biofluids
+Sepsis Human Swab
+Sexually Transmitted Disease (STD)-infected Human Swab
+Smoker Human Biofluids
+Smoker Human Sputum
+Stroke Human Biofluids
+Systemic Lupus Erythematosus (SLE) Human Biofluids
+Tuberculosis (TB) Human Biofluids
+Type 1 Diabetes Human Biofluids
+Type 2 Diabetes Human Biofluids
+Ulcerative Colitis Human Biofluids",""
+"","Human Plasma","Alzheimer's Human Plasma
+Amyotrophic Lateral Sclerosis (ALS) Human Plasma
+Asthma Human Plasma
+Atopic Dermatitis Human Plasma
+Bipolar Disorder Human Plasma
+Bladder Cancer Human Plasma
+Brain Cancer Human Plasma
+Breast Cancer Human Plasma
+Cervical Cancer Human Plasma
+Chronic Obstructive Pulmonary Disease (COPD) Human Plasma
+Colon Polyps Human Plasma
+Colorectal Cancer Human Plasma
+Customized Human Plasma
+Epstein-Barr Virus (EBV)-infected Human Plasma
+Esophageal Cancer Human Plasma
+HBS: Human Biological Samples
+Head and Neck Cancer Human Plasma
+Hepatitis A Virus (HAV)-infected Human Plasma
+Hepatitis B Virus (HBV)-infected Human Plasma
+Hepatitis C Virus (HCV)-infected Human Plasma
+Human Immunodeficiency Virus (HIV)-Infected Plasma
+Human Plasma
+Influenza Human Plasma
+Kidney Cancer Human Plasma
+Large Intestine Cancer Human Plasma
+Leukemia Human Plasma
+Lung Cancer Human Plasma
+Lymphoma Human Plasma
+Melanoma Human Plasma
+Mild Cognitive Impairment (MCI) Human Plasma
+Multiparous Female Human Plasma
+Multiple Sclerosis (MS) Human Plasma
+Non-Hodgkin's Lymphoma Human Plasma
+Osteoarthritis Human Plasma
+Ovarian Cancer Human Plasma
+Pancreatic Cancer Human Plasma
+Parkinson's Human Plasma
+Preeclampsia Human Plasma
+Pregnancy Human Plasma
+Prostate Cancer Human Plasma
+Psoriasis Human Plasma
+Rheumatoid Arthritis Human Plasma
+Sarcoma Human Plasma
+Schizophrenia Human Plasma
+Sepsis Human Plasma
+Stomach Cancer Human Plasma
+Streptococcal-infected Human Plasma
+Stroke Human Plasma
+Testicular Cancer Human Plasma
+Type 2 Diabetes Human Plasma
+Ulcerative Colitis Human Plasma
+Uterine Cancer Human Plasma",""
+"","Human Whole Blood","Acquired Immune Deficiency Syndrome (AIDS) Human Whole Blood
+Actinic Keratosis Human Whole Blood
+Alzheimer's Human Whole Blood
+Amyotrophic Lateral Sclerosis (ALS) Human Whole Blood
+Asthma Human Whole Blood
+Bipolar Disorder Human Whole Blood
+Brain Cancer Human Whole Blood
+Breast Cancer Human Whole Blood
+Chronic Obstructive Pulmonary Disease (COPD) Human Whole Blood
+Colorectal Cancer Human Whole Blood
+Crohn's Disease Human Whole Blood
+Cystic Fibrosis Human Whole Blood
+Esophageal Cancer Human Whole Blood
+HBS: Human Biological Samples
+Hepatitis B Virus (HBV)-infected Human Whole Blood
+Hepatitis C Virus (HCV)-infected Human Whole Blood
+Human Immunodeficiency Virus (HIV)-infected Whole Blood
+Human Red Blood Cells
+Human Whole Blood
+Leukemia Human Whole Blood
+Lung Cancer Human Whole Blood
+Lymphoma Human Whole Blood
+Multiple Sclerosis (MS) Human Whole Blood
+Non-Hodgkin's Lymphoma Human Whole Blood
+Pancreatic Cancer Human Whole Blood
+Parkinson's Human Whole Blood
+Prostate Cancer Human Whole Blood
+Psoriasis Human Whole Blood
+Rheumatoid Arthritis Human Whole Blood
+Sarcoma Human Whole Blood
+Scars Human Whole Blood
+Schizophrenia Human Whole Blood
+Stomach Cancer Human Whole Blood
+Stroke Human Whole Blood
+Systemic Lupus Erythematosus (SLE) Human Whole Blood
+Triple Negative Breast Cancer (TNBC) Whole Blood
+Type 1 Diabetes Human Whole Blood
+Type 2 Diabetes Human Whole Blood
+Ulcerative Colitis Human Whole Blood
+Warts Human Whole Blood",""
+"","Human Bone Marrow","Celiac Disease Human Whole Bone Marrow
+Crohn's Disease Human Whole Bone Marrow
+HBS: Human Biological Samples
+Hepatitis B Virus (HBV)-infected Human Whole Bone Marrow
+Hepatitis C Virus (HCV)-infected Human Whole Bone Marrow
+Human Bone Marrow
+Human Immunodeficiency Virus (HIV)-infected Whole Bone Marrow
+Human Papilloma Virus (HPV)-infected Whole Bone Marrow
+Multiple Myeloma Human Bone Marrow
+Psoriasis Human Whole Bone Marrow
+Rheumatoid Arthritis Human Whole Bone Marrow
+Systemic Lupus Erythematosus (SLE) Human Whole Bone Marrow",""
+"","Human Fresh/Frozen Tissue","Actinic Keratosis Human Skin Punches
+Atopic Dermatitis Human Skin Punches
+Endometrial Tissues
+Fresh Whole Human Tissue/Organ
+HBS: Human Biological Samples
+Human Feces
+Human Hair
+Myoma - Uterine Fibroids
+Pooled Human Liver Homogenate
+Psoriasis Human Skin Punches
+Scars Human Skin Punches
+Systemic Lupus Erythematosus (SLE) Human Skin Punches
+Warts Human Skin Punches",""
+"","Human Liver","3D InSight(TM) Liver Microtissues
+Corning(R) HepatoCells
+Human Fetal Liver Cells
+Human Hepatic Sinusoidal Endothelial Cells
+Human Hepatic Stellate Cells
+Human Hepatocytes
+Human Kupffer Cells
+Liver Cancer Human Fixed Tissue
+Liver Microsomes
+Pooled Human Liver Homogenate
+Sandwich-Culture Hepatocytes",""
+"","Human Nucleic Acid","Alzheimer's Human DNA
+Alzheimer's Human RNA
+Amyotrophic Lateral Sclerosis (ALS) Human DNA
+Amyotrophic Lateral Sclerosis (ALS) Human RNA
+Arthritis Human DNA
+Arthritis Human RNA
+Asthma Human DNA
+Asthma Human RNA
+Bipolar Disorder Human DNA
+Bipolar Disorder Human RNA
+Brain Cancer Human DNA
+Brain Cancer Human RNA
+Breast Cancer Human DNA
+Breast Cancer Human RNA
+Cardiovascular Disease (CVD) Human DNA
+Cardiovascular Disease (CVD) Human RNA
+Cervical Cancer Human DNA
+Cervical Cancer Human RNA
+Colorectal Cancer Human DNA
+Colorectal Cancer Human RNA
+Cystic Fibrosis Human DNA
+Cystic Fibrosis Human RNA
+Dementia Human DNA
+Dementia Human RNA
+Diabetes Human DNA
+Diabetes Human RNA
+Esophageal Cancer Human DNA
+Esophageal Cancer Human RNA
+HBS: Human Biological Samples
+Head and Neck Cancer Human DNA
+Head and Neck Cancer Human RNA
+Hepatic Injury Human DNA
+Leukemia Human DNA
+Leukemia Human RNA
+Liver Cancer Human DNA
+Liver Cancer Human RNA
+Lung Cancer Human DNA
+Lung Cancer Human RNA
+Lymphoma Human DNA
+Lymphoma Human RNA
+Major Depression Human DNA
+Major Depression Human RNA
+Mild Cognitive Impairment (MCI) Human DNA
+Mild Cognitive Impairment (MCI) Human RNA
+Multiple Sclerosis Human DNA
+Multiple Sclerosis Human RNA
+Osteoporosis Human DNA
+Ovarian Cancer Human DNA
+Ovarian Cancer Human RNA
+Pancreatic Cancer Human DNA
+Pancreatic Cancer Human RNA
+Parkinson's Human DNA
+Parkinson's Human RNA
+Pneumonia Human DNA
+Pneumonia Human RNA
+Prostate Cancer Human DNA
+Prostate Cancer Human RNA
+Renal Cancer Human DNA
+Renal Cancer Human RNA
+Rheumatoid Arthritis Human DNA
+Rheumatoid Arthritis Human RNA
+Sarcoma Human DNA
+Sarcoma Human RNA
+Schizophrenia Human DNA
+Schizophrenia Human RNA",""
+"","Primary Cells","Human Bladder Cells","HBS: Human Biological Samples
+Human Bladder Smooth Muscle Cells"
+"","","Human Brain/Neuronal Cells","HBS: Human Biological Samples
+Human Astrocytes
+Human Brain Microvascular Endothelial Cells
+Human Brain Vascular Pericytes
+Human Brain Vascular Smooth Muscle Cells
+Human Cerebellar Granule Cells
+Human Choroid Plexus Endothelial Cells
+Human Choroid Plexus Epithelial Cells
+Human Choroid Plexus Fibroblasts
+Human Meningeal Cells
+Human Microglia
+Human Neural Stem Cells
+Human Neurons
+Human Oligodendrocytes
+Human Perineural Cells
+Human Schwann Cells"
+"","","Human Cardiac Cells","HBS: Human Biological Samples
+Human Aortic Endothelial Cells
+Human Aortic Smooth Muscle Cells
+Human Cardiac Fibroblasts
+Human Cardiac Microvascular Endothelial Cells
+Human Cardiac Myocytes"
+"","","Human Epidermal Cells","HBS: Human Biological Samples
+Human Coronary Artery Endothelial Cells
+Human Dermal Lymphatic Endothelial Cells
+Human Dermal Microvascular Endothelial Cells
+Human Dermal Vascular Smooth Muscle Cells
+Human Epidermal Keratinocytes
+Human Epidermal Melanocytes
+Human Hair Cells
+Human Oral Keratinocytes"
+"","","Human Eye Cells","HBS: Human Biological Samples
+Human Keratocytes
+Human Lens Epithelial Cells
+Human Retinal Pigment Epithelial Cells
+Human Trabecular Meshwork Cells"
+"","","Human Fibroblast","HBS: Human Biological Samples
+Human Adult Dermal Fibroblasts
+Human Aortic Fibroblasts
+Human Bladder Stromal Fibroblasts
+Human Brain Fibroblasts
+Human Conjunctival Fibroblasts
+Human Fetal Dermal Fibroblasts
+Human Foreskin Fibroblasts
+Human Gingival Fibroblasts
+Human Lymphatic Fibroblasts
+Human Mammary Fibroblasts
+Human Neonatal Dermal Fibroblasts
+Human Ovarian Fibroblasts
+Human Periodontal Ligament Fibroblasts
+Human Prostate Fibroblasts
+Human Pulmonary Artery Fibroblasts
+Human Pulmonary Fibroblasts
+Human Splenic Fibroblasts"
+"","","Human Gastrointestinal Cells","HBS: Human Biological Samples
+Human Colonic Smooth Muscle Cells
+Human Esophageal Epithelial Cells
+Human Esophageal Smooth Muscle Cells
+Human Intestinal Microvascular Endothelial Cells
+Human Intestinal Smooth Muscle Cells"
+"","","Human Hepatic Cells","HBS: Human Biological Samples
+Human Fetal Liver Cells
+Human Hepatic Sinusoidal Endothelial Cells
+Human Hepatic Stellate Cells
+Human Hepatocytes
+Human Kupffer Cells"
+"","","Human Lung/Pulmonary Cells","HBS: Human Biological Samples
+Human Bronchial Epithelial Cells
+Human Bronchial Smooth Muscle Cells
+Human Pulmonary Alveolar Epithelial Cells
+Human Pulmonary Artery Endothelial Cells
+Human Pulmonary Artery Smooth Muscle Cells
+Human Pulmonary Microvascular Endothelial Cells
+Human Tracheal Epithelial Cells
+Human Tracheal Smooth Muscle Cells"
+"","","Human Lymphocytes","HBS: Human Biological Samples
+Human B Cells
+Human Lymph Cells
+Human Natural Killer Cells
+Human T Cells"
+"","","Human Phagocytes","HBS: Human Biological Samples
+Human Dendritic Cells
+Human Macrophages
+Human Monocytes"
+"","","Human Renal Cells","HBS: Human Biological Samples
+Human Renal Cortical Epithelial Cells
+Human Renal Glomerular Endothelial Cells
+Human Renal Mesangial Cells
+Human Renal Tubular Epithelial Cells"
+"","","Human Reproductive Cells","HBS: Human Biological Samples
+Human Amniotic Epithelial Cells
+Human Ovarian Primary Cells
+Human Villous Trophoblasts"
+"","","Human Skeletal System Cells","HBS: Human Biological Samples
+Human Chondrocytes
+Human Osteoblasts
+Human Pulposus Cells
+Human Synoviocytes"
+"","","Human Umbilical Cells","HBS: Human Biological Samples
+Human Umbilical Artery Endothelial Cells
+Human Umbilical Artery Smooth Muscle Cells
+Human Umbilical Vein Endothelial Cells
+Human Umbilical Vein Smooth Muscle Cells"
+"","","Other Human Cells","HBS: Human Biological Samples
+Human Adipocytes
+Human Adult Stem Cells
+Human Granulocytes
+Human Iris Pigment Epithelial Cells
+Human Lymphatic Endothelial Cells"
+"","","Other",""

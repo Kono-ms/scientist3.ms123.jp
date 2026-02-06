@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/common/css/style.css">
+<link rel="stylesheet" href="/common/css/style-chat.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="/js/prototype.js"></script>
+
+</head>
+<body class="m-chat">
+<div class="wrap sub page-m-chat">
+<!--コンテンツ開始-->
+<div class="l-container">
+<div class="inner m-chat__list" id="inner">
+[INNER]
+</div>
+<br class="clear_balloon"/>
+
+</div>
+<!--コンテンツ終了-->
+
+<a name="bott">&nbsp;</a>
+
+</div>
+
+<script>
+var myAjax=new Ajax.PeriodicalUpdater(
+	'inner',
+	'/m_chat2/chatinner2.php',
+	{
+		method:'get',
+		parameters:'aid=[AID]&etc02=[ETC02]&chat_hash=[CHAT_HASH]',
+		insertion:'Bottom',
+		frequency: 1,
+	        decay: 1,
+	}
+);
+
+function bottt(){
+	window.location.hash = "";
+	window.location.hash = "bott";
+};
+
+setTimeout("bottt()", 10);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<table>
+    <!--<tr><th>ID</th><td>[KEY]</td></tr>-->
+    <tr><th></th><td>Cosmo Bio Co Ltd</td></tr>
+    <tr><th>Project Name</th><td>[PDF_SHODAN_TITLE]</td></tr>
+    <tr><th>Study Code</th><td>[M2_STUDY_CODE]</td></tr>
+    <tr><th>Quote No.</th><td>[M2_QUOTE_NO]</td></tr>
+    <tr><th>Date</th><td>[M2_DATE]</td></tr>
+    <tr><th>Valid until</th><td>[M2_QUOTE_VALID_UNTIL]</td></tr>
+    <tr><th>Scientist3 Control No.</th><td>[SCNO]</td></tr>
+    <tr><th>サプライヤー会社名</th><td>[PDF_M1-M1_ETC128]</td></tr>
+    <tr><th>住所</th><td>[PDF_ADDRESS1]</td></tr>
+    <tr><th>担当者</th><td>[PDF_M1-M1_ETC32]</td></tr>
+    <tr><th>BILL TO(サプライヤー会社名)</th><td>[M2_SHIP_TO_SPT_2]</td></tr>
+    <tr><th>BILL TO(住所)</th><td>[PDF_ADDRESS2]</td></tr>
+   
+</table>
+
+<br><br>
+[AREA-FDETAIL-ITEMS]
+
+<br><br>
+<table>
+    <tr><th>Special Note</th><td>[M2_SPECIAL_NOTE]</td></tr>
+    <tr><th>Number of Payments:[M2_PAY_TYPE]:[NUMBER_OF_PAYMENTS]</th><td></td></tr>
+</table>
+
+
+[S-PDF_D_ITEMS]
+<!--このエリアは一括払い、もしくは、分割払い時の1つにまとめたPart0の見積り書のにのみ表示-->
+<br><br>
+<span>サービス費用</span>
+<table>
+    <tr><th>Subtotal</th><td>[MITSUMORISYO_SUBTOTAL1]</td><td>[D-M2_CURRENCY]</td></tr>
+    <tr><th>Tax Rate</th><td>[MITSUMORISYO_TAX_RATE1]</td><td>%</td></tr>
+    <tr><th>Sales Tax</th><td>[MITSUMORISYO_TAX_BILL1]</td><td>[D-M2_CURRENCY]</td></tr>
+    <!--<tr><th>Total</th><td>[PDF_TOTAL1]</td></tr>-->
+</table>
+<br>
+<span>手数料</span>
+<table>
+    <tr><th>PF手数料</th><td>[MITSUMORISYO_PF_FEE]</td><td>[D-M2_CURRENCY]</td></tr>
+    <tr><th>輸入代行費用</th><td>[INPUT-M2_IMPORT_FEE]</td><td>[D-M2_CURRENCY]</td></tr>
+    <tr><th>輸出代行費用</th><td>[INPUT-MITSUMORISYO_EXPORT_FEE]</td><td>[D-M2_CURRENCY]</td></tr>
+    <tr><th>特別値引き（運営）</th><td>[INPUT-M2_MANAGE_DISCOUNT]</td><td>[D-M2_CURRENCY]</td></tr>
+    <tr><th>小計2</th><td>[MITSUMORISYO_SUBTOTAL2]</td><td>[D-M2_CURRENCY]</td></tr>
+    <tr><th>税率2</th><td>[M2_TAX_RATE2]</td><td>%</td></tr>
+    <tr><th>消費税2</th><td>[MITSUMORISYO_TAX_BILL2]</td><td>[D-M2_CURRENCY]</td></tr>
+</table>
+
+<table>
+    <tr><th>合計金額</th><td>[MITSUMORISYO_ALL_CHARGE]</td><td>[D-M2_CURRENCY]</td></tr>
+</table>
+[E-PDF_D_ITEMS]

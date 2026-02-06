@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Researchersの希望情報一覧｜Scientist3</title>
+    <meta name="description"
+        content="Researchersの希望情報一覧のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/icon-192x192.png">
+    <!--template=/common/template/head.html-->
+</head>
+
+<body>
+    <div class="wrap sub">
+
+        <!--template=/common/template/header.html-->
+
+        <!-- 以上共通 -->
+        <div class="breadcrumb">
+            <div class="l-container">
+                <ol class="breadcrumb__list">
+                    <li class="breadcrumb__item"><a href="/">トップ</a></li>
+                    <li class="breadcrumb__item">Researchersの希望情報一覧</li>
+                </ol>
+            </div>
+        </div>
+        <section class="subpage-head">
+            <div class="l-container">
+                <div class="c-head">
+                    <h1 class="c-head__ttl"> Researchersの希望情報一覧 </h1>
+                    <p class="c-head__txt">Researchersの希望情報が[RECCOUNT]人見つかりました</p>
+                </div>
+            </div>
+        </section>
+        <section class="search">
+            <div class="search__area">
+                <ul class="search__word">
+                    <li class="search__ttl">検索条件</li>
+                    [SEL_WORD]
+                </ul>
+                <ul class="search__sort">
+                    <li class="search__ttl">並び替え</li>
+                    [SEL_SORT]
+                </ul>
+            </div>
+            <div class="search__area search__area--second">
+                <form method="get" action="./">
+                    <ul class="search__filter">
+                        <li class="search__ttl">検索フィルター</li>
+                        <li class="search__item select">
+                            <input type="hidden" name="mode" value="list">
+                            <input type="hidden" name="sort" value="[SORT]">
+                            <input type="hidden" name="word" value="[WORD]">
+                            <span>
+                                <select name="sel1" onChange="submit(this.form);">
+                                    <option value="">▼カテゴリーを選択</option>
+
+
+
+                                    [SEL_S1]
+
+
+
+                                </select>
+                            </span>
+                        </li>
+                        <li class="search__item " style="width: 100%;"> <input type="search"
+                                style="width: 100%;height: 4.5rem;line-height: 4.5rem;padding: 0 2.5rem 0 1.5rem;background: #fff;border: none;"
+                                value="[WORD2]" name="word2"> </li>
+                    </ul>
+                </form>
+
+            </div>
+        </section>
+        <section class="result">
+            <div class="l-container">
+                <div class="result__list">
+                    <meta LIST-START>
+                    <meta LIST-END>
+                </div>
+                <div class="pagination">
+                    <div class="pagination__list"> [PAGING] </div>
+                </div>
+            </div>
+        </section>
+
+        <!--template=/common/template/flowv.html-->
+
+        <!-- 以下共通 -->
+
+        <!--template=/common/template/footer.html-->
+
+    </div>
+</body>
+
+</html>

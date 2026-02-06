@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>追加請求書</title>
+    <link rel="stylesheet" href="/common/css/jquery.bxslider.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <script src="/common/js/jquery.bxslider.js"></script> 
+
+    <script>
+        function close_popup() {
+            $('#mask_mcontact2', parent.document).hide();
+            $('#popup_mcontact2', parent.document).fadeOut();
+        }
+    </script>
+</head>
+<body style="background:white;">
+
+<!--PDFダウンロード時や送信時はこのエリアは非表示-->
+    [S-PDF_BTN_AREA]
+    <div>
+        <a href="javascript:close_popup();">
+            Close
+        </a><br>
+        [S-BTN_SEND]
+        <a href="/a_test/?mode=disp_frame4&preview_type=s_add&pdf_action=send4&key=[KEY]" 
+            onclick="var ok=confirm('この内容で送信しますか？');if (ok) this.form.submit(); return false;">
+            Send PDF
+        </a><br>
+        [E-BTN_SEND]
+        <a href="/a_test/?mode=disp_frame3&preview_type=s&pdf_action=download&key=[KEY]">
+            Download
+        </a><br>
+    </div>
+    [E-PDF_BTN_AREA]
+
+    [PDF_VIEW]
+
+</body>
+</html>

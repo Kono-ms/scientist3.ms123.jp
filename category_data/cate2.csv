@@ -1,0 +1,831 @@
+"第一階層","第二階層","第三階層","第四階層",""
+"Biology","Antibodies","Antibody Affinity Maturation","Affinity Maturation
+Chain Shuffling
+Constant Fragment (Fc) Engineering",""
+"","","Antibody Amplification","Antibody Amplification",""
+"","","Antibody Characterization","Antibody Detection
+Antibody Glycosylation Assays
+Antibody Isotyping
+Epitope Mapping
+Pepscan Analysis
+Solid Phase Red Cell Adherence Assay
+T Cell Epitope Characterization
+X-Ray Crystallography",""
+"","","Antibody Conjugation","Antibody Conjugation
+Antibody-Drug Conjugation
+Biotin-Antibody Conjugation
+Hapten-Antibody Conjugation
+Horseradish Peroxidase-Antibody",""
+"","","Conjugation","Antibody Constructs
+Anti-Idiotype Antibodies
+Antibody Isotype Switching
+Antibody Products
+Antibody-Drug Conjugate Products
+Antigen Binding Fragment (Fab)
+Chicken Monoclonal Antibody Development
+Custom Antibodies
+Nanobodies
+Phosphospecific Antibodies
+Rabbit Monoclonal Antibody Development
+Single Chain Variable Fragment (scFv)",""
+"","","Antibody Detection","Antibody Sequencing
+Circulating Antibody Assay Development
+Direct Antibody Labeling
+Direct Antiglobulin Test
+Hemagglutination Inhibition Test
+Immunoassays
+Immunohistochemistry
+Immunophenotyping
+Indirect Antiglobulin Test
+Liposome Immunoassa",""
+"","","Antibody Humanization","Antibody Humanization
+Antibody Resurfacing
+Complementary Determining Region (CDR) Grafting
+Germline Humanization
+Specificity Determining Region (SDR) Grafting",""
+"","","Antibody Production","Antibody Reformatting
+Ascites Antibody Production
+Hybridoma Production
+In Vitro Monoclonal Antibody Production
+OmniRat Transgenic Animal Platform
+Polyclonal Antibody Production
+Polyclonal/Monoclonal Antibody Production",""
+"","","Antibody Purification","Antibody Purification
+Centrifugal Precipitation Chromatography
+Immunoaffinity Chromatography
+Size Exclusion Chromatography
+Other",""
+"","","ADCC and CDC Assay Services","Antibody and Protein Products Hub
+Toxin Linker Products",""
+"","DNA","DNA Detection and Analysis","Capillary Electrophoresis
+Cell Free DNA Assay
+Digital Polymerase Chain Reaction
+DNA Pull Down Assay
+DNA-lipid interaction analysis
+DNase Footprinting Assay
+Electrophoretic Mobility Shift Assay
+Isothermal Amplification
+Linear DNA Amplification (LinDA)
+Plasmid Retention Assay
+Polyacrylamide Gel Electrophoresis
+qPCR Analysis
+Recombinant Nucleosomes
+Threshold DNA Detection Assay
+Whole Genome Amplification (WGA)
+
+",""
+"","","DNA Sequencing","Amplicon - HLA Typing
+Amplicon 16s rRNA Sequencing
+ChIP-Sequencing
+ChIP-sequencing Profiling
+De Novo Genome Sequencing
+Exome Sequencing
+Hybridoma Sequencing/Antibody Sequencing
+Metagenomic Sequencing
+mtDNA Sequencing
+NGS: Next Generation Sequencing
+RAD Sequencing
+Sanger Sequencing
+Targeted Sequencing/Resequencing
+TCR Repertoire Sequencing
+Whole Genome Bisulphite Seq
+Whole Genome Sequencing",""
+"","","Genome Editing","CRISPR
+Engineered Meganucleases Genome Editing
+Genome Editing
+Recombinant AAV Mediated Genome Editing
+Transcription Activator Like Effector Nucleases Genome Editing
+Zinc Finger Nuclease Genome Editing
+Molecular Biology Services
+Artificial Chromosomes
+cDNA cloning & subcloning
+DNA Library Screening
+DNA Mutagenesis
+DNA Products
+Gene Synthesis
+Genomic DNA cloning
+Genomic DNA Purification
+Oligo Synthesis
+Plasmid DNA Preparation
+Other",""
+"","Glycobiology","Carbohydrate Isolation
+Carbohydrate Isolation Protocol Development
+Carbohydrate Structure Characterization","",""
+"","In Vitro/Vivo Assays","Angiogenesis","Bone Resorption Assay
+Cell Based Assays Consulting
+Chorioallantoic Membrane (CAM) Assay
+Co-Culture Angiogenesis Assay
+Hairless Mouse
+In Vivo Angiogenesis Assay
+Matrigel Plug Assay
+Sprouting Assay
+Tube Formation Assay",""
+"","","Apoptosis","Annexin V Apoptisis Assay
+Apoptosis Assays
+Apoptotic Cell Staining
+Caspase Assay
+Cathepsin Assay
+Cell Based Assays Consulting
+In Vivo Apoptosis Detection
+Mitochondrial Apoptosis Assay (JC-1)
+Serine Protease Assay
+TUNEL Assay",""
+"","","Biosensor Assays","Biosensor Assays
+",""
+"","","Cell Adhesion","Cell Adhesion
+Centrifugal Cell Adhesion Assay
+Hydroxyproline Assays
+Platelet Adhesion Assay",""
+"","","Cell Based Microscopy Assay","3D Cell Microscopy Assay
+Co-cultivation Microscopy Assay
+Micromanipulation Microscopy Assay
+Stem Cell Differentation Microscopy Assay",""
+"","","Cell Cycle","3H-Thymidine Incorporation
+BrdU S-Phase Analysis
+Cell Based Assays Consulting
+Cell Cycle
+Cell Viability
+Cytometric Bead Array (CBA) FACS Analysis
+Ploidy Analysis
+Poly-(ADP-Ribose) Polymerase 1 (PARP) FACS Analysis
+Propidium Iodide FACS Analysis",""
+"","","Coagulation","Activated Clotting Time (ACT)
+Anti-thrombin Assays
+Anti-Xa Assay
+Cell Based Assays Consulting
+Coagulation
+Ecarin Clotting Time (ECT)
+Factor X Assay
+Fibrinogen Assays
+International Normalized Ratio (INR) Testing
+Low Density Lipoprotein (LDL) Uptake Assay
+Platelet Function Testing
+Thrombin Generation Tests
+Thrombophilia Screening
+Von Willebrand Factor Analysis",""
+"","","High Throughput Assays","High Content Screening
+High Throughput Screening
+Mass Spectrometry-Based Proteomics
+Metabolomics
+Pathway Mapping
+Phenotype Assays
+Proteomics
+Synthetic Lethality Screening",""
+"","","Inflammation Assays","Cell Based Assays Consulting
+Cytokines
+Inflammation Assays",""
+"","","Lipid Assays","Adipogenesis Assay
+Cell Membrane Lipidomics
+Lipid Detection
+Lipid Disorder Screening
+Lipid Kinase Assays
+Lipid Peroxidation Assay
+Lipolysis",""
+"","","Microbial Testing","Agar Diffusion Testing
+Agar Dilution Testing
+Antimicrobial Effectiveness Testing
+Bioburden Microbial Testing
+Gradient Diffusion Testing
+Microbiological Sterility Testing
+Microbiology
+Microbiome Services
+Microdilution Testing
+Semi-Automated Microbial Testing",""
+"","","Motility Assays","Ciliary Motility",""
+"","","Oxidative Burst","Antioxidant Assays
+Cell Based Assays Consulting
+Oxidative Burst
+Reactive Species Assays",""
+"","","Release Assays","Catecholamine Assay
+Chromium Release Assay
+Cytokine Release Assay
+Glucose Release Assay
+Glucose Uptake
+Histamine Release Assay
+Interferon Gamma Release Assay
+Serotonin Release Assay",""
+"","","Virology Assays","Antivirals
+Endpoint Dilution Assay (TCID50) Assay
+Focus Forming Assay
+Plaque Assays
+Single Radial Immunodiffusion Assay
+Viral Clearance Assays
+Virus Detection Assays",""
+"","","Other","Aminotransferase Assays
+Antibody Purification
+Antimicrobial Peptide Synthesis
+Apoptosis Assays
+Assay Kits
+Biolistic Particle Delivery
+Cardiac Channels
+Cell Based Assays
+Cell Based Assays Consulting
+Cell Fractionation
+Cell Proliferation
+CHOP Reporter Assay
+Custom Libraries
+Cytotoxicity
+Decarboxylase Assays
+Denaturing High Performance Liquid Chromatography
+DNA Shuffling
+Error-Prone PCR
+Glucuronyltransferase
+Hairless Mouse
+hESC-Derived Neural Cell Cultures
+Kinase Proteins
+Luciferase Reporter Assay
+Monoamine Transporter Assays
+Multi-Omics Study
+Multiple Sclerosis Models
+Nanoporous Microspheres
+OECD 489: In Vivo Mammalian Alkaline Comet Assay
+Osteoclasts
+PEG Protein Conjugation
+Plasma Stability Assay
+Quantitative Whole Body Autoradiography (QWBA) - Non-rodent Species
+Solubility Assay
+T Cell Epitope Characterization",""
+"","RNA","RNA Analysis","Antisense RNA Amplification
+Digital Polymerase Chain Reaction
+In Situ Hybridization
+Linear Based RNA Amplification
+Microchip Capillary Electrophoresis
+Multiplex Cellular miRNA Assay
+Quantitative RT PCR
+RNA Amplification
+RNA Extraction
+Whole Transcriptome Amplification
+",""
+"","","RNA Interference","In Vitro Dicing RNA Interference
+RNA Interference
+RNAi Pathway Analysis
+Vector Based RNA interference
+",""
+"","","RNA Sequencing","De Novo Transcriptome Sequencing
+Degradome Sequencing
+miRNA sequencing
+Poly (A) tail Length Profiling (PAL-Seq)
+RNA Sequencing
+",""
+"","","RNA Synthesis","mRNA synthesis
+non-coding RNA Synthesis
+RNA oligo synthesis
+shRNA Synthesis
+siRNA Synthesis
+Other",""
+"","Bioelectronics","Electrophysiology Models
+Neuromodulation Clinical Trial
+Neuromodulation Device Contract Manufacturing
+Neuronal Electrophysiology Assays","",""
+"","Bioinformatics","Databases","Application Development
+Database Integration
+Database Management
+",""
+"","","In Silico Drug Dynamics","ADME-PK Due Diligence
+Brain-Barrier Permeability Simulation
+Drug Absorption Simulation
+In Silico ADME-PK Consultation
+In Silico ADME-PK Predictions
+In Silico Drug-Drug Interactions
+In Silico Lead Optimization
+In Silico Metabolite Predictions
+In Silico Pro-drug Predictions
+",""
+"","","In Silico Genome/Transcriptome Data Analysis","Base Calling
+Genome Data Analysis
+In Silico Cancer Genomics/Cancer Transcriptomics Analysis
+In Silico Epigenetic Compound Library Screening
+In Silico Genomics/Transcriptomics Analysis
+In Silico Metagenomics/Metatranscriptomics Analysis
+In Silico Nucleic Acid Microarray Analysis
+iPathway Guide
+NGS: Next Generation Sequencing Analysis
+Nucleic Acid Molecular Dynamic Simulation
+Pharmacogenomics Analysis
+",""
+"","","In Silico Proteome Data Analysis","Homology Modeling
+In Silico Protein Microarray Analysis
+In Silico Protein Modification Analysis
+In Silico Protein Sequence Analysis
+Nucleic Acid Studies Software
+Protein Interaction Molecular Dynamics Simulation
+Proteome Data Analysis
+",""
+"","","Software Tools","Database Management Software
+iPathway Guide
+Molecular Dynamics Software
+Oscope
+Protein Studies Software
+Software Tools
+",""
+"","","Statistical and Mathematical Modeling","Statistical and Mathematical Modeling
+Statistical/Mathematical Modeling of Metabolomic/Lipidomic Data
+Statistical/Mathematical Modeling of Proteomic Data",""
+"","","Other","CNS Quantitative Systems Pharmacology (QSP)
+Immunogenicity Predictions
+Microarray Data Analysis
+T Cell Epitope Mapping",""
+"","Cells","Biorepository","Biobanking
+Cell Services Consulting
+End of Production Cell Banking
+HBS: Human Biological Samples
+Master Cell Banking
+Population Biobanks
+Stem Cell Banks
+Tissue Acquisition
+Virtual Biobanking
+Virus Seed Banking
+Working Cell Bank",""
+"","","Cell & Tissue Histology","Cell and Tissue Histology
+Cell Membrane Lipidomics
+Cell Services Consulting
+Cryo-based Histology
+Customized Primary Cell Isolation
+HBS: Human Biological Samples
+Hematoxylin & Eosin (H&E) Staining
+Immunostaining
+Paraffin-based Histology
+Periodic Acid Schiff (PAS) Staining
+Refeed(R) Lipid Supplements
+Resin-based Histology
+Special Stainings
+Trichrome Staining",""
+"","","Cell Line Authentication","Copy Number Variant Analysis
+Isoenzyme Analysis
+Microsatellite Instability Analysis
+Random Amplified Polymorphic DNA Analysis
+STR Profiling - Microsatellite Short Tandem Repeat",""
+"","","Cell Line/Strain Development","Cell Line Construction
+Metabolic Engineering
+Recombinant Technology
+Rodent In Vitro Fertilization",""
+"","","Cell Products","Cell Products
+Cell Services Consulting
+Customized Primary Cell Isolation
+Human Primary Cell Isolation
+Spent Media Analysis",""
+"","","Cell Sorting","BD FACSAria
+BD FACSAria II
+BD FACSAria II SORP
+BD FACSCalibur
+BD FACSCanto II
+BD LSR Fortessa
+BD LSRII",""
+"","","Cell Transfection","Biolistic Particle Delivery
+Cell Services Consulting
+Cell Transfection
+Chemical-based Transfection (Non-Lipid)
+Electroporation Transfection
+Lipofection
+Microinjection Transfection
+Optical Transfection
+RNA-Based Transfection
+Viral Mediated Gene Delivery",""
+"","","Cell-Based Microarray","Reverse Transfection
+Tissue Microarray",""
+"","","Contamination Screening","Endotoxin Testing
+Mycobacterium Screening
+Single Nucleotide Polymorphism Microarray
+Spectral Karyotyping",""
+"","","Cytogenetics","Comparative Genomic Hybridization Microarray
+Custom Exosomes Engineering
+Cytogenetics
+Directional Genomic Hybridization (DGH)
+Extended Banding
+Flow Cytometry
+Fluorescent In Situ Hybridization",""
+"","","Mammalian Cultures","3D Cell Culture
+Adherent Cell Culture
+Cell Culture
+Cell Services Consulting
+Explant Culture
+Karyotyping
+Organotypic Culture
+Suspension Cell Culture",""
+"","","Non-Mammalian Cultures","Bacterial Cell Culture
+Cell Services Consulting
+Insect Tissue Culture
+Plant Tissue Culture
+Yeast Cell Culture",""
+"","","Single Cell Analysis","Single Cell DNA Sequencing
+Single Cell Force Spectroscopy
+Single Cell Isolation
+Single Cell quantitative Real Time-PCR
+Single Cell RNA Sequencing
+Single Cell Transcriptome Sequencing",""
+"","","Stem Cell Methodologies","Blastomere extraction
+Cell Services Consulting
+CMT1A iPSC Lines
+Colony Forming Cell Assay
+Gene-Edited iPSCs Disease Models
+Induced Pluripotent Stem (iPS) Cell Reprogramming
+Isogenic Knockout iPSC Lines
+Stem Cell Analysis
+Stem Cell Differentiation
+Teratoma Formation Assay
+Tetraploid Complementation Assay",""
+"","","Other","Blastocyst Injection
+Caco-2 Cell Line
+Cell Line Authentication
+Cell Line Construction
+Customized Primary Cell Isolation
+Human Primary Cell Isolation",""
+"","Nanotechnology","Drug Delivery Technology","Liposomes
+",""
+"","","Nanofabrication","Focused Ion Beam
+MEMS/NEMS
+Nano Etching
+Nanofabrication
+Nanofabrication Deposition and Growth
+Nanolithography",""
+"","","Nanoparticle Synthesis","Custom Nanostructures
+Metal/Metal Oxide Nanoparticle Synthesis
+Nanoparticle Conjugation and Functionalization
+Nanoparticle Synthesis
+Nanoporous Microspheres
+Nanotubes and Nanowires
+Silica/Polystyrene/Organic Nanoparticle Synthesis
+",""
+"","","Nanoscale Analysis","Atomic Absorption Analysis
+Lab-on-Chip Devices
+Nano Mass Spectrometry
+Nano-High Performance Liquid Chromatography",""
+"","","Other","Nanoporous Microspheres",""
+"","Pharmaceutical Compounding","Melatonin Bioidentical Compounding
+Melatonin Compounding
+","",""
+"","Primary Cells","Human Bladder Cells
+Human Bladder Microvascular Endothelial Cells
+Other","",""
+"","Protein Analysis","Protein Identification","MALDI-TOF Analysis
+Protein Identification
+",""
+"","","Protein Interactions","Affinity Tag Purification
+Analytical Ultracentrifugation
+Antibody-Antigen Affinity Measurement
+Differential Scanning Calorimetry
+Dynamic Light Scattering
+ELISA
+Fluorescence Polarization
+FRET/BRET
+Immunoprecipitation
+In Situ Proximity Ligation Assay
+Isothermal Titration Calorimetry
+MagHelix(TM) Surface Plasmon Resonance (SPR)
+Mammalian Two-Hybrid (MTH) Assays
+Mass Spectrometric Immuno Assay (MSIA)
+Microarray Spotting
+Peptide Array
+Phage Display
+Plasma Protein Binding by Ultracentrifugation
+Protein Binding
+Protein Complementation Assay
+Protein Interaction
+Protein Services Consulting
+Quantitative Shotgun Proteomics
+Surface Plasmon Resonance
+Western Blots
+Yeast Two Hybrid
+",""
+"","","Protein Post - Translational Modification Analysis","Application Development
+GC MS Analysis
+Glycoprotein Analysis
+LCMS Analysis
+Nano Mass Spectrometry
+Phosphorylation Analysis
+Protein Aggregation
+Protein Services
+Protein Services Consulting
+Protein Studies Software",""
+"","","Protein Purification","Antibody Purification
+Electrophoresis
+Expanded Bed Adsorption Chromatography
+Hydrophobic Interaction Chromatography
+Ion Exchange Chromatography
+Native Protein Purification
+Protein Post-translational Modification Analysis
+Protein Purification
+Protein Separation and Detection
+Protein Services Consulting
+Reverse Phase Chromatography
+Protein Quantification
+DigiWest: High Content Protein Profiling Services
+ICAT
+iTRAQ",""
+"","","Protein Quantification","RPPA Protein Profiling
+SILAC
+SRM/MRM",""
+"","","Protein Sequencing","Amino Acid Analysis (AAA)
+C-terminal Sequencing
+LCMS Analysis
+Liquid Chromatography
+N-terminal Sequencing
+Protein Sequencing
+Protein Services Consulting",""
+"","","Protein Structure","Circular Dichroism
+Homology Modeling
+Protein Crystallization
+Protein Melting Point Analysis
+Protein Structure
+Raman Spectroscopy
+Solid State Nuclear Magnetic Resonance
+Solution Nuclear Magenetic Resonance
+Structural Spectroscopy
+X-Ray Crystallography",""
+"","","Other","Homology Modeling
+LCMS Analysis
+Protein mapping
+Protein Services Consulting
+Proteomics
+Static Light Scattering
+Thermal Analysis",""
+"","Bioimaging","In Vivo Imaging","CAS-MAP(TM) In Vivo Apoptosis
+Computed Tomography
+Fluorescence Mediated Tomography
+In Vivo Positron Emission Tomography (PET) Imaging
+In Vivo Whole Tissue and Animal Imaging
+Inductively Coupled Plasma-Mass Spectrometry (ICP-MS) Analysis
+Luminescence Imaging
+Medical Magnetic Resonance Imaging
+Medical Ultrasonography
+Optical Tomographic Imaging
+Phase Contrast X-Ray Imaging
+Scintigraphy
+SPECT-CT and PET-CT Imaging
+Thermal and Acoustic Imaging
+Ultrasound Tomography",""
+"","","Microscopy","3D Cell Microscopy Assay
+Atomic Force Microscopy
+Confocal/Optical Microscopy
+Cryo Electron Microscopy
+Electron Microscopy
+FEI Tecnai F20 200kV Electron Microscope
+FEI Tecnai T12 120kV Electron Microscope
+Leica SP5 Confocal Microscope
+Light Sheet Fluorescence Microscopy
+Microscopy
+Nano-Imaging
+Olympus IX 81 TIRF Microscope
+Optical Birefringence Analysis
+Photoactivated Localization Microscopy (PALM)
+Scanning and Transmission Electron Microscopy
+Single Molecule Localization Microscopy
+Stochastic Optical Reconstruction Microscopy (STORM)
+Total Internal Reflection Fluorescence Microscopy
+X-ray Microscopy and Nanotomography (Nano-CT)
+Zeiss 880 Microscope",""
+"","","Other","Ab-Targeted Positron Emission Tomography
+Bioimaging
+EMRinger Tool
+fMRI: A Brain Scanning Technology
+Medical Imaging",""
+"","Biomarkers","Biomarker Discovery","Biomarker Discovery
+Biomarker Services
+Biomarker Services Consulting
+Circulating Antibody Assay Development
+Diagnostic Biomarkers Discovery
+Flow Cytometry
+Liquid Biopsy
+Molecular Profiling
+Pharmacodynamic Biomarkers Discovery
+Predictive Biomarkers Discovery
+Prognostic Biomarkers Discovery",""
+"","","Clinical Chemistry","A1C Testing
+Autoantibody Testing
+Basic Metabolic Profiling
+Biomarker Services
+Biomarker Services Consulting
+Blood Smear Testing
+Brain Natriuretic Peptide (BNP) Testing
+C-Reactive Protein (CRP) Testing
+Cerebrospinal Fluid Analysis
+Clinical Biomarkers
+Clinical Chemistry
+Complete Metabolic Panel Testing
+Creatine Kinase (CK) Testing
+Endocrine Assays
+F2-Isoprostane-Creatinine Ratio
+Glutamic Acid Decarbosylase Autoantibodies (GADA) Testing
+Hematology CBC
+Insulin Autoantibodies (IAA) Testing
+Insulinoma Associated-2 Autoantibodies (IA-2A) Testing
+Islet Cell Autoantibodies (ICA) Testing
+Lipid Profiling
+Lipoprotein Associated Phospholipase A2 Testing
+Metabolite Profiling
+Microalbumin/Creatinine Ratio (MACR)
+Myeloperoxidase Testing
+Oxidized Low Density Lipoproteins (LDL) Testing
+Peritoneal Fluid Analysis
+Semen Analysis
+Sputum Culture Analysis
+Troponin Testing
+",""
+"","","De Novo Biomarker Validation","Biomarker Analytical Validation
+Biomarker Clinical Utility
+Biomarker Clinical Validation
+Biomarker Services",""
+"","","Other","Biomarker Services
+Biomarker Services Consulting",""
+"","Epigenetics","Bisulfate Sequencing DNA Methylation Analysis","Base Specific Cleavage-MALDI TOF
+Bisulfite Sequencing (RRBS)
+Methylation Sensitive Single Strand Conformation Analysis
+Methylation Specific PCR
+Sequence Based Methylation Analysis
+Targeted Bisulphite Sequencing",""
+"","","Chromatin Analysis","Chromatin Interaction Analysis-Paired End Tag Sequencing
+Chromatin Tandem Affinity Purification Sequencing
+Chromosome Conformation Capture
+Expression Profiling
+ChIP-sequencing Profiling
+Expression Profiling
+RNA Profiling
+Target Gene Expression
+Whole Genome Profiling",""
+"","","Genotyping","Allele Specific Oligonucleotide Probes
+Amplified Fragment Length Polymorphism Detection
+DNA Hydroxy Methylation Seq
+Genotyping
+Random Amplified Polymorphic Detection
+Restriction Fragment Length Polymorphism Identification",""
+"","","Non-Bisulphate Conversion DNA Methylation Analysis","HELP Assay
+MeDIP-Sequencing
+Methylation Analysis
+Restriction Landmark Genome Scanning
+Single Molecule Real Time Sequencing",""
+"","","SNP Characterization","Denaturing High Performance Liquid Chromatography
+Enzyme SNP Genotyping
+High Resolution Melting Analysis
+Hybridization SNP Genotyping
+Single Strand Conformation Polymorphism Analysis
+SNP Characterization
+Temperature Gradient Gel Electrophoresis",""
+"","","Ubiquitylation Analysis","CHOP Reporter Assay
+Surface Plasmon Resonance
+Tandem Repeated Ubiquitin Binding Entities
+Ubiquitylation Analysis",""
+"","","Other","In Silico Epigenetic Compound Library Screening
+Multiplex Cellular miRNA Assay
+Restriction Landmark Genome Scanning
+Single Molecule Real Time Sequencing
+siRNA Expression Cassettes",""
+"","Molecular Pharmacology","Aptamer -Based Targeted Screening","Antibody Phage Display
+Aptamer Conjugation
+Aptamer Microarray
+Aptamer Products
+Aptamer-Based Proximity Ligation Assay
+Aptazymes
+SELEX",""
+"","","Hydrolase Targets","Deubiquitylase Assays
+Histone Deacetylase (HDAC) Assays
+Phosphatase Assays
+Phosphodiesterase Assays
+Protease Assay",""
+"","","Immuno-oncology Targets","Anaplastic lymphoma kinase (ALK) Assays
+Angiopoietin-2 (Ang-2) Assays
+B-Cell Lymphoma 2 (BCL-2) Assays
+Carcinoembryonic Antigen (CEA) Assays
+CD134 (OX 40) Assays
+CD137 Assays
+CD20 Assays
+CD252 (OX 40L) Assays
+CD79b Assays
+Checkpoint Kinase-1 (ChK-1) Assays
+Colony Stimulating Factor 1 Receptor (CSF-1R) Assays
+Cytotoxic T-Lymphocyte Antigen-4 (CTLA-4) Assays
+Extracellular signal Regulated Kinase Assays
+Fibroblast Growth Factor Receptor (FGFR) Assays
+Human Double Minute 2 (HDM2) Assays
+Human Epidermal growth factor Receptor (HER) Assays
+Hypoxia-Inducible Factor 1 (HIF1) alpha Assays
+Immuno-oncology Assays
+Indoleamine 2,3 Di-Oxygenase (IDO) Assays
+Kallikrein (KLK)-related Serine Protease Assays
+Killer cell Immunoglobulin-like Receptor (KIR) Assays
+Liposome Immunoassay
+Lymphocyte Activation Gene-3 (LAG-3) Assays
+Lysine Specific Demethylase-1 (LSD-1) Assays
+Mammalian Target of Rapamycin Complex Assays
+Mesothelin Assays
+Mitogen/Extracellular signal-regulated Kinase (MEK) Assays
+Mutant B-Raf Assays
+Phosphatidylinositol 3-Kinase (PI3K) Assays
+Programmed Cell Death-1 (PD-1) Assays
+Programmed Death-Ligand 1 (PD-L1) Assays
+Programmed Death-Ligand 2 (PD-L2) Assays
+Protein Kinase B (Akt) Assays
+Raf Assays
+RAS Assays
+Signaling Lymphocytic Activation Molecule Family Member 7 (SLAMF7) Assays
+Six Transmembrane Epithelial Antigen of the Prostate 1 (STEAP1) Assays
+T-cell Immunoglobulin and Mucin Domain-3 (TIM-3) Assays
+Vascular Endothelial Growth Factor (VEGF) Assays
+Vascular Endothelial Growth Factor Receptor (VEGFR) Assays",""
+"","","Ion Channels Target","Calcium Channel Assays
+Chloride Channel Assays
+Cyclic Nucleotide Gated (CNG) Channel
+High Throughput Screening
+HTS Assay Development
+Ion Channels
+Potassium Channel Assays
+Sodium Channel Assays",""
+"","","Isomerase Targets","Mutase Assays
+Racemase Assays",""
+"","","Ligase Targets","Carboxylase Assays
+Nitric Oxide Synthase Assays
+Synthetase Assays
+Ubiquitin Ligase Assays",""
+"","","Lyase Targets","Aldolase Assays
+Decarboxylase Assays",""
+"","","Non-Enzyme Protein Targets","G-PROTEIN COUPLED RECEPTOR (GPCR) Assays
+Heat Shock Protein Assays
+Human BCL Assays
+Nuclear Receptor Assays
+Protein Targets",""
+"","","Oxidoreductase targets","Dehydrogenase Assays
+Oxidase Assays
+Oxygenase Assays
+Peroxidase Assays",""
+"","","Protein Domain Targets","Bromodomain Assays
+In Vitro Enzyme Activity Assay Development
+Methyl CpG Binding Domain (MBD) Assays
+PDZ Domain Assays",""
+"","","Target Characterization","Reversibility Study
+Selectivity Profiling
+Substrate Competitive Study
+Target Identification
+Target Validation
+Time Dependent Study",""
+"","","Transferase Targets","Acetyltransferase Assays
+Aminotransferase Assays
+Histone Acetyltransferase (HAT) Assays
+Kinase Assays
+Methyltransferase Assays
+PARP Assays
+Phosphorylase Assays
+Polymerase Assays
+RNA Methylation Assays
+UDP-glucuronosyltransferases (UGT) Inhibition Assays",""
+"","","Transporter Targets","Amino Acid Transporter Assays
+ATP Competitive Study
+Folate Transporter Assays
+Glucose Transporter Assays
+Monocarboxylate Transporter Assays
+Nucleoside Transporter Assays
+Organic Ion Transporter Assays
+Peptide Transporter Assays
+Solute-Linked Carrier (SLC) Transporter Inhibition Assays
+Solute-Linked Carrier (SLC) Transporter Substrate Identification",""
+"","","Other","Cell-based Assay Development
+Cellular Thermal Shift Assay
+Drug Target Assays",""
+"","Protein Engineering","In Vitro Protein Evolution","Directed Evolution
+mRNA Display",""
+"","","Protein Engineering","Ribosome Display
+Peptide Synthesis
+Catalog Peptides
+Cell Penetrating Peptide Production
+Liquid Phase Peptide Synthesis
+Microwave Assisted Peptide Synthesis
+Peptide Synthesis
+Protein Engineering
+Protein Services Consulting
+Solid Phase Peptide Synthesis",""
+"","","Peptide/Protein Products","Enzyme Engineering
+Fusion Proteins
+Large Scale Protein Production
+Peptide/Protein Products
+Protein Engineering
+Protein Products
+Protein Scaffolds
+Recombinant Proteins
+Synthetic Proteins
+Virus Production",""
+"","","Protein Expression","Adeno Associated Virus Production
+Bacterial Expression
+Cell-Free Protein Expression
+Insect Expression
+Mammalian Expression
+Protein Engineering
+Protein Expression
+Yeast Expression",""
+"","","Protein/Peptide Conjugation","Biotin Protein Conjugation
+Carrier Protein Conjugation
+Enzyme Protein Conjugation
+Fluorophore Protein Conjugation
+Protein Conjugation
+Protein Engineering
+Protein Services Consulting",""
+"","","Protein/Peptide Therapeutics","Antimicrobial Peptide Synthesis
+Peptide/Protein Based Vaccine Production
+Protein Engineering",""
+"","","Rational Protein/Peptide Design","Computational Protein Design
+DNA Shuffling
+Error-Prone PCR
+Peptidomimetics
+Protein Engineering
+Site Saturation Mutagenesis
+Site-Directed Mutagenesis",""
+"","","Other","Gibco(TM) ExpiCHO(TM) Expression System
+Protein Engineering
+Protein Services Consulting",""

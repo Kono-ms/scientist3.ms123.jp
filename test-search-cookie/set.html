@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>test</title>
+</head>
+<body>
+<h1>test</h1>
+<p id="msg">Cookieの読み書きを行います。</p>
+
+<script type="text/javascript">
+	//document.cookie = 'test_name=Tanaka';
+	//document.cookie = 'test=1,2,3,4,5';
+	//document.cookie = 'test='+getCookieValue('test')+',6';
+
+	let e = document.getElementById('msg');
+	e.insertAdjacentHTML('afterend', '<p>' + document.cookie + '</p>');
+	e.insertAdjacentHTML('afterend', '<p>' + getCookieValue("test") + '</p>');
+
+
+
+	//削除したいもの
+	//document.cookie = "name=; max-age=0";
+	//document.cookie = "old=; max-age=0";
+	//document.cookie = "test_name=; max-age=0";
+	//document.cookie = "chks=; max-age=0";
+	//document.cookie = "test=; max-age=0";
+
+	function getCookieValue(key) {
+		const cookies = document.cookie.split(';');
+		const foundCookie = cookies.find(
+			(cookie) => cookie.split('=')[0].trim() === key.trim()
+			)
+		if (foundCookie) {
+			const cookieValue = decodeURIComponent(foundCookie.split('=')[1]);
+			return cookieValue;
+		}
+		return '';
+	}
+
+
+
+</script>
+
+
+
+</body>
+</html>

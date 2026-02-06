@@ -1,0 +1,541 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+    <h1>商談詳細情報管理</h1>
+
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> Home</li>
+        <li><a href="/a_shodan/">・商談詳細情報管理</a></li>
+        <li>商談詳細情報登録・編集</li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+
+
+        <div class="col-xs-12">
+            <div class="box box-warning">
+
+                <div class="box-header">
+                    <h3 class="box-title">登録・編集</h3>
+                </div><!-- /.box-header -->
+
+                <div class="box-body">
+
+                    [S-ERR]
+                    <div class="alert alert-warning alert-dismissible">
+                        <div class="message_box mb20">
+                            <p><i class="icon fa fa-warning"></i> 入力内容に不備がございますので、内容のご確認をお願いいたします。</p>
+                        </div>
+                        <div class="page_text">
+                            <ul class="error_list">
+                                [ERRMSG]
+                            </ul>
+                        </div>
+                    </div>
+                    [E-ERR]
+
+                    <form method="post" action="./" enctype="multipart/form-data">
+                        <button name="submit" value="submit" type="submit" class="mb20 btn btn-block btn-default"
+                            onclick="var ok=confirm('この内容で保存しますか？');if (ok) this.form.submit(); return false;"><i
+                                class="fa fa-floppy-o"></i> 保存</button>
+                        <input type="hidden" name="mode" value="save">
+                        <input type="hidden" name="key" value="[ID]">
+                        <input type="hidden" name="sort" value="[SORT]">
+                        <input type="hidden" name="word" value="[WORD]">
+                        <input type="hidden" name="page" value="[PAGE]">
+                        <input type="hidden" name="lid" value="[LID]">
+                        <input type="hidden" name="token" value="[TOKEN]">
+                        <input type="hidden" name="ID" value="[ID]">
+                        <input type="hidden" name="DIV_ID" value="[DIV_ID]">
+
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                <tr>
+                                    <th>商談ID</th>
+                                    <td><input type="text" name="SHODAN_ID" class="input_w10 form-control"
+                                            value="[SHODAN_ID]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>研究者ID</th>
+                                    <td><input type="text" name="MID2" class="input_w10 form-control" value="[MID2]"
+                                            size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>サプライヤーID</th>
+                                    <td><input type="text" name="MID1" class="input_w10 form-control" value="[MID1]"
+                                            size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>ステータス</th>
+                                    <td><input type="text" name="STATUS" class="input_w10 form-control" value="[STATUS]"
+                                            size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>登録日時</th>
+                                    <td><input type="text" name="NEWDATE" class="input_w10 form-control"
+                                            value="[NEWDATE]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>更新日時</th>
+                                    <td><input type="text" name="EDITDATE" class="input_w10 form-control"
+                                            value="[EDITDATE]" size="90"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        [S-FORM_T]
+                        ＜問い合わせ＞
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                <tr>
+                                    <th>コメント</th>
+                                    <td><textarea name="T_COMMENT" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[T_COMMENT]</textarea></td>
+                                </tr>
+
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_T_FILE" value="[T_FILE]" size="90"><input
+                                            type="hidden" name="T_FILE" value="[T_FILE]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-T_FILE]<a href="/a_filestatus/data/[ID]/[T_FILE]" download>[T_FILE]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_T_FILE"><br><br>[E-T_FILE]<input
+                                            type="file" name="EP_T_FILE" value="[T_FILE]" size="90"><input type="hidden"
+                                            name="T_FILE" value="[T_FILE]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_T_FILE2" value="[T_FILE2]" size="90"><input
+                                            type="hidden" name="T_FILE2" value="[T_FILE2]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-T_FILE2]<a href="/a_filestatus/data/[ID]/[T_FILE2]" download>[T_FILE2]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_T_FILE2"><br><br>[E-T_FILE2]<input
+                                            type="file" name="EP_T_FILE2" value="[T_FILE2]" size="90"><input
+                                            type="hidden" name="T_FILE2" value="[T_FILE2]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_T_FILE3" value="[T_FILE3]" size="90"><input
+                                            type="hidden" name="T_FILE3" value="[T_FILE3]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-T_FILE3]<a href="/a_filestatus/data/[ID]/[T_FILE3]" download>[T_FILE3]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_T_FILE3"><br><br>[E-T_FILE3]<input
+                                            type="file" name="EP_T_FILE3" value="[T_FILE3]" size="90"><input
+                                            type="hidden" name="T_FILE3" value="[T_FILE3]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_T_FILE4" value="[T_FILE4]" size="90"><input
+                                            type="hidden" name="T_FILE4" value="[T_FILE4]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-T_FILE4]<a href="/a_filestatus/data/[ID]/[T_FILE4]" download>[T_FILE4]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_T_FILE4"><br><br>[E-T_FILE4]<input
+                                            type="file" name="EP_T_FILE4" value="[T_FILE4]" size="90"><input
+                                            type="hidden" name="T_FILE4" value="[T_FILE4]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_T_FILE5" value="[T_FILE5]" size="90"><input
+                                            type="hidden" name="T_FILE5" value="[T_FILE5]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-T_FILE5]<a href="/a_filestatus/data/[ID]/[T_FILE5]" download>[T_FILE5]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_T_FILE5"><br><br>[E-T_FILE5]<input
+                                            type="file" name="EP_T_FILE5" value="[T_FILE5]" size="90"><input
+                                            type="hidden" name="T_FILE5" value="[T_FILE5]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+                                <tr>
+                                    <th>回答希望日時</th>
+                                    <td><input type="text" name="T_ANSWERDATE" class="input_w10 form-control"
+                                            value="[T_ANSWERDATE]" size="90"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        [E-FORM_T]
+
+                        [S-FORM_M1]
+                        ＜見積り依頼＞
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                <tr>
+                                    <th>メッセージ</th>
+                                    <td><textarea name="M1_MESSAGE" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[M1_MESSAGE]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>輸出代行の有無</th>
+                                    <td><input type="text" name="M1_TRANS_FLG" class="input_w10 form-control"
+                                            value="[M1_TRANS_FLG]" size="90"></td>
+                                </tr>
+                                <tr style="display:none;">
+                                    <th>輸出代行コメント</th>
+                                    <td><input type="text" name="M1_TRANS_TXT" class="input_w10 form-control"
+                                            value="[M1_TRANS_TXT]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>希望予算</th>
+                                    <td><input type="text" name="M1_PRICE" class="input_w10 form-control"
+                                            value="[M1_PRICE]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>見積り提出希望期限</th>
+                                    <td><input type="text" name="M1_KIGEN" class="input_w10 form-control"
+                                            value="[M1_KIGEN]" size="90"></td>
+                                </tr>
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_M1_FILE" value="[M1_FILE]" size="90"><input
+                                            type="hidden" name="M1_FILE" value="[M1_FILE]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-M1_FILE]<a href="/a_filestatus/data/[ID]/[M1_FILE]" download>[M1_FILE]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_M1_FILE"><br><br>[E-M1_FILE]<input
+                                            type="file" name="EP_M1_FILE" value="[M1_FILE]" size="90"><input
+                                            type="hidden" name="M1_FILE" value="[M1_FILE]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+                            </tbody>
+                        </table>
+                        [E-FORM_M1]
+
+                        [S-FORM_M1B]
+                        ＜再見積り依頼＞
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                <tr>
+                                    <th>メッセージ</th>
+                                    <td><textarea name="M1_MESSAGE" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[M1_MESSAGE]</textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>輸出代行の有無</th>
+                                    <td><input type="text" name="M1_TRANS_FLG" class="input_w10 form-control"
+                                            value="[M1_TRANS_FLG]" size="90"></td>
+                                </tr>
+                                <tr style="display:none;">
+                                    <th>輸出代行コメント</th>
+                                    <td><input type="text" name="M1_TRANS_TXT" class="input_w10 form-control"
+                                            value="[M1_TRANS_TXT]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>希望予算</th>
+                                    <td><input type="text" name="M1_PRICE" class="input_w10 form-control"
+                                            value="[M1_PRICE]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>見積り提出希望期限</th>
+                                    <td><input type="text" name="M1_KIGEN" class="input_w10 form-control"
+                                            value="[M1_KIGEN]" size="90"></td>
+                                </tr>
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_M1_FILE" value="[M1_FILE]" size="90"><input
+                                            type="hidden" name="M1_FILE" value="[M1_FILE]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-M1_FILE]<a href="/a_filestatus/data/[ID]/[M1_FILE]" download>[M1_FILE]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_M1_FILE"><br><br>[E-M1_FILE]<input
+                                            type="file" name="EP_M1_FILE" value="[M1_FILE]" size="90"><input
+                                            type="hidden" name="M1_FILE" value="[M1_FILE]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+                            </tbody>
+                        </table>
+                        [E-FORM_M1B]
+
+
+                        [S-FORM_M2]
+                        ＜見積り書＞
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                <tr>
+                                    <th>管理番号</th>
+                                    <td><input type="text" name="M2_ID" class="input_w10 form-control" value="[M2_ID]"
+                                            size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>バージョン</th>
+                                    <td><input type="text" name="M2_VERION" class="input_w10 form-control"
+                                            value="[M2_VERSION]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>納品形態</th>
+                                    <td><input type="text" name="M2_NOHIN_TYPE" class="input_w10 form-control"
+                                            value="[M2_NOHIN_TYPE]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>支払い条件</th>
+                                    <td><input type="text" name="M2_PAY_TYPE" class="input_w10 form-control"
+                                            value="[M2_PAY_TYPE]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>Study code</th>
+                                    <td><input type="text" name="M2_STUDY_CODE" class="input_w10 form-control"
+                                            value="[M2_STUDY_CODE]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>Date</th>
+                                    <td><input type="text" name="M2_DATE" class="input_w10 form-control"
+                                            value="[M2_DATE]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>Quote Valid Until</th>
+                                    <td><input type="text" name="M2_QUOTE_VALID_UNTIL" class="input_w10 form-control"
+                                            value="[M2_QUOTE_VALID_UNTIL]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>Currency</th>
+                                    <td><input type="text" name="M2_CURRENCY" class="input_w10 form-control"
+                                            value="[M2_CURRENCY]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>Special discount</th>
+                                    <td><input type="text" name="M2_SPECIAL_DISCOUNT" class="input_w10 form-control"
+                                            value="[M2_SPECIAL_DISCOUNT]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>Special Note</th>
+                                    <td><textarea name="M2_SPECIAL_NOTE" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[M2_SPECIAL_NOTE]</textarea></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        [E-FORM_M2]
+
+                        [S-FORM_H]
+                        ＜発注書＞
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                <tr>
+                                    <th>見積りID</th>
+                                    <td><input type="text" name="H_M2_ID" class="input_w10 form-control"
+                                            value="[H_M2_ID]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>コメント</th>
+                                    <td><textarea name="H_COMMENT" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[H_COMMENT]</textarea></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        [E-FORM_H]
+
+                        [S-FORM_N]
+                        ＜納品＞
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_N_FILE" value="[N_FILE]" size="90"><input
+                                            type="hidden" name="N_FILE" value="[N_FILE]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-N_FILE]<a href="/a_filestatus/data/[ID]/[N_FILE]" download>[N_FILE]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_N_FILE"><br><br>[E-N_FILE]<input
+                                            type="file" name="EP_N_FILE" value="[N_FILE]" size="90"><input type="hidden"
+                                            name="N_FILE" value="[N_FILE]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_N_FILE2" value="[N_FILE2]" size="90"><input
+                                            type="hidden" name="N_FILE2" value="[N_FILE2]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-N_FILE2]<a href="/a_filestatus/data/[ID]/[N_FILE2]" download>[N_FILE2]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_N_FILE2"><br><br>[E-N_FILE2]<input
+                                            type="file" name="EP_N_FILE2" value="[N_FILE2]" size="90"><input
+                                            type="hidden" name="N_FILE2" value="[N_FILE2]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_N_FILE3" value="[N_FILE3]" size="90"><input
+                                            type="hidden" name="N_FILE3" value="[N_FILE3]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-N_FILE3]<a href="/a_filestatus/data/[ID]/[N_FILE3]" download>[N_FILE3]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_N_FILE3"><br><br>[E-N_FILE3]<input
+                                            type="file" name="EP_N_FILE3" value="[N_FILE3]" size="90"><input
+                                            type="hidden" name="N_FILE3" value="[N_FILE3]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_N_FILE4" value="[N_FILE4]" size="90"><input
+                                            type="hidden" name="N_FILE4" value="[N_FILE4]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-N_FILE4]<a href="/a_filestatus/data/[ID]/[N_FILE4]" download>[N_FILE4]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_N_FILE4"><br><br>[E-N_FILE4]<input
+                                            type="file" name="EP_N_FILE4" value="[N_FILE4]" size="90"><input
+                                            type="hidden" name="N_FILE4" value="[N_FILE4]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_N_FILE5" value="[N_FILE5]" size="90"><input
+                                            type="hidden" name="N_FILE5" value="[N_FILE5]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-N_FILE5]<a href="/a_filestatus/data/[ID]/[N_FILE5]" download>[N_FILE5]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_N_FILE5"><br><br>[E-N_FILE5]<input
+                                            type="file" name="EP_N_FILE5" value="[N_FILE5]" size="90"><input
+                                            type="hidden" name="N_FILE5" value="[N_FILE5]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+
+                                [S-NEWDATA]<tr>
+                                    <th>データ添付(PDF)</th>
+                                    <td><input type="file" name="EP_N_PDF" value="[N_PDF]" size="90"><input
+                                            type="hidden" name="N_PDF" value="[N_PDF]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>データ添付(PDF)</th>
+                                    <td>[S-N_PDF]<a href="/a_filestatus/data/[ID]/[N_PDF]" download>[N_PDF]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_N_PDF"><br><br>[E-N_PDF]<input
+                                            type="file" name="EP_N_PDF" value="[N_PDF]" size="90"><input type="hidden"
+                                            name="N_PDF" value="[N_PDF]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+
+                                <tr>
+                                    <th>出荷日</th>
+                                    <td><input type="text" name="N_SHUKKA" class="input_w10 form-control"
+                                            value="[N_SHUKKA]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>輸送温度</th>
+                                    <td><input type="text" name="N_TEMP1" class="input_w10 form-control"
+                                            value="[N_TEMP1]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>貯蔵温度</th>
+                                    <td><input type="text" name="N_TEMP2" class="input_w10 form-control"
+                                            value="[N_TEMP2]" size="90"></td>
+                                </tr>
+                                <tr>
+                                    <th>AWB</th>
+                                    <td><input type="text" name="N_AWB" class="input_w10 form-control" value="[N_AWB]"
+                                            size="90"></td>
+                                </tr>
+
+                                <tr>
+                                    <th>メッセージ</th>
+                                    <td><textarea name="N_SESSAGE" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[N_MESSAGE]</textarea></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        [E-FORM_N]
+
+                        [S-FORM_S1]
+                        ＜請求書（サプライヤー）＞
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_S_FILE" value="[S_FILE]" size="90"><input
+                                            type="hidden" name="S_FILE" value="[S_FILE]"></td>
+                                </tr>[E-NEWDATA]
+                                [S-EDITDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td>[S-S_FILE]<a href="/a_filestatus/data/[ID]/[S_FILE]" download>[S_FILE]</a>　削除
+                                        <input type="checkbox" name="DEL_IMAGE_S_FILE"><br><br>[E-S_FILE]<input
+                                            type="file" name="EP_S_FILE" value="[S_FILE]" size="90"><input type="hidden"
+                                            name="S_FILE" value="[S_FILE]">
+                                    </td>
+                                </tr>[E-EDITDATA]
+                                <tr>
+                                    <th>メッセージ</th>
+                                    <td><textarea name="S_SESSAGE" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[S_MESSAGE]</textarea></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        [E-FORM_S1]
+
+                        [S-FORM_S2]
+                        ＜請求書（研究者）＞
+                        <table id="table_summary" class="table table-bordered table_edit" summary="表">
+                            <tbody>
+                                [S-NEWDATA]
+                                <tr>
+                                    <th>添付ファイル</th>
+                                    <td>
+                                        <input type="file" name="EP_S2_FILE" value="[S2_FILE]" size="90"><input
+                                            type="hidden" name="S2_FILE" value="[S2_FILE]">
+                                    </td>
+                                </tr>
+                                [E-NEWDATA]
+                                [S-EDITDATA]
+                                <tr>
+                                    <th>添付ファイル</th>
+                                    <td>
+                                        [S-S2_FILE]
+                                        <a href="/a_filestatus/data/[ID]/[S2_FILE]" download>[S2_FILE]</a>
+                                        　削除 <input type="checkbox" name="DEL_IMAGE_S2_FILE"><br><br>
+                                        [E-S2_FILE]
+                                        <input type="file" name="EP_S2_FILE" value="[S2_FILE]" size="90"><input
+                                            type="hidden" name="S2_FILE" value="[S2_FILE]">
+                                    </td>
+                                </tr>
+                                [E-EDITDATA]
+                                <tr>
+                                    <th>メッセージ</th>
+                                    <td><textarea name="S2_MESSAGE" class="textarea_w10 form-control" cols="70"
+                                            rows="5">[S2_MESSAGE]</textarea></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        [E-FORM_S2]
+
+                        <button name="submit" value="submit" type="submit" class="btn btn-block btn-default"
+                            onclick="var ok=confirm('この内容で保存しますか？');if (ok) this.form.submit(); return false;"><i
+                                class="fa fa-floppy-o"></i> 保存</button>
+                    </form>
+
+
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+
+
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+</section><!-- /.content -->

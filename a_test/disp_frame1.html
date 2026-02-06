@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>見積書</title>
+    <link rel="stylesheet" href="/html_a/AdminLTE/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/html_a/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="/html_a/AdminLTE/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/html_a/AdminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/html_a/css/common.css">
+    <style>
+    .estimate {
+        font-size: 2.3333vw;
+        padding: 1em;
+    }
+    .estimate table {
+        border-collapse: collapse;
+        table-layout: auto;
+        width: 100%;
+    }
+    .estimate-sticky {
+        background: linear-gradient(0deg,rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+        width: 100%;
+        position: sticky;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script> 
+    <script>
+    function close_popup() {
+        $('#mask_mcontact2', parent.document).hide();
+        $('#popup_mcontact2', parent.document).fadeOut();
+    }
+    </script>
+</head>
+<body class="estimate">
+
+[PDF_VIEW]
+
+[S-PDF_BTN_AREA]
+<div class="estimate-sticky">
+    <div class="modal-footer">
+        <button type="button" onclick="close_popup()"
+            class="btn btn-sm btn-default pull-left">Close</button>
+        [S-BTN_SEND]
+        <a href="/a_test/?mode=disp_frame1&preview_type=cb&pdf_action=send&key=[KEY]"
+            class="btn btn-sm btn-default"
+            onclick="var ok=confirm('この内容で送信しますか？');if (ok) this.form.submit(); return false;">Send PDF</a>
+        [E-BTN_SEND]
+        <a href="/a_test/?mode=disp_frame1&preview_type=cb&pdf_action=download&key=[KEY]"
+            class="btn btn-sm btn-primary">Download</a>
+    </div>
+</div>
+[E-PDF_BTN_AREA]
+
+</body>
+</html>

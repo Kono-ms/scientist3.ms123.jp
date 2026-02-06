@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>研究者プロフィール編集（完了）｜Scientist3</title>
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head.html-->
+</head>
+
+<body>
+  <div class="wrap sub">
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <section class="edit">
+      <div class="l-container">
+        <div class="c-head">
+          <!--<p class="c-head__txt">Congrats!</p>-->
+          <h2 class="c-head__ttl">研究者プロフィールの編集が完了しました</h2>
+          <div class="btn formset__btn">
+            <input type="button" value="サプライヤーを探す" onclick="return goto1();">
+            <input type="button" value="商談一覧" onclick="return goto2();">
+          </div>
+        </div>
+        <script type="text/javascript">
+          function goto1(){
+            location.href = '/m_search2/';
+            return false;
+          }
+          function goto2(){
+            location.href = '/m_message2/';
+            return false;
+          }
+        </script>
+        <!-- <div class="form-box">
+      <div class="guidance">
+        <div class="btn btn__attract"> <a href="/m_o2/">研究者の希望情報を入力・編集する</a> </div>
+        <div class="btn-under-txt"><p>研究者の希望情報を入力するとサプライヤーとのマッチングが開始されます。</p></div>
+      </div>
+      </div> -->
+      </div>
+    </section>
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

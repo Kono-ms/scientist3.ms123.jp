@@ -1,0 +1,407 @@
+@charset "UTF-8";
+:root {
+  --font-family-gothic: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  --font-family-UI: 'Segoe UI', Arial, Helvetica, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  --site-shadow: 0 2px 8px rgba(0,0,0,0.13);
+  --site-shadow-thin: 0 1px 4px rgba(0,0,0,0.13);
+}
+
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, html, i, iframe, img, ins, kbd, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit
+}
+button, input.btn, select, textarea {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  background: 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0
+}
+[type="button"], [type="submit"] {
+  border-radius: 0;
+  -webkit-box-sizing: content-box;
+  -webkit-appearance: button;
+  appearance: button;
+  border: 0;
+  box-sizing: border-box;
+  cursor: pointer
+}
+[type="button"]::-webkit-search-decoration, [type="submit"]::-webkit-search-decoration {
+  display: none
+}
+[type="button"]:focus, [type="submit"]:focus {
+  outline-offset: -2px
+}
+.select select {
+  width: 100%;
+  height: 4.5rem;
+  line-height: 4.5rem;
+  padding: 0 2.5rem 0 1.5rem;
+  background: #fff;
+}
+.select select::-ms-expand {
+  display: none
+}
+@media screen and (max-width:959px) {
+  .select select {
+    padding-left: 1rem;
+    font-size: 1.2rem
+  }
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1
+}
+ol, ul {
+  list-style: none
+}
+blockquote, q {
+  quotes: none
+}
+blockquote::after, blockquote::before, q::after, q::before {
+  content: '';
+  content: none
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+img {
+  margin: 0;
+  padding: 0;
+  vertical-align: bottom
+}
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth
+}
+body {
+  font-family: var(--font-family-gothic);
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1.4rem;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  font-weight: 500;
+  font-style: normal;
+  color: #333;
+  letter-spacing: .2px
+}
+table {
+  letter-spacing: 0;
+  empty-cells: show
+}
+tbody {
+  position: unset
+}
+table td, table th, table tr {
+  empty-cells: show;
+  position: unset
+}
+input, select, textarea {
+  font-size: inherit;
+  background: 0
+}
+button, input {
+  font-family: inherit;
+  cursor: pointer;
+}
+label, [type="checkbox"] {
+  cursor: pointer
+}
+[type="checkbox"], [type="radio"] {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin: 0 .5rem 0 0;
+  position: relative;
+}
+p {
+  line-height: inherit;
+}
+a {
+  color: rgba(41,82,255,1.00);
+  text-decoration: none;
+  cursor: pointer;
+}
+a:hover, button:hover, input:hover {
+  color: rgba(41,82,255,1.00);
+  opacity: .66;
+}
+img {
+  display: inline-block;
+  border: 0;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  vertical-align: bottom;
+  -webkit-backface-visibility: hidden;
+}
+*, ::after, ::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * 
+ * NOTE: チャット本文のスタイルです。/m_chat1/,/m_chat2/にて使用します。
+ * 
+**/
+.m-chat {
+  background-image: url(/common/images/mv_img.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% auto;
+  font-family: var(--font-family-gothic);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6666;
+  padding: 0;
+  margin: 0;
+}
+.m-chat::-webkit-scrollbar {
+  width: 10px; /* 垂直方向のスクロールバーの幅 */
+  height: 10px; /* 水平方向のスクロールバーの幅 */
+}
+
+.m-chat::-webkit-scrollbar-thumb {
+  box-shadow: none;
+  border-radius: 5px;
+  background-color: rgb(150,150,150);
+}
+
+.m-chat::-webkit-scrollbar-track {
+  box-shadow: none;
+  border-radius: 5px;
+  background-color: rgb(220,220,220);
+}
+
+.m-chat::-webkit-scrollbar-corner {
+  display: none;
+}
+
+.page-m-chat {
+	
+}
+.page-m-chat > .l-container {
+	
+}
+
+.m-chat__list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: stretch;
+  align-items: stretch;
+  gap: 12px;
+  padding: 8px;
+}
+
+
+
+/**
+ * balloon wrapper
+**/
+
+.right_balloon,
+.left_balloon {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.right_balloon {
+  justify-content: flex-end;
+}
+.left_balloon {
+  justify-content: flex-start;
+}
+@media only screen and (max-width:767px) {
+  .right_balloon {
+    padding-left: 40px;/* NOTE: 既読マーク用の余白（余白を設けないと横スクロールが出るので必須） */
+  }
+  .left_balloon {
+    padding-right: 40px;/* NOTE: 既読マーク用の余白（余白を設けないと横スクロールが出るので必須） */
+  }
+}
+
+
+/**
+ * balloon parts base
+**/
+
+.balloon_div_left {}
+.balloon_div_left:has([src*="s.gif"]) {
+  display: none;
+}
+.balloon_div_left > img {
+  border-radius: 50%;
+  background: #f1f1f1;
+  width: 44px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+@media only screen and (max-width:767px) {
+  .balloon_div_left > img {
+    width: 32px;
+    height: auto;
+  }
+}
+
+.balloon_div_right {
+  box-shadow: var(--site-shadow);
+  border-radius: 20px;
+  padding: 8px 16px;
+  position: relative;/* 既読マークの吸着位置 */
+}
+
+.balloon_sub {
+  border-bottom: solid 1px rgba(0,0,0,0.04);
+  line-height: 1;
+  margin: 0 -16px 4px;
+  padding: 0 20px 8px;
+}
+
+.balloon_date {
+  display: block;
+  color: rgba(0,0,0,0.4);
+  font-size: 12px;
+  font-weight: 400;
+  font-feature-settings: 'palt';
+  line-height: 1;
+}
+* + .balloon_date {
+  margin-top: 4px;
+}
+
+.balloon_name {
+  display: block;
+  color: rgba(0,0,0,0.4);
+  font-size: 12px;
+  font-weight: 600;
+  font-feature-settings: 'palt';
+  line-height: 1;
+}
+* + .balloon_name {
+  margin-top: 4px;
+}
+.balloon_kidoku {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  position: absolute;
+  bottom: 0.5ex;
+  z-index: 1;
+}
+
+.balloon_div_right > p {
+  font-size: inherit;
+  font-weight: 500;
+  line-height: 1.6666;
+}
+.balloon_div_right > p > .system_msg {}
+.balloon_div_right > p > a {
+  text-decoration: underline;
+}
+
+
+/**
+ * balloon parts
+ * NOTE: .right_balloon 自分
+ * NOTE: .left_balloon 相手
+**/
+
+/* NOTE: 自分の画像は常に非表示 */
+.right_balloon .balloon_div_left {
+  display: none;
+}
+
+.right_balloon .balloon_div_left {order: 1;}
+.right_balloon .balloon_div_right {
+  background: #79e278;/* line true color */
+  background: #9ef79d;/* line like color */
+  order: 0;
+}
+.right_balloon .balloon_date {
+  text-align: right;
+}
+.right_balloon .balloon_kidoku {
+  left: -1ex;
+  right: auto;
+  transform: translate(-100%,0);
+}
+
+.left_balloon .balloon_div_left {order: 0;}
+.left_balloon .balloon_div_right {
+  background: #fff;
+  order: 1;
+}
+.left_balloon .balloon_kidoku {
+  left: auto;
+  right: -1ex;
+  transform: translate(100%,0);
+}
+.left_balloon .balloon_date {
+  text-align: left;
+}
+
+
+
+/**
+ * system balloon
+ * NOTE: 
+ * 一部のHTMLを.left_balloonと共用しているため、スタイルの上書きが必要です。
+ * .left_balloon、.right_balloon、及びその内包される部品よりも下にスタイルを書いてください。
+**/
+
+.system_balloon {
+  display: block;
+  box-shadow: var(--site-shadow);
+  border-radius: 20px;
+  padding: 8px 16px;
+  gap: 0;
+  position: relative;
+}
+.system_balloon > .balloon_sub {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  border-bottom: solid 1px rgba(0,0,0,0.04);
+  line-height: 1;
+  margin: 0 -16px;
+  padding: 0 16px 4px;
+  gap: 1em;
+}
+.system_balloon > .balloon_sub > .balloon_name {}
+.system_balloon > .balloon_sub > .balloon_date {}
+.system_balloon > p {}
+
+.system_balloon .balloon_div_left {}
+.system_balloon .balloon_div_right {
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  position: static;
+}
+

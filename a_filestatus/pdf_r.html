@@ -1,0 +1,368 @@
+<style>
+.tableset__h2 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.5em;
+    line-height: 1;
+}
+.tableset__hr {
+    line-height: 0.1;
+}
+.header__cell-title-01 {
+    width: 16.66%;
+}
+.header__cell-title-02 {
+    width: 66.66%;
+}
+.header__cell-title-03 {
+    width: 16.66%;
+}
+.header__logo {
+    width: auto;
+    height: 1.5em;
+}
+
+/* NOTE: 日本語と英語ではサイズが異なるので注意（流用ができない） */
+.header__cell-01 {
+    font-size: 0.75em;
+    width: 8.33%;
+}
+.header__cell-02 {
+    font-size: 0.75em;
+    width: 62%;
+}
+.header__cell-03 {
+    font-size: 0.75em;
+    width: 0.5%;
+}
+.header__cell-04 {
+    font-size: 0.75em;
+    width: 16.66%;
+}
+.header__cell-05 {
+    font-size: 0.75em;
+    width: 12.5%;
+}
+/* NOTE: 日本語と英語ではサイズが異なるので注意（流用ができない） */
+.s3-info__cell-02 {
+    font-size: 0.75em;
+    width: 32%;
+}
+.s3-info__cell-03 {
+    font-size: 0.75em;
+    width: 2%;
+}
+.s3-info__cell-04 {
+    font-size: 0.75em;
+    width: 32%;
+}
+.s3-info__cell-05 {
+    font-size: 0.75em;
+    width: 2%;
+}
+.s3-info__cell-06 {
+    font-size: 0.75em;
+    width: 32%;
+}
+.s3-info__cell-title {
+    line-height: 1.5;
+}
+.s3-info__cell-text {
+    line-height: 1.25;
+}
+.s3-info__cell-border {
+    line-height: 0.1;
+}
+.s3-info__cell-border::before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 1px;
+}
+.s3-info__cell-margin-block {
+    line-height: 0.2;
+}
+/* NOTE:  */
+.item-table {
+    /* NOTE: 0.75em以上大きくすると多くの場合2ページになる */
+    font-size: 0.75em;
+}
+*+.item-table {
+    margin-top: 1em;
+}
+.item-header {
+    /* NOTE: 0.75em以上大きくすると多くの場合2ページになる */
+    font-size: 0.75em;
+}
+.item-table__cell-01 {
+    width: 40%;
+}
+.item-table__cell-02 {
+    width: 20%;
+}
+.item-table__cell-03 {
+    width: 20%;
+}
+.item-table__cell-04 {
+    width: 20%;
+}
+/* NOTE:  */
+.calc-table {
+    /* NOTE: 0.75em以上大きくすると多くの場合2ページになる */
+    font-size: 0.75em;
+    min-height: 1em;
+}
+.calc-table__cell-01 {
+    font-weight: 700;
+    width: 20%;
+}
+.calc-table__cell-02 {
+    width: 80%;
+}
+
+.tableset-border-05 {}
+.tableset-border-05 th,
+.tableset-border-05 td {
+    border: solid 1px #000;
+    padding: 0 0.25em;
+}
+</style>
+
+<!--<img src="/common/images/logo-s3-xl.png" alt="">--> 
+<!--<img src="/common/images/logo-s3-bg.png" alt="">-->
+
+<table cellspacing="0" cellpadding="0" border="0" summary="header">
+  <tbody>
+    <tr>
+      <td class="tableset__h2 header__cell-title-01"></td>
+      <td class="tableset__h2 header__cell-title-02"></td>
+      <td class="tableset__h2 header__cell-title-03"></td>
+    </tr>
+    <tr>
+      <td class="tableset__h2 header__cell-title-01"><img src="/common/images/logo-s3-xl.png" alt="" class="header__logo"></td>
+      <td class="tableset__h2 header__cell-title-02">見積書</td>
+      <td class="tableset__h2 header__cell-title-03"></td>
+    </tr>
+    <tr>
+      <td colspan="3" bgcolor="#D66B01" class="tableset__hr"></td>
+      <!--border-bottom--> 
+    </tr>
+  </tbody>
+</table>
+<table cellspacing="0" cellpadding="0" border="0" summary="header">
+  <tbody>
+    <tr>
+      <td colspan="5"></td>
+      <!--margin-bottom--> 
+    </tr>
+    <tr>
+      <td class="header__cell-01"></td>
+      <td class="header__cell-02"></td>
+      <td class="header__cell-03"></td>
+      <td class="header__cell-04">見積番号:</td>
+      <td class="header__cell-05">[M2_QUOTE_NO]</td>
+    </tr>
+    <tr>
+      <td class="header__cell-01">案件名:</td>
+      <td class="header__cell-02">[PDF_SHODAN_TITLE]</td>
+      <td class="header__cell-03"></td>
+      <td class="header__cell-04">見積日:</td>
+      <td class="header__cell-05">[M2_DATE]</td>
+    </tr>
+    <tr>
+      <td class="header__cell-01">試験番号:</td>
+      <td class="header__cell-02">[M2_STUDY_CODE]</td>
+      <td class="header__cell-03"></td>
+      <td class="header__cell-04">有効期限:</td>
+      <td class="header__cell-05">[M2_QUOTE_VALID_UNTIL]</td>
+    </tr>
+    <tr>
+      <td class="header__cell-01"></td>
+      <td class="header__cell-02"></td>
+      <td class="header__cell-03"></td>
+      <td class="header__cell-04">Scientist3管理番号:</td>
+      <td class="header__cell-05">[SCNO]</td>
+    </tr>
+    <!--予備-->
+    <!--[KEY]--><!--ID-->
+    <!--[M2_SHIP_TO_SPT_2]--><!--No title-->
+    <!--[PDF_M1-M1_ETC32]--><!--No title-->
+  </tbody>
+</table>
+<table cellspacing="0" cellpadding="0" border="0" summary="s3-info">
+  <tbody>
+    <tr>
+      <td class="s3-info__cell-02"></td>
+      <td class="s3-info__cell-03"></td>
+      <td class="s3-info__cell-04"></td>
+      <td class="s3-info__cell-05"></td>
+      <td class="s3-info__cell-06"></td>
+    </tr>
+    <tr>
+      <td class="s3-info__cell-02 s3-info__cell-title">[PDF_M2-M2_ETC20]<!--研究者会社名--></td>
+      <!--NOTE: CB宛ての「Researcher information(Reseacher Company Name)」が入る想定です-->
+
+      <td class="s3-info__cell-03 s3-info__cell-title"></td>
+      <td class="s3-info__cell-04 s3-info__cell-title">再委託先:[PDF_M1-M1_ETC128]<!--[M2_SHIP_TO_SPT_2]--></td>
+      <!--NOTE: CB宛ての「Suppier name」が入る想定です（M2_SHIP_TO_SPT_2は予備）-->
+
+      <td class="s3-info__cell-05 s3-info__cell-title"></td>
+      <td class="s3-info__cell-06 s3-info__cell-title">コスモ・バイオ株式会社</td>
+    </tr>
+    <tr>
+      <td class="s3-info__cell-02 s3-info__cell-border" style="background: #aa2c27;"></td>
+      <td class="s3-info__cell-03 s3-info__cell-border"></td>
+      <td class="s3-info__cell-04 s3-info__cell-border" style="background: #D66B01;"></td>
+      <td class="s3-info__cell-05 s3-info__cell-border"></td>
+      <td class="s3-info__cell-06 s3-info__cell-border" style="background: #ccc;"></td>
+    </tr>
+    <tr>
+      <td class="s3-info__cell-02 s3-info__cell-margin-block"></td>
+      <td class="s3-info__cell-03 s3-info__cell-margin-block"></td>
+      <td class="s3-info__cell-04 s3-info__cell-margin-block"></td>
+      <td class="s3-info__cell-05 s3-info__cell-margin-block"></td>
+      <td class="s3-info__cell-06 s3-info__cell-margin-block"></td>
+    </tr>
+    <tr>
+      <td class="s3-info__cell-02 s3-info__cell-text"><!--[PDF_M2-M2_DVAL18] [PDF_M2-M2_DVAL19]-->[PDF_ADDRESS3]</td>
+      <!--NOTE: CB宛ての「Researcher information(担当者)」が入る想定です（CB宛てのPDF_ADDRESS3を採用）-->
+
+      <td class="s3-info__cell-03 s3-info__cell-text"></td>
+      <td class="s3-info__cell-04 s3-info__cell-text">[PDF_ADDRESS2]</td>
+      <td class="s3-info__cell-05 s3-info__cell-text"></td>
+      <td class="s3-info__cell-06 s3-info__cell-text">〒135-0016 東京都江東区東陽2-2-20<br>
+        TEL:03-5632-9615 / FAX:03-5632-9614</td>
+    </tr>
+  </tbody>
+</table>
+
+
+[AREA-FDETAIL-ITEMS]
+
+
+<!--Start special item-->
+<table cellspacing="0" cellpadding="0" border="0" summary="item-header" class="item-header">
+  <tbody>
+    <tr>
+      <td></td>
+      <!--margin-top--> 
+    </tr>
+  </tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="special" class="item-table tableset-border-05">
+  <tbody>
+    <tr>
+      <td> 特記事項:<br>
+        [M2_SPECIAL_NOTE]<!--特記事項が入ります-->
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!--End special item--> 
+
+[S-PDF_D_ITEMS]
+
+<!--Start calc-->
+<table cellspacing="0" cellpadding="0" border="0" summary="calc" class="calc-table">
+  <tbody>
+    <tr>
+      <td></td>
+      <!--margin-top--> 
+    </tr>
+    <tr>
+      <td>サービス費用</td>
+    </tr>
+  </tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="calc" class="calc-table tableset-border-05">
+  <tbody>
+    <tr>
+      <td class="calc-table__cell-01">特別値引き</td>
+      <td class="calc-table__cell-02"></td>
+    </tr>
+    <tr>
+      <td class="calc-table__cell-01">小計</td>
+      <td class="calc-table__cell-02">[MITSUMORISYO_SUBTOTAL1][D-M2_CURRENCY]<!--Subtotal--></td>
+    </tr>
+    <tr>
+      <td class="calc-table__cell-01">税率</td>
+      <td class="calc-table__cell-02">[MITSUMORISYO_TAX_RATE1]%<!--Tax Rate--></td>
+    </tr>
+    <tr>
+      <td class="calc-table__cell-01">消費税</td>
+      <td class="calc-table__cell-02">[MITSUMORISYO_TAX_BILL1][D-M2_CURRENCY]<!--Sales Tax--></td>
+    </tr>
+    <!--予備-->
+    <!--[M2_PAY_TYPE]:[NUMBER_OF_PAYMENTS]--><!--Number of Payments-->
+    <!--[PDF_TOTAL1]--><!--Total-->
+  </tbody>
+</table>
+<table cellspacing="0" cellpadding="0" border="0" summary="calc" class="calc-table">
+  <tbody>
+    <tr>
+      <td></td>
+      <!--margin-top--> 
+    </tr>
+    <tr>
+      <td>手数料</td>
+    </tr>
+  </tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="calc" class="calc-table tableset-border-05">
+  <tbody>
+    <tr>
+      <td class="calc-table__cell-01">PF手数料</td>
+      <td class="calc-table__cell-02">[MITSUMORISYO_PF_FEE][D-M2_CURRENCY]</td>
+    </tr>
+    <tr>
+      <td class="calc-table__cell-01">輸入代行費用</td>
+      <td class="calc-table__cell-02">[INPUT-M2_IMPORT_FEE][D-M2_CURRENCY]</td>
+    </tr>
+    <tr>
+      <td class="calc-table__cell-01">輸出代行費用</td>
+      <td class="calc-table__cell-02">[INPUT-MITSUMORISYO_EXPORT_FEE][D-M2_CURRENCY]</td>
+    </tr>
+    <tr>
+      <td class="calc-table__cell-01">特別値引き</td>
+      <td class="calc-table__cell-02">[INPUT-M2_MANAGE_DISCOUNT][D-M2_CURRENCY]</td>
+    </tr>
+    <tr>
+      <td class="calc-table__cell-01">小計</td>
+      <td class="calc-table__cell-02">[MITSUMORISYO_SUBTOTAL2][D-M2_CURRENCY]<!--小計2--></td>
+    </tr>
+  </tbody>
+</table>
+<table cellspacing="0" cellpadding="0" border="0" summary="calc" class="calc-table">
+  <tbody>
+    <tr>
+      <td></td>
+      <!--margin-top--> 
+    </tr>
+  </tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="calc" class="calc-table tableset-border-05">
+  <tbody>
+    <tr>
+      <td class="calc-table__cell-01">消費税</td>
+      <td class="calc-table__cell-02">[MITSUMORISYO_TAX_BILL2][D-M2_CURRENCY]<!--消費税2--></td>
+    </tr>
+  </tbody>
+</table>
+<table cellspacing="0" cellpadding="0" border="0" summary="calc" class="calc-table">
+  <tbody>
+    <tr>
+      <td></td>
+      <!--margin-top--> 
+    </tr>
+  </tbody>
+</table>
+<table cellspacing="0" cellpadding="2" border="0.5" summary="calc" class="calc-table tableset-border-05">
+  <tbody>
+    <tr>
+      <td class="calc-table__cell-01">合計金額</td>
+      <td class="calc-table__cell-02">[MITSUMORISYO_ALL_CHARGE][D-M2_CURRENCY]</td>
+    </tr>
+  </tbody>
+</table>
+<!--End calc--> 
+[E-PDF_D_ITEMS]

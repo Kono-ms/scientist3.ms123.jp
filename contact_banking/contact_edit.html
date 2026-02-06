@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Change for Banking information | Scientist3</title>
+  <meta name="description"
+    content="Contact Usのページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/about2/">Top</a></li>
+          <li class="breadcrumb__item">Change for Banking information</li>
+        </ol>
+      </div>
+    </div>
+    <section class="subpage-head">
+      <div class="l-container">
+        <div class="c-head">
+          <h2 class="c-head__ttl">Change for Banking information</h2>
+        </div>
+      </div>
+    </section>
+    <section class="contact">
+      <div class="l-container">
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <form id="form1" method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="mode" value="saveconf">
+            <input type="hidden" name="key" value="[ID]">
+            <input type="hidden" name="sort" value="[SORT]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="page" value="[PAGE]">
+            <input type="hidden" name="lid" value="[LID]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="TMP04" value="[TMP04]">
+            <input type="hidden" name="TMP05" value="[TMP05]">
+            <input type="hidden" name="TMP06" value="[TMP06]">
+            <input type="hidden" name="TMP07" value="[TMP07]">
+            <input type="hidden" name="TMP08" value="[TMP08]">
+            <input type="hidden" name="TMP09" value="[TMP09]">
+            <input type="hidden" name="TMP10" value="[TMP10]">
+            <input type="hidden" name="ENABLE" value="[ENABLE]">
+            <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+            <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+            <div class="formset">
+
+              <div class="formset__item">
+If you want to change your Banking information, please download the following form.
+                <br><a class="for-download-link" href="./Notification of Change To Banking Information.xlsx" download="Notification of Change To Banking Information.xlsx">Notification of Change To Banking Information</a>
+              </div>
+
+
+              <div class="formset__item">
+                <div class="formset__ttl"><span>Company name</span><span class="formset__must">必須</span></div>
+                <div class="formset__input"><input class="txt_w35p" type="text" name="TMP01" value="[TMP01]"
+                    placeholder="Example)〇〇 Co., Ltd" required /></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span>Name</span><span class="formset__must">必須</span></div>
+                <div class="formset__input"><input class="txt_w35p" type="text" name="NAME" value="[NAME]"
+                    placeholder="Example)John Smith" required /></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span>Email</span><span class="formset__must">必須</span></div>
+                <div class="formset__input"><input class="txt_w35p" type="text" name="EMAIL" value="[EMAIL]"
+                    placeholder="Example) info@xxxxx.jp" required /></div>
+              </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl"><span>Phone</span><span class="formset__must">必須</span></div>
+                <div class="formset__input">
+                    <input type="tel" name="TEL" value="[TEL]"
+                        placeholder="Example) 012-3456-7890" required data-jquery-validate-rule="phone" />
+                </div>
+              </div>
+
+              <!--
+              <div class="formset__item">
+                <div class="formset__ttl"><span>download</span></div>
+                <div class="formset__input btn_download"><a href="./file01.xlsx" download="file01.xlsx">download</a></div>
+              </div>
+              -->
+
+              [S-NEWDATA]<div class="formset__item">
+                <div class="formset__ttl">Upload Your File<span class="formset__must">必須</span></div>
+                <!--<div class="formset__input btn_upload"><input type="file" name="EP_TMP02" value="[TMP02]" required size="90"><input
+                    type="hidden" name="TMP02" value="[TMP02]"></div>-->
+                <div class="formset__input btn_upload"><input type="file" name="EP_TMP02" value="" required size="90"><input
+                    type="hidden" name="TMP02" value="[TMP02]"></div>
+              </div>[E-NEWDATA]
+              [S-EDITDATA]<div class="formset__item">
+                <div class="formset__ttl">Upload Your File<span class="formset__must">必須</span></div>
+                <div class="formset__input"><a href="[TMP02]" download="file01.xlsx">download</a> 削除 <input
+                    type="checkbox" name="DEL_IMAGE_TMP02"><br><input type="file" name="EP_TMP02" value="[TMP02]"
+                    size="90"><input type="hidden" name="TMP02" value="[TMP02]">
+                </div>
+              </div>[E-EDITDATA]
+
+              <!-- 
+              <div class="formset__item">
+                <div class="formset__ttl"><span>Billing Addresses</span></div>
+                <div class="formset__input"><input class="txt_w35p" type="text" name="INPUT1" value="[INPUT1]"
+                    placeholder="" /></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span>Banking Details</span></div>
+                <div class="formset__input"><textarea class="textarea_w73p" cols="40" rows="8" name="INPUT2"
+                    placeholder="">[INPUT2]</textarea></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span>Accounting / Invoicing Contacts</span></div>
+                <div class="formset__input"><input class="txt_w35p" type="text" name="INPUT3" value="[INPUT3]"
+                    placeholder="" /></div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span>Tax / VAT Information</span></div>
+                <div class="formset__input"><input class="txt_w35p" type="text" name="INPUT4" value="[INPUT4]"
+                    placeholder="" /></div>
+              </div> -->
+
+            </div>
+            <div class="btn formset__btn">
+              <a href="#" onClick="history.back(); return false;" class="btn_prev">Back</a>
+              <input type="submit" value="Confirm" name="submit" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer_en.html-->
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+
+<h1>カテゴリー管理</h1>
+
+<ol class="breadcrumb">
+<li><i class="fa fa-dashboard"></i> Home</li>
+<li><a href="/a_m1/">カテゴリー管理</a></li>
+<li>カテゴリー登録・編集</li>
+</ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+<div class="row">
+
+
+<div class="col-xs-12">
+<div class="box box-warning">
+
+<div class="box-header">
+<h3 class="box-title">登録・編集</h3>
+</div><!-- /.box-header -->
+
+<div class="box-body">
+
+[ERR-S]
+<div class="alert alert-warning alert-dismissible">
+<div class="message_box mb20">
+<p><i class="icon fa fa-warning"></i> 入力内容に不備がございますので、内容のご確認をお願いいたします。</p>
+</div>
+<div class="page_text">
+<ul class="error_list">
+[ERRMSG]
+</ul>
+</div>
+</div>
+[ERR-E]
+			<form  method="post" action="./" enctype="multipart/form-data">
+			<input type="hidden" name="mode" value="save">
+			<input type="hidden" name="key" value="[ID]">
+			<input type="hidden" name="sort" value="[SORT]">
+			<input type="hidden" name="word" value="[WORD]">
+			<input type="hidden" name="page" value="[PAGE]">
+			<input type="hidden" name="lid" value="[LID]">
+			<input type="hidden" name="ID" value="[ID]">
+<input type="hidden" name="SDATE" value="[SDATE]">
+<input type="hidden" name="EDATE" value="[EDATE]">
+<input type="hidden" name="ETC01" value="[ETC01]">
+<input type="hidden" name="ETC02" value="[ETC02]">
+<input type="hidden" name="ETC03" value="[ETC03]">
+<input type="hidden" name="ETC11" value="[ETC11]">
+<input type="hidden" name="ETC12" value="[ETC12]">
+<input type="hidden" name="ETC13" value="[ETC13]">
+
+<table id="table_summary" class="table table-bordered table_edit" summary="表">
+			<tr><th width="140">大カテゴリー</th><td><input type="text" name="BIG" value="[BIG]" size="90"></td></tr>
+<tr><th width="140">小カテゴリー</th><td><input type="text" name="SMALL" value="[SMALL]" size="90"></td></tr>
+<tr>
+	<th width="140">並び順</th>
+	<td><input type="text" name="SORT" value="[SORT]" size="90"></td>
+</tr>
+			</table>
+<button name="submit" value="submit" type="submit" class="btn btn-block btn-default" onclick="var ok=confirm('保存してもよろしいですか？');if (ok) this.form.submit(); return false;"><i class="fa fa-floppy-o"></i> 保存</button>
+</form>
+
+
+</div><!-- /.box-body -->
+</div><!-- /.box -->
+
+
+</div><!-- /.col -->
+</div><!-- /.row -->
+</section><!-- /.content -->

@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+/**
+ *
+ * 各CSSファイルの読み込み
+ *
+**/
+@import url('https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css');
+@import url('base.css');
+@import url('style.css');
+@import url('style-message.css');
+@import url('load.css');
+@import url('https://use.typekit.net/oew8imd.css');

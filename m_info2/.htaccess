@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} al.ptr61.public.gmocloud.com
+RewriteRule .* - [G]
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ([0-9a-zA-Z-]+)/$ /m_info2/index.php?word=$1 [QSA,L]

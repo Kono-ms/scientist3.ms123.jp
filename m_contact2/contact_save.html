@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>サプライヤーへの問合せ（下書き）｜Scientist3</title>
+  <meta name="description"
+    content="契約締結確認フォーム（Confirmation）のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">サプライヤーへの問合せ（下書き）</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">下書き</h1>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <div class="formset">
+            <div class="formset__item">
+              <div class="formset__ttl"><span>検索条件</span></div>
+              <div class="formset__input">[WORD_VIEW]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>サプライヤー</span></div>
+              <div class="formset__input">[M1_VIEW]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">お問い合わせ日</div>
+              <div class="formset__input">
+                [NEWDATE]
+              </div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>案件名</span></div>
+              <div class="formset__input">[D-TITLE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>お問い合わせ内容</span></div>
+              <div class="formset__input">[D-COMMENT]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>添付ファイル</span></div>
+              <div class="formset__input">[D-FILE]</div>
+              <div class="formset__input">[D-FILE2]</div>
+              <div class="formset__input">[D-FILE3]</div>
+              <div class="formset__input">[D-FILE4]</div>
+              <div class="formset__input">[D-FILE5]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>回答希望日</span></div>
+              <div class="formset__input">[D-KIGEN]</div>
+            </div>
+          </div>
+          <form method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="type" value="[TYPE]">
+            <input type="hidden" name="mode" value="save2">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="shodan_id" value="[SHODAN_ID]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="word2" value="[WORD2]">
+            <input type="hidden" name="mid_list" value="[MID_LIST]">
+            <input type="hidden" name="m1_id" value="[M1_ID]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="TITLE" value="[TITLE]">
+            <input type="hidden" name="COMMENT" value="[COMMENT]">
+            <input type="hidden" name="FILE" value="[FILE]">
+            <input type="hidden" name="FILE2" value="[FILE2]">
+            <input type="hidden" name="FILE3" value="[FILE3]">
+            <input type="hidden" name="FILE4" value="[FILE4]">
+            <input type="hidden" name="FILE5" value="[FILE5]">
+            <input type="hidden" name="KIGEN" value="[KIGEN]">
+            <input type="hidden" name="MID1_LIST" value="[MID1_LIST]">
+            <div class="btn formset__btn">
+              <button type="submit">保存</button>
+            </div>
+          </form>
+          <form method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="type" value="[TYPE]">
+            <input type="hidden" name="mode" value="back">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="shodan_id" value="[SHODAN_ID]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="word2" value="[WORD2]">
+            <input type="hidden" name="mid_list" value="[MID_LIST]">
+            <input type="hidden" name="m1_id" value="[M1_ID]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="TITLE" value="[TITLE]">
+            <input type="hidden" name="COMMENT" value="[COMMENT]">
+            <input type="hidden" name="FILE" value="[FILE]">
+            <input type="hidden" name="FILE2" value="[FILE2]">
+            <input type="hidden" name="FILE3" value="[FILE3]">
+            <input type="hidden" name="FILE4" value="[FILE4]">
+            <input type="hidden" name="FILE5" value="[FILE5]">
+            <input type="hidden" name="KIGEN" value="[KIGEN]">
+            <input type="hidden" name="MID1_LIST" value="[MID1_LIST]">
+            <div class="btn formset__btn btn--small formset__btn--back">
+              <button type="submit">編集</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

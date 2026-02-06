@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>研究者会員登録（確認画面）｜Scientist3</title>
+  <meta name="description"
+    content="研究者会員登録（確認画面）のページ。Scientist3は研究者と研究者を結ぶ新たなマッチングサービスです。研究者が求める研究者と、研究者が求める研究者、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head.html-->
+</head>
+
+<body>
+  <div class="wrap sub">
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">研究者会員登録（確認画面）</li>
+        </ol>
+      </div>
+    </div>
+    <section class="register">
+      <div class="l-container">
+        <div class="c-head">
+          <h2 class="c-head__ttl">研究者の方</h2>
+        </div>
+        <div class="form-box form__compact">
+          <div class="formset">
+            <h3 class="c-formset__ttl">新規会員登録（確認画面）</h3>
+            <p class="c-formset__txt">入力内容に間違いが無いかご確認くださいませ。</p>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>メールアドレス</span></div>
+              <div class="formset__input">[D-EMAIL]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>パスワード</span></div>
+              <div class="formset__input">********</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>組織名</span><span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_DVAL03]</div>
+            </div>
+             <div class="formset__item">
+              <div class="formset__ttl"><span>組織名(英語表記)</span><span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_ETC20]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>郵便番号</span><span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_DVAL06]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>住所</span><span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_DVAL07]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>TEL</span><span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_DVAL08]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>氏名</span><span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_DVAL16] [D-M2_DVAL17]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>氏名（英語表記）</span><span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_DVAL18] [D-M2_DVAL19]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>部署</span></div>
+              <div class="formset__input">[D-M2_DVAL04]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>役職</span></div>
+              <div class="formset__input">[D-M2_ETC19]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>ホームページ</span></div>
+              <div class="formset__input">[D-M2_DTXT02]</div>
+            </div>
+          </div>
+          <form method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="mode" value="[NEXTMODE]">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="sort" value="[SORT]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="page" value="[PAGE]">
+            <input type="hidden" name="lid" value="[LID]">
+            <input type="hidden" name="token" value="[TOKEN]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="MID" value="[MID]">
+            <input type="hidden" name="EMAIL" value="[EMAIL]">
+            <input type="hidden" name="PASS" value="[PASS]">
+            <input type="hidden" name="SOCIALID" value="[SOCIALID]">
+            <input type="hidden" name="M2_DVAL01" value="[M2_DVAL01]">
+            <input type="hidden" name="M2_DVAL02" value="[M2_DVAL02]">
+            <input type="hidden" name="M2_DVAL03" value="[M2_DVAL03]">
+            <input type="hidden" name="M2_DVAL04" value="[M2_DVAL04]">
+            <input type="hidden" name="M2_DVAL05" value="[M2_DVAL05]">
+            <input type="hidden" name="M2_DVAL06" value="[M2_DVAL06]">
+            <input type="hidden" name="M2_DVAL07" value="[M2_DVAL07]">
+            <input type="hidden" name="M2_DVAL08" value="[M2_DVAL08]">
+            <input type="hidden" name="M2_DVAL09" value="[M2_DVAL09]">
+            <input type="hidden" name="M2_DVAL10" value="[M2_DVAL10]">
+            <input type="hidden" name="M2_DVAL11" value="[M2_DVAL11]">
+            <input type="hidden" name="M2_DVAL12" value="[M2_DVAL12]">
+            <input type="hidden" name="M2_DVAL13" value="[M2_DVAL13]">
+            <input type="hidden" name="M2_DVAL14" value="[M2_DVAL14]">
+            <input type="hidden" name="M2_DVAL15" value="[M2_DVAL15]">
+            <input type="hidden" name="M2_DVAL16" value="[M2_DVAL16]">
+            <input type="hidden" name="M2_DVAL17" value="[M2_DVAL17]">
+            <input type="hidden" name="M2_DVAL18" value="[M2_DVAL18]">
+            <input type="hidden" name="M2_DVAL19" value="[M2_DVAL19]">
+            <input type="hidden" name="M2_DVAL20" value="[M2_DVAL20]">
+            <input type="hidden" name="M2_DVAL21" value="[M2_DVAL21]">
+            <input type="hidden" name="M2_DVAL22" value="[M2_DVAL22]">
+            <input type="hidden" name="M2_DVAL23" value="[M2_DVAL23]">
+            <input type="hidden" name="M2_DVAL24" value="[M2_DVAL24]">
+            <input type="hidden" name="M2_DVAL25" value="[M2_DVAL25]">
+            <input type="hidden" name="M2_DVAL26" value="[M2_DVAL26]">
+            <input type="hidden" name="M2_DVAL27" value="[M2_DVAL27]">
+            <input type="hidden" name="M2_DVAL28" value="[M2_DVAL28]">
+            <input type="hidden" name="M2_DVAL29" value="[M2_DVAL29]">
+            <input type="hidden" name="M2_DVAL30" value="[M2_DVAL30]">
+            <input type="hidden" name="M2_DTXT01" value="[M2_DTXT01]">
+            <input type="hidden" name="M2_DTXT02" value="[M2_DTXT02]">
+            <input type="hidden" name="M2_DTXT03" value="[M2_DTXT03]">
+            <input type="hidden" name="M2_DTXT04" value="[M2_DTXT04]">
+            <input type="hidden" name="M2_DTXT05" value="[M2_DTXT05]">
+            <input type="hidden" name="M2_DTXT06" value="[M2_DTXT06]">
+            <input type="hidden" name="M2_DTXT07" value="[M2_DTXT07]">
+            <input type="hidden" name="M2_DTXT08" value="[M2_DTXT08]">
+            <input type="hidden" name="M2_DTXT09" value="[M2_DTXT09]">
+            <input type="hidden" name="M2_DTXT10" value="[M2_DTXT10]">
+            <input type="hidden" name="M2_DTXT11" value="[M2_DTXT11]">
+            <input type="hidden" name="M2_DTXT12" value="[M2_DTXT12]">
+            <input type="hidden" name="M2_DTXT13" value="[M2_DTXT13]">
+            <input type="hidden" name="M2_DTXT14" value="[M2_DTXT14]">
+            <input type="hidden" name="M2_DTXT15" value="[M2_DTXT15]">
+            <input type="hidden" name="M2_DTXT16" value="[M2_DTXT16]">
+            <input type="hidden" name="M2_DTXT17" value="[M2_DTXT17]">
+            <input type="hidden" name="M2_DTXT18" value="[M2_DTXT18]">
+            <input type="hidden" name="M2_DTXT19" value="[M2_DTXT19]">
+            <input type="hidden" name="M2_DTXT20" value="[M2_DTXT20]">
+            <input type="hidden" name="M2_DTXT21" value="[M2_DTXT21]">
+            <input type="hidden" name="M2_DTXT22" value="[M2_DTXT22]">
+            <input type="hidden" name="M2_DTXT23" value="[M2_DTXT23]">
+            <input type="hidden" name="M2_DTXT24" value="[M2_DTXT24]">
+            <input type="hidden" name="M2_DTXT25" value="[M2_DTXT25]">
+            <input type="hidden" name="M2_DTXT26" value="[M2_DTXT26]">
+            <input type="hidden" name="M2_DTXT27" value="[M2_DTXT27]">
+            <input type="hidden" name="M2_DTXT28" value="[M2_DTXT28]">
+            <input type="hidden" name="M2_DTXT29" value="[M2_DTXT29]">
+            <input type="hidden" name="M2_DTXT30" value="[M2_DTXT30]">
+            <input type="hidden" name="M2_DSEL01" value="[M2_DSEL01]">
+            <input type="hidden" name="M2_DSEL02" value="[M2_DSEL02]">
+            <input type="hidden" name="M2_DSEL03" value="[M2_DSEL03]">
+            <input type="hidden" name="M2_DSEL04" value="[M2_DSEL04]">
+            <input type="hidden" name="M2_DSEL05" value="[M2_DSEL05]">
+            <input type="hidden" name="M2_DSEL06" value="[M2_DSEL06]">
+            <input type="hidden" name="M2_DSEL07" value="[M2_DSEL07]">
+            <input type="hidden" name="M2_DSEL08" value="[M2_DSEL08]">
+            <input type="hidden" name="M2_DSEL09" value="[M2_DSEL09]">
+            <input type="hidden" name="M2_DSEL10" value="[M2_DSEL10]">
+            <input type="hidden" name="M2_DRDO01" value="[M2_DRDO01]">
+            <input type="hidden" name="M2_DRDO02" value="[M2_DRDO02]">
+            <input type="hidden" name="M2_DRDO03" value="[M2_DRDO03]">
+            <input type="hidden" name="M2_DRDO04" value="[M2_DRDO04]">
+            <input type="hidden" name="M2_DRDO05" value="[M2_DRDO05]">
+            <input type="hidden" name="M2_DRDO06" value="[M2_DRDO06]">
+            <input type="hidden" name="M2_DRDO07" value="[M2_DRDO07]">
+            <input type="hidden" name="M2_DRDO08" value="[M2_DRDO08]">
+            <input type="hidden" name="M2_DRDO09" value="[M2_DRDO09]">
+            <input type="hidden" name="M2_DRDO10" value="[M2_DRDO10]">
+            <input type="hidden" name="M2_DCHK01" value="[M2_DCHK01]">
+            <input type="hidden" name="M2_DCHK02" value="[M2_DCHK02]">
+            <input type="hidden" name="M2_DCHK03" value="[M2_DCHK03]">
+            <input type="hidden" name="M2_DCHK04" value="[M2_DCHK04]">
+            <input type="hidden" name="M2_DCHK05" value="[M2_DCHK05]">
+            <input type="hidden" name="M2_DCHK06" value="[M2_DCHK06]">
+            <input type="hidden" name="M2_DCHK07" value="[M2_DCHK07]">
+            <input type="hidden" name="M2_DCHK08" value="[M2_DCHK08]">
+            <input type="hidden" name="M2_DCHK09" value="[M2_DCHK09]">
+            <input type="hidden" name="M2_DCHK10" value="[M2_DCHK10]">
+            <input type="hidden" name="M2_DFIL01" value="[M2_DFIL01]">
+            <input type="hidden" name="M2_DFIL02" value="[M2_DFIL02]">
+            <input type="hidden" name="M2_DFIL03" value="[M2_DFIL03]">
+            <input type="hidden" name="M2_DFIL04" value="[M2_DFIL04]">
+            <input type="hidden" name="M2_DFIL05" value="[M2_DFIL05]">
+            <input type="hidden" name="M2_DFIL06" value="[M2_DFIL06]">
+            <input type="hidden" name="M2_DFIL07" value="[M2_DFIL07]">
+            <input type="hidden" name="M2_DFIL08" value="[M2_DFIL08]">
+            <input type="hidden" name="M2_DFIL09" value="[M2_DFIL09]">
+            <input type="hidden" name="M2_DFIL10" value="[M2_DFIL10]">
+            <input type="hidden" name="M2_MSEL01" value="[M2_MSEL01]">
+            <input type="hidden" name="M2_MSEL02" value="[M2_MSEL02]">
+            <input type="hidden" name="M2_MSEL03" value="[M2_MSEL03]">
+            <input type="hidden" name="M2_MSEL04" value="[M2_MSEL04]">
+            <input type="hidden" name="M2_MSEL05" value="[M2_MSEL05]">
+            <input type="hidden" name="M2_MSEL06" value="[M2_MSEL06]">
+            <input type="hidden" name="M2_MSEL07" value="[M2_MSEL07]">
+            <input type="hidden" name="M2_MSEL08" value="[M2_MSEL08]">
+            <input type="hidden" name="M2_MSEL09" value="[M2_MSEL09]">
+            <input type="hidden" name="M2_MSEL10" value="[M2_MSEL10]">
+            <input type="hidden" name="M2_MRDO01" value="[M2_MRDO01]">
+            <input type="hidden" name="M2_MRDO02" value="[M2_MRDO02]">
+            <input type="hidden" name="M2_MRDO03" value="[M2_MRDO03]">
+            <input type="hidden" name="M2_MRDO04" value="[M2_MRDO04]">
+            <input type="hidden" name="M2_MRDO05" value="[M2_MRDO05]">
+            <input type="hidden" name="M2_MRDO06" value="[M2_MRDO06]">
+            <input type="hidden" name="M2_MRDO07" value="[M2_MRDO07]">
+            <input type="hidden" name="M2_MRDO08" value="[M2_MRDO08]">
+            <input type="hidden" name="M2_MRDO09" value="[M2_MRDO09]">
+            <input type="hidden" name="M2_MRDO10" value="[M2_MRDO10]">
+            <input type="hidden" name="M2_MCHK01" value="[M2_MCHK01]">
+            <input type="hidden" name="M2_MCHK02" value="[M2_MCHK02]">
+            <input type="hidden" name="M2_MCHK03" value="[M2_MCHK03]">
+            <input type="hidden" name="M2_MCHK04" value="[M2_MCHK04]">
+            <input type="hidden" name="M2_MCHK05" value="[M2_MCHK05]">
+            <input type="hidden" name="M2_MCHK06" value="[M2_MCHK06]">
+            <input type="hidden" name="M2_MCHK07" value="[M2_MCHK07]">
+            <input type="hidden" name="M2_MCHK08" value="[M2_MCHK08]">
+            <input type="hidden" name="M2_MCHK09" value="[M2_MCHK09]">
+            <input type="hidden" name="M2_MCHK10" value="[M2_MCHK10]">
+            <input type="hidden" name="ENABLE" value="[ENABLE]">
+            <input type="hidden" name="NEWDATE" value="[NEWDATE]">
+            <input type="hidden" name="EDITDATE" value="[EDITDATE]">
+            <input type="hidden" name="M1_ETC01[]" value="[M1_ETC01]">
+            <input type="hidden" name="M2_ETC02" value="[M2_ETC02]">
+            <input type="hidden" name="M2_ETC03" value="[M2_ETC03]">
+            <input type="hidden" name="M2_ETC04" value="[M2_ETC04]">
+            <input type="hidden" name="M2_ETC05" value="[M2_ETC05]">
+            <input type="hidden" name="M2_ETC06" value="[M2_ETC06]">
+            <input type="hidden" name="M2_ETC07" value="[M2_ETC07]">
+            <input type="hidden" name="M2_ETC08" value="[M2_ETC08]">
+            <input type="hidden" name="M2_ETC09" value="[M2_ETC09]">
+            <input type="hidden" name="M2_ETC10" value="[M2_ETC10]">
+            <input type="hidden" name="M2_ETC11" value="[M2_ETC11]">
+            <input type="hidden" name="M2_ETC12" value="[M2_ETC12]">
+            <input type="hidden" name="M2_ETC13" value="[M2_ETC13]">
+            <input type="hidden" name="M2_ETC14" value="[M2_ETC14]">
+            <input type="hidden" name="M2_ETC15" value="[M2_ETC15]">
+            <input type="hidden" name="M2_ETC16" value="[M2_ETC16]">
+            <input type="hidden" name="M2_ETC17" value="[M2_ETC17]">
+            <input type="hidden" name="M2_ETC18" value="[M2_ETC18]">
+            <input type="hidden" name="M2_ETC19" value="[M2_ETC19]">
+            <input type="hidden" name="M2_ETC20" value="[M2_ETC20]">
+            <div class="btn formset__btn">
+              <input class="btn" type="submit" value="この内容で会員登録する" name="submit" value="submit" />
+            </div>
+            <div class="btn-under-txt"><a href="#" onclick="history.back(); return false;">入力画面へ戻る</a></div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- 以下共通 -->
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

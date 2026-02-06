@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>test pdfmake</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js" integrity="sha512-dRUcT5xAexUevhjrE5AvW+pen2BQizPSwJ2w1wAW5lbQvUYhZcz/aWmDt0ROdo5iJnT43foWTMrNzIrwkAlOEg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+$(function() {
+
+	console.log('start loading vfs fonts');
+	$('body').addClass('loading-vfs-fonts');
+
+	window.pdfmakeDocs = {}
+	window.pdfmakeDocs['docDefinition'] = {}
+	$('#button-dl').on('click',function(){
+		if($('body').hasClass('loading-vfs-fonts')==false){
+
+			var date = new Date();// 日付の取得
+			date.setTime(date.getTime() + 1000 * 60 * 60 * 9);// 日本時間に変更
+			var year = date.getFullYear();
+			var wago = '令和' + String(year - 2018);
+			var month = date.getUTCMonth() + 1;//0-11を返すため１を足す
+			var day = date.getUTCDate();
+			var hours = date.getUTCHours();
+			var minutes = date.getUTCMinutes();
+			var seconds = date.getUTCSeconds();
+
+			// content
+			let pdfContent = [
+				'Bulleted list example:',
+				{
+					// to treat a paragraph as a bulleted list, set an array of items under the ul key
+					ul: [
+						'Item 1',
+						'Item 2',
+						'Item 3',
+						{ text: 'Item 4', bold: true },
+					]
+				},
+				'Numbered list example:',
+				{
+					// for numbered lists set the ol key
+					ol: [
+						'Item 1',
+						'Item 2',
+						'Item 3'
+					]
+				}
+			];
+
+			// style
+
+			// font
+			// NOTE: フォントはすべてvfs-fonts.jsにbase64でminifyされています。
+			// NOTE: 源信ゴシックはNotosansライクフォントです。
+			window.pdfMake.fonts = {
+				IPAgothic: {
+					normal:      'GenShinGothic-Regular.ttf',
+					bold:        'GenShinGothic-Bold.ttf',
+					italics:     'GenShinGothic-Regular.ttf',
+					bolditalics: 'GenShinGothic-Bold.ttf'
+				},
+				IPAmincho: {
+					normal:      'GenShinGothic-Regular.ttf',
+					bold:        'GenShinGothic-Bold.ttf',
+					italics:     'GenShinGothic-Regular.ttf',
+					bolditalics: 'GenShinGothic-Bold.ttf'
+				}
+			};
+			window.pdfmakeDocs.docDefinition = {
+				content: pdfContent,
+				defaultStyle: {
+					//font: Object.keys(window.pdfMake.fonts)[0], // Any already loaded font
+					font: 'IPAgothic', // Any already loaded font
+				},  
+			};
+
+			window.pdfMake.createPdf(window.pdfmakeDocs.docDefinition).download('test-pdfmake-'
+				+ year.toString().slice(2,4)
+				+ ('0' + month).slice(-2)
+				+ ('0' + day).slice(-2)
+				+ ('00' + hours).slice(-2)
+				+ ('0' + minutes).slice(-2)
+				+ ('0' + seconds).slice(-2)
+				+ '.pdf');
+
+		}else{
+			alert('loading fonts for pdf');
+		}
+	});
+
+	$.ajax({
+		type : 'GET',
+		url: './vfs-fonts.js',
+		dataType: 'script',
+		cache: true,
+	}).done(function(){
+		console.log('finish loading vfs fonts');
+		$('body').removeClass('loading-vfs-fonts');
+		$(document).trigger('loadPdfmake');
+	});
+});
+</script>
+</head>
+
+<body>
+
+<button type="button" id="button-dl">Download</button>
+
+</body>
+</html>

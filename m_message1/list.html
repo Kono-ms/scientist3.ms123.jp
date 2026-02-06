@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Opportunity List | Scientist3</title>
+  <meta name="description"
+    content="商談の一覧のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head.html-->
+  <script>
+
+    // NOTE: ifrm_shodan_chatのリサイズはCSSで行っているのでJSは追加しないでください。
+
+    function chat_open(id, aid, mid1, mid2) {
+      $('.ifrm_shodan_chat').attr('src', '/m_chat1/?mode=list&word=' + aid + '&mid1= ' + mid1 + '&mid2=' + mid2 + '&etc02=' + id);
+      $('.ifrm_shodan_chat').on('load', function () {
+        var content = $('.ifrm_shodan_chat').contents();
+        content.find('header').hide();
+        content.find('.breadcrumb').hide();
+      });
+      $('#mask_shodan_chat').show();
+      $('#popup_shodan_chat').fadeIn();
+    }
+
+    // 商談トグルボタン（イベント）
+    // NOTE: 2023.09.22 既存の関数の改修
+    function shodan_toggle_click(e) {
+      let $title = $(e.target);
+      if ($title.hasClass('is--active')) {
+        // NOTE: アコーディオンが開いている場合にクリックされた時
+        // 任意のコード
+        console.log('イベント:商談アコーディオンを閉じました');
+      } else {
+        // NOTE: アコーディオンが閉じている場合にクリックされた時
+        // 任意のコード
+        console.log('イベント:商談アコーディオンを開きました');
+      }
+    }
+
+    function check_contact2(shodan_id) {
+      var mid_list = '';
+      $('input[name=shodan_' + shodan_id + ']:checked').each(function () {
+        var val = $(this).val();
+        console.log(val);
+        mid_list += (mid_list != '' ? ',' : '') + val;
+      });
+      location.href = '/m_contact1/?type=見積り送付&mode=new&shodan_id=' + shodan_id;
+    }
+    function check_contact2_add(shodan_id) {
+      var mid_list = '';
+      $('input[name=shodan_' + shodan_id + ']:checked').each(function () {
+        var val = $(this).val();
+        console.log(val);
+        mid_list += (mid_list != '' ? ',' : '') + val;
+      });
+      location.href = '/m_contact1/?type=見積り送付&mode=new&shodan_id=' + shodan_id;
+    }
+    function check_contact2_edit(shodan_id) {
+      var mid_list = '';
+      $('input[name=shodan_' + shodan_id + ']:checked').each(function () {
+        var val = $(this).val();
+        console.log(val);
+        mid_list += (mid_list != '' ? ',' : '') + val;
+      });
+      location.href = '/m_contact1/?type=見積り送付&mode=new&shodan_id=' + shodan_id + '&upd_mode=1';
+    }
+
+    $(function () {
+      //Quick start guideを最初っから表示
+      document.getElementById('flow_box_id').classList.add('effect-scroll');
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header1.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/about2/">Top</a></li>
+          <li class="breadcrumb__item">Opportunity List</li>
+        </ol>
+      </div>
+    </div>
+    <section class="subpage-head">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">Opportunity List</h1>
+          <p class="c-head__txt">[RECCOUNT] researchers exchanging messages</p>
+        </div>
+      </div>
+    </section>
+    <section class="innerTab">
+      <div class="l-container">
+        <ul class="innerTab-flex">
+          <li class="innerTab__item">[S-STANDARD]<a href="/m_message1/" class="active">Opportunity
+              List</a>[S-MIDOKU]<span class="item__badge">[MIDOKU]</span>[E-MIDOKU][E-STANDARD]</li>
+          <li class="innerTab__item"><a href="/m_schedule1/">Opportunity Progress Table</a></li>
+          <li class="innerTab__item"><a href="/m_m1/?param=Company_information">Basic Information</a></li>
+
+        </ul>
+      </div>
+    </section>
+    <section class="result">
+      <div class="l-container column--2col">
+        <div id="side">
+          <div class="side-search__area">
+            <form method="get" action="./">
+              <ul class="side-search__filter">
+                <li class="side-search__item">
+                  <input class="side-search__word" type="search" value="[WORD2]" name="word2" placeholder="Free word">
+                </li>
+                <li class="side-search__item">
+                  <div class="searchSort">
+                    <p class="searchSort__ttl">Reordering</p>
+                    <label class="searchSort__electbox">
+                      <!--<select name="sort" onChange="location.href=value;">-->
+                      <select name="sort">
+                        <option value="1" [SORT_SELECT_1]>Last modified in ascending order</option>
+                        <option value="2" [SORT_SELECT_2]>Last modified: in descending order</option>
+                        <option value="3" [SORT_SELECT_3]>Progress in ascending order</option>
+                        <option value="4" [SORT_SELECT_4]>Progress in descending order</option>
+                        <option value="5" [SORT_SELECT_5]>Date of contact: ascending order</option>
+                        <option value="6" [SORT_SELECT_6]>Date of contact: descending order</option>
+                      </select>
+                    </label>
+                  </div>
+                </li>
+                <li class="side-search__item side-searchInput">
+                  <p class="side-searchInput__ttl">Status</p>
+                  <div class="side-searchInput__item">
+                    <label for=""><input type="checkbox" id="" name="word[]" value="1" [WORD_CHECK_1] />Inquiry</label>
+                  </div>
+                  <div class="side-searchInput__item">
+                    <label for=""><input type="checkbox" id="" name="word[]" value="2" [WORD_CHECK_2] />Estimate</label>
+                  </div>
+                  <div class="side-searchInput__item">
+                    <label for=""><input type="checkbox" id="" name="word[]" value="3" [WORD_CHECK_3] />Order
+                      placement</label>
+                  </div>
+                  <div class="side-searchInput__item">
+                    <label for=""><input type="checkbox" id="" name="word[]" value="4" [WORD_CHECK_4] />Delivery</label>
+                  </div>
+                  <div class="side-searchInput__item">
+                    <label for=""><input type="checkbox" id="" name="word[]" value="5" [WORD_CHECK_5] />Request</label>
+                  </div>
+                  <div class="side-searchInput__item">
+                    <label for=""><input type="checkbox" id="" name="word[]" value="6" [WORD_CHECK_6] />Done.</label>
+                  </div>
+                  <div class="side-searchInput__item">
+                    <label for=""><input type="checkbox" id="" name="word[]" value="7"
+                        [WORD_CHECK_7] />Cancellation</label>
+                  </div>
+                  <div class="side-searchInput__item">
+                    <label for=""><input type="checkbox" id="" name="word[]" value="8"
+                        [WORD_CHECK_8] />Declination</label>
+                  </div>
+                </li>
+              </ul>
+              <div class="search__btn">
+                <button type="submit" value="検索する">Be searched</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+        <div id="main" class="row">
+
+          <div class="result__header">
+            <div class="result__noApplicationNum">Displays [START] to [END] out of all [RECCOUNT] items</div>
+            <!--
+		  <p class="result__noApplicationNum--all"><a href="#">全ての案件を表示する</a></p>
+        -->
+          </div>
+          <div class="result-supplier__list">
+            <!--
+        <table class="table table-bordered table-hover">
+            <thead>
+                <th>
+                    [S-S_NICKNAME]
+                    <a href="./?mode=list&sort=1&page=1">ニックネーム</a>
+                    [E-S_NICKNAME]
+                    [S-S_NICKNAME_A]
+                    <a href="./?mode=list&sort=2&page=1">ニックネーム▲</a>
+                    [E-S_NICKNAME_A]
+                    [S-S_NICKNAME_D]
+                    <a href="./?mode=list&sort=1&page=1">ニックネーム▼</a>
+                    [E-S_NICKNAME_D]
+                </th>
+                <th>
+                    [S-S_NAME]
+                    <a href="./?mode=list&sort=3&page=1">氏名</a>
+                    [E-S_NAME]
+                    [S-S_NAME_A]
+                    <a href="./?mode=list&sort=4&page=1">氏名▲</a>
+                    [E-S_NAME_A]
+                    [S-S_NAME_D]
+                    <a href="./?mode=list&sort=3&page=1">氏名▼</a>
+                    [E-S_NAME_D]
+                </th>
+                <th>
+                    [S-S_CONPANYNAME]
+                    <a href="./?mode=list&sort=5&page=1">会社名または屋号</a>
+                    [E-S_CONPANYNAME]
+                    [S-S_CONPANYNAME_A]
+                    <a href="./?mode=list&sort=6&page=1">会社名または屋号▲</a>
+                    [E-S_CONPANYNAME_A]
+                    [S-S_CONPANYNAME_D]
+                    <a href="./?mode=list&sort=5&page=1">会社名または屋号▼</a>
+                    [E-S_CONPANYNAME_D]
+                </th>
+                <th>未読</th>
+            </thead>
+            <tbody>
+                <meta LIST-dummy-START>
+                <tr>
+                    <td><a href="/m_search1/?mode=disp&key=[D-M2-ID]">[D-M2-M2_DVAL01]</a></td>
+                    <td>[D-M2-M2_DVAL02]</td>
+                    <td>[D-M2-M2_DVAL03]</td>
+                    <td><a href="/m_chat1_list/?mode=list&word=[L-MID]-[D-M2-MID]&mid1=[L-MID]&mid2=[D-M2-MID]">[S-MIDOKU]<span class="item__badge" style="right:-3rem;">未読</span>[E-MIDOKU]商談状況を確認する</a></td>
+                </tr>
+                <meta LIST-dummy-END>
+            </tbody>
+        </table>
+-->
+
+
+            <div class="shodan__list">
+              <!--<meta LIST-START>-->
+              <div class="shodan__item" data-acc="[SHODAN_ID]">
+                <label class="shodan__item-title" onclick="shodan_toggle_click(event);" data-acc-title>
+
+                  <!--
+                  <p class="item--new">NEW</p>
+                  -->
+                  [S-SHODAN-MIDOKU]
+                  <p class="item--new">Unread</p>
+                  [E-SHODAN-MIDOKU]
+
+                  <p class="item--title">[TITLE]</p>
+                  <span>&nbsp;&#124;&nbsp;</span>
+                  <p class="item--title">[D-M2-M2_ETC20]</p>
+                  <span>&nbsp;&#124;&nbsp;</span>
+                  <p class="item--title">[D-M2-M2_DVAL18]</p>
+                  <p class="item--title">[D-M2-M2_DVAL19]</p>
+                  <p class="item--date">Last updated: [EDITDATE]</p>
+                  <p class="shodan__item-status"><span>Status</span><b>[STATUS]</b></p>
+                </label>
+                <div class="shodan__item-body" data-acc-body>
+                  <div class="shodan__item-list">
+                    <div class="shodan__item-checklist">[M2_LIST]</div>
+                  </div>
+                  <div class="shodan__item-sidetray">
+                    <!-- 先方依頼：ボタンすべて不要 -->
+                    <!--
+                    <p class="shodan__item-contacts"><a href="/m_contact1/?type=問い合わせ&mode=disp&shodan_id=[SHODAN_ID]"
+                        class="ui-link-arrow">問い合わせ内容を見る</a></p>
+                    -->
+                    <!--
+                    <div class="shodan__item-query">
+                      <p class="item--title">検索条件</p>
+                      <dl class="item--cate">
+                        !--<dt class="item--cate-title">カテゴリ</dt>--
+                        <dd class="item--cate-list">
+                          [CATEGORY]
+                        </dd>
+                      </dl>
+                      <dl class="item--cate">
+                        !--<dt class="item--cate-title">キーワード</dt>--
+                        <dd class="item--cate-word">
+                          <span>[KEYWORD]</span>
+                        </dd>
+                      </dl>
+                    </div>
+                    -->
+                  </div>
+                  <div class="shodan__item-func">
+                    <!-- 先方依頼：ボタンすべて不要 -->
+                    <!--
+                    <div class="btn--small btn--default" style="[STATUS_HIDE]"><button type="button" onClick="check_contact2([SHODAN_ID]);">見積りを提示する</button></div>
+                    <div class="btn--small btn--default" style="[STATUS_ADD_HIDE]"><button type="button" onClick="check_contact2_add([SHODAN_ID]);">見積りを追加する</button></div>
+                    <div class="btn--small btn--default" style="[STATUS_EDIT_HIDE]"><button type="button" onClick="check_contact2_edit([SHODAN_ID]);">見積りを修正する</button></div>
+                    -->
+                    <!--
+                <div class="btn--small btn--plain"><a href="">全案件の履歴一覧</a></div>
+                <div class="btn--small btn--plain"><a href="/m_estimates/?mode=cancel&word=M100001-M200001&mid1=M100001&mid2=M200001&eid=E20211228111907825&key=82">キャンセル</a></div>
+                -->
+                  </div>
+                </div>
+              </div>
+              <!--<meta LIST-END>-->
+            </div>
+            <!-- /.shodan__list -->
+
+
+          </div>
+          <!--/.result-supplier__list-->
+          <div class="pagination">
+            <div class="pagination__list">[PAGING]</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--template=/common/template/flow_en.html-->
+
+    <!-- 以下共通 -->
+    <style>
+      .popup_shodan_chat {
+        display: none;
+        position: fixed;
+        left: 20px;
+        top: 20px;
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        z-index: 10002;
+      }
+      @media only screen and (max-width:767px) {
+        .popup_shodan_chat {
+          left: 12px;
+          top: 12px;
+          width: calc(100% - 24px);
+          height: calc(100% - 24px);
+        }
+      }
+      .ifrm_shodan_chat {
+        width: 100%;
+        height: 100%;
+        vertical-align: bottom;
+      }
+      .mask_shodan_chat {
+        display: none;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: #808080;
+        opacity: 0.5;
+        z-index: 10001;
+      }
+    </style>
+    <div id="popup_shodan_chat" class="popup_shodan_chat">
+      <iframe class="ifrm_shodan_chat" src="" frameborder="none"></iframe>
+    </div>
+    <div id="mask_shodan_chat" class="mask_shodan_chat"></div>
+
+
+    <!--template=/common/template/footer_en.html-->
+  </div>
+</body>
+
+</html>

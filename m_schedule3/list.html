@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Opportunity Progress Table｜Scientist3</title>
+  <meta name="description"
+    content="Opportunity Progress Tableのページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head.html-->
+  <script>
+
+    $(document).ready(function () {
+      var wsize = $(window).width();
+      var hsize = $(window).height();
+      $(".ifrm_mcontact").css("width", (wsize - 40) + "px");
+      $(".ifrm_mcontact").css("height", (hsize - 40) + "px");
+      $(".ifrm_mcontact2").css("width", (wsize - 40) + "px");
+      $(".ifrm_mcontact2").css("height", (hsize - 40) + "px");
+    });
+
+    function open_mcontact2(url) {
+      $('.ifrm_mcontact2').attr('src', url);
+      $('#mask_mcontact2').show();
+      $('#popup_mcontact2').fadeIn();
+    }
+
+    function popup_file_btn(aid, etc02) {
+      $('.ifrm_mcontact').attr('src', '/m_filestatus3/?mode=list&word=' + aid + '&frame=on&contact_status=1&etc02=' + etc02);
+      $('#mask_mcontact').show();
+      $('#popup_mcontact').fadeIn();
+    }
+
+    $(function () {
+
+      $('#submit1').click(function () {
+        //お問い合わせ
+
+        let chks = $('[name="chk[]"]:checked');
+        if (chks.length == 0) {
+          alert("選択してください。");
+          return false;
+        }
+        let chkstr = "";
+        $(chks).map(function () {
+          if (chkstr != "") {
+            chkstr = chkstr + ",";
+          }
+          chkstr = chkstr + $(this).val();
+        });
+
+        // alert(chkstr);
+        $('.chk').val(chkstr);
+        $('#form1').submit();
+      });
+
+      $('#submit2').click(function () {
+        //一括見積もり
+
+        let chks = $('[name="chk[]"]:checked');
+        if (chks.length == 0) {
+          alert("選択してください。");
+          return false;
+        }
+        let chkstr = "";
+        $(chks).map(function () {
+          if (chkstr != "") {
+            chkstr = chkstr + ",";
+          }
+          chkstr = chkstr + $(this).val();
+        });
+
+        $('.chk').val(chkstr);
+        $('#form2').submit();
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header3.html-->
+
+    <!-- 以上共通 -->
+    <!--
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">Opportunity Progress Table</li>
+        </ol>
+      </div>
+    </div>
+    -->
+
+    <section class="result schedule">
+      <span style="color:tomato;margin: auto;width: 800px;display: block;">※工事中のため表示が正しくありません</span>
+      <table>
+        <tbody>
+          <tr>
+            <th>商談ID</th>
+            <th>品番</th>
+            <th>前払い</th>
+            <th>案件名</th>
+            <th>研究者</th>
+            <th>サプライヤー名</th>
+            <th>ステータス</th>
+            <th>見積り書</th>
+            <th>発注書</th>
+            <th>納品書</th>
+            <th>請求書</th>
+          </tr>
+          <meta LIST-START>
+          <meta LIST-END>
+        </tbody>
+      </table>
+      <div class="pagination">
+        <div class="pagination__list"> [PAGING] </div>
+      </div>
+    </section>
+
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+
+  </div>
+  <style>
+    .popup_mcontact {
+      display: none;
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      width: calc(100% - 40px);
+      height: calc(100% - 40px);
+      z-index: 10002;
+    }
+
+    .mask_mcontact {
+      display: none;
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      background-color: #808080;
+      opacity: 0.5;
+      z-index: 10001;
+    }
+  </style>
+  <div id="popup_mcontact" class="popup_mcontact">
+    <iframe class="ifrm_mcontact" src="" frameborder="none"></iframe>
+  </div>
+  <div id="mask_mcontact" class="mask_mcontact"> </div>
+
+  <style>
+    .popup_mcontact2 {
+      display: none;
+      position: fixed;
+      left: 20px;
+      top: 20px;
+      width: calc(100% - 40px);
+      height: calc(100% - 40px);
+      z-index: 10002;
+    }
+
+    .mask_mcontact2 {
+      display: none;
+      position: fixed;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      background-color: #808080;
+      opacity: 0.5;
+      z-index: 10001;
+    }
+  </style>
+  <div id="popup_mcontact2" class="popup_mcontact">
+    <iframe class="ifrm_mcontact2" src="" frameborder="none"></iframe>
+  </div>
+  <div id="mask_mcontact2" class="mask_mcontact"> </div>
+</body>
+
+</html>

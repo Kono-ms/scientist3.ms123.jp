@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>サプライヤーを探す｜Scientist3</title>
+  <meta name="description"
+    content="サプライヤーを探すのページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/icon-192x192.png">
+  <!--template=/common/template/head.html-->
+  <script>
+    $(function () {
+
+      $('#submit1').click(function () {
+        //お問い合わせ
+
+        let chks = $('[name="chk[]"]:checked');
+        if (chks.length == 0) {
+          alert("選択してください。");
+          return false;
+        }
+        let chkstr = "";
+        $(chks).map(function () {
+          if (chkstr != "") {
+            chkstr = chkstr + ",";
+          }
+          chkstr = chkstr + $(this).val();
+        });
+
+        // alert(chkstr);
+        $('.chk').val(chkstr);
+        $('#form1').submit();
+      });
+
+      $('#submit2').click(function () {
+        //一括見積もり
+
+        let chks = $('[name="chk[]"]:checked');
+        if (chks.length == 0) {
+          alert("選択してください。");
+          return false;
+        }
+        let chkstr = "";
+        $(chks).map(function () {
+          if (chkstr != "") {
+            chkstr = chkstr + ",";
+          }
+          chkstr = chkstr + $(this).val();
+        });
+
+        $('.chk').val(chkstr);
+        $('#form2').submit();
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header2.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">サプライヤーを探す</li>
+        </ol>
+      </div>
+    </div>
+    <section class="innerTab">
+      <div class="l-container">
+        <ul class="innerTab-flex">
+          <li class="innerTab__item"><a href="/m_search2/" class="active">サプライヤーを探す</a></li>
+          <li class="innerTab__item">[S-STANDARD]<a href="/m_message2/">商談一覧</a>[S-MIDOKU]<span
+              class="item__badge">[MIDOKU]</span>[E-MIDOKU][E-STANDARD]</li>
+          <li class="innerTab__item"><a href="/m_schedule2/">商談進捗表</a></li>
+          <li class="innerTab__item"><a href="/m_draft2/">下書き一覧</a></li>
+        </ul>
+      </div>
+    </section>
+
+    [S-KEIYAKU-OFF]
+    <section class="search-attention">
+      <div class="l-container">
+        <div class="attention">
+          <p class="attention__txt">サプライヤーに発注をする前に御社と弊社で取引契約を締結する必要があります。<br>締結を希望される方、またはすでに締結されているかどうか確認したい方は<a
+              href="/m_contract2/">こちら</a>をクリックしてください。</p>
+        </div>
+      </div>
+    </section>
+    [E-KEIYAKU-OFF]
+    [S-KARITORKU]
+    <section class="search-attention">
+      <div class="l-container">
+        <div class="attention">
+          <p class="attention__txt">サプライヤーに発注をする前に御社と弊社で取引契約を締結する必要があります。<br>締結を希望される方、またはすでに締結されているかどうか確認したい方は<a
+              href="/m_contract2/">こちら</a>をクリックしてください。</p>
+        </div>
+      </div>
+    </section>
+    [E-KARITORKU]
+
+
+    
+
+
+    <section class="search">
+      <div class="l-container">
+
+
+        <div class="search__area">
+          <form method="get" action="./" name="formtop" id="formtop">
+            <input type="hidden" name="mode" value="list">
+            <input type="hidden" id="H_PAGE_MAX" name="PAGE_MAX" value="10">
+            <ul class="search__filter">
+              <li class="search__ttl">キーワード</li>
+              <li class="search__item">
+                <input class="search__word" type="search" value="[WORD2]" name="word2">
+              </li>
+            </ul>
+            <!--
+            <ul class="search__filter">
+              <li class="search__item">
+                <label class="select">
+                  <select name="word[]">
+                    <option value="">カテゴリーを選択</option>
+
+                    [SEL_S1]
+
+                  </select>
+                </label>
+              </li>
+              <li class="search__item">
+                <label class="select">
+                  <select name="word[]">
+                    <option value="">国を選択</option>
+
+                    [SEL_S2]
+
+                  </select>
+                </label>
+              </li>
+              <li class="search__item">
+                <label class="select">
+                  <select name="word[]">
+                    <option value="">GLPを選択</option>
+
+                    [SEL_S3]
+
+                  </select>
+                </label>
+              </li>
+              <li class="search__item">
+                <label class="select">
+                  <select name="word[]">
+                    <option value="">○○を選択</option>
+
+                    [SEL_S4]
+
+                  </select>
+                </label>
+              </li>
+            </ul>
+            -->
+
+            <ul class="search__filter">
+              <li class="search__ttl">カテゴリー</li>
+              <li class="search__item">
+                <div class="search-cate-drill">
+                  <div>
+                    <label class="select">
+                      <select id="cate1" name="M1_ETC17"></select>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="select">
+                      <select id="cate2" name="M1_ETC18"></select>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="select">
+                      <select id="cate3" name="M1_ETC19"></select>
+                    </label>
+                  </div>
+                  <div>
+                    <label class="select">
+                      <select id="cate4" name="M1_ETC20"></select>
+                    </label>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+
+            <script>
+              var cate_list = ([CATE_LIST]);
+              var cate1_val = '[CATE1_VAL]';
+              var cate2_val = '[CATE2_VAL]';
+              var cate3_val = '[CATE3_VAL]';
+              var cate4_val = '[CATE4_VAL]';
+              $(document).ready(function () {
+                $('#cate1').on('change', function () {
+                  cate1_val = $('#cate1').val();
+                  cate1_change();
+                });
+                $('#cate2').on('change', function () {
+                  cate2_val = $('#cate2').val();
+                  cate2_change();
+                });
+                $('#cate3').on('change', function () {
+                  cate3_val = $('#cate3').val();
+                  cate3_change();
+                });
+                $('#cate4').on('change', function () {
+                  cate4_val = $('#cate4').val();
+                  cate4_change();
+                });
+                cate1_change();
+              });
+              function cate1_change() {
+                var html = '<option value=""></option>';
+                for (var x in cate_list) {
+                  var selected = '';
+                  if (cate1_val == x) {
+                    selected = ' selected ';
+                  }
+                  html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+                }
+                $('#cate1').html(html);
+                cate2_change();
+              }
+              function cate2_change() {
+                var html = '<option value=""></option>';
+                if (cate_list[cate1_val] == undefined) {
+                  cate1_val = '';
+                  cate2_val = '';
+                  cate3_val = '';
+                  cate4_val = '';
+                  $('#cate2').html('');
+                  $('#cate3').html('');
+                  $('#cate4').html('');
+                  return;
+                }
+                else {
+                  for (var x in cate_list[cate1_val]) {
+                    var selected = '';
+                    if (cate2_val == x) {
+                      selected = ' selected ';
+                    }
+                    html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+                  }
+                }
+                $('#cate2').html(html);
+                cate3_change();
+              }
+              function cate3_change() {
+                var html = '<option value=""></option>';
+                console.log('cate3_change:cate1 ' + cate1_val);
+                console.log('cate3_change:cage2 ' + cate2_val);
+                console.log('cate3_change:cage2 ' + cate_list[cate1_val][cate2_val]);
+                if (cate_list[cate1_val][cate2_val] == undefined) {
+                  console.log('cate3_change:then ');
+                  cate2_val = '';
+                  cate3_val = '';
+                  cate4_val = '';
+                  $('#cate3').html('');
+                  $('#cate4').html('');
+                  return;
+                }
+                else {
+                  console.log('cate3_change:else ');
+                  for (var x in cate_list[cate1_val][cate2_val]) {
+                    var selected = '';
+                    if (cate3_val == x) {
+                      selected = ' selected ';
+                    }
+                    html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+                  }
+                }
+                $('#cate3').html(html);
+                cate4_change();
+              }
+              function cate4_change() {
+                var html = '<option value=""></option>';
+                if (cate_list[cate1_val][cate2_val][cate3_val] == undefined) {
+                  cate3_val = '';
+                  cate4_val = '';
+                  $('#cate4').html('');
+                  return;
+                }
+                else {
+                  for (var x in cate_list[cate1_val][cate2_val][cate3_val]) {
+                    var selected = '';
+                    if (cate4_val == x) {
+                      selected = ' selected ';
+                    }
+                    html += '<option value="' + x + '" ' + selected + '>' + x + '</option>';
+                  }
+                }
+                $('#cate4').html(html);
+              }
+            </script>
+
+            <script type="text/javascript">
+              function select_all(cbx_name) {
+                var checkboxes = document.getElementsByClassName(cbx_name);
+
+                //console.log(checkboxes);
+
+                var findout=0;
+                for (var i = 0; i < checkboxes.length; i++) {
+                  checkboxes[i].checked=true;
+                }
+
+                find_checked('chk');
+                return findout;
+              }
+              function unselect_all(cbx_name) {
+                var checkboxes = document.getElementsByClassName(cbx_name);
+
+                //console.log(checkboxes);
+
+                var findout=0;
+                for (var i = 0; i < checkboxes.length; i++) {
+                  checkboxes[i].checked=false;
+                }
+
+                find_checked('chk');
+                return findout;
+              }
+            </script>
+
+
+            <div class="search__btn">
+              <button type="submit" value="検索する" name="send">この条件で検索する</button>
+            </div>
+            <div class="btn-under-txt">
+              <p>（検索条件：[SEL_WORD]）</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <section class="result">
+      <div class="l-container">
+        <div class="result__header">
+          <div class="result__noApplicationNum">全[RECCOUNT]件中、[START]〜[END]件を表示</div>
+          <!--上記「1〜3件」はハリボテ：タグ導入をお願いします（川田）-->
+          <div class="searchSortBox">
+            <div class="searchSort">
+              <p class="searchSort__ttl">並び替え</p>
+              <label class="select">
+                <select name="sort" onChange="location.href='./?mode=list&sort=1&page=1';">
+                  [SEL_SORT]
+                </select>
+              </label>
+            </div>
+            <div class="searchSort">
+              <p class="searchSort__ttl">表示件数</p>
+              <label class="select">
+                <!--<select name="PAGE_MAX" onChange="location.href='./?mode=list&sort=2&page=1&word2=[WORD2]';">-->
+                <select id="page_max" name="PAGE_MAX" onChange="view1(this);">
+                  <option value="10">10件</option>
+                  <option value="50">50件</option>
+                  <option value="100">100件</option>
+                  <!--<option value="2">2件</option>-->
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript">
+          function view1(sobj){
+            var page_max=sobj.value;
+            document.getElementById("H_PAGE_MAX").value=page_max;
+            document.getElementById('formtop').submit();
+          }
+
+          function set_page_max(){
+            let url = new URL(window.location.href);
+            let params = url.searchParams;
+            console.log(params.get('PAGE_MAX'));
+            var $pmax=params.get('PAGE_MAX');
+            if($pmax=="10"){
+              document.getElementById('page_max').options[0].selected=true;
+            }else if($pmax=="50"){
+              document.getElementById('page_max').options[1].selected=true;
+            }else if($pmax=="100"){
+              document.getElementById('page_max').options[2].selected=true;
+            }
+            /*else if($pmax=="2"){
+              document.getElementById('page_max').options[3].selected=true;
+            }*/
+            else{
+              document.getElementById('page_max').options[0].selected=true;
+            }
+            
+          }
+          window.onload=set_page_max;
+        </script>
+        <div class="result-サプライヤー__list">
+          <fieldset class="result-サプライヤー__checkbox">
+            <input type="button" value="すべて選択" onclick="select_all('chk');">&nbsp;&nbsp;
+            <input type="button" value="選択解除" onclick="unselect_all('chk');">
+            <!--<meta LIST-START>-->
+            <!--<meta LIST-END>-->
+          </fieldset>
+        </div>
+        <div class="pagination">
+          <div class="pagination__list"> [PAGING] </div>
+        </div>
+      </div>
+    </section>
+    <section class="ikkatsu">
+      <div class="l-container">
+        <p class="ikkatsu__ttl">チェックをつけたサプライヤーに一括で<br class="sp--disp">「お問い合わせ / 価格相談」をする</p>
+        <div class="ikkatsuBox">
+          <div class="ikkatsuBox__btnBox">
+            <form id="form1" action="/m_contact2/" method="get">
+              <input type="hidden" name="type" value="問い合わせ" />
+              <input type="hidden" name="mode" value="new" />
+              <input type="hidden" name="key" value="" />
+              <input type="hidden" name="word" value="[WORD3]" />
+              <input type="hidden" name="word2" value="[WORD2]" />
+              <input type="hidden" class="chk" name="chk" value="" />
+              <a class="ikkatsuBox__btn" id="submit1" href="javascript:void(0)">一括お問い合わせ</a>
+              <!-- <a class="ikkatsuBox__btn"
+                href="/m_contact2/?type=問い合わせ&mode=new&key=&word=[WORD3]&word2=[WORD2]">一括お問い合わせ</a> -->
+            </form>
+            <form id="form2" action="/m_contact2/" method="get">
+              <input type="hidden" name="type" value="見積り依頼" />
+              <input type="hidden" name="mode" value="new" />
+              <input type="hidden" name="key" value="" />
+              <input type="hidden" name="word" value="[WORD3]" />
+              <input type="hidden" name="word2" value="[WORD2]" />
+              <input type="hidden" class="chk" name="chk" value="" />
+              <a class="ikkatsuBox__btn" id="submit2" href="javascript:void(0)">一括見積依頼</a>
+              <!--  <a class="ikkatsuBox__btn" href="/m_contact2/?type=見積り依頼&mode=new&key=&word=[WORD3]&word2=[WORD2]">一括見積依頼</a> -->
+            </form>
+
+
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    
+
+
+
+    <script type="text/javascript">
+      //ユーザがチェックを入れたアイテムのページ持越し処理
+      function find_checked(cbx_name) {
+        var checkboxes = document.getElementsByClassName(cbx_name);
+        //console.log(checkboxes);
+        var checked_items="";
+        for (var i = 0; i < checkboxes.length; i++) {
+          if(checkboxes[i].checked==true){
+            //console.log(checkboxes[i]);
+              if(checked_items==""){
+                checked_items=checkboxes[i].value; 
+
+              }else{
+                if(checkboxes[i].value!="") checked_items+=","+checkboxes[i].value;
+              }
+          }
+        }
+        document.cookie = 'checked_items='+checked_items+'; max-age='+60*60*3;
+
+      }
+
+
+      function select_checked_items(cbx_name) {
+        var checkboxes = document.getElementsByClassName(cbx_name);
+        //console.log(checkboxes);
+        
+        var citems =getCookieValue('checked_items').split(',');
+        console.log(citems);
+        for (var i = 0; i < checkboxes.length; i++) {
+            for(var j=0; j < citems.length ;j++){
+                if(checkboxes[i].value==citems[j]){
+                    checkboxes[i].checked=true;
+                }
+            }
+        }
+      }
+      window.onload=select_checked_items('chk');
+
+
+      function getCookieValue(key) {
+        const cookies = document.cookie.split(';');
+        const foundCookie = cookies.find(
+          (cookie) => cookie.split('=')[0].trim() === key.trim()
+          )
+        if (foundCookie) {
+          const cookieValue = decodeURIComponent(foundCookie.split('=')[1]);
+          return cookieValue;
+        }
+        return '';
+      }
+
+
+      function show_cookie(){
+          console.log(document.cookie);
+      }
+      window.onload=show_cookie();
+    </script>
+
+
+
+    <!--template=/common/template/flow.html-->
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+
+  </div>
+</body>
+
+</html>

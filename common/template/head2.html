@@ -1,0 +1,245 @@
+<!-- head2 -->
+<!-- Google Tag Manager -->
+<script type="text/plain" data-cookiecategory="performance">
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KX97XVGG');</script>
+<!-- End Google Tag Manager -->
+
+<!--NOTE: 2025.01.07 gtag関数が存在しない場合にJSが中止しない調整の追記-->
+<script type="text/plain" data-cookiecategory="performance">
+try{
+  gtag('consent', 'update', {
+      'analytics_storage': 'granted'
+  });
+}catch(e){console.log(e.message)}
+</script>
+
+<!-- Deferred CSS loading (recommended) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.8.2/dist/cookieconsent.css" media="print" onload="this.media='all'">
+<script defer src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.8.2/dist/cookieconsent.js"></script>
+
+<script defer src="/common/js/cookieconsent-init-jp.js"></script>
+<link rel="stylesheet" href="/common/css/cookie.css?20250616" />
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/common/css/import.css" />
+    <link rel="stylesheet" href="/common/css/jquery.bxslider.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/localization/messages_ja.js"></script><!-- NOTE: 研究者側だけValidationを日本語化 -->
+    <script src="/common/js/jquery.bxslider.js"></script> 
+    <script src="/common/js/ofi.min.js"></script> 
+    <script src="/common/js/common.js"></script> 
+    <script>
+      $(function(){
+
+        // NOTE: jquery.validate.js
+
+        // デフォルトメッセージのカスタマイズ
+        $.extend( $.validator.messages, {
+          required: "必須項目です",
+          remote: "修正してください",
+          email: "有効なEメールアドレスを入力してください",
+          url: "有効なURLを入力してください",
+          date: "有効な日付を入力してください",
+          dateISO: "有効な日付（ISO）を入力してください",
+          number: "有効な数字を入力してください",
+          digits: "数字のみを入力してください",
+          creditcard: "有効なクレジットカード番号を入力してください",
+          equalTo: "同じ値をもう一度入力してください",
+          extension: "有効な拡張子を含む値を入力してください",
+          maxlength: $.validator.format( "{0} 文字以内で入力してください" ),
+          minlength: $.validator.format( "{0} 文字以上で入力してください" ),
+          rangelength: $.validator.format( "{0} 文字から {1} 文字までの値を入力してください" ),
+          range: $.validator.format( "{0} から {1} までの値を入力してください" ),
+          step: $.validator.format( "{0} の倍数を入力してください" ),
+          max: $.validator.format( "{0} 以下の値を入力してください" ),
+          min: $.validator.format( "{0} 以上の値を入力してください" )
+        });
+
+        // NOTE: required属性付与の補助
+        $('ul[required] [type="radio"], ul[required] [type="checkbox"]').attr('required', 'required');
+
+        // 独自ルール
+        $.validator.addMethod('katakana', function (value, element) {
+          return this.optional(element) || /^([ァ-ンヴー\s　]+)$/.test(value);
+        }, '全角カタカナを入力してください。');
+
+        $.validator.addMethod('alphaNumeric', function (value, element) {
+          return this.optional(element) || /^([a-zA-Z0-9\s\.\,\-]+)$/.test(value);
+        }, '半角英数字をご入力ください。');
+
+        // pw 的確なチェック
+        $.validator.addMethod('pw', function (value, element) {
+          return this.optional(element) || /^(?=.*[-*&@])(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])[!-~]{8,}$/.test(value);
+        }, 'パスワードは8文字以上で、小文字(a-z)、大文字(A-Z)、数字(0-9)、特殊文字(-, *, &, @)を含む必要があります。');
+
+        // pw 使用不可な文字列
+        $.validator.addMethod('noValidString', function (value, element) {
+          return this.optional(element) || !(/[`˜!#$%^()_+={}[\]\|:;"'<>,.?\\]/.test(value));
+        }, '「`˜!#$%^()_+={}[]|:;\"\'<>,.?\\」は使用できません。');
+
+        $.validator.addMethod('phone', function (value, element) {
+          return this.optional(element) || /^[0-9\-\+\#\*]*$/.test(value);
+        }, '正しい電話番号を入力してください（半角数字・ハイフン）');
+
+        $.validator.addMethod('phoneOnlyDigit', function (value, element) {
+          return this.optional(element) || /^[0-9\+\#\*]*$/.test(value);
+        }, '正しい電話番号を入力してください（半角数字・ハイフンなし）');
+
+        $.validator.addMethod('zip', function (value, element) {
+          return this.optional(element) || /^[0-9]{7}$/.test(value);
+        }, '7桁の半角数字を入力してください（ハイフンなし）');
+
+        $.validator.addMethod('positive', function (value, element) {
+          return this.optional(element) || /^[0-9]*$/.test(value);
+        }, '半角数字で正の数を入力してください');
+
+        // 入力ルール　静的
+        // NOTE: inputタグなどの name属性で指定
+        let rules = {
+          //'MKANA': { katakana: true },// NOTE: カタカナを name="MKANA"に実装
+          //'MKANA': { katakana: true },// NOTE: カタカナを name="MKANA"に実装
+          //'MKANA': { katakana: true },// NOTE: カタカナを name="MKANA"に実装
+        };
+
+        let messages = {
+          //time: {required: "希望の時間帯を選択してください"},// NOTE: 必須メッセージを name="time"に実装
+          //time: {required: "希望の時間帯を選択してください"},// NOTE: 必須メッセージを name="time"に実装
+          //time: {required: "希望の時間帯を選択してください"},// NOTE: 必須メッセージを name="time"に実装
+        };
+
+        // 入力ルール　動的
+        // NOTE: inputタグなどに data-jquery-validate-rule="phone" などを付けて指定
+        $('[data-jquery-validate-rule]').each(function () {
+          let $input = $(this);
+          let name = $input.attr('name');
+
+          // ルールの動的追加
+          let ruleList = $input.attr('data-jquery-validate-rule').split(/\s*,\s*/);
+          for(let i in ruleList){
+
+            // ルールの名称（HTMLに記載したもの）
+            let rule = ruleList[i];
+
+            // カタカナ
+            if (rule === 'katakana') {
+              if (!(name in rules)) rules[name] = {};
+              rules[name]['katakana'] = true;
+            }
+
+            // 半角英数字
+            if (rule === 'alpha-num') {
+              if (!(name in rules)) rules[name] = {};
+              rules[name]['alphaNumeric'] = true;
+            }
+
+            // パスワード
+            if (rule === 'password') {
+              if (!(name in rules)) rules[name] = {};
+              rules[name]['pw'] = true;
+            }
+
+            // 使用不可な文字
+            if (rule === 'no-valid-str') {
+              if (!(name in rules)) rules[name] = {};
+              rules[name]['noValidString'] = true;
+            }
+
+            // 電話番号（ハイフン可能）
+            if (rule === 'phone') {
+              if (!(name in rules)) rules[name] = {};
+              rules[name]['phone'] = true;
+            }
+
+            // 電話番号（数字のみ）
+            if (rule === 'phone-only-digit') {
+              if (!(name in rules)) rules[name] = {};
+              rules[name]['phoneOnlyDigit'] = true;
+            }
+
+            // 郵便番号
+            if (rule === 'zip') {
+              if (!(name in rules)) rules[name] = {};
+              rules[name]['zip'] = true;
+            }
+
+            // 正の数
+            if (rule === 'positive') {
+              if (!(name in rules)) rules[name] = {};
+              rules[name]['positive'] = true;
+            }
+
+            // 指定項目との等しさ（特定のID名セレクタのみ対応）
+            if (rule.indexOf('equalTo')!=-1&&rule.indexOf('#')!=-1) {
+              if (!(name in rules)) rules[name] = {};
+              if (!(name in messages)) messages[name] = {};
+              let id = (rule.split('#'))[1];
+              let selector = '#'+id;
+              if($(selector).length) rules[name]['equalTo'] = selector;
+              if($(selector).length) messages[name]['equalTo'] = "パスワードが一致しません" // エラーメッセージ
+            }
+          }
+        });
+
+        $('[action]').not('[role]').validate({
+          rules: rules,
+          messages: messages,
+          errorElement: 'span',
+          errorClass: 'jquery-validate--error',
+          errorPlacement: function ($err, $input) {
+
+            // NOTE: apend error element
+            console.log('form on error');
+            let $errWrap = $('<span class="item--error-wrapper"></span>');
+            $err.css({
+              'width': $input.outerWidth(),
+              //'height': $input.outerHeight(),
+            });
+            $errWrap.append($err);
+
+            if (String($input.attr('type')).match(/radio|checkbox/) && $input.closest('ul')[0]) {
+              // NOTE: radio, checkbox
+              $errWrap.addClass('is--ul');
+              $input.closest('ul').before($errWrap);
+            } else {
+              // NOTE: その他の通常のバリデーション
+              if (
+                $input.parent().hasClass('pwd-input-wrap')
+                || $input.parent().hasClass('fieldset')
+                || $input.parent().hasClass('select')
+                || $input.parent().hasClass('input-select')
+              ) {
+                $input.parent().before($errWrap);
+              } else {
+                $input.before($errWrap);
+              }
+            }
+
+            // NOTE: auto scroll for error item
+            let firstError = $('.jquery-validate--error').eq(0).offset().top;
+            let position = firstError > window.innerHeight / 2 ? firstError - ( window.innerHeight / 2 ) : 0;
+            $('html, body').stop().animate({ scrollTop: position }, 400);
+          }
+        });
+
+        // NOTE: do valid by real-time
+        $(document).on('change','[action]:not([role])',function(){
+          let $form = $(this);
+          let is__valid = $form.valid();
+          if (is__valid) {
+            $('.item--error-wrapper').remove();
+          }
+        });
+      })
+    </script>
+

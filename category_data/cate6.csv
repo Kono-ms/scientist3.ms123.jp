@@ -1,0 +1,103 @@
+"第一階層","第二階層","第三階層","第四階層"
+"DMPK","Radioanalysis","Stand-alone Radioanalysis of Animal Pre-clinical Samples
+Stand-alone Radioanalysis of Human Clinical Samples",""
+"","in vivo Pharmacokinetics","Ocular Pharmacokinetic (PK) Screening","Ocular Pharmacokinetic (PK) Screening - Dog / Canine
+Ocular Pharmacokinetic (PK) Screening - Monkey / Non-human Primate
+Ocular Pharmacokinetic (PK) Screening - Other Species
+Ocular Pharmacokinetic (PK) Screening - Rabbit
+Ocular Pharmacokinetic (PK) Screening - Rat"
+"","","Pharmacokinetic (PK) Screening","Pharmacokinetic (PK) Screening - Dog / Canine
+Pharmacokinetic (PK) Screening - Monkey / Non-human Primate
+Pharmacokinetic (PK) Screening - Mouse / Murine
+Pharmacokinetic (PK) Screening - Other Species
+Pharmacokinetic (PK) Screening - Rat"
+"","","Other","Bioequivalence Studies
+in vivo Pharmacokinetics
+In Vivo PK Consulting
+Mouse Efficacy Combination
+Mouse Efficacy Monotherapy
+PK PD Modeling & Analysis
+Rat Efficacy Combination
+Rat Efficacy Monotherapy
+Repetitive Maximum Tolerated Dose (MTD) Rat Study
+Single Maximum Tolerated Dose (MTD) Mouse Study
+Single Maximum Tolerated Dose (MTD) Rat Study"
+"","in vitro ADME","Cell Permeability and Absorption Models","Blood Brain Barrier
+Buccal Permeability
+Caco-2 Cell Permeability
+Human Blood Brain Barrier on a Chip (BBBoC)
+Intestinal Permeability
+Membrane Permeability (PAMPA)
+Membrane Transporters
+Multidrug Resistance
+Nasal Permeability
+Ocular Permeability
+Sandwich-Culture Hepatocytes
+Skin Permeability
+Vaginal Permeability"
+"","","Compound Distribution","Cell Fractionation
+Compound Distribution
+Drug Distribution Studies
+PharmacoScan - A Pharmacogenomics Tool
+Red Blood Cell (RBC) Partitioning (Blood/Plasma Ratio)"
+"","","Conjugate Detection","Conjugate Detection
+Glucuronyltransferase
+Glutathione Transferase
+N Acetyl Transferase
+Sulfotransferase"
+"","","Cytochrome P450s","CYP Induction
+CYP Inhibition Assay
+CYP Isozyme Mapping
+Cytochrome P450s"
+"","","Drug-Drug Interactions","Corning(R) HepatoCells
+Drug Drug Interactions
+Phase I Metabolism
+Phase II Metabolism"
+"","","Metabolic Stability","GI Fluid Stability
+Metabolic Stability
+Metabolic Stability in Hepatocytes
+Metabolic Stability in Microsomes
+Plasma Stability Assay"
+"","","Metabolite Identification and Profiling","Isotopic Labeling
+Metabolite Generation
+Metabolite Identification
+Metabolite Quantification
+Metabolite Structural Elucidation
+Metabolite Synthesis
+NMR Methods
+No Label Methods
+Non Isotopic Labeling
+Radiolabeled Tracers
+Reactive Metabolite
+Reference Standards"
+"","","Protein Binding","Equilibrium Dialysis
+Protein Aggregation
+Protein Binding HPLC
+Protein Binding Ultrafiltration"
+"","","Other",""
+"","in vivo ADME","Excretion, Mass Balance, and Expired Air","Expired Air Study - Mouse / Murine
+Expired Air Study - Other Species
+Expired Air Study - Rat
+Mass Balance Study - Dog / Canine
+Mass Balance Study - Monkey / Non-human Primate
+Mass Balance Study - Other Species
+Mass Balance Study - Rat"
+"","","Placental Transfer and Milk Secretion","Milk Secretion Study - Other Species
+Milk Secretion Study - Rat
+Placental Transfer Study - Other Species
+Placental Transfer Study - Rabbit
+Placental Transfer Study - Rat
+"
+"","","QWBA / Tissue Distribution","Ocular Distribution Study - Dog / Canine
+Ocular Distribution Study - Monkey / Non-human Primate
+Ocular Distribution Study - Other Species
+Ocular Distribution Study - Rabbit
+Ocular Distribution Study - Rat
+Quantitative Whole Body Autoradiography (QWBA) - Non-rodent Species
+Quantitative Whole Body Autoradiography (QWBA) - Rodent Species (Mouse, Rat)"
+"","","Surgical Models","Chronic Bile Duct Cannulation (BDC) Study - Dog / Canine
+Chronic Bile Duct Cannulation (BDC) Study - Monkey / Non-human Primate
+Chronic Bile Duct Cannulation (BDC) Study - Other Species
+Chronic Bile Duct Cannulation (BDC) Study - Rat"
+"","","Other","in vivo Radiolabeled Metabolism
+Mass Balance"

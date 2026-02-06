@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>pdf downloader design test</title>
+<meta name="description" content="" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/common/css/import.css" />
+<link rel="stylesheet" href="/common/css/jquery.bxslider.css" />
+</head>
+
+<body>
+  <div id="top" class="wrap top">
+    <div style="border: solid 2px #ccc; padding: 2em; max-width: 600px; margin: 0 auto;">
+
+      <p style="font-size: 21px; font-weight: 700; line-height: 2;">既にCSSに組み込みましたので、サイト内のどこでも、何らかの要素の中に自由に配置可能（Adobe Flashなどと同じ方法でかつ、Adobe readerなしで表示可能です。）</p>
+
+      <!--PDF-->
+      <div class="pdf-viewer">
+        <nav class="pdf-viewer__nav">
+          <div class="btn">
+            <a href="">ダウンロード</a>
+          </div>
+          <div class="btn">
+            <a href="">送付</a>
+          </div>
+          <div class="btn">
+            <a href="">閉じる</a>
+          </div>
+        </nav>
+        <object data="print.php#toolbar=0" type=""></object>
+      </div>
+      <!--/PDF-->
+
+    </div>
+  </div>
+</body>
+</html>
