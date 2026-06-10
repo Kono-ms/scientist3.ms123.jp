@@ -1771,6 +1771,13 @@ echo "<!--1a-->";
 		$str=str_replace("[H_M2_DETAIL]","{}",$str);
 
 
+		//「見積り送付」「追加見積り」の確認画面（saveconf）に、
+		//送信後の見積書（CB宛て英語版）と同等の見積書風プレビューを表示
+		if( ($type=="見積り送付" || $type=="追加見積り") && $mode=="saveconf" ){
+			$quotation_preview=makeConfQuotationPreview($key,$shodan_id);
+			$str=str_replace("[QUOTATION_PREVIEW_AREA]",$quotation_preview,$str);
+		}
+
 	}
 	else if($key) {
 echo "<!--2a-->";
@@ -3022,6 +3029,9 @@ echo "<!--3a-->";
 	}
 
 	$str=str_replace("[BASE_URL]",BASE_URL,$str);
+
+	//見積書風プレビュー未生成時（エラー戻り等）にタグがのこらないための処理
+	$str=str_replace("[QUOTATION_PREVIEW_AREA]","",$str);
 
 	print $str;
 
@@ -5564,6 +5574,272 @@ function ListSQLSearch($word,$word2)
 
 	return $function_ret;
 } 
+
+//=========================================================================================================
+//名前 確認画面用の見積書（CB宛て英語版）プレビュー生成
+//機能 「見積り送付」「追加見積り」の確認画面（saveconf）で、
+//     送信後にメッセージのリンク（mode=disp_frame）から表示される見積書（CB宛て英語版）と
+//     同等の見積書風HTMLを、DB保存前のPOSTデータから組み立てる。
+//
+//     支払い方法による分岐（送信後に作られる見積書の構成にあわせる）
+//     ・一括払い（Once）：全Itemで1枚。
+//     ・2回払い（Split）：送信後にユーザに表示されるのはPart0（全Itemまとめ）のため全Itemで1枚。
+//     　Item毎の支払い条件文言は、支払いタイミングのチェック（Part1=前払い/未チェック=Part2=後払い）で切替。
+//     ・マイルストーン払い（Milestone）：Item毎にPartNの見積書が作られ、Part0はユーザに表示されないため、
+//     　Item毎に1枚ずつ生成。特記事項・前払い文言もItem毎の値（M2_SPECIAL_NOTE_TMP/MAEBARAI）を使用。
+//
+//     ※この段階ではDB未保存のため、SCNo等の送信時に採番・確定される項目は空欄となる。
+//引数 $key:DAT_FILESTATUSのID（Revise Quotation経由時のみ）、$shodan_id:商談ID
+//戻値 見積書風HTML（文字列）
+//=========================================================================================================
+function makeConfQuotationPreview($key,$shodan_id)
+{
+	eval(globals());
+
+	//商談IDが空の場合（Revise Quotation経由）はkeyのレコードから取得
+	//（SaveDataと同じ補完方法）
+	if($shodan_id=="" && $key!=""){
+		$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID=".$key.";";
+		$rs=mysqli_query(ConnDB(),$StrSQL);
+		$item_filestatus = mysqli_fetch_assoc($rs);
+		$shodan_id=$item_filestatus['SHODAN_ID'];
+	}
+
+	//商談（案件名と研究者MID）
+	$StrSQL="SELECT * FROM DAT_SHODAN WHERE ID='".$shodan_id."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$item_shodan=mysqli_fetch_assoc($rs);
+
+	//サプライヤー（ログイン中のM1）
+	$StrSQL="SELECT * FROM DAT_M1 WHERE MID='".$_SESSION['MID']."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$pdf_m1_item=mysqli_fetch_assoc($rs);
+
+	//研究者
+	$StrSQL="SELECT * FROM DAT_M2 WHERE MID='".$item_shodan["MID2"]."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$pdf_m2_item=mysqli_fetch_assoc($rs);
+
+	//通貨に対応する四捨五入のまるめる桁指定（makeServiceAreaと同じ）
+	if($_POST['M2_CURRENCY']=="M2_CURRENCY:JPY"){
+		$decimal_point=0;
+	}else{
+		$decimal_point=2;
+	}
+	$disp_currency=str_replace("M2_CURRENCY:","",$_POST['M2_CURRENCY']);
+
+	//税率1
+	//国内サプライヤー10%,海外サプライヤー0%。
+	//送信前のためDB値（M2_TAX_RATE1）はなく、自動入力の初期ルールと同じ値を使う（makeServiceAreaと同じ）。
+	if($pdf_m1_item["M1_DVAL04"]=="M1_DVAL04:Japan"){
+		$tax_rate1=10;
+	}else{
+		$tax_rate1=0;
+	}
+
+	//ヘッダ情報（disp_frameと同じテンプレートを流用しPOSTデータで置換）
+	$info_tpl=file_get_contents("../common/template/preview_mitsu_info_cb.html");
+
+	$info_tpl=str_replace("[PDF_SHODAN_TITLE]",$item_shodan["TITLE"],$info_tpl);
+	$info_tpl=str_replace("[M2_STUDY_CODE]",$_POST['M2_STUDY_CODE'],$info_tpl);
+	$info_tpl=str_replace("[M2_QUOTE_NO]",$_POST['M2_QUOTE_NO'],$info_tpl);
+
+	//Date
+	//送信後の見積書はNEWDATE（送信日時）が表示される。
+	//確認段階ではレコードがないため、フォームのDate（自動セットの本日）を表示。
+	$disp_date="";
+	$date=date_create($_POST['M2_DATE']);
+	if($_POST['M2_DATE']!="" && $date){
+		$disp_date=$date->format('Y/m/d');
+	}else{
+		$disp_date=date('Y/m/d');
+	}
+	$info_tpl=str_replace("[NEWDATE]",$disp_date,$info_tpl);
+
+	//有効期限
+	$disp_valid_until="";
+	$date=date_create($_POST['M2_QUOTE_VALID_UNTIL']);
+	if($_POST['M2_QUOTE_VALID_UNTIL']!="" && $date){
+		$disp_valid_until=$date->format('Y/m/d');
+	}
+	$info_tpl=str_replace("[FORMATTED_M2_QUOTE_VALID_UNTIL]",$disp_valid_until,$info_tpl);
+
+	//「Scientist3 Control No.」は送信時に採番されるため確認段階では空欄
+	$info_tpl=str_replace("[SCNO]","",$info_tpl);
+
+	//CBの見積書に表示するShip to（makePreviewInfo_CBと同じ）
+	$pdf_address4="";
+	if($pdf_m1_item["M1_DVAL04"]!="M1_DVAL04:Japan"){
+		//CBの物流センターの住所
+		$pdf_address4="Cosmo Bio Shinsuna Distribution Center ShinSuna 1-Chome, Koto-Ku,Tokyo 136-0075, Japan 3F 12-39 TEL: 81-3-5632-9608";
+	}else{
+		//研究者の「住所（英語表記）」
+		$pdf_address4=$pdf_m2_item["M2_DVAL20"];
+	}
+	$info_tpl=str_replace("[PDF_ADDRESS4]",$pdf_address4,$info_tpl);
+
+	//サプライヤーのCompany Information (基本情報)のAddress Line 1～Country（makePreviewInfo_CBと同じ）
+	$pdf_address3="";
+	$pdf_address3.=$pdf_m1_item["M1_ETC129"];
+	$pdf_address3.=!empty($pdf_m1_item["M1_ETC130"]) ? ", ".$pdf_m1_item["M1_ETC130"] : "";
+	$pdf_address3.=!empty($pdf_m1_item["M1_ETC131"]) ? ", ".$pdf_m1_item["M1_ETC131"] : "";
+	$pdf_address3.=!empty($pdf_m1_item["M1_ETC132"]) ? ", ".$pdf_m1_item["M1_ETC132"] : "";
+	$pdf_address3.=!empty($pdf_m1_item["M1_ETC133"]) ? ", ".str_replace("M1_ETC133:","",$pdf_m1_item["M1_ETC133"]) : "";
+	$info_tpl=str_replace("[PDF_ADDRESS3]",$pdf_address3,$info_tpl);
+
+	//のこりの[PDF_M1-*][PDF_M2-*]タグを一括置換（makePreviewInfo_CBと同じ）
+	foreach ($pdf_m1_item as $idx => $val) {
+		$info_tpl=str_replace("[PDF_M1-".$idx."]",$val,$info_tpl);
+		$info_tpl=str_replace("[D-PDF_M1-".$idx."]", str_replace($idx.":","",$val), $info_tpl);
+	}
+	foreach ($pdf_m2_item as $idx => $val) {
+		$info_tpl=str_replace("[PDF_M2-".$idx."]",$val,$info_tpl);
+		$info_tpl=str_replace("[D-PDF_M2-".$idx."]", str_replace($idx.":","",$val), $info_tpl);
+	}
+
+	//支払い方法毎に見積書ブロック（1枚分）の構成を決める
+	$blocks=array();
+	if($_POST['M2_PAY_TYPE']=="Milestone"){
+		//マイルストーン払い：Item毎に1枚（PartN相当。Part0はユーザに表示されないため作らない）
+		for($detail_key = 0; $detail_key < count($_POST['M2_DETAIL_ITEM']); $detail_key++) {
+			$blocks[]=array($detail_key);
+		}
+	}else{
+		//一括払い：全Itemで1枚
+		//2回払い：ユーザに表示されるのはPart0（全Itemまとめ）のため全Itemで1枚
+		$tmp_all=array();
+		for($detail_key = 0; $detail_key < count($_POST['M2_DETAIL_ITEM']); $detail_key++) {
+			$tmp_all[]=$detail_key;
+		}
+		$blocks[]=$tmp_all;
+	}
+
+	//Item毎の支払い条件（Payment terms）の文言（disp_frameと同じ文言）
+	$m2_payment_note_eng_before="A prepaid invoice will be issued at the time of order.";
+	$m2_payment_note_eng_after="Invoices will be issued upon completion of acceptance inspection of the report or upon completion of delivery of goods.";
+
+	$block_tpl=file_get_contents("m2_conf_quotation.html");
+	$item_tpl_org=file_get_contents("../common/template/add_detail_area2.html");
+	$sf_tpl_org=file_get_contents("../common/template/service_fee_typeA.html");
+
+	$output="";
+	$block_no=0;
+	foreach($blocks as $block_item_keys){
+		$block_no++;
+		$tpl=$block_tpl;
+
+		//マイルストーン払いは見積書が複数枚並ぶため、どのItemの見積書かラベルを表示
+		if($_POST['M2_PAY_TYPE']=="Milestone"){
+			$tpl=DispParam($tpl,"QUOTATION_LABEL");
+			$label="Quotation ".$block_no." / ".count($blocks)."：".$_POST['M2_DETAIL_ITEM'][$block_item_keys[0]];
+			$tpl=str_replace("[QUOTATION_LABEL]",$label,$tpl);
+		}else{
+			$tpl=DispParamNone($tpl,"QUOTATION_LABEL");
+		}
+
+		$tpl=str_replace("[PREVIEW_INFO_CB]",$info_tpl,$tpl);
+
+		//明細行（disp_frameと同じテンプレートのCB面を流用）
+		$add_detail_area2="";
+		$syoke1=0;
+		$sum_m2_detail_sp_discount=0;
+		$detail_no=0;
+		foreach($block_item_keys as $detail_key){
+			$detail_no++;
+			$item_tpl=str_replace('XXX',$detail_no,$item_tpl_org);
+			$item_tpl=DispParam($item_tpl,"PREVIEW_ITEM_DETAIL_CB_AREA");
+			$item_tpl=DispParamNone($item_tpl,"PREVIEW_ITEM_DETAIL_R_AREA");
+
+			//フロントでアイテムナンバーが連番にならない場合の対応
+			//（テンポラリー項目（MAEBARAI、M2_SPECIAL_NOTE_TMP）はItemNoの値で参照する）
+			$item_no=$_POST['ItemNo'][$detail_key];
+			if(is_null($item_no) || $item_no==""){
+				$item_no=$detail_key+1;
+			}
+
+			//Item毎の支払い条件（Payment terms）
+			//・一括払い：前払いチェック（MAEBARAI[1]）ありなら全Itemが前払い表記
+			//・2回払い：支払いタイミングのチェックあり（Part1）が前払い表記、未チェック（Part2）は後払い表記
+			//・マイルストーン払い：Item毎の前払いチェック（MAEBARAI[ItemNo]）ありなら前払い表記
+			//（SaveDataでM_STATUSに「(前払い)」が付く条件、およびdisp_frameの文言切替と同じ判定）
+			$m2_payment_note_eng_disp=$m2_payment_note_eng_after;
+			if($_POST['M2_PAY_TYPE']=="Once"){
+				if( !is_null($_POST["MAEBARAI"][1]) && $_POST["MAEBARAI"][1]!="" ){
+					$m2_payment_note_eng_disp=$m2_payment_note_eng_before;
+				}
+			}else if($_POST['M2_PAY_TYPE']=="Split"){
+				if($_POST['M2_DETAIL_SPLIT_PART'][$detail_key]=="Part1"){
+					$m2_payment_note_eng_disp=$m2_payment_note_eng_before;
+				}
+			}else if($_POST['M2_PAY_TYPE']=="Milestone"){
+				if( !is_null($_POST["MAEBARAI"][$item_no]) && $_POST["MAEBARAI"][$item_no]!="" ){
+					$m2_payment_note_eng_disp=$m2_payment_note_eng_before;
+				}
+			}
+			$item_tpl=str_replace("[D-M2_PAYMENT_NOTE_ENG_".$detail_no."]",$m2_payment_note_eng_disp,$item_tpl);
+
+			$item_tpl=str_replace("[D-M2_CURRENCY]",$disp_currency,$item_tpl);
+			$item_tpl=str_replace("[D-M2_DETAIL_ITEM_".$detail_no."]",$_POST['M2_DETAIL_ITEM'][$detail_key],$item_tpl);
+			$item_tpl=str_replace("[D-M2_DETAIL_DESCRIPTION_".$detail_no."]",str_replace("\n", '<br>', $_POST['M2_DETAIL_DESCRIPTION'][$detail_key]),$item_tpl); // Dはbr変換
+			$item_tpl=str_replace("[D-M2_DETAIL_QUANTITY_".$detail_no."]",$_POST['M2_DETAIL_QUANTITY'][$detail_key],$item_tpl);
+			$item_tpl=str_replace("[D-M2_DETAIL_UNIT_PRICE_".$detail_no."]",$_POST['M2_DETAIL_UNIT_PRICE'][$detail_key],$item_tpl);
+			$item_tpl=str_replace("[D-M2_DETAIL_SP_DISCOUNT_".$detail_no."]",$_POST['M2_DETAIL_SP_DISCOUNT'][$detail_key],$item_tpl);
+			$item_tpl=str_replace("[D-M2_DETAIL_PRICE_".$detail_no."]",$_POST['M2_DETAIL_PRICE'][$detail_key],$item_tpl);
+			$item_tpl=str_replace("[D-M2_DETAIL_NOTE_".$detail_no."]",str_replace("\n", '<br>', $_POST['M2_DETAIL_NOTE'][$detail_key]),$item_tpl); // Dはbr変換
+			$item_tpl=str_replace("[D-M2_SPECIAL_NOTE_TMP_".$detail_no."]",str_replace("\n", '<br>', $_POST['M2_SPECIAL_NOTE_TMP'][$item_no]),$item_tpl); // Dはbr変換
+
+			$add_detail_area2.=$item_tpl;
+
+			//小計1（=Item毎の合計（M2_DETAIL_PRICE）の合計）と値引き合計（makeServiceAreaと同じ）
+			if(is_numeric($_POST['M2_DETAIL_PRICE'][$detail_key])){
+				$syoke1=$syoke1+$_POST['M2_DETAIL_PRICE'][$detail_key];
+			}
+			if(is_numeric($_POST['M2_DETAIL_SP_DISCOUNT'][$detail_key])){
+				$sum_m2_detail_sp_discount=$sum_m2_detail_sp_discount+$_POST['M2_DETAIL_SP_DISCOUNT'][$detail_key];
+			}
+		}
+		$tpl=str_replace("[ADD_DETAIL_AREA2]",$add_detail_area2,$tpl);
+
+		$sum_m2_detail_sp_discount=round($sum_m2_detail_sp_discount,$decimal_point);
+		$tpl=str_replace("[SUM_M2_DETAIL_SP_DISCOUNT]",$sum_m2_detail_sp_discount,$tpl);
+
+		//特記事項
+		//・一括払い/2回払い：Special Note
+		//・マイルストーン払い：Item毎のSpecial Note（送信後はPartN毎のM2_SPECIAL_NOTEに保存される値）
+		if($_POST['M2_PAY_TYPE']=="Milestone"){
+			$item_no=$_POST['ItemNo'][$block_item_keys[0]];
+			if(is_null($item_no) || $item_no==""){
+				$item_no=$block_item_keys[0]+1;
+			}
+			$tpl=str_replace("[D-M2_SPECIAL_NOTE]",$_POST['M2_SPECIAL_NOTE_TMP'][$item_no],$tpl);
+		}else{
+			$tpl=str_replace("[D-M2_SPECIAL_NOTE]",$_POST['M2_SPECIAL_NOTE'],$tpl);
+		}
+
+		//小計・税率・消費税・合計（makeServiceAreaのCB面と同じ計算・丸め）
+		$sf_tpl=$sf_tpl_org;
+		$sf_tpl=DispParam($sf_tpl,"PREVIEW_SYOKEI_CB_AREA");
+		$sf_tpl=DispParamNone($sf_tpl,"PREVIEW_SYOKEI_R_AREA");
+
+		$syoke1=round($syoke1,$decimal_point);
+		$tax_bill1=$tax_rate1*$syoke1/100;
+		$tax_bill1=round($tax_bill1,$decimal_point);
+		$pdf_total1=$syoke1+$tax_bill1;
+		$pdf_total1=round($pdf_total1,$decimal_point);
+
+		$sf_tpl=str_replace("[MITSUMORISYO_SUBTOTAL1]",$syoke1,$sf_tpl);
+		$sf_tpl=str_replace("[MITSUMORISYO_TAX_RATE1]",$tax_rate1,$sf_tpl);
+		$sf_tpl=str_replace("[MITSUMORISYO_TAX_BILL1]",$tax_bill1,$sf_tpl);
+		$sf_tpl=str_replace("[PDF_TOTAL1]",$pdf_total1,$sf_tpl);
+		$sf_tpl=str_replace("[D-M2_CURRENCY]",$disp_currency,$sf_tpl);
+
+		$tpl=str_replace("[SERVICE_FEE_AREA]",$sf_tpl,$tpl);
+
+		$output.=$tpl;
+	}
+
+	return $output;
+}
 
 //=========================================================================================================
 //名前 DB初期化

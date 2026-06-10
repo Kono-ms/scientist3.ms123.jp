@@ -9,6 +9,8 @@
   <meta name="description"
     content="[PAGE_TITLE]（Confirmation）のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
   <!--template=/common/template/head.html-->
+  <!-- 見積書風プレビュー用 -->
+  <link rel="stylesheet" href="/common/css/style-estimate.css" />
 </head>
 
 <body>
@@ -52,144 +54,12 @@
         </div>
         [ERR-E]
         <div class="form-box">
-          <div class="formset">
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Project name</span></div>
-              <div class="formset__input">[D-TITLE]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Supplier</span></div>
-              <div class="formset__input">[M1_VIEW]</div>
-            </div>
+          <!-- 見積書風プレビュー -->
+          <!-- 送信後にメッセージのリンクから表示される見積書（CB宛て英語版）と同等の内容をPOSTデータから組み立てて表示。 -->
+          <!-- 一括払い・2回払いは1枚（2回払いは全Itemまとめ）、マイルストーン払いはItem毎に1枚表示される。 -->
+          <!-- SCNo等、送信時に採番・確定される項目はこの段階では空欄となる。 -->
+          [QUOTATION_PREVIEW_AREA]
 
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl"><strong>Matters to be confirmed</strong></div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Form of 納品<span class="formset__must">Mandatory</span></div>
-              <div class="formset__input">[D-M2_NOHIN_TYPE]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Payment Terms<span class="formset__must">Mandatory</span></div>
-              <div class="formset__input">[D-M2_PAY_TYPE]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">見積ステータス（仮：テスト用）<span class="formset__must">Mandatory</span></div>
-              <div class="formset__input">[D-M_STATUS]</div>
-            </div>
-
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl">
-                <strong>Basic items</strong>
-              </div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Quote No.</div>
-              <div class="formset__input">[D-M2_QUOTE_NO]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Study code</div>
-              <div class="formset__input">[D-M2_STUDY_CODE]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Date<span class="formset__must">Mandatory</span></div>
-              <div class="formset__input">[D-M2_DATE]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Quote Valid Until<span class="formset__must">Mandatory</span></div>
-              <div class="formset__input">[D-M2_QUOTE_VALID_UNTIL]</div>
-            </div>
-            <!--
-            <div class="formset__item">
-              <div class="formset__ttl">Description<span class="formset__must">Mandatory</span></div>
-              <div class="formset__input">[D-M2_DESCRIPTION]</div>
-            </div>
-            -->
-            <div class="formset__item">
-              <div class="formset__ttl">Currency<span class="formset__must">Mandatory</span></div>
-              <div class="formset__input"><span data-currency>[D-M2_CURRENCY]</span></div>
-            </div>
-
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl"><strong>Description</strong></div>
-            </div>
-
-            [ADD_DETAIL_AREA]
-
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl"><strong></strong></div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Special discount</div>
-              <div class="formset__input"><span data-text-format="price">[D-M2_SPECIAL_DISCOUNT]</span></div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Special Note</div>
-              <div class="formset__input">[D-M2_SPECIAL_NOTE]</div>
-            </div>
-
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl">
-                <strong>SHIP TO</strong>
-              </div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Organization Name</div>
-              <div class="formset__input">[D-M2_SHIP_TO_SPT_1]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Address Line 1</div>
-              <div class="formset__input">[D-M2_SHIP_TO_SPT_2]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Address Line 2</div>
-              <div class="formset__input">[D-M2_SHIP_TO_SPT_3]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">City/Province</div>
-              <div class="formset__input">[D-M2_SHIP_TO_SPT_4]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">ZIP/Postal Code</div>
-              <div class="formset__input">[D-M2_SHIP_TO_SPT_5]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Country</div>
-              <div class="formset__input">[D-M2_SHIP_TO_SPT_6]</div>
-            </div>
-
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl">
-                <strong>BILL TO</strong>
-              </div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Organization Name</div>
-              <div class="formset__input">[D-M2_BILL_TO_SPT_1]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Address Line 1</div>
-              <div class="formset__input">[D-M2_BILL_TO_SPT_2]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Address Line 2</div>
-              <div class="formset__input">[D-M2_BILL_TO_SPT_3]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">City/Province</div>
-              <div class="formset__input">[D-M2_BILL_TO_SPT_4]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">ZIP/Postal Code</div>
-              <div class="formset__input">[D-M2_BILL_TO_SPT_5]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Country</div>
-              <div class="formset__input">[D-M2_BILL_TO_SPT_6]</div>
-            </div>
-
-
-          </div>
           <form method="post" action="./" enctype="multipart/form-data">
             <input type="hidden" name="type" value="[TYPE]">
             <input type="hidden" name="mode" value="[NEXTMODE]">
