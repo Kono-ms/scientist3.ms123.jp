@@ -14,11 +14,11 @@
   padding: 0 4rem;
   position: relative
 }
-@media only screen and (max-width:959px) {
+@media only screen and (max-width:959.98px) {
   .base_wrap {
   }
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .base_wrap {
     padding: 0 1rem;
   }
@@ -29,7 +29,7 @@
   display: flex;
   justify-content: space-between;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .flex_wrap {
     flex-wrap: wrap;
   }
@@ -92,7 +92,7 @@
   color: #fff;
   padding: 12px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .TITLE01 {
     font-size: 24px;
   }
@@ -282,7 +282,7 @@
   margin-right: auto;
   padding-top: 24px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .columun_center_wrap {
     flex-basis: 100%;
     max-width: 100%;
@@ -345,7 +345,7 @@
   display: inline-block;
   font-size: 12px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .columun_center_wrap .columun_list_wrap {
     padding: 0;
   }
@@ -533,7 +533,7 @@
 }
 
 /*** タブレット端末用**/
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
 
   .flex_wrap .columun_left_wrap {
     padding: 0;
@@ -711,7 +711,7 @@
   overflow: hidden;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
 
   /*** ページング**/
   .paging {

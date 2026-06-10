@@ -1,12 +1,13 @@
 <script>
-    $(document).ready(function () {
-        var wsize = $(window).width();
-         var hsize = $(window).height();
-        $(".ifrm_mcontact").css("width", (wsize - 40) + "px");
-        $(".ifrm_mcontact").css("height", (hsize - 40) + "px");
-        $(".ifrm_mcontact2").css("width", (wsize - 40) + "px");
-        $(".ifrm_mcontact2").css("height", (hsize - 40) + "px");
-    });
+    // NOTE: CSSで解決させる方法に変更
+    //$(document).ready(function () {
+    //    var wsize = $(window).width();
+    //    var hsize = $(window).height();
+    //    $(".ifrm_mcontact").css("width", (wsize - 40) + "px");
+    //    $(".ifrm_mcontact").css("height", (hsize - 40) + "px");
+    //    $(".ifrm_mcontact2").css("width", (wsize - 40) + "px");
+    //    $(".ifrm_mcontact2").css("height", (hsize - 40) + "px");
+    //});
 
     function open_mcontact2(url) {
         $('.ifrm_mcontact2').attr('src', url);
@@ -26,6 +27,26 @@
     }
     function popup_preview_cb() {
         var url=document.getElementById('OPT_PREVIEW_LIST_CB').value;
+        //console.log('preview url:'+url);
+        if(url==""){
+            return false;
+        }
+        $('.ifrm_mcontact2').attr('src', url);
+        $('#mask_mcontact2').show();
+        $('#popup_mcontact2').fadeIn();
+    }
+    function popup_preview_hk_cb() {
+        var url=document.getElementById('OPT_PREVIEW_LIST_HK_CB').value;
+        //console.log('preview url:'+url);
+        if(url==""){
+            return false;
+        }
+        $('.ifrm_mcontact2').attr('src', url);
+        $('#mask_mcontact2').show();
+        $('#popup_mcontact2').fadeIn();
+    }
+    function popup_preview_hk_r() {
+        var url=document.getElementById('OPT_PREVIEW_LIST_HK_R').value;
         //console.log('preview url:'+url);
         if(url==""){
             return false;
@@ -145,7 +166,7 @@
                                             value="[EDITDATE]" size="90"></td>-->
                                 </tr>
                                 <tr>
-                                    <th>見積書（CB宛）<span style="color: tomato;font-size: 1.4rem;">※工事中</span></th>
+                                    <th>見積書（CB宛）<span style="color: tomato;font-size: 1.4rem;"></span></th>
                                     <td>
                                         <select name="OPT_PREVIEW_LIST_CB" id="OPT_PREVIEW_LIST_CB" class="input_select form-control">
                                             <option value="">▼選択して下さい</option>
@@ -155,7 +176,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>見積書（研究者宛）<span style="color: tomato;font-size: 1.4rem;">※工事中</span></th>
+                                    <th>見積書（研究者宛）<span style="color: tomato;font-size: 1.4rem;"></span></th>
                                     <td>
                                         <select name="OPT_PREVIEW_LIST_R" id="OPT_PREVIEW_LIST_R" class="input_select form-control">
                                             <option value="">▼選択して下さい</option>
@@ -164,9 +185,28 @@
                                         <a href="javascript:popup_preview_r();" id="preview_btn_r" class="btn btn-default btn-xs">プレビュー</a>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>発注書（CB宛て）<span style="color: tomato;font-size: 1.4rem;"></span></th>
+                                    <td>
+                                        <select name="OPT_PREVIEW_LIST_HK_CB" id="OPT_PREVIEW_LIST_HK_CB" class="input_select form-control">
+                                            <option value="">▼選択して下さい</option>
+                                            [OPT_PREVIEW_LIST_HK_CB]
+                                        </select>
+                                        <a href="javascript:popup_preview_hk_cb();" id="preview_btn_hk_cb" class="btn btn-default btn-xs">プレビュー</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>発注書（R宛て）<span style="color: tomato;font-size: 1.4rem;"></span></th>
+                                    <td>
+                                        <select name="OPT_PREVIEW_LIST_HK_R" id="OPT_PREVIEW_LIST_HK_R" class="input_select form-control">
+                                            <option value="">▼選択して下さい</option>
+                                            [OPT_PREVIEW_LIST_HK_R]
+                                        </select>
+                                        <a href="javascript:popup_preview_hk_r();" id="preview_btn_hk_r" class="btn btn-default btn-xs">プレビュー</a>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-                        <a href="javascript:open_mcontact2('https://scientist3.ms123.jp/a_filestatus/?mode=disp_frame1&preview_type=cb&key=1661&lid=&sort=&word=&page=1')">test</a>
                         <button name="submit" value="submit" type="submit" class="btn btn-block btn-default"
                             onclick="var ok=confirm('この内容で保存しますか？');if (ok) this.form.submit(); return false;"><i
                                 class="fa fa-floppy-o"></i> 保存</button>
@@ -181,57 +221,42 @@
     </div><!-- /.row -->
 </section><!-- /.content -->
 
-<style>
-    .popup_mcontact {
-      display: none;
-      position: fixed;
-      left: 20px;
-      top: 20px;
-      width: calc(100% - 40px);
-      height: calc(100% - 40px);
-      z-index: 10002;
-  }
 
-  .mask_mcontact {
-      display: none;
-      position: fixed;
-      left: 0px;
-      top: 0px;
-      width: 100%;
-      height: 100%;
-      background-color: #808080;
-      opacity: 0.5;
-      z-index: 10001;
-  }
+<style>
+.popup_mcontact,
+.popup_mcontact2 {
+	--pop-offset: 40px;
+    display: none;
+    border: 1px solid #000;
+    background: #ddd;
+    position: fixed;
+    inset: var(--pop-offset);
+    z-index: 10002;
+}
+.ifrm_mcontact,
+.ifrm_mcontact2,
+.popup_mcontact iframe,
+.popup_mcontact2 iframe {
+    border: none;
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+.mask_mcontact {
+    display: none;
+    background: rgba(128,128,128,0.5);
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+}
 </style>
+
 <div id="popup_mcontact" class="popup_mcontact">
     <iframe class="ifrm_mcontact" src="" frameborder="none"></iframe>
 </div>
 <div id="mask_mcontact" class="mask_mcontact"> </div>
-
-<style>
-    .popup_mcontact2 {
-      display: none;
-      position: fixed;
-      left: 20px;
-      top: 20px;
-      width: calc(100% - 40px);
-      height: calc(100% - 40px);
-      z-index: 10002;
-  }
-
-  .mask_mcontact2 {
-      display: none;
-      position: fixed;
-      left: 0px;
-      top: 0px;
-      width: 100%;
-      height: 100%;
-      background-color: #808080;
-      opacity: 0.5;
-      z-index: 10001;
-  }
-</style>
 <div id="popup_mcontact2" class="popup_mcontact">
     <iframe class="ifrm_mcontact2" src="" frameborder="none"></iframe>
 </div>

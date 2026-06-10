@@ -95,6 +95,9 @@
   $FieldName[88]="S_STATUS";
   $FieldName[89]="S_ADD_CHARGE1";
   $FieldName[90]="S_ADD_CHARGE2";
+  $FieldName[91]="H_SHIP_TO_SPT_1";
+  $FieldName[92]="H_SHIP_TO_SPT_2";
+  $FieldName[93]="H_SHIP_TO_SPT_3";
 
 
   $FieldValue[0]="";
@@ -188,6 +191,9 @@
   $FieldValue[88]="";
   $FieldValue[89]="";
   $FieldValue[90]="";
+  $FieldValue[91]="";
+  $FieldValue[92]="";
+  $FieldValue[93]="";
 
 //入力フィールドの書式　0-TEXT, 1-SELECT, 2-RADIO, 3-CHECKBOX, 4-FILE
   $FieldAtt[0]="0";
@@ -282,6 +288,9 @@
   $FieldAtt[88]="0";
   $FieldAtt[89]="0";
   $FieldAtt[90]="0";
+  $FieldAtt[91]="0";
+  $FieldAtt[92]="0";
+  $FieldAtt[93]="0";
 
 //SELECT, RADIO, CHECKBOX時の値群
   $FieldParam[0]="";
@@ -375,10 +384,13 @@
   $FieldParam[88]="";
   $FieldParam[89]="";
   $FieldParam[90]="";
+  $FieldParam[91]="";
+  $FieldParam[92]="";
+  $FieldParam[93]="";
 
 
 //全フィールド数
-	$FieldMax=90;
+	$FieldMax=93;
 
 //キーフィールドの設定
 	$FieldKey=0;

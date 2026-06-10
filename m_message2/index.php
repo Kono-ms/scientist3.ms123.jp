@@ -360,8 +360,12 @@ function DispData($mode,$sort,$word,$word2,$key,$page,$lid,$token)
 			// ステータス
 			$status=$item['STATUS'];
 			if($status=="見積り依頼" || $status=="再見積り依頼" || $status=="見積り送付"
-			 || $status=='発注依頼' || $status=='決済者発注承認' || $status=='運営手数料追加'){
+			 || $status=='運営手数料追加'){
 				$status="見積り";
+			}
+
+			if($status=='発注依頼' || $status=="決済者発注承認"){
+				$status="発注";
 			}
 
 			if($status=="受注承認"  || 
@@ -372,6 +376,10 @@ function DispData($mode,$sort,$word,$word2,$key,$page,$lid,$token)
 			}
 			if($status=="データ納品" || $status=="物品納品" || $status=="サプライヤーが納品(一括前払い)" || $status=="研究者が納品承認(一括前払い)"){
 				$status="納品";
+			}
+			if($status=="発注否認"){
+				//「見積り」表記にもどる
+				$status="見積り";
 			}
 			if($status=="キャンセル承認"){
 				$status="キャンセル";
@@ -402,6 +410,7 @@ function DispData($mode,$sort,$word,$word2,$key,$page,$lid,$token)
 				$str=DispParamNone($str,"MITSUMORI_IRAI");
 			}
 
+			
 
 			// 検索条件
 			$str=str_replace("[KEYWORD]",$item['KEYWORD'],$str);
@@ -462,6 +471,19 @@ function DispData($mode,$sort,$word,$word2,$key,$page,$lid,$token)
 			$str=str_replace("[M1_LIST]",$m1_link,$str);
 
 
+			//「発注依頼」があったら「キャンセルボタン」を非表示
+			$StrSQL="SELECT ID, NEWDATE, SHODAN_ID, STATUS, DIV_ID";
+			$StrSQL.=" FROM DAT_FILESTATUS ";
+			$StrSQL.=" WHERE SHODAN_ID='".$item["ID"]."' ";
+			$StrSQL.=" and STATUS='発注依頼' ";
+			$hatyu_rs=mysqli_query(ConnDB(),$StrSQL);
+			$hatyu_item_num =  mysqli_num_rows($hatyu_rs);
+
+			if($hatyu_item_num > 0){
+				$str=DispParamNone($str,"CANCEL_BTN");
+			}else{
+				$str=DispParam($str,"CANCEL_BTN");
+			}
 
 
 			$strMain=$strMain.$str.chr(13);

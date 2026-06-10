@@ -175,7 +175,7 @@
   padding: 15px;
   gap: var(--shodan-item-body-gap);
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .shodan__item-body {
     --shodan-item-body-gap: 8px;
     --shodan-item-sidetray-width: auto;
@@ -194,7 +194,7 @@
   width: var(--shodan-item-list-width);
 }
 * + .shodan__item-list {margin-top: 8px;}
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .shodan__item-list {
     order: 0;
   }
@@ -236,7 +236,7 @@
   padding: 0;
   gap: 8px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .shodan__item-sidetray {
     order: 99;
   }
@@ -261,7 +261,7 @@
   line-height: 1;
   padding: 12px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .shodan__item-contacts > a {
     box-shadow: none;
     border-radius: 0;
@@ -293,7 +293,7 @@
   padding: 12px;
   gap: 8px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .shodan__item-query {
     box-shadow: none;
     border-radius: 0;
@@ -380,7 +380,7 @@
   width: 100%;
   gap: 8px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .shodan__item-func {
     flex-wrap: nowrap;
     padding: 8px 0;
@@ -396,7 +396,7 @@
   width: auto;
   margin: 0;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .shodan__item-func .btn--small,
   .shodan__item-func .btn {
     max-width: 144px;
@@ -418,7 +418,7 @@
   padding: 12px;
   gap: 8px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   /* NOTE: スマホでは余白を無くしスペースを確保するようなスタイルにする */
   .shodan__item-sidetray-box {
     box-shadow: none;
@@ -577,7 +577,7 @@
   padding: 15px;
   gap: var(--msg-item-body-gap);
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .msg__item-body {
     --msg-item-body-gap: 8px;
     --msg-item-sidetray-width: auto;
@@ -602,7 +602,7 @@
   width: 100%;
   gap: 8px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .msg__item-func {
     flex-wrap: nowrap;
     padding: 8px 0;
@@ -618,7 +618,7 @@
   width: auto;
   margin: 0;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .msg__item-func .btn--small,
   .msg__item-func .btn {
     max-width: 144px;
@@ -636,7 +636,7 @@
   --chat-title-fs: 28px;
   --chat-ui-fs: 14px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   :root {
     --chat-title-fs: 22px;
     --chat-ui-fs: 9px;
@@ -653,7 +653,7 @@
   display: none;
 }
 
-@media only screen and (max-width:959px) {
+@media only screen and (max-width:959.98px) {
   .chat-outline {
     padding-top: 20px;
   }
@@ -670,7 +670,7 @@
   padding: 0 160px;
   position: relative;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .chat-outline .chat-head {
     padding: 0 44px;
   }
@@ -774,7 +774,7 @@
   white-space: nowrap;
   padding: 4px 16px;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .chat-outline .chat-head .chat__status {
     justify-content: center;
     border-radius: 6px;
@@ -864,7 +864,7 @@
   position: relative;
   z-index: 1;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .chat-footer-close {
     max-width: none;
     width: 100%;

@@ -139,7 +139,7 @@
               </div>
             </div>
             <div class="formset__item">
-              <div class="formset__ttl">Study code</div>
+              <div class="formset__ttl">Quote No</div>
               <div id="M2_QUOTE_NO" class="formset__input">[D-M2_QUOTE_NO]</div>
             </div>
             <div class="formset__item">
@@ -154,10 +154,11 @@
               <div class="formset__ttl">Quote Valid Until<span class="formset__must">Mandatory</span></div>
               <div id="M2_QUOTE_VALID_UNTIL" class="formset__input">[D-M2_QUOTE_VALID_UNTIL]</div>
             </div>
+            <!--
             <div class="formset__item">
               <div class="formset__ttl">内容<span class="formset__must">Mandatory</span></div>
               <div id="M2_DESCRIPTION" class="formset__input">[D-M2_DESCRIPTION]</div>
-            </div>
+            </div>-->
             <div class="formset__item">
               <div class="formset__ttl">Currency<span class="formset__must">Mandatory</span></div>
               <div id="M2_CURRENCY" class="formset__input">[D-M2_CURRENCY]</div>
@@ -184,7 +185,11 @@
                 </div>
                 <div class="formset__item">
                   <div class="formset__ttl">Price<span class="formset__must">Mandatory</span></div>
-                  <div id="M2_DETAIL_PRICE_XXX" class="formset__input">[D-M2_DETAIL_PRICE_XXX]</div>
+                  <div id="M2_DETAIL_PRICE_XXX" class="formset__input">[D-M2_DETAIL_PRICE_ORIGIN_XXX]</div>
+                </div>
+                <div class="formset__item">
+                  <div class="formset__ttl">M2_DETAIL_SP_DISCOUNT<span class="formset__must">Mandatory</span></div>
+                  <div id="M2_DETAIL_PRICE_XXX" class="formset__input">[D-M2_DETAIL_SP_DISCOUNT_XXX]</div>
                 </div>
                 <div class="formset__item">
                   <div class="formset__ttl">Note</div>
@@ -196,14 +201,30 @@
             <div class="formset__item formset__item--head">
               <div class="formset__ttl"><strong></strong></div>
             </div>
+            <!--
             <div class="formset__item">
               <div class="formset__ttl">Special discount</div>
               <div id="M2_SPECIAL_DISCOUNT" class="formset__input">[D-M2_SPECIAL_DISCOUNT]</div>
-            </div>
+            </div>-->
             <div class="formset__item">
               <div class="formset__ttl">Special Note</div>
               <div id="M2_SPECIAL_NOTE" class="formset__input">[D-M2_SPECIAL_NOTE]</div>
             </div>
+
+            [S-KESAISYA_SHIP_TO]
+             <div class="formset__item">
+              <div class="formset__ttl">国名</div>
+              <div class="formset__input">[D-H_SHIP_TO_SPT_1]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">郵便番号</div>
+              <div class="formset__input">[D-H_SHIP_TO_SPT_2]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">住所</div>
+              <div class="formset__input">[D-H_SHIP_TO_SPT_3]</div>
+            </div>
+            [E-KESAISYA_SHIP_TO]
 
 
           </div>
@@ -219,6 +240,9 @@
             <input type="hidden" name="ID" value="[ID]">
             <input type="hidden" name="H_M2_ID" value="[H_M2_ID]">
             <input type="hidden" name="H_COMMENT" value="[H_COMMENT]">
+            <input type="hidden" name="H_SHIP_TO_SPT_1" value="[H_SHIP_TO_SPT_1]">
+            <input type="hidden" name="H_SHIP_TO_SPT_2" value="[H_SHIP_TO_SPT_2]">
+            <input type="hidden" name="H_SHIP_TO_SPT_3" value="[H_SHIP_TO_SPT_3]">
             <div class="btn formset__btn">
               <button type="submit">この内容で送信</button>
             </div>
@@ -235,6 +259,9 @@
             <input type="hidden" name="ID" value="[ID]">
             <input type="hidden" name="H_M2_ID" value="[H_M2_ID]">
             <input type="hidden" name="H_COMMENT" value="[H_COMMENT]">
+            <input type="hidden" name="H_SHIP_TO_SPT_1" value="[H_SHIP_TO_SPT_1]">
+            <input type="hidden" name="H_SHIP_TO_SPT_2" value="[H_SHIP_TO_SPT_2]">
+            <input type="hidden" name="H_SHIP_TO_SPT_3" value="[H_SHIP_TO_SPT_3]">
             <div class="btn formset__btn btn--small formset__btn--back">
               <button type="submit">戻る</button>
             </div>

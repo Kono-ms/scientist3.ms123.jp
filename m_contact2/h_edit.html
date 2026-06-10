@@ -10,7 +10,14 @@
     content="[PAGE_TITLE]のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
   <!--template=/common/template/head2.html--><!-- 研究者側だけValidationを日本語化 -->
   <script>
+
+    //演算できる数値かどうか判定
+    function isNumeric(str) {
+      return !isNaN(parseFloat(str)) && isFinite(str);
+    }
+
     var h_m2_detail = ([H_M2_DETAIL]);
+    const h_ship_to = ([H_SHIP_TO]);
     $(document).ready(function () {
       $('select[name=H_M2_ID]').on('change', function () {
         $('#add_detail_area').html('');
@@ -36,15 +43,33 @@
               }
               var detail = val['detail'][i];
               var detail_no = i + 1;
+              var origin_price;
+              var quantity;
+              var unit_price;
+
+              if(isNumeric(detail['M2_DETAIL_QUANTITY'])){
+                quantity=detail['M2_DETAIL_QUANTITY'];
+              }else{
+                quantity=0;
+              }
+              if(isNumeric(detail['M2_DETAIL_UNIT_PRICE'])){
+                unit_price=detail['M2_DETAIL_UNIT_PRICE'];
+              }else{
+                unit_price=0;
+              }
+              origin_price=Number(quantity)*Number(unit_price);
+
               $('#M2_DETAIL_ITEM_' + detail_no).html(detail['M2_DETAIL_ITEM']);
               $('#M2_DETAIL_DESCRIPTION_' + detail_no).html(detail['M2_DETAIL_DESCRIPTION']);
-              $('#M2_DETAIL_PRICE_' + detail_no).html(detail['M2_DETAIL_PRICE']);
+              $('#M2_DETAIL_PRICE_' + detail_no).html(origin_price);
+              //$('#M2_DETAIL_PRICE_' + detail_no).html(detail['M2_DETAIL_PRICE']);
+              $('#M2_DETAIL_SP_DISCOUNT_' + detail_no).html(detail['M2_DETAIL_SP_DISCOUNT']);
               $('#M2_DETAIL_NOTE_' + detail_no).html(detail['M2_DETAIL_NOTE']);
             }
 
           }
 
-          $('#M2_SPECIAL_DISCOUNT').html(val['M2_SPECIAL_DISCOUNT']);
+          //$('#M2_SPECIAL_DISCOUNT').html(val['M2_SPECIAL_DISCOUNT']);
           $('#M2_SPECIAL_NOTE').html(val['M2_SPECIAL_NOTE']);
         }
         else {
@@ -60,11 +85,12 @@
           $('#M2_DETAIL_ITEM_1').val('');
           $('#M2_DETAIL_DESCRIPTION_1').val('');
           $('#M2_DETAIL_PRICE_1').val('');
+          $('#M2_DETAIL_SP_DISCOUNT_1').val('');
           $('#M2_DETAIL_NOTE_1').val('');
 
           $('#add_detail_area').html('');
 
-          $('#M2_SPECIAL_DISCOUNT').html('');
+          //$('#M2_SPECIAL_DISCOUNT').html('');
           $('#M2_SPECIAL_NOTE').html('');
         }
       });
@@ -92,6 +118,27 @@
       $('#detail_' + detail_no).html('');
     }
 
+    // 発注依頼の住所プルダウンとフォーム
+    // NOTE: SHIP TOセレクトボックス
+    $(function () {
+      $('select[name="select_h_ship_to"]').on('change', function (e) {
+        fill_ship_to(e);
+      });
+      $('select[name="select_h_ship_to"]').trigger('change');
+    });
+
+    function fill_ship_to(e){
+      const $select = $(e.target);
+      const selectedNo = $select.val();
+      if(selectedNo!=""){
+        // NOTE: inputのID名とname属性、および const h_ship_toのキー名は、同一の名称である必要があります。
+        $('[id^="H_SHIP_TO_SPT_"]').each(function(i){
+          let $input = $(this);
+          $input.val(h_ship_to[selectedNo][$input.attr('name')]);
+        });
+      }
+    }
+
   </script>
 </head>
 
@@ -113,7 +160,6 @@
       <div class="l-container">
         <div class="c-head">
           <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
-          <h1 style="color:tomato;font-size: 2rem;">現在2回払いの発注は改修中のため行わないでください。</h1>
         </div>
         [ERR-S]
         <div class="error_01">
@@ -186,16 +232,17 @@
               <div class="formset__item">
                 <div class="formset__ttl">管理番号<span class="formset__must">Mandatory</span></div>
                 <div class="formset__input">
-                  <select name="H_M2_ID" class="input_select form-control">
+                  <select name="H_M2_ID" class="input_select form-control" required>
                     <option value=""></option>
                     [H_M2_LIST]
                   </select>
                 </div>
               </div>
 
+              <!--
               <div class="formset__item formset__item--head">
                 <div class="formset__ttl"><strong>見積り書</strong></div>
-              </div>
+              </div>-->
 
 
               <div class="formset__item formset__item--head">
@@ -217,7 +264,7 @@
                 </div>
               </div>
               <div class="formset__item">
-                <div class="formset__ttl">Study code</div>
+                <div class="formset__ttl">Quote No</div>
                 <div id="M2_QUOTE_NO" class="formset__input">[D-M2_QUOTE_NO]</div>
               </div>
               <div class="formset__item">
@@ -232,10 +279,11 @@
                 <div class="formset__ttl">Quote Valid Until<span class="formset__must">Mandatory</span></div>
                 <div id="M2_QUOTE_VALID_UNTIL" class="formset__input">[D-M2_QUOTE_VALID_UNTIL]</div>
               </div>
+              <!--
               <div class="formset__item">
                 <div class="formset__ttl">内容<span class="formset__must">Mandatory</span></div>
                 <div id="M2_DESCRIPTION" class="formset__input">[D-M2_DESCRIPTION]</div>
-              </div>
+              </div>-->
               <div class="formset__item">
                 <div class="formset__ttl">Currency<span class="formset__must">Mandatory</span></div>
                 <div id="M2_CURRENCY" class="formset__input">[D-M2_CURRENCY]</div>
@@ -258,7 +306,11 @@
               </div>
               <div class="formset__item">
                 <div class="formset__ttl">Price<span class="formset__must">Mandatory</span></div>
-                <div id="M2_DETAIL_PRICE_1" class="formset__input">[D-M2_DETAIL_PRICE_1]</div>
+                <div id="M2_DETAIL_PRICE_1" class="formset__input">[D-M2_DETAIL_PRICE_ORIGIN_1]</div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">Special discount<span class="formset__must">Mandatory</span></div>
+                <div id="M2_DETAIL_SP_DISCOUNT_1" class="formset__input">[D-M2_DETAIL_SP_DISCOUNT_1]</div>
               </div>
               <div class="formset__item">
                 <div class="formset__ttl">Note</div>
@@ -282,7 +334,11 @@
                   </div>
                   <div class="formset__item">
                     <div class="formset__ttl">Price<span class="formset__must">Mandatory</span></div>
-                    <div id="M2_DETAIL_PRICE_XXX" class="formset__input">[D-M2_DETAIL_PRICE_XXX]</div>
+                    <div id="M2_DETAIL_PRICE_XXX" class="formset__input">[D-M2_DETAIL_PRICE_ORIGIN_XXX]</div>
+                  </div>
+                  <div class="formset__item">
+                    <div class="formset__ttl">Special discount<span class="formset__must">Mandatory</span></div>
+                    <div id="M2_DETAIL_SP_DISCOUNT_XXX" class="formset__input">[D-M2_DETAIL_SP_DISCOUNT_XXX]</div>
                   </div>
                   <div class="formset__item">
                     <div class="formset__ttl">Note</div>
@@ -294,15 +350,15 @@
               <div class="formset__item formset__item--head">
                 <div class="formset__ttl"><strong></strong></div>
               </div>
+              <!--
               <div class="formset__item">
                 <div class="formset__ttl">Special discount</div>
                 <div id="M2_SPECIAL_DISCOUNT" class="formset__input">[D-M2_SPECIAL_DISCOUNT]</div>
-              </div>
+              </div>-->
               <div class="formset__item">
                 <div class="formset__ttl">Special Note</div>
                 <div id="M2_SPECIAL_NOTE" class="formset__input">[D-M2_SPECIAL_NOTE]</div>
               </div>
-
 
               <div class="formset__item">
                 <div class="formset__ttl">コメント</div>
@@ -311,6 +367,43 @@
                     placeholder="">[H_COMMENT]</textarea>
                 </div>
               </div>
+
+              [S-KESAISYA_SHIP_TO]
+              <!--研究者にひもづいた決済者がいる場合にここを表示-->
+              <div class="formset__item">
+                <div class="formset__ttl"></div>
+                <div class="formset__input">
+                  <select name="select_h_ship_to" id="select_h_ship_to" class="input_select">
+                    <option value="">住所を選択して下さい</option>
+                    <option value="v1">[name_h_ship_to_v1]</option>
+                  </select>
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">国</div>
+                <div class="formset__input">
+                  <input type="text" name="H_SHIP_TO_SPT_1" id="H_SHIP_TO_SPT_1" value="[D-H_SHIP_TO_SPT_1]"
+                    placeholder="" />
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">郵便番号</div>
+                <div class="formset__input">
+                  <input type="text" name="H_SHIP_TO_SPT_2" id="H_SHIP_TO_SPT_2" value="[D-H_SHIP_TO_SPT_2]"
+                    placeholder="" />
+                </div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl">住所</div>
+                <div class="formset__input">
+                  <input type="text" name="H_SHIP_TO_SPT_3" id="H_SHIP_TO_SPT_3" value="[D-H_SHIP_TO_SPT_3]"
+                    placeholder="" />
+                </div>
+              </div>
+              [E-KESAISYA_SHIP_TO]
+
+
+
               <div class="btn formset__btn">
                 <input type="submit" value="確認画面" />
               </div>

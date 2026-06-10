@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="ja">
-
+<!--contact_edit-->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -119,7 +119,7 @@
               <div class="formset__item">
                 <div class="formset__ttl">案件名<span class="formset__must">Mandatory</span></div>
                 <div class="formset__input">
-                  <input class="txt_w35p" type="text" name="TITLE" value="[D-TITLE]" placeholder="" required />
+                  <input type="text" name="TITLE" value="[D-TITLE]" placeholder="" required />
                 </div>
               </div>
               <div class="formset__item">
@@ -132,27 +132,51 @@
               <div class="formset__item">
                 <div class="formset__ttl">添付ファイル</div>
                 <div class="formset__input">
+                  <ul>
+                    <li>
+                      <input type="file" name="EP_FILE" value="[D-FILE]" placeholder="" />
+                      <input type="hidden" name="FILE" value="[D-FILE]" />
+                    </li>
+                    <li>
+                      <input type="file" name="EP_FILE2" value="[D-FILE2]" placeholder="" />
+                      <input type="hidden" name="FILE2" value="[D-FILE2]" />
+                    </li>
+                    <li>
+                      <input type="file" name="EP_FILE3" value="[D-FILE3]" placeholder="" />
+                      <input type="hidden" name="FILE3" value="[D-FILE3]" />
+                    </li>
+                    <li>
+                      <input type="file" name="EP_FILE4" value="[D-FILE4]" placeholder="" />
+                      <input type="hidden" name="FILE4" value="[D-FILE4]" />
+                    </li>
+                    <li>
+                      <input type="file" name="EP_FILE5" value="[D-FILE5]" placeholder="" />
+                      <input type="hidden" name="FILE5" value="[D-FILE5]" />
+                    </li>
+                  </ul>
+                  <!--
                   <p style="margin:3px;">
-                    <input class="txt_w35p" type="file" name="FILE" value="[D-FILE]" placeholder="" />
+                    <input type="file" name="FILE" value="[D-FILE]" placeholder="" />
                   </p>
                   <p style="margin:3px;">
-                    <input class="txt_w35p" type="file" name="FILE2" value="[D-FILE2]" placeholder="" />
+                    <input type="file" name="FILE2" value="[D-FILE2]" placeholder="" />
                   </p>
                   <p style="margin:3px;">
-                    <input class="txt_w35p" type="file" name="FILE3" value="[D-FILE3]" placeholder="" />
+                    <input type="file" name="FILE3" value="[D-FILE3]" placeholder="" />
                   </p>
                   <p style="margin:3px;">
-                    <input class="txt_w35p" type="file" name="FILE4" value="[D-FILE4]" placeholder="" />
+                    <input type="file" name="FILE4" value="[D-FILE4]" placeholder="" />
                   </p>
                   <p style="margin:3px;">
-                    <input class="txt_w35p" type="file" name="FILE5" value="[D-FILE5]" placeholder="" />
+                    <input type="file" name="FILE5" value="[D-FILE5]" placeholder="" />
                   </p>
+                  -->
                 </div>
               </div>
               <div class="formset__item">
                 <div class="formset__ttl">回答希望日</div>
                 <div class="formset__input">
-                  <input class="txt_w35p" type="date" name="KIGEN" value="[D-KIGEN]" placeholder="" />
+                  <input type="date" name="KIGEN" value="[D-KIGEN]" placeholder="" data-jquery-validate-rule="minDateToday" />
                 </div>
               </div>
               <div class="btn formset__btn">

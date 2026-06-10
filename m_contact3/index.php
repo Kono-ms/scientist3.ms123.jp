@@ -1989,12 +1989,12 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 	$comment = '';
 	switch($type) {
 		case '発注承認':
-			$comment = '決済者により発注依頼が承認されました
+			$comment = '決裁者により発注依頼が承認されました
 				' . $_POST['H3A_MESSAGE'] . '
 			';
   	  break;
 		case '発注否認':
-			$comment = '決済者により発注依頼が否認されました
+			$comment = '決裁者により発注依頼が否認されました
 				' . $_POST['H3B_MESSAGE'] . '
 			';
   	  break;

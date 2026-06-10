@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]（Confirmation）｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]（Confirmation）のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]（Confirmation）</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]（Confirmation）</h1>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <div class="formset">
+            <div class="formset__item">
+              <div class="formset__ttl"><span>Project name</span></div>
+              <div class="formset__input">[D-TITLE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>Supplier</span></div>
+              <div class="formset__input">[M1_VIEW]</div>
+            </div>
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl"><strong>Matters to be confirmed</strong></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Form of 納品<span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_NOHIN_TYPE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Payment Terms<span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_PAY_TYPE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">見積ステータス（仮：テスト用）<span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M_STATUS]</div>
+            </div>
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl">
+                <strong>Basic items</strong>
+              </div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Quote No.</div>
+              <div class="formset__input">[D-M2_QUOTE_NO]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Study code</div>
+              <div class="formset__input">[D-M2_STUDY_CODE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Date<span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_DATE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Quote Valid Until<span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_QUOTE_VALID_UNTIL]</div>
+            </div>
+            <!--
+            <div class="formset__item">
+              <div class="formset__ttl">Description<span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_DESCRIPTION]</div>
+            </div>
+            -->
+            <div class="formset__item">
+              <div class="formset__ttl">Currency<span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-M2_CURRENCY]</div>
+            </div>
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl"><strong>Description</strong></div>
+            </div>
+
+            [ADD_DETAIL_AREA]
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl"><strong></strong></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Special discount</div>
+              <div class="formset__input">[D-M2_SPECIAL_DISCOUNT]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Special Note</div>
+              <div class="formset__input">[D-M2_SPECIAL_NOTE]</div>
+            </div>
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl">
+                <strong>SHIP TO</strong>
+              </div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Organization Name</div>
+              <div class="formset__input">[D-M2_SHIP_TO_SPT_1]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Address Line 1</div>
+              <div class="formset__input">[D-M2_SHIP_TO_SPT_2]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Address Line 2</div>
+              <div class="formset__input">[D-M2_SHIP_TO_SPT_3]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">City/Province</div>
+              <div class="formset__input">[D-M2_SHIP_TO_SPT_4]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">ZIP/Postal Code</div>
+              <div class="formset__input">[D-M2_SHIP_TO_SPT_5]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Country</div>
+              <div class="formset__input">[D-M2_SHIP_TO_SPT_6]</div>
+            </div>
+
+            <div class="formset__item formset__item--head">
+              <div class="formset__ttl">
+                <strong>BILL TO</strong>
+              </div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Organization Name</div>
+              <div class="formset__input">[D-M2_BILL_TO_SPT_1]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Address Line 1</div>
+              <div class="formset__input">[D-M2_BILL_TO_SPT_2]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Address Line 2</div>
+              <div class="formset__input">[D-M2_BILL_TO_SPT_3]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">City/Province</div>
+              <div class="formset__input">[D-M2_BILL_TO_SPT_4]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">ZIP/Postal Code</div>
+              <div class="formset__input">[D-M2_BILL_TO_SPT_5]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Country</div>
+              <div class="formset__input">[D-M2_BILL_TO_SPT_6]</div>
+            </div>
+
+
+          </div>
+          <form method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="type" value="[TYPE]">
+            <input type="hidden" name="mode" value="[NEXTMODE]">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="shodan_id" value="[SHODAN_ID]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="word2" value="[WORD2]">
+            <input type="hidden" name="mid_list" value="[MID_LIST]">
+            <input type="hidden" name="m1_id" value="[M1_ID]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="H_M2_ID" value="[H_M2_ID]">
+            <input type="hidden" name="M2_TITLE" value="[M2_TITLE]">
+            <input type="hidden" name="M2_PRICE" value="[M2_PRICE]">
+            <input type="hidden" name="M2_COMMENT" value="[M2_COMMENT]">
+            <input type="hidden" name="MID1_LIST" value="[MID1_LIST]">
+
+            <input type="hidden" name="M2_NOHIN_TYPE" value="[M2_NOHIN_TYPE]">
+            <input type="hidden" name="M2_PAY_TYPE" value="[M2_PAY_TYPE]">
+
+            <input type="hidden" name="M2_QUOTE_NO" value="[M2_QUOTE_NO]">
+            <input type="hidden" name="M2_STUDY_CODE" value="[M2_STUDY_CODE]">
+            <input type="hidden" name="M2_DATE" value="[M2_DATE]">
+            <input type="hidden" name="M2_QUOTE_VALID_UNTIL" value="[M2_QUOTE_VALID_UNTIL]">
+            <input type="hidden" name="M2_DESCRIPTION" value="[M2_DESCRIPTION]">
+            <input type="hidden" name="M2_CURRENCY" value="[M2_CURRENCY]">
+            <input type="hidden" name="M_STATUS" value="[M_STATUS]">
+            
+            <input type="hidden" name="M2_SHIP_TO_SPT_1" value="[M2_SHIP_TO_SPT_1]">
+            <input type="hidden" name="M2_SHIP_TO_SPT_2" value="[M2_SHIP_TO_SPT_2]">
+            <input type="hidden" name="M2_SHIP_TO_SPT_3" value="[M2_SHIP_TO_SPT_3]">
+            <input type="hidden" name="M2_SHIP_TO_SPT_4" value="[M2_SHIP_TO_SPT_4]">
+            <input type="hidden" name="M2_SHIP_TO_SPT_5" value="[M2_SHIP_TO_SPT_5]">
+            <input type="hidden" name="M2_SHIP_TO_SPT_6" value="[M2_SHIP_TO_SPT_6]">
+
+            <input type="hidden" name="M2_BILL_TO_SPT_1" value="[M2_BILL_TO_SPT_1]">
+            <input type="hidden" name="M2_BILL_TO_SPT_2" value="[M2_BILL_TO_SPT_2]">
+            <input type="hidden" name="M2_BILL_TO_SPT_3" value="[M2_BILL_TO_SPT_3]">
+            <input type="hidden" name="M2_BILL_TO_SPT_4" value="[M2_BILL_TO_SPT_4]">
+            <input type="hidden" name="M2_BILL_TO_SPT_5" value="[M2_BILL_TO_SPT_5]">
+            <input type="hidden" name="M2_BILL_TO_SPT_6" value="[M2_BILL_TO_SPT_6]">
+
+            [HIDDEN_DETAIL_AREA]
+
+            <input type="hidden" name="M2_SPECIAL_DISCOUNT" value="[M2_SPECIAL_DISCOUNT]">
+            <input type="hidden" name="M2_SPECIAL_NOTE" value="[M2_SPECIAL_NOTE]">
+
+            <div class="btn formset__btn">
+              <button type="submit">Send with this content</button>
+            </div>
+          </form>
+          <form method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="type" value="[TYPE]">
+            <input type="hidden" name="mode" value="back">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="shodan_id" value="[SHODAN_ID]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="word2" value="[WORD2]">
+            <input type="hidden" name="mid_list" value="[MID_LIST]">
+            <input type="hidden" name="m1_id" value="[M1_ID]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="H_M2_ID" value="[H_M2_ID]">
+            <input type="hidden" name="M2_TITLE" value="[M2_TITLE]">
+            <input type="hidden" name="M2_PRICE" value="[M2_PRICE]">
+            <input type="hidden" name="M2_COMMENT" value="[M2_COMMENT]">
+            <input type="hidden" name="MID1_LIST" value="[MID1_LIST]">
+
+            <input type="hidden" name="M2_NOHIN_TYPE" value="[M2_NOHIN_TYPE]">
+            <input type="hidden" name="M2_PAY_TYPE" value="[M2_PAY_TYPE]">
+
+            <input type="hidden" name="M2_QUOTE_NO" value="[M2_QUOTE_NO]">
+            <input type="hidden" name="M2_STUDY_CODE" value="[M2_STUDY_CODE]">
+            <input type="hidden" name="M2_DATE" value="[M2_DATE]">
+            <input type="hidden" name="M2_QUOTE_VALID_UNTIL" value="[M2_QUOTE_VALID_UNTIL]">
+            <input type="hidden" name="M2_DESCRIPTION" value="[M2_DESCRIPTION]">
+            <input type="hidden" name="M2_CURRENCY" value="[M2_CURRENCY]">
+            <input type="hidden" name="M_STATUS" value="[M_STATUS]">
+
+            <input type="hidden" name="M2_SHIP_TO_SPT_1" value="[M2_SHIP_TO_SPT_1]">
+            <input type="hidden" name="M2_SHIP_TO_SPT_2" value="[M2_SHIP_TO_SPT_2]">
+            <input type="hidden" name="M2_SHIP_TO_SPT_3" value="[M2_SHIP_TO_SPT_3]">
+            <input type="hidden" name="M2_SHIP_TO_SPT_4" value="[M2_SHIP_TO_SPT_4]">
+            <input type="hidden" name="M2_SHIP_TO_SPT_5" value="[M2_SHIP_TO_SPT_5]">
+            <input type="hidden" name="M2_SHIP_TO_SPT_6" value="[M2_SHIP_TO_SPT_6]">
+
+            <input type="hidden" name="M2_BILL_TO_SPT_1" value="[M2_BILL_TO_SPT_1]">
+            <input type="hidden" name="M2_BILL_TO_SPT_2" value="[M2_BILL_TO_SPT_2]">
+            <input type="hidden" name="M2_BILL_TO_SPT_3" value="[M2_BILL_TO_SPT_3]">
+            <input type="hidden" name="M2_BILL_TO_SPT_4" value="[M2_BILL_TO_SPT_4]">
+            <input type="hidden" name="M2_BILL_TO_SPT_5" value="[M2_BILL_TO_SPT_5]">
+            <input type="hidden" name="M2_BILL_TO_SPT_6" value="[M2_BILL_TO_SPT_6]">
+
+            [HIDDEN_DETAIL_AREA]
+
+            <input type="hidden" name="M2_SPECIAL_DISCOUNT" value="[M2_SPECIAL_DISCOUNT]">
+            <input type="hidden" name="M2_SPECIAL_NOTE" value="[M2_SPECIAL_NOTE]">
+
+            <div class="btn formset__btn btn--small formset__btn--back">
+              <button type="submit">Go back</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer_en.html-->
+  </div>
+</body>
+
+</html>

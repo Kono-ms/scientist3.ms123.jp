@@ -299,6 +299,7 @@
                 $('select').addClass('glayout');
                 $('textarea').addClass('glayout');
                 $('label.input-file').addClass('glayout');
+                $('button.input-file-delete').addClass('glayout');
             }
 
         });
@@ -326,6 +327,9 @@
                     <p class="c-head__txt">Edit the supplier profile.</p>
                     [E-HON_REGIST]
                 </div>
+                <nav class="subpage-head__func">
+                    <div class="btn btn--blue-border-w"><a href="/m_search2/?mode=disp&key=[ID]" target="_blank">View my details<i class="fa-solid fa-up-right-from-square"></i></a></div>
+                </nav>
             </div>
         </section>
         <section class="innerTab">
@@ -667,7 +671,12 @@
                         </div>[E-NEWDATA]
                         [S-EDITDATA]<div class="formset__item">
                             <div class="formset__ttl">logo</div>
-                            <div class="formset__input"><img src="[M1_DFIL02]" width="200"> Delete <input type="checkbox" name="DEL_IMAGE_M1_DFIL02"><br><input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL02" value="[M1_DFIL02]" size="90"><input type="hidden" name="M1_DFIL02" value="[M1_DFIL02]">
+                            <div class="formset__input"><img src="[M1_DFIL02]" width="200">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_DFIL02">
+                                </label>
+                                <br><input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL02" value="[M1_DFIL02]" size="90"><input type="hidden" name="M1_DFIL02" value="[M1_DFIL02]">
                             </div>
                         </div>[E-EDITDATA]
                     </div>
@@ -732,8 +741,11 @@
                                 <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
                             </div>
                             <div class="formset__input">[S-M1_DFIL03]<a href="[M1_DFIL03]" download="">Download</a>
-                                　Delete
-                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL03"><br>[E-M1_DFIL03]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL03" value="[M1_DFIL03]" size="90"><input type="hidden" name="M1_DFIL03" value="[M1_DFIL03]">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_DFIL03">
+                                </label>
+                                <br>[E-M1_DFIL03]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL03" value="[M1_DFIL03]" size="90"><input type="hidden" name="M1_DFIL03" value="[M1_DFIL03]">
                             </div>
                         </div>[E-EDITDATA]
 
@@ -755,8 +767,11 @@
                                 <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
                             </div>
                             <div class="formset__input">[S-M1_DFIL04]<a href="[M1_DFIL04]" download="">Download</a>
-                                　Delete
-                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL04"><br>[E-M1_DFIL04]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL04" value="[M1_DFIL04]" size="90"><input type="hidden" name="M1_DFIL04" value="[M1_DFIL04]">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_DFIL04">
+                                </label>
+                                <br>[E-M1_DFIL04]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL04" value="[M1_DFIL04]" size="90"><input type="hidden" name="M1_DFIL04" value="[M1_DFIL04]">
                             </div>
                         </div>[E-EDITDATA]
 
@@ -778,8 +793,11 @@
                                 <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
                             </div>
                             <div class="formset__input">[S-M1_DFIL05]<a href="[M1_DFIL05]" download="">Download</a>
-                                　Delete
-                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL05"><br>[E-M1_DFIL05]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL05" value="[M1_DFIL05]" size="90"><input type="hidden" name="M1_DFIL05" value="[M1_DFIL05]">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_DFIL05">
+                                </label>
+                                <br>[E-M1_DFIL05]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL05" value="[M1_DFIL05]" size="90"><input type="hidden" name="M1_DFIL05" value="[M1_DFIL05]">
                             </div>
                         </div>[E-EDITDATA]
 
@@ -801,8 +819,11 @@
                                 <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
                             </div>
                             <div class="formset__input">[S-M1_DFIL06]<a href="[M1_DFIL06]" download="">Download</a>
-                                　Delete
-                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL06"><br>[E-M1_DFIL06]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL06" value="[M1_DFIL06]" size="90"><input type="hidden" name="M1_DFIL06" value="[M1_DFIL06]">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_DFIL06">
+                                </label>
+                                <br>[E-M1_DFIL06]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL06" value="[M1_DFIL06]" size="90"><input type="hidden" name="M1_DFIL06" value="[M1_DFIL06]">
                             </div>
                         </div>[E-EDITDATA]
 
@@ -822,8 +843,11 @@
                                 <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
                             </div>
                             <div class="formset__input">[S-M1_DFIL07]<a href="[M1_DFIL07]" download="">Download</a>
-                                　Delete
-                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL07"><br>[E-M1_DFIL07]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL07" value="[M1_DFIL07]" size="90"><input type="hidden" name="M1_DFIL07" value="[M1_DFIL07]">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_DFIL07">
+                                </label>
+                                <br>[E-M1_DFIL07]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL07" value="[M1_DFIL07]" size="90"><input type="hidden" name="M1_DFIL07" value="[M1_DFIL07]">
                             </div>
                         </div>[E-EDITDATA]
 
@@ -844,8 +868,11 @@
                                 <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
                             </div>
                             <div class="formset__input">[S-M1_DFIL08]<a href="[M1_DFIL08]" download="">Download</a>
-                                　Delete
-                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL08"><br>[E-M1_DFIL08]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL08" value="[M1_DFIL08]" size="90"><input type="hidden" name="M1_DFIL08" value="[M1_DFIL08]">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_DFIL08">
+                                </label>
+                                <br>[E-M1_DFIL08]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL08" value="[M1_DFIL08]" size="90"><input type="hidden" name="M1_DFIL08" value="[M1_DFIL08]">
                             </div>
                         </div>[E-EDITDATA]
 
@@ -866,8 +893,11 @@
                                 <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
                             </div>
                             <div class="formset__input">[S-M1_DFIL09]<a href="[M1_DFIL09]" download="">Download</a>
-                                　Delete
-                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL09"><br>[E-M1_DFIL09]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL09" value="[M1_DFIL09]" size="90"><input type="hidden" name="M1_DFIL09" value="[M1_DFIL09]">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_DFIL09">
+                                </label>
+                                <br>[E-M1_DFIL09]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL09" value="[M1_DFIL09]" size="90"><input type="hidden" name="M1_DFIL09" value="[M1_DFIL09]">
                             </div>
                         </div>[E-EDITDATA]
 
@@ -887,8 +917,11 @@
                                 <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
                             </div>
                             <div class="formset__input">[S-M1_DFIL10]<a href="[M1_DFIL10]" download="">Download</a>
-                                　Delete
-                                <input type="checkbox" name="DEL_IMAGE_M1_DFIL10"><br>[E-M1_DFIL10]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL10" value="[M1_DFIL10]" size="90"><input type="hidden" name="M1_DFIL10" value="[M1_DFIL10]">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_DFIL10">
+                                </label>
+                                <br>[E-M1_DFIL10]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL10" value="[M1_DFIL10]" size="90"><input type="hidden" name="M1_DFIL10" value="[M1_DFIL10]">
                             </div>
                         </div>[E-EDITDATA]
 
@@ -909,8 +942,11 @@
                                 <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
                             </div>
                             <div class="formset__input">[S-M1_ETC04]<a href="[M1_ETC04]" download="">Download</a>
-                                　Delete
-                                <input type="checkbox" name="DEL_IMAGE_M1_ETC04"><br>[E-M1_ETC04]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_ETC04" value="[M1_ETC04]" size="90"><input type="hidden" name="M1_ETC04" value="[M1_ETC04]">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_ETC04">
+                                </label>
+                                <br>[E-M1_ETC04]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_ETC04" value="[M1_ETC04]" size="90"><input type="hidden" name="M1_ETC04" value="[M1_ETC04]">
                             </div>
                         </div>[E-EDITDATA]
 
@@ -931,8 +967,11 @@
                                 <small class="formset__note">(.pdf, .png, .gif, or .jpg)　(Max：1GB)</small>
                             </div>
                             <div class="formset__input">[S-M1_ETC05]<a href="[M1_ETC05]" download="">Download</a>
-                                　Delete
-                                <input type="checkbox" name="DEL_IMAGE_M1_ETC05"><br>[E-M1_ETC05]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_ETC05" value="[M1_ETC05]" size="90"><input type="hidden" name="M1_ETC05" value="[M1_ETC05]">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_ETC05">
+                                </label>
+                                <br>[E-M1_ETC05]<input type="file" accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_ETC05" value="[M1_ETC05]" size="90"><input type="hidden" name="M1_ETC05" value="[M1_ETC05]">
                             </div>
                         </div>[E-EDITDATA]
 

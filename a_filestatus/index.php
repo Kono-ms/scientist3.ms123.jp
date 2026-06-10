@@ -279,9 +279,83 @@ function SendMail_v1_2($key)
 echo "<!--SendMail_v:".$mailto."-->";
 	mb_send_mail($mailto, $subject, $MailBody, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
 
+	//debug
+	//mb_send_mail("h.tsurumi@ms123.co.jp", $subject, $MailBody, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">");  
+
 }
 
 
+//=========================================================================================================
+//名前 
+//機能\ 
+//引数 $keyはDAT_FILESTATUS_DETAILのID
+//戻値 
+//=========================================================================================================
+function SendMail_v1_3($key)
+{
+
+	eval(globals());
+
+	$maildata = GetMailTemplate('メールテンプレート10');
+
+	$MailBody = $maildata['BODY'];
+	$subject = $maildata['TITLE'];
+
+	//echo "<pre>";
+	//var_dump($maildata);
+	//echo "</pre>";
+
+	$StrSQL="SELECT * FROM DAT_FILESTATUS_DETAIL WHERE ID='".$key."' order by ID desc limit 1;";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$itemFSD=mysqli_fetch_assoc($rs);
+	//echo "<!--StrSQL:$StrSQL-->";
+
+	$filestatus_id_original=$itemFSD["FILESTATUS_ID"];
+
+	$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID='".$filestatus_id_original."' order by ID desc limit 1;";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$itemFS=mysqli_fetch_assoc($rs);
+	//echo "<!--StrSQL:$StrSQL-->";
+
+	$fs_shodan_id=$itemFS["SHODAN_ID"];
+	$fs_m2_id=$itemFS["M2_ID"];
+	$fs_m2_version=$itemFS["M2_VERSION"];
+	$fs_mid1=$itemFS["MID1"];
+	$fs_mid2=$itemFS["MID2"];
+
+	//echo "<!--filestatus_id_original:$filestatus_id_original-->";
+	//echo "<!--fs_shodan_id:$fs_shodan_id-->";
+	//echo "<!--fs_m2_id:$fs_m2_id-->";
+	//echo "<!--fs_mid1:$fs_mid1-->";
+	//echo "<!--fs_mid2:$fs_mid2-->";
+
+	
+	$StrSQL="SELECT * FROM DAT_M1 WHERE MID='".$fs_mid1."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$item_MID1 = mysqli_fetch_assoc($rs);
+	//foreach ($item_MID1 as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+
+	$StrSQL="SELECT * FROM DAT_M2 WHERE MID='".$fs_mid2."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$item_MID2 = mysqli_fetch_assoc($rs);
+	//foreach ($item_MID2 as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+
+	$mailto = SENDER_EMAIL;
+
+
+	mb_language("Japanese");
+	mb_internal_encoding("UTF-8");
+echo "<!--SendMail_v:".$mailto."-->";
+	mb_send_mail($mailto, $subject, $MailBody, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
+	
+	//debug
+	//mb_send_mail("h.tsurumi@ms123.co.jp", $subject, $MailBody, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">");  
+
+}
 
 
 //=========================================================================================================
@@ -367,7 +441,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				break;
 			case "disp_frame1":
 				//pdf対応
-				//見積書のpdf表示用モード
+				//見積り書のpdf表示用モード
 				$filename="disp_frame1.html";
 				$msg01="";
 				$msg02="";
@@ -402,6 +476,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 		$fp=$DOCUMENT_ROOT.$filename;
 		$str=@file_get_contents($fp);
 
+		$pre_mode="";
+		$pre_mode=$mode;
 		//発注書のテンプレート読み込んだら後の処理はdisp_frame1と同じ
 		if($mode=="disp_frame2"){
 			$mode="disp_frame1";
@@ -428,8 +504,21 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				$pdf_view=@file_get_contents($DOCUMENT_ROOT."pdf_cb.html");
 			}else if($preview_type=="r"){
 				$pdf_view=@file_get_contents($DOCUMENT_ROOT."pdf_r.html");
-			}else if($preview_type=="h"){
+			}else if($preview_type=="h" || $preview_type=="hcb" || $preview_type=="hr"){
 				$pdf_view=@file_get_contents($DOCUMENT_ROOT."pdf_h.html");
+
+				//echo "<!--プレビュータイプ：preview_type:$preview_type-->";
+				if($preview_type=="hcb"){
+					$pdf_view=DispParam($pdf_view, "PDF_H_TO_CB");
+					$pdf_view=DispParamNone($pdf_view, "PDF_H_TO_R");
+				}else if($preview_type=="hr"){
+					$pdf_view=DispParamNone($pdf_view, "PDF_H_TO_CB");
+					$pdf_view=DispParam($pdf_view, "PDF_H_TO_R");
+				}else{
+					$pdf_view=DispParamNone($pdf_view, "PDF_H_TO_CB");
+					$pdf_view=DispParamNone($pdf_view, "PDF_H_TO_R");
+				}
+
 			}else if($preview_type=="s"){
 				$pdf_view=@file_get_contents($DOCUMENT_ROOT."pdf_s.html");
 			}
@@ -444,7 +533,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			$StrSQL="SELECT * FROM DAT_SHODAN WHERE ID='".$pdf_shoan_id."' ";
 			$StrSQL.=" and MID1_LIST='".$pdf_mid1."' ";
 			$StrSQL.=" and MID2='".$pdf_mid2."' ";
-			echo "<!--pdf SQL:$StrSQL-->";
+			//echo "<!--pdf SQL:$StrSQL-->";
 			$rs=mysqli_query(ConnDB(),$StrSQL);
 			$pdf_shodan_item=mysqli_fetch_assoc($rs);
 			$str=str_replace("[PDF_SHODAN_TITLE]",$pdf_shodan_item["TITLE"],$str);
@@ -474,6 +563,31 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				$str=str_replace("[D-PDF_M3-".$idx."]", str_replace($idx.":","",$val), $str);
 			}
 
+			//通常決済者がいない場合があるので、DAT_M3のデータをとってこれないことがある。
+			//その際の、表示タグが未変換でのこらないための処理。
+			$StrSQL="SHOW COLUMNS FROM DAT_M3;";
+			$rs=mysqli_query(ConnDB(),$StrSQL);
+			while($pdf_m3_colum_name=mysqli_fetch_assoc($rs)){
+				$idx=$pdf_m3_colum_name["Field"];
+				//echo "<!--idx:$idx-->";
+				$str=str_replace("[PDF_M3-".$idx."]","",$str);
+				$str=str_replace("[D-PDF_M3-".$idx."]", str_replace($idx.":","",""), $str);
+			}
+			
+			//有効期限
+			//M2_QUOTE_VALID_UNTIL
+			$originalDate = $FieldValue[19];
+			echo "<!--originalDate:$originalDate-->";
+			if(!is_null($originalDate) && $originalDate!=""){
+				$date = date_create($originalDate);
+				if ($date) {
+					$dispDate = $date->format('Y/m/d');
+					$str = str_replace("[FORMATTED_M2_QUOTE_VALID_UNTIL]", $dispDate, $str);
+				}
+			}
+			$str = str_replace("[FORMATTED_M2_QUOTE_VALID_UNTIL]", "", $str);
+
+
 			//サプライヤーのbill toの1番目のアドレス
 			$pdf_address1="";
 			$pdf_address1.=$pdf_m1_item["M1_ETC34"];
@@ -499,18 +613,24 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			$pdf_address3.=!empty($pdf_m1_item["M1_ETC133"]) ? ", ".str_replace("M1_ETC133:","",$pdf_m1_item["M1_ETC133"]) : "";
 			$str=str_replace("[PDF_ADDRESS3]",$pdf_address3,$str);
 
-			//CBの見積書に表示するShip to
+			//CBの見積り書に表示するShip to
 			$pdf_address4="";
-			if($pdf_m1_item["M1_ETC133"]!="M1_ETC133:Japan"){
+			if($pdf_m1_item["M1_DVAL04"]!="M1_DVAL04:Japan"){
+			//if($pdf_m1_item["M1_ETC133"]!="M1_ETC133:Japan"){
 				//CBの物流センターの住所
-				$pdf_address4="Cosmo Bio Shinsuna Distribution Center ShinSuna 1-Chome, Koto-Ku,Tokyo 136-0075, Japan 3F 12-39 TEL: 81-3-5632-9608";
+				$pdf_address4="Cosmo Bio Shinsuna Distribution Center ShinSuna 1-Chome, Koto-Ku,Tokyo 136-0075, Japan 3F 12-39<br>TEL: 81-3-5632-9608";
 			}else{
+				//研究者の「住所（英語表記）」
 				$pdf_address4="";
-				$pdf_address4.=$pdf_m3_item["M2_DVAL03"];
-				$pdf_address4.=!empty($pdf_m3_item["M2_DVAL07"]) ? ", ".$pdf_m3_item["M2_DVAL07"] : "";
-				$pdf_address4.=!empty($pdf_m3_item["M2_DVAL06"]) ? ", ".$pdf_m3_item["M2_DVAL06"] : "";
-				$pdf_address4.=!empty($pdf_m3_item["M2_DVAL05"]) ? ", ".$pdf_m3_item["M2_DVAL05"] : "";
-				$pdf_address4.=!empty($pdf_m3_item["M2_DVAL08"]) ? ", ".$pdf_m3_item["M2_DVAL08"] : "";
+				$pdf_address4=$pdf_m2_item["M2_DVAL20"];
+
+				////研究者に紐づけられた決済者の住所
+				//$pdf_address4="";
+				//$pdf_address4.=$pdf_m3_item["M2_DVAL03"];
+				//$pdf_address4.=!empty($pdf_m3_item["M2_DVAL07"]) ? ", ".$pdf_m3_item["M2_DVAL07"] : "";
+				//$pdf_address4.=!empty($pdf_m3_item["M2_DVAL06"]) ? ", ".$pdf_m3_item["M2_DVAL06"] : "";
+				//$pdf_address4.=!empty($pdf_m3_item["M2_DVAL05"]) ? ", ".$pdf_m3_item["M2_DVAL05"] : "";
+				//$pdf_address4.=!empty($pdf_m3_item["M2_DVAL08"]) ? ", ".$pdf_m3_item["M2_DVAL08"] : "";
 			}
 			$str=str_replace("[PDF_ADDRESS4]",$pdf_address4,$str);
 			//Number of Payments
@@ -546,13 +666,14 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			$StrSQL.=" and DIV_ID='".$FieldValue[54]."' ";
 			$StrSQL.=" and (STATUS='請求' or STATUS='請求書送付(一括前払い)' or STATUS='請求書送付(前払い)') ";
 			$StrSQL.=" and S_STATUS='請求（研究者）' ";
-			echo "<!--pdf SQL:$StrSQL-->";
+			//echo "<!--pdf SQL:$StrSQL-->";
 			$rs=mysqli_query(ConnDB(),$StrSQL);
 			$pdf_seikyu_r_item=mysqli_fetch_assoc($rs);
 			$pdf_invoice_url2=$filepath1.$pdf_seikyu_r_item["ID"]."/".$pdf_seikyu_r_item["S2_FILE"];
 			$str=str_replace("[PDF_INVOICE_URL1]",$pdf_invoice_url2,$str);
 			$str=str_replace("[PDF_S2_FILE1]",$pdf_seikyu_r_item["S2_FILE"],$str);
 			$str=str_replace("[PDF_S2_MESSAGE1]",$pdf_seikyu_r_item["S2_MESSAGE"],$str);
+			$str=str_replace("[PDF_S2_NEWDATE]",$pdf_seikyu_r_item["NEWDATE"],$str);
 
 			//「納品確認」データに保存した「請求書（研究者）」のデータの情報。
 			//請求書送信前データ表示用。
@@ -582,6 +703,33 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			}else{
 				$str=DispParamNone($str, "SEIKYU_PREVIEW1");
 				$str=DispParam($str, "SEIKYU_PREVIEW2");
+			}
+
+
+			//発注書プレビュープルダウンのプレビュー内容の日付は「見積り送付」ではなく、「決済者発注承認」または、「発注依頼」のデータをもってくる。
+			//（１）管理画面の発注書の発注日：③決裁者ありの場合：決裁者が発注承認した日
+			//（２）管理が目の発注書の発注日：④決裁者なしの場合：研究者が発注依頼した日
+			//上記を実現するために、「決済者発注承認」のデータがあればそのデータのNEWDATEを使い、
+			//それがなければ、「発注依頼」のデータを使うようにした。
+
+			$StrSQL="SELECT ID,SHODAN_ID,STATUS,NEWDATE FROM DAT_FILESTATUS WHERE DIV_ID='".$FieldValue[54]."' ";
+			$StrSQL.=" AND STATUS='決済者発注承認' ";
+			$preview_k_rs=mysqli_query(ConnDB(),$StrSQL);
+			$preview_k_item=mysqli_fetch_assoc($preview_k_rs);
+			$preview_k_num=mysqli_num_rows($preview_k_rs);
+
+			$StrSQL="SELECT ID,SHODAN_ID,STATUS,NEWDATE FROM DAT_FILESTATUS WHERE DIV_ID='".$FieldValue[54]."' ";
+			$StrSQL.=" AND STATUS='発注依頼' ";
+			$preview_h_rs=mysqli_query(ConnDB(),$StrSQL);
+			$preview_h_item=mysqli_fetch_assoc($preview_h_rs);
+			$preview_h_num=mysqli_num_rows($preview_h_rs);
+
+			if($preview_k_num>0){
+				$str=str_replace("[HATYU_NEWDATE]",$preview_k_item["NEWDATE"],$str);
+			}else if($preview_h_num>0){
+				$str=str_replace("[HATYU_NEWDATE]",$preview_h_item["NEWDATE"],$str);
+			}else{
+				$str=str_replace("[HATYU_NEWDATE]","",$str);
 			}
 		}
 
@@ -627,6 +775,48 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			//echo "<!--m2_quote_no:$m2_quote_no-->";
 			//echo "<!--SCNo_str:$SCNo_str-->";
 			$str=str_replace("[PRE_SCNO]",$SCNo_str."-Version".$m2_version,$str);
+		}
+
+		//発注書のディスプレイのみのフォーム用(FORM_H_DISPONLY)
+		//H3A_MESSAGE,H_COMMENT,DIV_ID,STATUS
+		if($FieldValue[34]=="受注承認"){
+			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$FieldValue[54]."' ";
+			$StrSQL.=" AND STATUS='発注依頼' ";
+			$h_rs=mysqli_query(ConnDB(),$StrSQL);
+			$h_item=mysqli_fetch_assoc($h_rs);
+
+			$SCNo_ary=array(
+				"SCNo_yy" => "", 
+				"SCNo_mm" => "", 
+				"SCNo_dd" => "", 
+				"SCNo_cnt" => "", 
+				"SCNo_else1" => "", 
+				"SCNo_else2" => "", 
+			);
+			$m2_quote_no="";
+			$m2_version="";
+
+			$str=str_replace("[DISPONLY_H_COMMENT]",$h_item["H_COMMENT"],$str);
+			$str=str_replace("[DISPONLY_H3A_MESSAGE]",$h_item["H3A_MESSAGE"],$str);
+			$str=str_replace("[DISPONLY_PONO]",$h_item["PONO"],$str);
+
+			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID='".$h_item["H_M2_ID"]."' ";
+			$StrSQL.=" AND STATUS='見積り送付' ";
+			$mitsu_rs=mysqli_query(ConnDB(),$StrSQL);
+			$mitsu_item=mysqli_fetch_assoc($mitsu_rs);
+
+			$SCNo_ary["SCNo_yy"]=$mitsu_item["SCNo_yy"];
+			$SCNo_ary["SCNo_mm"]=$mitsu_item["SCNo_mm"];
+			$SCNo_ary["SCNo_dd"]=$mitsu_item["SCNo_dd"];
+			$SCNo_ary["SCNo_cnt"]=$mitsu_item["SCNo_cnt"];
+			$SCNo_ary["SCNo_else1"]=$mitsu_item["SCNo_else1"];
+			$SCNo_ary["SCNo_else2"]=$mitsu_item["SCNo_else2"];
+			$SCNo_str=formatAlphabetId($SCNo_ary);
+			$m2_quote_no=$mitsu_item["M2_QUOTE_NO"];
+			$m2_version=$mitsu_item["M2_VERSION"];
+			//echo "<!--m2_quote_no:$m2_quote_no-->";
+			//echo "<!--SCNo_str:$SCNo_str-->";
+			$str=str_replace("[DISPONLY_SCNO]",$SCNo_str."-Version".$m2_version,$str);
 		}
 		
 
@@ -880,6 +1070,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_M1B");
 					$str=DispParamNone($str, "FORM_M2");
 					$str=DispParamNone($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H_DISPONLY");
 					$str=DispParamNone($str, "FORM_N");
 					$str=DispParamNone($str, "FORM_S1");
 					$str=DispParamNone($str, "FORM_S2");
@@ -896,6 +1087,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_M1B");
 					$str=DispParamNone($str, "FORM_M2");
 					$str=DispParamNone($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H_DISPONLY");
 					$str=DispParamNone($str, "FORM_N");
 					$str=DispParamNone($str, "FORM_S1");
 					$str=DispParamNone($str, "FORM_S2");
@@ -912,6 +1104,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParam($str, "FORM_M1B");
 					$str=DispParamNone($str, "FORM_M2");
 					$str=DispParamNone($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H_DISPONLY");
 					$str=DispParamNone($str, "FORM_N");
 					$str=DispParamNone($str, "FORM_S1");
 					$str=DispParamNone($str, "FORM_S2");
@@ -929,6 +1122,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_M1B");
 					$str=DispParam($str, "FORM_M2");
 					$str=DispParamNone($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H_DISPONLY");
 					$str=DispParamNone($str, "FORM_N");
 					$str=DispParamNone($str, "FORM_S1");
 					$str=DispParamNone($str, "FORM_S2");
@@ -948,6 +1142,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_M1B");
 						$str=DispParamNone($str, "FORM_M2");
 						$str=DispParamNone($str, "FORM_H");
+						$str=DispParamNone($str, "FORM_H_DISPONLY");
 						$str=DispParamNone($str, "FORM_N");
 						$str=DispParamNone($str, "FORM_S1");
 						$str=DispParamNone($str, "FORM_S2");
@@ -963,6 +1158,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_M1B");
 						$str=DispParamNone($str, "FORM_M2");
 						$str=DispParam($str, "FORM_H");
+						$str=DispParamNone($str, "FORM_H_DISPONLY");
 						$str=DispParamNone($str, "FORM_N");
 						$str=DispParamNone($str, "FORM_S1");
 						$str=DispParamNone($str, "FORM_S2");
@@ -980,7 +1176,9 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_M1");
 					$str=DispParamNone($str, "FORM_M1B");
 					$str=DispParamNone($str, "FORM_M2");
-					$str=DispParam($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H");
+					//$str=DispParam($str, "FORM_H");
+					$str=DispParam($str, "FORM_H_DISPONLY");
 					$str=DispParamNone($str, "FORM_N");
 					$str=DispParamNone($str, "FORM_S1");
 					$str=DispParamNone($str, "FORM_S2");
@@ -997,6 +1195,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_M1B");
 					$str=DispParamNone($str, "FORM_M2");
 					$str=DispParamNone($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H_DISPONLY");
 					$str=DispParamNone($str, "FORM_N");
 					$str=DispParamNone($str, "FORM_S1");
 					$str=DispParamNone($str, "FORM_S2");
@@ -1018,6 +1217,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_M1B");
 					$str=DispParamNone($str, "FORM_M2");
 					$str=DispParamNone($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H_DISPONLY");
 					$str=DispParam($str, "FORM_N");
 					$str=DispParamNone($str, "FORM_S1");
 					$str=DispParamNone($str, "FORM_S2");
@@ -1064,6 +1264,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_M1B");
 						$str=DispParamNone($str, "FORM_M2");
 						$str=DispParamNone($str, "FORM_H");
+						$str=DispParamNone($str, "FORM_H_DISPONLY");
 						$str=DispParam($str, "FORM_N");
 						$str=DispParamNone($str, "FORM_S1");
 						$str=DispParam($str, "FORM_S2");
@@ -1079,6 +1280,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_M1B");
 						$str=DispParamNone($str, "FORM_M2");
 						$str=DispParamNone($str, "FORM_H");
+						$str=DispParamNone($str, "FORM_H_DISPONLY");
 						$str=DispParam($str, "FORM_N");
 						$str=DispParamNone($str, "FORM_S1");
 						$str=DispParamNone($str, "FORM_S2");
@@ -1113,6 +1315,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_M1B");
 						$str=DispParamNone($str, "FORM_M2");
 						$str=DispParamNone($str, "FORM_H");
+						$str=DispParamNone($str, "FORM_H_DISPONLY");
 						$str=DispParamNone($str, "FORM_N");
 						$str=DispParam($str, "FORM_S1");
 						$str=DispParamNone($str, "FORM_S2");
@@ -1129,6 +1332,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_M1B");
 						$str=DispParamNone($str, "FORM_M2");
 						$str=DispParamNone($str, "FORM_H");
+						$str=DispParamNone($str, "FORM_H_DISPONLY");
 						$str=DispParamNone($str, "FORM_N");
 						$str=DispParamNone($str, "FORM_S1");
 						$str=DispParam($str, "FORM_S2");
@@ -1150,6 +1354,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_M1B");
 						$str=DispParamNone($str, "FORM_M2");
 						$str=DispParamNone($str, "FORM_H");
+						$str=DispParamNone($str, "FORM_H_DISPONLY");
 						$str=DispParamNone($str, "FORM_N");
 						$str=DispParamNone($str, "FORM_S1");
 						$str=DispParamNone($str, "FORM_S2");
@@ -1167,6 +1372,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_M1B");
 					$str=DispParamNone($str, "FORM_M2");
 					$str=DispParamNone($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H_DISPONLY");
 					$str=DispParamNone($str, "FORM_N");
 					$str=DispParamNone($str, "FORM_S1");
 					$str=DispParamNone($str, "FORM_S2");
@@ -1183,6 +1389,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_M1B");
 					$str=DispParamNone($str, "FORM_M2");
 					$str=DispParamNone($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H_DISPONLY");
 					$str=DispParamNone($str, "FORM_N");
 					$str=DispParamNone($str, "FORM_S1");
 					$str=DispParamNone($str, "FORM_S2");
@@ -1199,6 +1406,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_M1B");
 					$str=DispParamNone($str, "FORM_M2");
 					$str=DispParamNone($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H_DISPONLY");
 					$str=DispParamNone($str, "FORM_N");
 					$str=DispParamNone($str, "FORM_S1");
 					$str=DispParamNone($str, "FORM_S2");
@@ -1242,6 +1450,10 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 		$SCNo_ary["SCNo_else2"]=$FieldValue[77];
 		$SCNo_str=formatAlphabetId($SCNo_ary);
 		$m2_quote_no=$FieldValue[71];
+
+		if( isset($FieldValue[14]) && $FieldValue[14]!="" ){
+			$SCNo_str.="-V".$FieldValue[14];
+		}
 			//echo "<!--m2_quote_no:$m2_quote_no-->";
 			//echo "<!--SCNo_str:$SCNo_str-->";
 		$str=str_replace("[SCNO]",$SCNo_str,$str);
@@ -1261,6 +1473,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 		//M2_MANAGE_DISCOUNT:$FieldValue[63]
 		//M2_TAX_RATE2:$FieldValue[64]
 		//DIV_ID:$FieldValue[54]
+		//M2_CURRENCY:$FieldValue[21]
 		echo "<!--".$FieldName[16].": ".$FieldValue[16]."-->";
 		echo "<!--".$FieldName[22].": ".$FieldValue[22]."-->";
 		echo "<!--".$FieldName[2].": ".$FieldValue[2]."-->";
@@ -1269,6 +1482,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 		echo "<!--".$FieldName[63].": ".$FieldValue[63]."-->";
 		echo "<!--".$FieldName[64].": ".$FieldValue[64]."-->";
 		echo "<!--".$FieldName[54].": ".$FieldValue[54]."-->";
+		echo "<!--".$FieldName[21].": ".$FieldValue[21]."-->";
 
 		$tmp="";
 		$tmp=explode("-", $FieldValue[54]);
@@ -1283,11 +1497,19 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 
 		//先方の要望によりサービス費用エリアの表示条件変更
 		if($FieldValue[34]=="見積り送付" || $FieldValue[34]=="運営手数料追加"){
-
 		//if(($FieldValue[34]=="見積り送付" || $FieldValue[34]=="運営手数料追加") && 
 		//	($FieldValue[16]=="Once" || 
 		//	($FieldValue[16]=="Split" && $part=="Part0") || 
 		//	($FieldValue[16]=="Milestone" && $part=="Part0") ) ){
+
+			//通貨に対応する四捨五入のまるめる桁指定
+			$m2_currency=$FieldValue[21];
+			if($m2_currency=="M2_CURRENCY:JPY"){
+				$decimal_point=0;
+			}else{
+				$decimal_point=2;
+			}
+			echo "<!--decimal_point:$decimal_point-->";
 
 			$str=DispParam($str, "FORM_M2_SUB");
 
@@ -1298,20 +1520,22 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			//小計1
 			//※先方の要望により、
 			//スペシャルディスカウント(M2_SPECIAL_DISCOUNT)の仕様変更で、各アイテムごとにスペシャルディスカウントを設定するようにした。
-			//=該当分割分のアイテムのM2_DETAIL_PRICEの合計+M2_DETAIL_HANDLING_FEEの合計
+			//小計1=該当分割分のアイテムのM2_DETAIL_PRICEの合計
+			//（旧小計1=該当分割分のアイテムのM2_DETAIL_PRICEの合計+M2_DETAIL_HANDLING_FEEの合計が仕様変更で上記になった）
 			//※注意：M2_DETAIL_PRICE=M2_DETAIL_QUANTITY*M2_DETAIL_UNIT_PRICE-M2_DETAIL_SP_DISCOUNTに変更になった。
-			//元はM2_DETAIL_QUANTITY*M2_DETAIL_UNIT_PRICEだった
+			//(元はM2_DETAIL_QUANTITY*M2_DETAIL_UNIT_PRICEだった)
 			$StrSQL="SELECT * FROM DAT_FILESTATUS_DETAIL WHERE FILESTATUS_ID='".$FieldValue[0]."' order by NEWDATE";
 			//echo "<!--SQL:".$StrSQL."-->";
 			$rs_detail=mysqli_query(ConnDB(),$StrSQL);
 			$syoke1=0;
 			$sum_m2_detail_sp_discount=0;
 			while($item_detail = mysqli_fetch_assoc($rs_detail)){
-				if(is_numeric($item_detail["M2_DETAIL_HANDLING_FEE"])){
-					$m2_detail_handling_fee=$item_detail["M2_DETAIL_HANDLING_FEE"];
-				}else{
-					$m2_detail_handling_fee=0;
-				}
+				//仕様変更で「M2_DETAIL_HANDLING_FEE」は廃止
+				//if(is_numeric($item_detail["M2_DETAIL_HANDLING_FEE"])){
+				//	$m2_detail_handling_fee=$item_detail["M2_DETAIL_HANDLING_FEE"];
+				//}else{
+				//	$m2_detail_handling_fee=0;
+				//}
 
 				if(is_numeric($item_detail["M2_DETAIL_PRICE"])){
 					$m2_detail_price=$item_detail["M2_DETAIL_PRICE"];
@@ -1326,14 +1550,21 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				}
 
 				$sum_m2_detail_sp_discount=$sum_m2_detail_sp_discount+$m2_detail_sp_discount;
-				$syoke1=$syoke1+$m2_detail_price+$m2_detail_handling_fee;
+				$syoke1=$syoke1+$m2_detail_price;
+				//$syoke1=$syoke1+$m2_detail_price+$m2_detail_handling_fee;
 				echo "<!--m2_detail_handling_fee:$m2_detail_handling_fee-->";
 				echo "<!--m2_detail_sp_discount:$m2_detail_sp_discount-->";
 				echo "<!--M2_DETAIL_PRICE:".$item_detail["M2_DETAIL_PRICE"]."-->";
 			}
 			
 			echo "<!--M2_detail_SP_DISCOUNTの合計:$sum_m2_detail_sp_discount-->";
+			$sum_m2_detail_sp_discount=round($sum_m2_detail_sp_discount,$decimal_point);
+			echo "<!--sum_m2_detail_sp_discount:round():$sum_m2_detail_sp_discount-->";
+
 			echo "<!--syoke1:$syoke1-->";
+			$syoke1=round($syoke1,$decimal_point);
+			echo "<!--syoke1:round():$syoke1-->";
+
 			$str=str_replace("[SUM_M2_DETAIL_SP_DISCOUNT]", $sum_m2_detail_sp_discount, $str); //PDF対応
 			$str=str_replace("[MITSUMORISYO_SUBTOTAL1]", $syoke1, $str);
 
@@ -1394,12 +1625,19 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 
 				}
 			}
+
+			echo "<!--tax_rate1:$tax_rate1-->";
+			//tax_rate1は通貨に関係なく整数入力のみ
+			$tax_rate1=round($tax_rate1,0);
+			echo "<!--tax_rate1:round():$tax_rate1-->";
+
 			$str_tax_rate1='<input type="text" name="M2_TAX_RATE1" class="input_w10 form-control" 
 				value="'.$tax_rate1.'" size="90">';
 			//pdf対応
 			if($mode=="disp_frame1"){
 				$str_tax_rate1=$tax_rate1;
 			}
+
 			$str=str_replace("[MITSUMORISYO_TAX_RATE1]",$str_tax_rate1,$str);
 
 			////税率1
@@ -1419,11 +1657,18 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 
 			//消費税
 			$tax_bill1=$tax_rate1*$syoke1/100;
+			echo "<!--tax_bill1:$tax_bill1-->";
+			$tax_bill1=round($tax_bill1,$decimal_point);
+			echo "<!--tax_bill1:round():$tax_bill1-->";
 			$str=str_replace("[MITSUMORISYO_TAX_BILL1]",$tax_bill1,$str);
 
+			
 			//PDF対応
 			//PDF用の表示
 			$pdf_total1=$syoke1+$tax_bill1;
+			echo "<!--pdf_total1:$pdf_total1-->";
+			$pdf_total1=round($pdf_total1,$decimal_point);
+			echo "<!--pdf_total1:round():$pdf_total1-->";
 			$str=str_replace("[PDF_TOTAL1]", $pdf_total1, $str);
 			
 
@@ -1436,6 +1681,11 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			}else{
 				$pf_fee=0;
 			}
+
+			echo "<!--pf_fee:$pf_fee-->";
+			$pf_fee=round($pf_fee,$decimal_point);
+			echo "<!--pf_fee:round():$pf_fee-->";
+
 			$str=str_replace("[MITSUMORISYO_PF_FEE]",$pf_fee,$str);
 
 			echo "<!--PF手数料率:M2_ETC02:".$FieldValue[85]."-->";
@@ -1574,6 +1824,11 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 
 
 			}
+
+			echo "<!--import_fee:$import_fee-->";
+			$import_fee=round($import_fee,$decimal_point);
+			echo "<!--import_fee:round():$import_fee-->";
+
 			//pdf対応
 			if($mode=="disp_frame1"){
 				$str_import_fee=$import_fee;
@@ -1706,9 +1961,9 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 
 				$export_fee=0;
 				while($partN_item = mysqli_fetch_assoc($partN_rs)){
-					echo "<!--サービス費用エリア：part0:";
-					var_dump($partN_item);
-					echo "-->";
+					//echo "<!--サービス費用エリア：part0:";
+					//var_dump($partN_item);
+					//echo "-->";
 					if($partN_item["DIV_ID"]==$pre_part."-Part0"){
 						continue;
 					}
@@ -1750,14 +2005,14 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			//「見積り依頼」データの「M1_TRANS_FLG」が「なし」の場合は強制的に「0」
 			$StrSQL="SELECT ID,NEWDATE,STATUS,M1_TRANS_FLG FROM DAT_FILESTATUS WHERE ";
 			$StrSQL.=" SHODAN_ID='".$FieldValue[1]."' ";
-			$StrSQL.=" AND STATUS='見積り依頼' ";
+			$StrSQL.=" AND (STATUS='見積り依頼' OR STATUS='再見積り依頼') ";
 			$StrSQL.=" AND NEWDATE<'".$FieldValue[32]."' ";
 			$StrSQL.=" ORDER BY NEWDATE DESC ";
 			$irai_rs=mysqli_query(ConnDB(),$StrSQL);
 			$irai_item = mysqli_fetch_assoc($irai_rs);
-			echo "<!--サービス合計エリア irai_item:";
-			var_dump($irai_item);
-			echo "-->";
+			//echo "<!--サービス合計エリア irai_item:";
+			//var_dump($irai_item);
+			//echo "-->";
 			if($irai_item["M1_TRANS_FLG"]=="なし"){
 				$str=DispParam($str, "M1_TRANS_FLG_EXP");
 				//データはそもそもこの場合保存されてないが念のためここでも0に設定する。
@@ -1773,6 +2028,10 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 
 			//ここまで、[HIDDEN_M2_EXPORT_FEE]タグがのこってたら、非表示
 			$str=DispParamNone($str, "HIDDEN_M2_EXPORT_FEE");
+
+			echo "<!--export_fee:$export_fee-->";
+			$export_fee=round($export_fee,$decimal_point);
+			echo "<!--export_fee:round():$export_fee-->";
 
 			//pdf対応
 			if($mode=="disp_frame1"){
@@ -1881,9 +2140,9 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 
 				$mng_discount=0;
 				while($partN_item = mysqli_fetch_assoc($partN_rs)){
-					echo "<!--サービス費用エリア：part0:";
-					var_dump($partN_item);
-					echo "-->";
+					//echo "<!--サービス費用エリア：part0:";
+					//var_dump($partN_item);
+					//echo "-->";
 					if($partN_item["DIV_ID"]==$pre_part."-Part0"){
 						continue;
 					}
@@ -1901,6 +2160,11 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				value="'.$mng_discount.'" size="90">';
 
 			}
+
+			echo "<!--mng_discount:$mng_discount-->";
+			$mng_discount=round($mng_discount,$decimal_point);
+			echo "<!--mng_discount:round():$mng_discount-->";
+
 			//pdf対応
 			if($mode=="disp_frame1"){
 				$str_mng_discount=$mng_discount;
@@ -1917,16 +2181,27 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			//小計2
 			$syoke2=$pf_fee+$import_fee+$export_fee-$mng_discount;
 			echo "<!--syoke2:$syoke2=$pf_fee+$import_fee+$export_fee-$mng_discount-->";
+			$syoke2=round($syoke2,$decimal_point);
+			echo "<!--syoke2:round():$syoke2-->";
+
 			$str=str_replace("[MITSUMORISYO_SUBTOTAL2]",$syoke2,$str);
 
 
 			//税率2
 			$tax_rate2=$FieldValue[64];
+			echo "<!--tax_rate2:$tax_rate2-->";
+			//tax_rate2は通貨に関係なく整数入力のみ
+			$tax_rate2=round($tax_rate2,0);
+			echo "<!--tax_rate2:round():$tax_rate2-->";
+			$str=str_replace("[MITSUMORISYO_TAX_RATE2]",$tax_rate2,$str);
+
 			
 
 			//消費税率2
 			$tax_bill2=$syoke2*$tax_rate2/100;
 			echo "<!--tax_bill2:$tax_bill2=$syoke2*$tax_rate2/100;-->";
+			$tax_bill2=round($tax_bill2,$decimal_point);
+			echo "<!--tax_bill2:round():$tax_bill2-->";
 			$str=str_replace("[MITSUMORISYO_TAX_BILL2]",$tax_bill2,$str);
 
 
@@ -1934,13 +2209,19 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			//M2_CURRENCY
 			$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2;
 			echo "<!--all_charge:$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2-->";
-			if($FieldValue[21]=="M2_CURRENCY:JPY"){
-				$rounded_all_charge=round($all_charge);
-			}else{
-				$rounded_all_charge=round($all_charge,1);
-			}
+			$all_charge=round($all_charge,$decimal_point);
+			echo "<!--all_charge:round():$all_charge-->";
 			$str=str_replace("[MITSUMORISYO_ALL_CHARGE]",$all_charge,$str);
-			$str=str_replace("[R_MITSUMORISYO_ALL_CHARGE]",$rounded_all_charge,$str);
+
+			//$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2;
+			//echo "<!--all_charge:$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2-->";
+			//if($m2_currency=="M2_CURRENCY:JPY"){
+			//	$rounded_all_charge=round($all_charge);
+			//}else{
+			//	$rounded_all_charge=round($all_charge,1);
+			//}
+			//$str=str_replace("[MITSUMORISYO_ALL_CHARGE]",$all_charge,$str);
+			//$str=str_replace("[R_MITSUMORISYO_ALL_CHARGE]",$rounded_all_charge,$str);
 
 
 		}else{
@@ -1990,7 +2271,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			$tpl_pdf_items=file_get_contents("pdf_items_cb.html");
 		}else if($preview_type=="r"){
 			$tpl_pdf_items=file_get_contents("pdf_items_r.html");
-		}else if($preview_type=="h"){
+		}else if($preview_type=="h" || $preview_type=="hcb" || $preview_type=="hr"){
 			$tpl_pdf_items=file_get_contents("pdf_items_h.html");
 		}
 
@@ -2007,6 +2288,102 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			$each_output2=$tpl_pdf_items;
 
 			$each_output2=str_replace("[D-M2_CURRENCY]",str_replace("M2_CURRENCY:","",$FieldValue[21]),$each_output2);
+
+
+			//Item毎の支払い条件（Payment terms）にあわせた文言をセット START
+			if($preview_type=="cb" || $preview_type=="r"){
+				//見積り送付のデータをとってくる
+				//本来、自分のFieldValueのデータを見ればいいが、ユーザ画面側の処理とあわせるためにこのDBからとってくる処理をおこなう。
+				$StrSQL="SELECT ID,DIV_ID,STATUS,M2_CURRENCY,M2_PAY_TYPE,DIV_ID,M_STATUS FROM DAT_FILESTATUS ";
+				$StrSQL.=" WHERE DIV_ID='".$FieldValue[54]."' ";
+				$StrSQL.=" AND SHODAN_ID='".$FieldValue[1]."' ";
+				$StrSQL.=" AND MID1='".$FieldValue[2]."' ";
+				$StrSQL.=" AND (STATUS='見積り送付' OR STATUS='運営手数料追加') ";
+				$tmp_mitsu_rs=mysqli_query(ConnDB(),$StrSQL);
+				$tmp_mitsu_item = mysqli_fetch_assoc($tmp_mitsu_rs);
+
+				$m2_payment_note_eng_before="A prepaid invoice will be issued at the time of order.";
+				$m2_payment_note_eng_after="Invoices will be issued upon completion of acceptance inspection of the report or upon completion of delivery of goods.";
+				$m2_payment_note_jp_before="ご注文時に前払いの請求書発行";
+				$m2_payment_note_jp_after="報告書の検収完了時または成果物の納品完了時に請求書発行";
+				$m2_payment_note_eng_disp=$m2_payment_note_eng_after;
+				$m2_payment_note_jp_disp=$m2_payment_note_jp_after;
+				//echo "<!--デバッグ：支払い条件 m2_pay_type:".$tmp_mitsu_item["M2_PAY_TYPE"]."-->";
+				if( $tmp_mitsu_item["M2_PAY_TYPE"]=="Once" || $tmp_mitsu_item["M2_PAY_TYPE"]=="Milestone"){
+					//echo "<!--デバッグ：支払い条件Oncde,Milestone-->";
+	
+					if( strpos($tmp_mitsu_item["M_STATUS"],"(前払い)")!==false ){
+						$m2_payment_note_eng_disp=$m2_payment_note_eng_before;
+						$m2_payment_note_jp_disp=$m2_payment_note_jp_before;
+					}
+	
+				}else if($tmp_mitsu_item["M2_PAY_TYPE"]=="Split"){
+					//echo "<!--デバッグ：支払い条件Split-->";
+	
+					$div_id=$tmp_mitsu_item["DIV_ID"];
+					$tmp="";
+					$tmp=explode("-", $div_id);
+	
+					if(count($tmp)==3 && $tmp[0]!="" && $tmp[1]!="" && $tmp[2]!=""){
+						if($tmp[2]!="Part0"){
+							//echo "<!--デバッグ：支払い条件Part0以外-->";
+	
+							//2回払いのときに、Part0以外でプレビュー表示がもしあるなら以下を実行
+							if( strpos($tmp_mitsu_item["M_STATUS"],"(前払い)")!==false ){
+								$m2_payment_note_eng_disp=$m2_payment_note_eng_before;
+								$m2_payment_note_jp_disp=$m2_payment_note_jp_before;
+							}
+	
+						}else if($tmp[2]=="Part0"){
+							//2回払いのときに、Part0のプレビュー表示
+							//echo "<!--デバッグ：支払い条件Part0-->";
+							$invoice_no=$tmp[0]."-".$tmp[1];
+							$StrSQL="SELECT * from DAT_FILESTATUS_DETAIL where DIV_ID LIKE '".$invoice_no."-Part%' ";
+							$StrSQL.=" and DIV_ID !='".$invoice_no."-Part0' ";
+							$StrSQL.=" and DIV_ITEM_NO IS NOT NULL ";
+							$StrSQL.=" and DIV_ITEM_NO!='' ";
+							$StrSQL.=" and DIV_ITEM_NO='".$item["DIV_ITEM_NO"]."'";
+							$same_fsd_rs=mysqli_query(ConnDB(),$StrSQL);
+							$same_fsd_num2=mysqli_num_rows($same_fsd_rs);
+	
+							if($same_fsd_num2>0){
+								$same_fsd_rs_item = mysqli_fetch_assoc($same_fsd_rs);
+								//echo "<!--same_fsd_rs_item:";
+								//var_dump($same_fsd_rs_item);
+								//echo "-->";
+	
+								$StrSQL="SELECT ID,STATUS,DIV_ID,M_STATUS from DAT_FILESTATUS where ID='".$same_fsd_rs_item["FILESTATUS_ID"]."' ";
+								$part_fs_rs=mysqli_query(ConnDB(),$StrSQL);
+								$part_fs_rs_item = mysqli_fetch_assoc($part_fs_rs);
+								//echo "<!--part_fs_rs_item:";
+								//var_dump($part_fs_rs_item);
+								//echo "-->";
+								if( strpos($part_fs_rs_item["M_STATUS"],"(前払い)")!==false ){
+									$m2_payment_note_eng_disp=$m2_payment_note_eng_before;
+									$m2_payment_note_jp_disp=$m2_payment_note_jp_before;
+								}
+							}else{
+								//例外
+								$m2_payment_note_eng_disp="";
+								$m2_payment_note_jp_disp="";
+							}
+						}
+						
+					}else{
+						//例外
+						$m2_payment_note_eng_disp="";
+						$m2_payment_note_jp_disp="";
+					}
+	
+				}
+				$each_output2=str_replace("[D-M2_PAYMENT_NOTE_ENG]",$m2_payment_note_eng_disp,$each_output2);
+				$each_output2=str_replace("[D-M2_PAYMENT_NOTE_JP]",$m2_payment_note_jp_disp,$each_output2);
+				
+			}
+			//Item毎の支払い条件（Payment terms）にあわせた文言をセット END
+
+
+
 
 			foreach ($item as $fkey => $val) {
 				if($fkey=="M_STATUS"){
@@ -2096,6 +2473,10 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			//echo "<!--m2_quote_no:$m2_quote_no-->";
 			//echo "<!--SCNo_str:$SCNo_str-->";
 			$each_output=str_replace("[SCNO_RELATED]",$SCNo_str,$each_output);
+
+
+			//「見積り送付」「運営手数料追加」の見積書プレビューのプルダウン
+			$each_output=dispMitsuAtAccordion($item,$each_output);
 
 			
 			////マイルストーン払いの場合に、Item名も表示。
@@ -2320,8 +2701,16 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			$str=DispParam($str,"PDF_BTN_AREA");
 			//sendPDF($str,$to);
 			SubmitMitsumori($key);
+			
+			//メールテンプレート2
 			SendMail_v1($key);
-			SendMail_v1_2($key);
+			
+			//送信タイミングをサプライヤーが「見積り送付」時に変更でコメントアウト
+			////メールテンプレート3
+			//SendMail_v1_2($key);
+
+			//メールテンプレート10
+			SendMail_v1_3($key);
 
 		}else if($mode=="disp_frame1" && $pdf_action=="send2"){
 			$str=DispParam($str,"PDF_BTN_AREA");
@@ -2347,7 +2736,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 
 		}else if($pdf_btn_version=="2"){
 
-			if($FieldValue[34]=="見積り送付" || $FieldValue[34]=="運営手数料追加"){
+			if( ($FieldValue[34]=="見積り送付" || $FieldValue[34]=="運営手数料追加") 
+				&& $pre_mode=="disp_frame1" ){
 				//運営手数料追加モードを経由した場合、すでに「見積り送付」済みかどうか
 				//つまり同じ「見積り送付」のデータが自分いがいにあるかどうか
 				$redundancy_num=0;
@@ -2370,6 +2760,9 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				}
 			}
 
+			//echo "<!--pdf_btn_version:$pdf_btn_version-->";
+			//echo "<!--FieldValue[34]:".$FieldValue[34]."-->";
+			//echo "<!--mode:$mode-->";
 			$str=DispParam($str,"BTN_SEND");
 
 		}else{
@@ -2377,8 +2770,156 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 		}
 
 
+
+//以下、仕様変更前の仕様
+//(1)運営手数料追加のデータにあるプルダウンは両方、運営手数料追加のデータからつくられ、
+//見積り送付のデータにあるプルダウンは両方、見積り送付のデータからつくられている。
+//
+//(2)CBとRが同じデータから作られている
+
+
+//		//pdf対応
+//		//詳細ページのpdfプレビューボタンのプルダウン
+//		//※運営手数料追加時のプレビューボタン表示は廃止されたため大本のif文を変更
+//		if($FieldValue[34]=="見積り送付" || $FieldValue[34]=="運営手数料追加"){
+//			$str=DispParam($str,"PREVIEW_LIST_CB");
+//			$str=DispParam($str,"PREVIEW_LIST_R");
+//			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE M2_ID='".$FieldValue[13]."' ";
+//			$StrSQL.=" AND M2_VERSION='".$FieldValue[14]."' AND (STATUS='見積り送付' OR STATUS='運営手数料追加') ";
+//			//echo('<!--previewSQL:'.$StrSQL.'-->');
+//			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+//			
+//			$opt_preview_list_r="";
+//			$opt_preview_list_cb="";
+//			while($preview_item = mysqli_fetch_assoc($preview_rs)){
+//				if($preview_item["STATUS"]!=$FieldValue[34]){
+//					//見積り送付のデータには見積り送付、
+//					//運営手数料のデータには運営手数料のデータのみプルダウンで表示。
+//					continue;
+//				}
+//
+//				$SCNo_ary=array(
+//					"SCNo_yy" => "", 
+//					"SCNo_mm" => "", 
+//					"SCNo_dd" => "", 
+//					"SCNo_cnt" => "", 
+//					"SCNo_else1" => "", 
+//					"SCNo_else2" => "", 
+//				);
+//				$SCNo_str="";
+//				$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
+//				$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
+//				$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
+//				$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
+//				$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
+//				$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
+//				$SCNo_str=formatAlphabetId($SCNo_ary);
+//				$preview_m2_version="";
+//				$preview_m2_version=$preview_item["M2_VERSION"];
+//
+//
+//				//運営手数料追加モードを経由した場合、すでに「見積り送付」済みかどうか
+//				//つまり同じ「見積り送付」のデータが自分いがいにあるかどうか
+//				$redundancy_num=0;
+//				$StrSQL="SELECT ID,STATUS,M2_ID,M2_VERSION,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID='".$preview_item["SHODAN_ID"]."' AND";
+//				$StrSQL.=" M2_ID='".$preview_item["M2_ID"]."' AND ";
+//				$StrSQL.=" M2_VERSION='".$preview_item["M2_VERSION"]."' AND ";
+//				$StrSQL.=" DIV_ID='".$preview_item["DIV_ID"]."' AND ";
+//				$StrSQL.=" ID!='".$preview_item["ID"]."' AND";
+//				$StrSQL.=" (STATUS='見積り送付' OR STATUS='運営手数料追加') ";
+//				$redundancy_rs=mysqli_query(ConnDB(),$StrSQL);
+//				$redundancy_num=mysqli_num_rows($redundancy_rs);
+//				$redundancy_item=mysqli_fetch_assoc($redundancy_rs);
+//				//echo "<!--StrSQL(redundancy):$StrSQL-->";
+//				//echo "<!--redundancy:";
+//				//var_dump($redundancy_item);
+//				//echo "-->";
+//				if($redundancy_num<=0){
+//					$str=DispParamNone($str,"SENT_MITSU_MARK");
+//				}else{
+//					$str=DispParam($str,"SENT_MITSU_MARK");
+//				}
+//
+//				if( ($preview_item["M2_PAY_TYPE"]=="Once" || $preview_item["M2_PAY_TYPE"]=="Milestone") &&
+//					($preview_item["M_STATUS"]=="手数料追加" || $preview_item["M_STATUS"]=="手数料追加(前払い)") &&
+//					$redundancy_num<=0 ){
+//					//送信ボタン付きで表示
+//					$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=2&key=".$preview_item["ID"]."'>";
+//					$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+//					
+//					//送信ボタンない状態で表示
+//					$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
+//					$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+//				}else if($preview_item["M2_PAY_TYPE"]=="Split" && 
+//					($preview_item["M_STATUS"]=="手数料追加" || $preview_item["M_STATUS"]=="手数料追加(前払い)") &&
+//					$redundancy_num<=0 ){
+//					$tmp="";
+//					$tmp=explode("-", $preview_item["DIV_ID"]);
+//					echo "<!--";
+//					var_dump($tmp);
+//					echo "-->";
+//					$part="";
+//					$part_no="";
+//					if(count($tmp)==3){
+//						$part=$tmp[2];
+//					}
+//					if($part=="Part0"){
+//						//送信ボタン付きで表示
+//						$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=2&key=".$preview_item["ID"]."'>";
+//						$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+//						$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=2&key=".$preview_item["ID"]."'>";
+//						$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+//					}else{
+//						//送信ボタンない状態で表示
+//						$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=1&key=".$preview_item["ID"]."'>";
+//						$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+//						$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
+//						$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+//					}
+//				}
+//				else{
+//					//送信ボタンない状態で表示
+//					$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=1&key=".$preview_item["ID"]."'>";
+//					$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+//					$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
+//					$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+//				}
+//				
+//			}
+//			$str=str_replace("[OPT_PREVIEW_LIST_R]",$opt_preview_list_r,$str);
+//			$str=str_replace("[OPT_PREVIEW_LIST_CB]",$opt_preview_list_cb,$str);
+//		}else{
+//				$str=DispParamNone($str,"PREVIEW_LIST_CB");
+//				$str=DispParamNone($str,"PREVIEW_LIST_R");
+//		}
+
+
+
+
+
 		//pdf対応
 		//詳細ページのpdfプレビューボタンのプルダウン
+		//※運営手数料追加時のプレビューボタン表示は廃止されたため大本のif文を変更
+		//以下仕様変更
+		//以下仕様変更
+		//以下仕様変更
+		//以下仕様変更
+		//[最終決定のプルダウンの仕様]
+		//(a)運営手数料追加のデータの詳細ページ
+		//  ・CB宛てもR宛てのプルダウンも両方「運営手数料追加」のデータから作らざるを得ない。
+		//  
+		//(b)見積り送付のデータの詳細ページ
+		//  ・CB宛て
+		//    ・運営手数料追加「あり」の場合は、運営手数料追加のデータを表示
+		//    ・運営手数料追加「なし」の場合は、見積り送付のデータを表示
+		//  ・R宛て
+		//  　・見積り送付のデータを表示
+		//(c)運営画面からの「見積り送付」の際に、NEWDATEをボタンをした時刻にし、見積り送付データではなく、それぞれ上記の対象の表示データのNEWDATEを表示するようにする。
+		//
+		//
+		//※※運営手数料追加後に見積り送信した後は、「見積り送付」のレコードで見てくださいということで運用面で把握してもらう。
+
+		echo "<!--プレビュー用のステータス：".$FieldValue[34]."-->";
 		if($FieldValue[34]=="見積り送付" || $FieldValue[34]=="運営手数料追加"){
 			$str=DispParam($str,"PREVIEW_LIST_CB");
 			$str=DispParam($str,"PREVIEW_LIST_R");
@@ -2390,11 +2931,6 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			$opt_preview_list_r="";
 			$opt_preview_list_cb="";
 			while($preview_item = mysqli_fetch_assoc($preview_rs)){
-				if($preview_item["STATUS"]!=$FieldValue[34]){
-					//見積り送付のデータには見積り送付、
-					//運営手数料のデータには運営手数料のデータのみプルダウンで表示。
-					continue;
-				}
 
 				$SCNo_ary=array(
 					"SCNo_yy" => "", 
@@ -2424,7 +2960,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				$StrSQL.=" M2_VERSION='".$preview_item["M2_VERSION"]."' AND ";
 				$StrSQL.=" DIV_ID='".$preview_item["DIV_ID"]."' AND ";
 				$StrSQL.=" ID!='".$preview_item["ID"]."' AND";
-				$StrSQL.=" (STATUS='見積り送付' OR STATUS='運営手数料追加') ";
+				$StrSQL.=" (STATUS='見積り送付') ";
+				//$StrSQL.=" (STATUS='見積り送付' OR STATUS='運営手数料追加') ";
 				$redundancy_rs=mysqli_query(ConnDB(),$StrSQL);
 				$redundancy_num=mysqli_num_rows($redundancy_rs);
 				$redundancy_item=mysqli_fetch_assoc($redundancy_rs);
@@ -2432,24 +2969,16 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				//echo "<!--redundancy:";
 				//var_dump($redundancy_item);
 				//echo "-->";
+
+				//「送信済み」表示
 				if($redundancy_num<=0){
 					$str=DispParamNone($str,"SENT_MITSU_MARK");
 				}else{
 					$str=DispParam($str,"SENT_MITSU_MARK");
 				}
 
-				if( ($preview_item["M2_PAY_TYPE"]=="Once" || $preview_item["M2_PAY_TYPE"]=="Milestone") &&
-					($preview_item["M_STATUS"]=="手数料追加" || $preview_item["M_STATUS"]=="手数料追加(前払い)") &&
-					$redundancy_num<=0 ){
-					//送信ボタン付きで表示
-					$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=2&key=".$preview_item["ID"]."'>";
-					$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
-					
-					//送信ボタンない状態で表示
-					$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
-					$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
-				}else if($preview_item["M2_PAY_TYPE"]=="Split" && 
-					($preview_item["M_STATUS"]=="手数料追加" || $preview_item["M_STATUS"]=="手数料追加(前払い)") &&
+				if( $FieldValue[34]=="運営手数料追加" && $preview_item["STATUS"]=="運営手数料追加" &&
+					($preview_item["M2_PAY_TYPE"]=="Once" || $preview_item["M2_PAY_TYPE"]=="Milestone" || $preview_item["M2_PAY_TYPE"]=="Split") &&
 					$redundancy_num<=0 ){
 					$tmp="";
 					$tmp=explode("-", $preview_item["DIV_ID"]);
@@ -2465,8 +2994,18 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						//送信ボタン付きで表示
 						$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=2&key=".$preview_item["ID"]."'>";
 						$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
-						$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=2&key=".$preview_item["ID"]."'>";
+						//送信ボタンない状態で表示
+						$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
 						$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+
+					}else if($preview_item["M2_PAY_TYPE"]=="Once"){
+						//送信ボタン付きで表示
+						$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=2&key=".$preview_item["ID"]."'>";
+						$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+						//送信ボタンない状態で表示
+						$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
+						$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+
 					}else{
 						//送信ボタンない状態で表示
 						$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=1&key=".$preview_item["ID"]."'>";
@@ -2474,16 +3013,58 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
 						$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
 					}
-				}
-				else{
+
+				}else if($FieldValue[34]=="運営手数料追加" && $preview_item["STATUS"]=="運営手数料追加"){
 					//送信ボタンない状態で表示
 					$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=1&key=".$preview_item["ID"]."'>";
 					$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
 					$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
 					$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
 				}
+
+				//echo "<!--プルダウン用のFieldValue[34]：".$FieldValue[34]."-->";
+				//echo "<!--プルダウン用のFieldValue[61]：".$FieldValue[61]."-->";
+
+				if( $FieldValue[34]=="見積り送付" && 
+					($FieldValue[61]=="手数料追加" || $FieldValue[61]=="手数料追加(前払い)") ){
+				
+					//echo "<!--プルダウン用:preview_item[STATUS]：".$preview_item["STATUS"]."-->";
+
+					if($preview_item["STATUS"]=="運営手数料追加"){
+						//「運営手数料追加」のデータを送信ボタンない状態で表示
+						$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
+						$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+						//echo "<!--プルダウン用：opt_preview_list_cb：$opt_preview_list_cb-->";
+						//echo "<!--プルダウン用：opt_preview_list_r：$opt_preview_list_r-->";
+					}
+
+					if($preview_item["STATUS"]=="見積り送付"){
+						//「見積り送付」のデータを送信ボタンない状態で表示
+						$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=1&key=".$preview_item["ID"]."'>";
+						$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+						//echo "<!--プルダウン用：opt_preview_list_cb：$opt_preview_list_cb-->";
+						//echo "<!--プルダウン用：opt_preview_list_r：$opt_preview_list_r-->";
+					}
+					
+
+				}else if( $FieldValue[34]=="見積り送付" && 
+					($FieldValue[61]=="直接送付" || $FieldValue[61]=="直接送付(前払い)") ){
+					
+					if($preview_item["STATUS"]=="見積り送付"){
+						//「見積り送付」のデータを送信ボタンない状態で表示
+						$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=1&key=".$preview_item["ID"]."'>";
+						$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+						$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
+						$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+					
+					}
+
+				}
+
 				
 			}
+			//echo "<!--プルダウン用（ループの外）：opt_preview_list_cb：$opt_preview_list_cb-->";
+			//echo "<!--プルダウン用（ループの外）：opt_preview_list_r：$opt_preview_list_r-->";
 			$str=str_replace("[OPT_PREVIEW_LIST_R]",$opt_preview_list_r,$str);
 			$str=str_replace("[OPT_PREVIEW_LIST_CB]",$opt_preview_list_cb,$str);
 		}else{
@@ -2500,7 +3081,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			//echo('<!--previewSQL:'.$StrSQL.'-->');
 			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
 			
-			$opt_preview_list_h="";
+			$opt_preview_list_h_r="";
+			$opt_preview_list_h_cb="";
 			while($preview_item = mysqli_fetch_assoc($preview_rs)){
 
 				$SCNo_ary=array(
@@ -2524,22 +3106,76 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 
 				if($FieldValue[34]=="決済者発注承認"){
 					//送信ボタンある状態で表示
-					$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=h&btn_version=2&key=".$preview_item["ID"]."'>";
-					$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
+					$opt_preview_list_h_r.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hr&btn_version=2&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_h_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
 
 				}else if($kessai_num<=0 || $m2_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:なし"){
 					//送信ボタンある状態で表示
-					$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=h&btn_version=2&key=".$preview_item["ID"]."'>";
-					$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
+					$opt_preview_list_h_r.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hr&btn_version=2&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_h_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
 				}else{
-					//送信ボタンある状態で表示
-					$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=h&btn_version=1&key=".$preview_item["ID"]."'>";
-					$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
+					//送信ボタンない状態で表示
+					$opt_preview_list_h_r.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hr&btn_version=1&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_h_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
 				}
+
+				//CB宛て閲覧用
+				//送信ボタンない状態で表示
+				$opt_preview_list_h_cb.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hcb&btn_version=1&key=".$preview_item["ID"]."'>";
+				$opt_preview_list_h_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
 				
 			}
-			$str=str_replace("[OPT_PREVIEW_LIST_HK]",$opt_preview_list_h,$str);
+			$str=str_replace("[OPT_PREVIEW_LIST_HK_R]",$opt_preview_list_h_r,$str);
+			$str=str_replace("[OPT_PREVIEW_LIST_HK_CB]",$opt_preview_list_h_cb,$str);
 		}
+
+		//pdf対応
+		//詳細ページのpdfプレビューボタンのプルダウン
+		//受注承認の「表示のみの発注書」
+		//FORM_H_DISPONLY
+		if($FieldValue[34]=="受注承認"){
+			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$FieldValue[54]."' ";
+			$StrSQL.=" AND STATUS='見積り送付'";
+			//echo('<!--previewSQL:'.$StrSQL.'-->');
+			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+			
+			$opt_preview_list_h_r="";
+			$opt_preview_list_h_cb="";
+			while($preview_item = mysqli_fetch_assoc($preview_rs)){
+
+				$SCNo_ary=array(
+					"SCNo_yy" => "", 
+					"SCNo_mm" => "", 
+					"SCNo_dd" => "", 
+					"SCNo_cnt" => "", 
+					"SCNo_else1" => "", 
+					"SCNo_else2" => "", 
+				);
+				$SCNo_str="";
+				$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
+				$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
+				$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
+				$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
+				$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
+				$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
+				$SCNo_str=formatAlphabetId($SCNo_ary);
+				$preview_m2_version="";
+				$preview_m2_version=$preview_item["M2_VERSION"];
+
+				//R宛て
+				//送信ボタンない状態で表示
+				$opt_preview_list_h_r.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hr&btn_version=1&key=".$preview_item["ID"]."'>";
+				$opt_preview_list_h_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+
+				//CB宛て
+				//送信ボタンない状態で表示
+				$opt_preview_list_h_cb.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hcb&btn_version=1&key=".$preview_item["ID"]."'>";
+				$opt_preview_list_h_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+			}
+			$str=str_replace("[OPT_PREVIEW_LIST_HK_R_DISPONLY]",$opt_preview_list_h_r,$str);
+			$str=str_replace("[OPT_PREVIEW_LIST_HK_CB_DISPONLY]",$opt_preview_list_h_cb,$str);
+		}
+
 
 
 
@@ -2592,7 +3228,7 @@ where
 
 		$StrSQL.=" LEFT JOIN DAT_M1 ON DAT_FILESTATUS.MID1=DAT_M1.MID ";
 		$StrSQL.=" LEFT JOIN DAT_M2 ON DAT_FILESTATUS.MID2=DAT_M2.MID ".ListSql(mysqli_real_escape_string(ConnDB(),$sort),mysqli_real_escape_string(ConnDB(),$word)).";";
-echo "<!--".$StrSQL."-->";
+		//echo "<!--".$StrSQL."-->";
 		$rs=mysqli_query(ConnDB(),$StrSQL);
 		$item=mysqli_num_rows($rs);
 		if($item=="") {
@@ -2641,22 +3277,156 @@ echo "<!--".$StrSQL."-->";
 			$CurrentRecord=1;
 			$strMain="";
 			while ($item = mysqli_fetch_assoc($rs)) {
+				//echo "<!--item:\n";
+				//var_dump($item);
+				//echo "-->";
 
 				$str=$strM;
 
 				$StrSQL="SELECT * from DAT_M2 where MID = '".$item['MID2']."';";
 				$rs_m2=mysqli_query(ConnDB(),$StrSQL);
 				$m2 = mysqli_fetch_assoc($rs_m2);
+
+				$StrSQL="SELECT * from DAT_M1 where MID = '".$item['MID1']."';";
+				$rs_m1=mysqli_query(ConnDB(),$StrSQL);
+				$m1 = mysqli_fetch_assoc($rs_m1);
+				$str=str_replace("[D-MID1]",$m1['M1_DVAL01'],$str);
+
+				$StrSQL="SELECT * FROM DAT_M3 WHERE MID='".$m2["M2_DVAL15"]."'";
+				$rs_m3=mysqli_query(ConnDB(),$StrSQL);
+				$m3 = mysqli_fetch_assoc($rs_m3);
+				$num_m3=mysqli_num_rows($rs_m3);
+
+
+				$StrSQL="SELECT * from DAT_SHODAN where ID = '".$item['SHODAN_ID']."';";
+				$rs_shodan=mysqli_query(ConnDB(),$StrSQL);
+				$shodan_item = mysqli_fetch_assoc($rs_shodan);
+				//echo "<!--shodan_item:$StrSQL-->";
+
+				//echo "<!--m1:\n";
+				//var_dump($m1);
+				//echo "-->";
+				//echo "<!--m2:\n";
+				//var_dump($m2);
+				//echo "-->";
+				//echo "<!--m3:\n";
+				//var_dump($m3);
+				//echo "-->";
+				//echo "<!--shodan_item:\n";
+				//var_dump($shodan_item);
+				//echo "-->";
+
+
 				//$str=str_replace("[D-MID2]",$m2['M2_DVAL01'],$str);
 				$str=str_replace("[D-MID2]",$m2['M2_DVAL03'],$str);
+
+				
+
+
+				//1回払い
+				$ext_msg = '';
+				if($shodan_item["STATUS"] == "受注承認(一括前払い)"){
+					$ext_msg .= '<p style="color:red;font-weight:bold;">[要請求書発行（サプライヤーから請求書送付後）]<p>';
+				}
+
+				//1回払い
+				//・決済者承認が「なし」：「発注依頼」後の段階で「[要承認対応]」のマークを出力
+				//・決済者承認が「あり」：「決済者発注承認」後の段階で「[要承認対応]」のマークを出力
+				if( !is_null($m2["M2_DVAL15"]) && $m2["M2_DVAL15"]!="" && $num_m3>0 
+					&& $m2["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+					//決済者承認が「あり」の場合
+					if($shodan_item["STATUS"] == "決済者発注承認" && $item["STATUS"] == "決済者発注承認"){
+						//2重の文言表示を防止
+						$disp_word="[要承認対応]";
+						if(strpos($ext_msg, $disp_word)!==false){
+							$ext_msg .='';
+						}else{
+							$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+						}
+					}
+				}else{
+					//決済者が存在しないもしくは、決済者承認が「なし」の場合
+					if($shodan_item["STATUS"] == "発注依頼" && $item["STATUS"] == "発注依頼"){
+						//2重の文言表示を防止
+						$disp_word="[要承認対応]";
+						if(strpos($ext_msg, $disp_word)!==false){
+							$ext_msg .='';
+						}else{
+							$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+						}
+					}
+				}
+
+
+				//2回払い、マイルストーン
+				$StrSQL="SELECT * FROM DAT_SHODAN_DIV WHERE SHODAN_ID='".$shodan_item["ID"]."'";
+				//echo "<!--".$shodan_item["ID"].": $StrSQL-->";
+				$shodan_div_rs=mysqli_query(ConnDB(),$StrSQL);
+				while( $shodan_div_item=mysqli_fetch_assoc($shodan_div_rs) ){
+					if($shodan_div_item["STATUS"]=="受注承認(前払い)"){
+						//2重の文言表示を防止
+						$disp_word="[受注承認（前払い） サプライヤーから受領次第、要請求書発行]";
+						if(strpos($ext_msg, $disp_word)!==false){
+							$ext_msg .='';
+						}else{
+							$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+						}
+					
+					}
+					//・決済者承認が「なし」：「発注依頼」後の段階で「[要承認対応]」のマークを出力
+					//・決済者承認が「あり」：「決済者発注承認」後の段階で「[要承認対応]」のマークを出力
+					else if($shodan_div_item["STATUS"] == "決済者発注承認" 
+						|| $shodan_div_item["STATUS"] == "発注依頼"){
+
+						if( !is_null($m2["M2_DVAL15"]) && $m2["M2_DVAL15"]!="" && $num_m3>0 
+							&& $m2["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+							
+							//決済者承認が「あり」の場合
+							if($shodan_div_item["STATUS"] == "決済者発注承認"){
+								//2重の文言表示を防止
+								$disp_word="[要承認対応]";
+								if(strpos($ext_msg, $disp_word)!==false){
+									$ext_msg .='';
+								}else{
+									$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+								}
+							}
+						}else{
+							//決済者が存在しないもしくは、決済者承認が「なし」の場合
+							if($shodan_div_item["STATUS"] == "発注依頼"){
+								//2重の文言表示を防止
+								$disp_word="[要承認対応]";
+								if(strpos($ext_msg, $disp_word)!==false){
+									$ext_msg .='';
+								}else{
+									$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+								}
+							}
+						}
+					}
+					//else if($shodan_div_item['STATUS'] == '決済者発注承認') {
+					//	//2重の文言表示を防止
+					//	$disp_word="[要承認対応]";
+					//	if(strpos($ext_msg, $disp_word)!==false){ 
+					//		$ext_msg .='';
+					//	}else{
+					//		$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+					//	}
+					//}
+				}
+				$str=str_replace("[EXT-MSG]",$ext_msg,$str);
+
+
+
+
 
 				$m1_list = explode(',', $item['MID1_LIST']);
 				$m1_name_list = '';
 				foreach($m1_list as $m1_mid) {
 					$StrSQL="SELECT * from DAT_M1 where MID = '".$m1_mid."';";
 					$rs_m1=mysqli_query(ConnDB(),$StrSQL);
-					$m1 = mysqli_fetch_assoc($rs_m1);
-					$m1_name_list .= '<div>' . $m1['M1_DVAL01'] . '</div>';
+					$tmp_m1 = mysqli_fetch_assoc($rs_m1);
+					$m1_name_list .= '<div>' . $tmp_m1['M1_DVAL01'] . '</div>';
 				}
 				$str=str_replace("[D-MID1_LIST]",$m1_name_list,$str);
 
@@ -2664,10 +3434,6 @@ echo "<!--".$StrSQL."-->";
 				//リストページ
 				//仕様変更で該当行のデータのみをリンク表示
 				if($item["STATUS"]=="見積り送付" || $item["STATUS"]=="運営手数料追加"){
-					$str=DispParam($str,"PREVIEW_LIST_CB");
-					$str=DispParam($str,"PREVIEW_LIST_R");
-
-					
 
 					$SCNo_ary=array(
 						"SCNo_yy" => "", 
@@ -2695,12 +3461,88 @@ echo "<!--".$StrSQL."-->";
 					$str=str_replace("[OPT_PREVIEW_LIST_R_STR]",$preview_name,$str);
 					$str=str_replace("[OPT_PREVIEW_LIST_CB_STR]",$preview_name,$str);
 					
+					if($item["STATUS"]=="運営手数料追加"){
+						//「運営手数料追加」の場合、CB宛てのプレビューボタンのみ表示
+						$str=DispParam($str,"PREVIEW_LIST_CB");
+						$str=DispParamNone($str,"PREVIEW_LIST_R");
+
+					}else if($item["STATUS"]=="見積り送付" && 
+						($item["M_STATUS"]=="手数料追加" || $item["M_STATUS"]=="手数料追加(前払い)") ){
+						//「見積り送付」で手数料追加モードを経由している場合、研究者宛てのプレビューボタンのみ表示
+						$str=DispParamNone($str,"PREVIEW_LIST_CB");
+						$str=DispParam($str,"PREVIEW_LIST_R");
+					}
+
+					$str=DispParam($str,"PREVIEW_LIST_CB");
+					$str=DispParam($str,"PREVIEW_LIST_R");
 
 				}else{
 						$str=DispParamNone($str,"PREVIEW_LIST_CB");
 						$str=DispParamNone($str,"PREVIEW_LIST_R");
 				}
 
+
+				//プレビュー関連
+				//リストページ
+				//発注書
+				if($item["STATUS"]=="決済者発注承認" || $item["STATUS"]=="発注依頼"){
+
+					$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$item["DIV_ID"]."' ";
+					$StrSQL.=" AND STATUS='見積り送付'";
+					//echo('<!--previewSQL:'.$StrSQL.'-->');
+					$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+					$preview_item = mysqli_fetch_assoc($preview_rs);
+
+					$opt_preview_list_h="";
+					$StrSQL="SELECT ID,MID,M2_DVAL15,KESSAI_SYONIN FROM DAT_M2 where MID='".$item["MID2"]."' order by ID desc;";
+					$m2_rs=mysqli_query(ConnDB(),$StrSQL);
+					$m2_item = mysqli_fetch_assoc($m2_rs);
+					//echo "<!--m2_item:";
+					//var_dump($m2_item);
+					//echo "-->";
+					$StrSQL="SELECT ID,MID FROM DAT_M3 where MID='".$m2_item["M2_DVAL15"]."' ";
+					$StrSQL.=" and MID IS NOT NULL and MID!='' order by ID desc;";
+					$kessai_rs=mysqli_query(ConnDB(),$StrSQL);
+					$kessai_item = mysqli_fetch_assoc($kessai_rs);
+					$kessai_num = mysqli_num_rows($kessai_rs);
+					//echo "<!--kessai_item:";
+					//var_dump($kessai_item);
+					//echo "-->";
+
+					$SCNo_ary=array(
+						"SCNo_yy" => "", 
+						"SCNo_mm" => "", 
+						"SCNo_dd" => "", 
+						"SCNo_cnt" => "", 
+						"SCNo_else1" => "", 
+						"SCNo_else2" => "", 
+					);
+					$SCNo_str="";
+					$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
+					$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
+					$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
+					$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
+					$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
+					$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
+					$SCNo_str=formatAlphabetId($SCNo_ary);
+					$preview_m2_version="";
+					$preview_m2_version=$preview_item["M2_VERSION"];
+
+					if($item["STATUS"]=="決済者発注承認"){
+						$str=DispParam($str,"PREVIEW_LIST_H");
+						$str=str_replace("[PH_ID]",$preview_item["ID"],$str);
+						$preview_name="発注書：".$SCNo_str."-Version".$preview_m2_version;
+
+					}else if($kessai_num<=0 || $m2_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:なし"){
+						$str=DispParam($str,"PREVIEW_LIST_H");
+						$str=str_replace("[PH_ID]",$preview_item["ID"],$str);
+						$preview_name="発注書：".$SCNo_str."-Version".$preview_m2_version;
+					}
+					$str=str_replace("[OPT_PREVIEW_LIST_H_STR]",$preview_name,$str);
+
+				}
+				//上記で表示にならなかったら非表示
+				$str=DispParamNone($str,"PREVIEW_LIST_H");
 
 
 //				//プレビュー関連
@@ -3831,6 +4673,7 @@ function SubmitMitsumori($key)
 	//更新基本データ
 	$date_stmp=date('Y/m/d H:i:s');
 	$status="見積り送付";
+	$c_status="見積り";
 
 	//$StrSQL="SELECT * FROM ".$TableName." WHERE `".$FieldName[$FieldKey]."`='".mysqli_real_escape_string(ConnDB(),$key)."' order by ID desc limit 1;";
 	//$rs=mysqli_query(ConnDB(),$StrSQL);
@@ -3864,6 +4707,7 @@ function SubmitMitsumori($key)
 	$StrSQL = "
 		UPDATE DAT_SHODAN SET
 			EDITDATE = '".$date_stmp."',
+			C_STATUS = '".$c_status."',
 			STATUS = '".$status."'
 		WHERE
 		  ID = ".$fs_shodan_id."
@@ -3935,6 +4779,23 @@ function SubmitMitsumori($key)
 			$new_FS_rs=mysqli_query(ConnDB(),$StrSQL);
 			$item_new_FS=mysqli_fetch_assoc($new_FS_rs);
 			$new_filestatus_id=$item_new_FS["ID"];
+
+
+			//DAT_SHODAN_DIVにエントリーがあったら更新
+			//DAT_SHODANの該当取引のレコードのステータスを「見積り送付」に更新
+			$StrSQL = "
+				UPDATE DAT_SHODAN_DIV SET
+					EDITDATE = '".$date_stmp."',
+					C_STATUS = '".$c_status."',
+					STATUS = '".$status."'
+				WHERE
+					SHODAN_ID = '".$fs_shodan_id."' 
+					AND DIV_ID='".$item_new_FS["DIV_ID"]."' 
+				";
+				
+			if (!(mysqli_query(ConnDB(),$StrSQL))) {
+				die;
+			}
 
 
 			$copy_filestatus_id=$copy_item_FS["ID"];
@@ -4085,7 +4946,8 @@ function SubmitMitsumori($key)
 			<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=見積り送付&mode=disp_frame&key='.$fs_key.'\'\');">
 				'.$m2_quote_no.' ('.$SCNo_str.') Version'.$m2_version.'-'.$item_name.' '.$disp_part.'
 			</a>' . 
-			'　<a href="/m_contact2/?type=再見積り依頼&mode=new&key='.$part0_key.'" target="_top">再見積りを依頼する</a>
+			'　<a href="/m_contact2/?type=再見積り依頼&mode=new&key='.$part0_key.'" target="_blank">再見積りを依頼する</a><br>'.
+			'　<a href="/m_contact2/?type=発注依頼&mode=new&shodan_id='.$fs_shodan_id.'&m1_mid='.$fs_mid1.'" target="_blank">発注依頼</a>
 			';
 		}else if($new_item_FS["M2_PAY_TYPE"]=='Split' && $part=="Part0"){
 			//2回払いでPart0以外は上でcontinueしてる。
@@ -4095,7 +4957,8 @@ function SubmitMitsumori($key)
 			<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=見積り送付&mode=disp_frame&key='.$fs_key.'\'\');">
 				'.$m2_quote_no.' ('.$SCNo_str.') Version'.$m2_version.' '.$disp_part.'
 			</a>' . 
-			'　<a href="/m_contact2/?type=再見積り依頼&mode=new&key='.$fs_key.'" target="_top">再見積りを依頼する</a>
+			'　<a href="/m_contact2/?type=再見積り依頼&mode=new&key='.$fs_key.'" target="_blank">再見積りを依頼する</a><br>'.
+			'　<a href="/m_contact2/?type=発注依頼&mode=new&shodan_id='.$fs_shodan_id.'&m1_mid='.$fs_mid1.'" target="_blank">発注依頼</a>
 			';
 		
 		}else if($new_item_FS["M2_PAY_TYPE"]=='Once'){
@@ -4104,7 +4967,8 @@ function SubmitMitsumori($key)
 			<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=見積り送付&mode=disp_frame&key='.$fs_key.'\'\');">
 				'.$m2_quote_no.' ('.$SCNo_str.') Version'.$m2_version.' '.$disp_part.'
 			</a>' . 
-			'　<a href="/m_contact2/?type=再見積り依頼&mode=new&key='.$fs_key.'" target="_top">再見積りを依頼する</a>
+			'　<a href="/m_contact2/?type=再見積り依頼&mode=new&key='.$fs_key.'" target="_blank">再見積りを依頼する</a><br>'.
+			'　<a href="/m_contact2/?type=発注依頼&mode=new&shodan_id='.$fs_shodan_id.'&m1_mid='.$fs_mid1.'" target="_blank">発注依頼</a>
 			';
 		}else{
 			//例外があったら表示のみ
@@ -4146,6 +5010,101 @@ function SubmitMitsumori($key)
 	}
 
 }
+
+
+//=========================================================================================================
+//名前 
+//機能 アコーディオンでの見積り書のプルダウンのプレビュー表示
+//引数 a_filestatusのレコード（見積りレビュー用につかっている「見積り送付」のレコード）,置換対象の文字列:
+//戻値 $function_ret
+//=========================================================================================================
+function dispMitsuAtAccordion($item,$str){
+	echo "<!--プレビュー用のステータス：".$item["STATUS"]."-->";
+	if($item["STATUS"]=="見積り送付" || $item["STATUS"]=="運営手数料追加"){
+		$str=DispParam($str,"PREVIEW_LIST_CB");
+		$str=DispParam($str,"PREVIEW_LIST_R");
+		$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE M2_ID='".$item["M2_ID"]."' ";
+		$StrSQL.=" AND M2_VERSION='".$item["M2_VERSION"]."' AND (STATUS='見積り送付' OR STATUS='運営手数料追加') ";
+		//echo('<!--previewSQL:'.$StrSQL.'-->');
+		$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+		
+		$opt_preview_list_r="";
+		$opt_preview_list_cb="";
+		while($preview_item = mysqli_fetch_assoc($preview_rs)){
+			$SCNo_ary=array(
+				"SCNo_yy" => "", 
+				"SCNo_mm" => "", 
+				"SCNo_dd" => "", 
+				"SCNo_cnt" => "", 
+				"SCNo_else1" => "", 
+				"SCNo_else2" => "", 
+			);
+			$SCNo_str="";
+			$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
+			$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
+			$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
+			$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
+			$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
+			$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
+			$SCNo_str=formatAlphabetId($SCNo_ary);
+			$preview_m2_version="";
+			$preview_m2_version=$preview_item["M2_VERSION"];
+			
+
+			if($item["STATUS"]=="運営手数料追加" && $preview_item["STATUS"]=="運営手数料追加"){
+				//送信ボタンない状態で表示
+				$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=1&key=".$preview_item["ID"]."'>";
+				$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+				$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
+				$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+			}
+			
+			if( $item["STATUS"]=="見積り送付" && 
+				($item["M_STATUS"]=="手数料追加" || $item["M_STATUS"]=="手数料追加(前払い)") ){
+			
+				//echo "<!--プルダウン用:preview_item[STATUS]：".$preview_item["STATUS"]."-->";
+				if($preview_item["STATUS"]=="運営手数料追加"){
+					//「運営手数料追加」のデータを送信ボタンない状態で表示
+					$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+					//echo "<!--プルダウン用：opt_preview_list_cb：$opt_preview_list_cb-->";
+					//echo "<!--プルダウン用：opt_preview_list_r：$opt_preview_list_r-->";
+				}
+				if($preview_item["STATUS"]=="見積り送付"){
+					//「見積り送付」のデータを送信ボタンない状態で表示
+					$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=1&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+					//echo "<!--プルダウン用：opt_preview_list_cb：$opt_preview_list_cb-->";
+					//echo "<!--プルダウン用：opt_preview_list_r：$opt_preview_list_r-->";
+				}
+				
+			}else if( $item["STATUS"]=="見積り送付" && 
+				($item["M_STATUS"]=="直接送付" || $item["M_STATUS"]=="直接送付(前払い)") ){
+				
+				if($preview_item["STATUS"]=="見積り送付"){
+					//「見積り送付」のデータを送信ボタンない状態で表示
+					$opt_preview_list_r.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=r&btn_version=1&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+					$opt_preview_list_cb.="<option value='/a_filestatus/?mode=disp_frame1&preview_type=cb&btn_version=1&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
+				
+				}
+			}
+			
+		}
+
+		//echo "<!--プルダウン用（ループの外）：opt_preview_list_cb：$opt_preview_list_cb-->";
+		//echo "<!--プルダウン用（ループの外）：opt_preview_list_r：$opt_preview_list_r-->";
+		$str=str_replace("[OPT_ACCORDION_PREVIEW_LIST_R]",$opt_preview_list_r,$str);
+		$str=str_replace("[OPT_ACCORDION_PREVIEW_LIST_CB]",$opt_preview_list_cb,$str);
+	}else{
+			$str=DispParamNone($str,"PREVIEW_LIST_CB");
+			$str=DispParamNone($str,"PREVIEW_LIST_R");
+	}
+
+	return $str;
+}
+
 
 
 
@@ -4338,7 +5297,12 @@ function SubmitSeikyu($key){
 	$mid2=$FieldValue[3];
 	$shodan_id=$FieldValue[1];
 
-	if($FieldValue[30] != '') {
+	////下記のファイル縛りは先方の要望により廃止
+	//if($FieldValue[30] != '') {
+
+		////下記のファイル縛りは先方の要望により廃止
+		////下記のファイル縛りは先方の要望により廃止
+
 		//【$FieldValue[34]が「納品確認」の時に、が表示されて値が入力された場合。】
 		//今開いてるSTATUSが納品確認のデータで、S2_FILEに値が入ってる場合は、
 		//DAT_FILESTATUSのSTATUSが請求になってるレコードがあるか探して、なかったら、新規データを作り、かつ今開いてるデータを更新
@@ -4544,9 +5508,9 @@ function SubmitSeikyu($key){
 
 
 		}
-	}else{
-		echo "<span class='err-disp'>送信エラー：添付ファイルを選択し保存してからもう一度お試しください</span>";
-	}
+	//}else{
+	//	echo "<span class='err-disp'>送信エラー：添付ファイルを選択し保存してからもう一度お試しください</span>";
+	//}
 
 }
 

@@ -135,6 +135,7 @@
                 $('select').addClass('glayout');
                 $('textarea').addClass('glayout');
                 $('label.input-file').addClass('glayout');
+                $('button.input-file-delete').addClass('glayout');
             }
         });
     </script>
@@ -162,6 +163,9 @@
                     <p class="c-head__txt">Edit the supplier profile.</p>
                     [E-HON_REGIST]
                 </div>
+                <nav class="subpage-head__func">
+                    <div class="btn btn--blue-border-w"><a href="/m_search2/?mode=disp&key=[ID]" target="_blank">View my details<i class="fa-solid fa-up-right-from-square"></i></a></div>
+                </nav>
             </div>
         </section>
         <section class="innerTab">
@@ -903,8 +907,10 @@
                                 [S-EDITDATA]
                                 <div class="formset__input-child">
                                     [S-M1_ETC46]
-                                    <a href="[M1_ETC46]" download="">Download</a> Delete
-                                    <input type="checkbox" name="DEL_IMAGE_M1_ETC46"><br>
+                                    <a href="[M1_ETC46]" download="">Download</a>
+                                    <label class="input-file-remove-flag"><span>Delete</span><input type="checkbox"
+                                        name="DEL_IMAGE_M1_ETC46"></label>
+                                    <br>
                                     [E-M1_ETC46]
                                     <input type="file" name="EP_M1_ETC46" value="[M1_ETC46]" size="90">
                                     <input type="hidden" name="M1_ETC46" value="[M1_ETC46]">
@@ -1054,8 +1060,10 @@
 
                                         [S-EDITDATA]
                                         [S-M1_DRDO06]
-                                        <a href="[M1_DRDO06]" download="">Download</a> Delete
-                                        <input type="checkbox" name="DEL_IMAGE_M1_DRDO06"><br>
+                                        <a href="[M1_DRDO06]" download="">Download</a>
+                                        <label class="input-file-remove-flag"><span>Delete</span><input type="checkbox"
+                                            name="DEL_IMAGE_M1_DRDO06"></label>
+                                        <br>
                                         [E-M1_DRDO06]
                                         <input type="file" name="EP_M1_DRDO06" value="[M1_DRDO06]" size="90">
                                         <input type="hidden" name="M1_DRDO06" value="[M1_DRDO06]">

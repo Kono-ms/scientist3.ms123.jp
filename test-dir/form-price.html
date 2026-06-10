@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Input Formatter</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { padding: 8px; font-size: 16px; width: 200px; text-align: right; }
+    </style>
+</head>
+<body>
+
+    <div class="input-group">
+        <label>JPY (整数のみ):</label>
+        <input type="text" class="cur-input" data-currency="JPY" data-type="amount" placeholder="0">
+    </div>
+
+    <div class="input-group">
+        <label>USD (小数点第2位):</label>
+        <input type="text" class="cur-input" data-currency="USD" data-type="amount" placeholder="0.00">
+    </div>
+
+    <div class="input-group">
+        <label>EUR (カンマ/ドット逆転):</label>
+        <input type="text" class="cur-input" data-currency="EUR" data-type="amount" placeholder="0,00">
+    </div>
+
+    <div class="input-group">
+        <label>Quantity (通貨に関わらず整数):</label>
+        <input type="text" class="cur-input" data-currency="GBP" data-type="quantity" placeholder="0">
+    </div>
+
+<script>
+document.querySelectorAll('.cur-input').forEach(el => {
+    
+    // 1. 入力中：数字と区切り文字以外を排除
+    el.addEventListener('input', function(e) {
+        let val = this.value;
+        const currency = this.dataset.currency;
+        const isQty = this.dataset.type === 'quantity';
+
+        if (currency === 'JPY' || isQty) {
+            // 整数のみ
+            this.value = val.replace(/[^\d]/g, '');
+        } else {
+            // 小数点第2位まで (EUR対応でドットとカンマ両方許容)
+            // 最初のドットかカンマ以降を2文字に制限
+            this.value = val.replace(/[^0-9.,]/g, '');
+            const parts = this.value.split(/[.,]/);
+            if (parts.length > 1) {
+                this.value = parts[0] + (val.includes('.') ? '.' : ',') + parts[1].substring(0, 2);
+            }
+        }
+    });
+
+    // 2. フォーカス時：計算可能な数値形式に戻す（カンマ等を除去）
+    el.addEventListener('focus', function() {
+        // 表示用の桁区切り（.や,）を消して編集しやすくする
+        // ただしEURの場合は「小数点としてのカンマ」を残す必要があるため注意
+        let val = this.value;
+        if (this.dataset.currency === 'EUR' && this.dataset.type !== 'quantity') {
+            this.value = val.replace(/\./g, ''); // 桁区切りのドットを消す
+        } else {
+            this.value = val.replace(/,/g, ''); // 桁区切りのカンマを消す
+        }
+    });
+
+    // 3. 離脱時：最終的なフォーマットを適用
+    el.addEventListener('blur', function() {
+        let val = this.value;
+        if (!val) return;
+
+        const currency = this.dataset.currency;
+        const isQty = this.dataset.type === 'quantity';
+
+        // 数値変換用に標準化（EURのカンマをドットに置換）
+        let cleanVal = val.replace(/,/g, '.');
+        let num = parseFloat(cleanVal);
+        if (isNaN(num)) return;
+
+        // ロケール判定
+        const locale = {
+            'JPY': 'ja-JP',
+            'USD': 'en-US',
+            'GBP': 'en-GB',
+            'EUR': 'de-DE' // ドイツ形式：1.234,56
+        }[currency] || 'en-US';
+
+        // フォーマット設定
+        const options = {
+            minimumFractionDigits: (currency === 'JPY' || isQty) ? 0 : 2,
+            maximumFractionDigits: (currency === 'JPY' || isQty) ? 0 : 2
+        };
+
+        this.value = new Intl.NumberFormat(locale, options).format(num);
+    });
+});
+</script>
+</body>
+</html>

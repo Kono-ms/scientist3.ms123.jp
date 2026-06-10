@@ -437,21 +437,22 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 			}
 		}
 
-		//共通ボタン
-		if(in_array("運営手数料追加", $tmp_status) ||
-				in_array("発注依頼", $tmp_status) ||
-				in_array("決済者発注承認", $tmp_status) ){
-		//if(in_array("見積り送付", $tmp_status) ||
-		//		in_array("運営手数料追加", $tmp_status) ||
+		//チャット画面のdeclineボタン廃止
+		////共通ボタン
+		//if(in_array("運営手数料追加", $tmp_status) ||
 		//		in_array("発注依頼", $tmp_status) ||
 		//		in_array("決済者発注承認", $tmp_status) ){
-			$btn_area.= '
-					<div>
-						<span style="color:tomato;">共通操作:</span>
-						<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
-					</div>
-					';
-		}
+		////if(in_array("見積り送付", $tmp_status) ||
+		////		in_array("運営手数料追加", $tmp_status) ||
+		////		in_array("発注依頼", $tmp_status) ||
+		////		in_array("決済者発注承認", $tmp_status) ){
+		//	$btn_area.= '
+		//			<div>
+		//				<span style="color:tomato;">共通操作:</span>
+		//				<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
+		//			</div>
+		//			';
+		//}
 	}
 
 	//$btn_area = '';
@@ -477,39 +478,43 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 			break;
 		case '運営手数料追加':
 			if($item_num_div=="" || $item_num_div==0){
-				$btn_area = '
-				<div>
-					<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
-				</div>
-				';
+				//チャット画面のdeclineボタン廃止
+				$btn_area ='';
 				//$btn_area = '
-				//<div>
-				//<a href="/m_contact1/?type=見積り送付&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Add an estimate</a>
-				//	<a href="/m_contact1/?type=見積り送付&mode=new&shodan_id='.$_GET['etc02'].'&upd_mode=1" target="_blank">Revise the estimate</a>
-				//</div>
 				//<div>
 				//	<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
 				//</div>
 				//';
+
+				
 			}
-			
 			break;
 		case '追加見積り':
 			$btn_area = '
-        <div>
-					<a href="/m_contact1/?type=追加見積り&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Add an estimate</a>
-					　<a href="/m_contact1/?type=追加見積り&mode=new&shodan_id='.$_GET['etc02'].'&upd_mode=1" target="_blank">Revise the estimate</a>
-        </div>
-        <div>
-					<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
-        </div>
+			<div>
+			<a href="/m_contact1/?type=追加見積り&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Add an estimate</a>
+			　<a href="/m_contact1/?type=追加見積り&mode=new&shodan_id='.$_GET['etc02'].'&upd_mode=1" target="_blank">Revise the estimate</a>
+			</div>
 			';
+			//$btn_area = '
+			//<div>
+			//<a href="/m_contact1/?type=追加見積り&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Add an estimate</a>
+			//　<a href="/m_contact1/?type=追加見積り&mode=new&shodan_id='.$_GET['etc02'].'&upd_mode=1" target="_blank">Revise the estimate</a>
+			//</div>
+			//<div>
+			//<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
+			//</div>
+			//';
 			break;
 		case '発注依頼':
-			$btn_area.='
-				<div>
-					<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
-				</div>';
+			//チャット画面のdeclineボタン廃止
+			//$btn_area.='
+			//<div>
+			//	<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
+			//</div>';
+			$btn_area ='';
+
+
 			//受注承認できるのは運営のみに仕様変更のためコメントアウト
 			//if($kessai_num>=1){
 			//	$btn_area.='
@@ -528,12 +533,15 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 			//}
 			break;
 		case '決済者発注承認':
-			//受注承認できるのは運営のみに仕様変更
-			$btn_area = '
-				<div>
-					<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
-				</div>
-				';
+			//チャット画面のdeclineボタン廃止
+			$btn_area ='';
+			////受注承認できるのは運営のみに仕様変更
+			//$btn_area = '
+			//	<div>
+			//		<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
+			//	</div>
+			//	';
+
 
 			//$btn_area = '
 			//	<div>
@@ -545,11 +553,13 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 			//	';
 			break;
 		case '発注否認':
-			$btn_area = '
-        <div>
-					<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
-        </div>
-			';
+			//チャット画面のdeclineボタン廃止
+			$btn_area ='';
+			//$btn_area = '
+			//<div>
+			//<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
+			//</div>
+			//';
 			break;
 		case '受注承認':
 		case '実施中':
@@ -572,12 +582,17 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 			}
 			$btn_area .= '
 			<div>
-				<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
-			</div>
-			<div>
 				<a href="/m_contact1/?type=追加見積り&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">追加見積り</a>
 			</div>
 			';
+			//$btn_area .= '
+			//<div>
+			//	<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
+			//</div>
+			//<div>
+			//	<a href="/m_contact1/?type=追加見積り&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">追加見積り</a>
+			//</div>
+			//';
 			break;
 		case '請求書送付(一括前払い)':
 			$btn_area = '';
@@ -597,14 +612,21 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 				</div>
 				';
 			}
+			//チャット画面のdeclineボタン廃止
 			$btn_area .= '
-			<div>
-				<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
-			</div>
 			<div>
 				<a href="/m_contact1/?type=追加見積り&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">追加見積り</a>
 			</div>
 			';
+
+			//$btn_area .= '
+			//<div>
+			//	<a href="javascript:shodan_cancel('.$_GET['etc02'].');">Decline</a>
+			//</div>
+			//<div>
+			//	<a href="/m_contact1/?type=追加見積り&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">追加見積り</a>
+			//</div>
+			//';
 			break;
 		case 'データ納品':
 		case '物品納品':
@@ -612,9 +634,9 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 		case '受注承認(一括前払い)':
 		case '請求':
 			$btn_area = '
-        <div>
-					<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">Send invoice</a>
-        </div>
+			<div>
+			<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">Send invoice</a>
+			</div>
 			';
 			break;
 	}
@@ -744,6 +766,12 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 
 	if($item_shodan['STATUS']=="請求書送付(一括前払い)" || $item_shodan['STATUS']=="請求書送付(前払い)"){
 		$status="実施中";
+	}
+	if($item_shodan['STATUS']=="決済者発注承認"){
+		$status="決済者発注承認";
+	}
+	if($item_shodan['STATUS']=="サプライヤーキャンセル承認"){
+		$status="サプライヤーキャンセル承認";
 	}
 
 	$str=str_replace("[TITLE]",$item_shodan['TITLE'],$str);

@@ -38,6 +38,12 @@
     function go_m2() {
       window.open('/m_contact1/?type=見積り送付&mode=new&shodan_id=[SHODAN_ID_FOR_M2]');
     }
+     function go_m2_debug() {
+      window.open('/m_contact1_oldver/?type=見積り送付&mode=new&shodan_id=[SHODAN_ID_FOR_M2]');
+    }
+    function go_m2_test() {
+      window.open('/m_contact1_test/?type=見積り送付&mode=new&shodan_id=[SHODAN_ID_FOR_M2]');
+    }
     function go_d() {
       window.open('/m_contact1/?type=見積りの辞退&mode=new&shodan_id=[SHODAN_ID_FOR_M2]');
     }
@@ -52,7 +58,7 @@
     <div class="breadcrumb">
       <div class="l-container">
         <ol class="breadcrumb__list">
-          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item"><a href="/">Top</a></li>
           <li class="breadcrumb__item">[PAGE_TITLE]</li>
         </ol>
       </div>
@@ -110,8 +116,11 @@
             </div>
             <div class="formset__item">
               <div class="formset__ttl"><span>Samples Shipping Support From CosmoBio</span></div>
-              <div class="formset__input">[D-M1_TRANS_FLG]</div>
-              <div class="formset__input">[D-M1_TRANS_TXT]</div>
+              <div class="formset__input">[D-M1_TRANS_FLG]　[D-M1_TRANS_TXT]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>Temperature</span></div>
+              <div class="formset__input">[D-TEMPR]</div>
             </div>
             <div class="formset__item">
               <div class="formset__ttl"><span>Sample Type</span></div>
@@ -137,6 +146,8 @@
         </div>
         <div class="btn formset__btn btn--small formset__btn--back">
           <button type="button" onclick="go_m2();">Submit Quotation</button>
+          <button type="button" onclick="go_m2_debug();">(デバッグ用)旧フォーム</button>
+          <button type="button" onclick="go_m2_test();">(デバッグ用)テスト用</button>
           <button type="button" onclick="go_d();">Decline</button>
         </div>
       </div>

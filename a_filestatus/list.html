@@ -35,6 +35,17 @@
         $('#popup_mcontact2').fadeIn();
     }
 
+     function popup_preview_h(id) {
+        var url="/a_filestatus/?mode=disp_frame2&preview_type=h&btn_version=1&key="+id;
+        //console.log('preview url:'+url);
+        if(url==""){
+            return false;
+        }
+        $('.ifrm_mcontact2').attr('src', url);
+        $('#mask_mcontact2').show();
+        $('#popup_mcontact2').fadeIn();
+    }
+
 //    function popup_preview_r(id) {
 //        var url=document.getElementById('OPT_PREVIEW_LIST_R_'+id).value;
 //        //console.log('preview url:'+url);
@@ -151,8 +162,8 @@
 
                 </th>
 
-                <th>見積書（CB宛）</th>
-                <th>見積書（研究者宛）</th>
+                <th>見積り書（CB宛）</th>
+                <th>見積り書（研究者宛）</th>
 
                 <th>
                   [S-EDITDATE]<a href="./?mode=list&lid=[LID]&sort=11&word=[WORD]&page=[PAGE]">更新日時</a>[E-EDITDATE]
@@ -181,7 +192,7 @@
 
                 <td>[D-MID2]</td>
                 <td>[D-M1_DVAL01]</td>
-                <td>[D-STATUS]</td>
+                <td>[D-STATUS][EXT-MSG]</td>
                 <td>
                   [S-PREVIEW_LIST_CB]
                   <a href="javascript:popup_preview_cb([ID]);" id="preview_btn_cb" class="btn btn-default btn-xs">[OPT_PREVIEW_LIST_CB_STR]</a>
@@ -192,6 +203,10 @@
                   </select>
                   <a href="javascript:popup_preview_cb([ID]);" id="preview_btn_cb" class="btn btn-default btn-xs">プレビュー</a>-->
                   [E-PREVIEW_LIST_CB]
+
+                  [S-PREVIEW_LIST_H]
+                  <a href="javascript:popup_preview_h([PH_ID]);" id="preview_btn_h" class="btn btn-default btn-xs">[OPT_PREVIEW_LIST_H_STR]</a>
+                  [E-PREVIEW_LIST_H]
                 </td>
                 <td>
                   [S-PREVIEW_LIST_R]
@@ -203,6 +218,10 @@
                   </select>
                   <a href="javascript:popup_preview_r([ID]);" id="preview_btn_r" class="btn btn-default btn-xs">プレビュー</a>-->
                   [E-PREVIEW_LIST_R]
+
+                  [S-PREVIEW_LIST_H]
+                  <a href="javascript:popup_preview_h([PH_ID]);" id="preview_btn_h" class="btn btn-default btn-xs">[OPT_PREVIEW_LIST_H_STR]</a>
+                  [E-PREVIEW_LIST_H]
                 </td>
                 <td>[D-EDITDATE]</td>
                 <td><a href="/a_filestatus_detail/?mode=list&key=&lid=&sort=&word=商談詳細ID：[D-ID]&page="

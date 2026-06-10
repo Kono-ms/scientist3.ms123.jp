@@ -700,10 +700,12 @@ function showStatus($val){
 				$status="Estimate";
 				break;
 			case "見積り送付":
+			case "決済者発注承認":
 				$status="Estimate";
 				break;
 			case "発注否認":
-				$status="Order rejection";
+				$status="Estimate";
+				//$status="Order rejection";
 				break;
 			case "納品確認":
 				$status="Delivery";
@@ -727,6 +729,7 @@ function showStatus($val){
 
 
 }
+
 
 //=========================================================================================================
 //名前 テキストに含まれるステータスをすべてログインユーザーに応じて日本語→英語に変換
@@ -1087,16 +1090,16 @@ function check_M2_PAY_TYPE($shodan_id,$mid1){
 	$StrSQL.=" and STATUS='発注依頼' order by ID desc ";
 	$h_rs=mysqli_query(ConnDB(),$StrSQL);
 	$h_item= mysqli_fetch_assoc($h_rs);
-	echo "<!--$StrSQL:[1]:\n";
-	var_dump($h_item);
-	echo "-->";
+	//echo "<!--$StrSQL:[1]:\n";
+	//var_dump($h_item);
+	//echo "-->";
 	$StrSQL="SELECT ID,SHODAN_ID,MID1,STATUS,M2_PAY_TYPE FROM DAT_FILESTATUS WHERE ID=".$h_item["H_M2_ID"]." ";
 	$StrSQL.=" and MID1='".$mid1."' ";
 	$rs_chk=mysqli_query(ConnDB(),$StrSQL);
 	$item_chk = mysqli_fetch_assoc($rs_chk);
-	echo "<!--$StrSQL:[2]:\n";
-	var_dump($item_chk);
-	echo "-->";
+	//echo "<!--$StrSQL:[2]:\n";
+	//var_dump($item_chk);
+	//echo "-->";
 	
 	$m2_pay_type = (isset($item_chk["M2_PAY_TYPE"]) && $item_chk["M2_PAY_TYPE"]!="") ? $item_chk["M2_PAY_TYPE"] : "";
 
@@ -1129,6 +1132,7 @@ function check_split_progress_hatyu($shodan_id,$div_id){
 	//念のためDAT_SHODAN_DIVで発注依頼の前の何もしてない状態かチェック
 	$StrSQL="SELECT * FROM DAT_SHODAN_DIV WHERE SHODAN_ID='".$shodan_id."'";
 	$StrSQL.=" AND DIV_ID='".$div_id_part1."' ";
+	//echo "<!--SQL1:$StrSQL-->";
 	$rs=mysqli_query(ConnDB(),$StrSQL);
 	$num1=0;
 	while( $item = mysqli_fetch_assoc($rs) ){
@@ -1146,6 +1150,7 @@ function check_split_progress_hatyu($shodan_id,$div_id){
 	}
 	$StrSQL="SELECT * FROM DAT_SHODAN_DIV WHERE SHODAN_ID='".$shodan_id."'";
 	$StrSQL.=" AND DIV_ID='".$div_id_part2."' ";
+	//echo "<!--SQL2:$StrSQL-->";
 	$rs=mysqli_query(ConnDB(),$StrSQL);
 	$num2=0;
 	while( $item = mysqli_fetch_assoc($rs) ){
@@ -1305,11 +1310,21 @@ function makeServiceArea($id,$str){
 		$part=$tmp[2];
 		$pre_part=$tmp[0]."-".$tmp[1];
 	}
-	echo "<!--サービス費用エリア：part:$part-->";
-	echo "<!--サービス費用エリア：pre_part:$pre_part-->";
-	echo "<!--target_item:\n";
-	var_dump($target_item);
-	echo "-->";
+	//echo "<!--サービス費用エリア：part:$part-->";
+	//echo "<!--サービス費用エリア：pre_part:$pre_part-->";
+	//echo "<!--target_item:\n";
+	//var_dump($target_item);
+	//echo "-->";
+
+
+	//通貨に対応する四捨五入のまるめる桁指定
+	$m2_currency=$target_item["M2_CURRENCY"];
+	if($m2_currency=="M2_CURRENCY:JPY"){
+		$decimal_point=0;
+	}else{
+		$decimal_point=2;
+	}
+	echo "<!--decimal_point:$decimal_point-->";
 
 	//小計1
 	//※先方の要望により、
@@ -1346,7 +1361,13 @@ function makeServiceArea($id,$str){
 	}
 	
 	echo "<!--M2_detail_SP_DISCOUNTの合計:$sum_m2_detail_sp_discount-->";
+	$sum_m2_detail_sp_discount=round($sum_m2_detail_sp_discount,$decimal_point);
+	echo "<!--sum_m2_detail_sp_discount:round():$sum_m2_detail_sp_discount-->";
+
 	echo "<!--syoke1:$syoke1-->";
+	$syoke1=round($syoke1,$decimal_point);
+	echo "<!--syoke1:round():$syoke1-->";
+
 	$str=str_replace("[SUM_M2_DETAIL_SP_DISCOUNT]", $sum_m2_detail_sp_discount, $str); //PDF対応
 	$str=str_replace("[MITSUMORISYO_SUBTOTAL1]", $syoke1, $str);
 
@@ -1367,17 +1388,28 @@ function makeServiceArea($id,$str){
 			$tax_rate1=0;
 		}
 	}
+
+	echo "<!--tax_rate1:$tax_rate1-->";
+			//tax_rate1は通貨に関係なく整数入力のみ
+	$tax_rate1=round($tax_rate1,0);
+	echo "<!--tax_rate1:round():$tax_rate1-->";
 	$str=str_replace("[MITSUMORISYO_TAX_RATE1]",$tax_rate1,$str);
 
 
 	//消費税
 	$tax_bill1=$tax_rate1*$syoke1/100;
+	echo "<!--tax_bill1:$tax_bill1-->";
+	$tax_bill1=round($tax_bill1,$decimal_point);
+	echo "<!--tax_bill1:round():$tax_bill1-->";
 	$str=str_replace("[MITSUMORISYO_TAX_BILL1]",$tax_bill1,$str);
 
 
 	//PDF対応
 	//PDF用の表示
 	$pdf_total1=$syoke1+$tax_bill1;
+	echo "<!--pdf_total1:$pdf_total1-->";
+	$pdf_total1=round($pdf_total1,$decimal_point);
+	echo "<!--pdf_total1:round():$pdf_total1-->";
 	$str=str_replace("[PDF_TOTAL1]", $pdf_total1, $str);
 
 
@@ -1391,6 +1423,11 @@ function makeServiceArea($id,$str){
 	}else{
 		$pf_fee=0;
 	}
+
+	echo "<!--pf_fee:$pf_fee-->";
+	$pf_fee=round($pf_fee,$decimal_point);
+	echo "<!--pf_fee:round():$pf_fee-->";
+
 	$str=str_replace("[MITSUMORISYO_PF_FEE]",$pf_fee,$str);
 
 	echo "<!--M2_ETC02:".$itemM2["M2_ETC02"]."-->";
@@ -1431,11 +1468,11 @@ function makeServiceArea($id,$str){
 		$StrSQL.=" ORDER BY CAST(SUBSTRING_INDEX(DIV_ID, 'Part', -1) AS UNSIGNED) DESC;";
 		$partLAST_rs=mysqli_query(ConnDB(),$StrSQL);
 		$partLAST_item = mysqli_fetch_assoc($partLAST_rs);
-		echo "<!--サービス費用エリア(輸入)：partLAST:";
-		echo "$StrSQL\n";
-		var_dump($partLAST_item);
-		echo "-->";
-		echo "<!--54:".$target_item["DIV_ID"].", prepart合体：".$pre_part."-Part0"."-->";
+		//echo "<!--サービス費用エリア(輸入)：partLAST:";
+		//echo "$StrSQL\n";
+		//var_dump($partLAST_item);
+		//echo "-->";
+		//echo "<!--54:".$target_item["DIV_ID"].", prepart合体：".$pre_part."-Part0"."-->";
 		if($target_item["DIV_ID"]==$pre_part."-Part0"){
 			//Part0だったら
 			if(is_numeric($partLAST_item["M2_IMPORT_FEE"])){
@@ -1467,10 +1504,10 @@ function makeServiceArea($id,$str){
 			$StrSQL.=" AND STATUS='".$target_item["STATUS"]."' ";
 			$partN_rs=mysqli_query(ConnDB(),$StrSQL);
 
-			echo "<!--サービス費用エリア(輸入)：partN:";
-			echo "$StrSQL\n";
-			var_dump($partN_item);
-			echo "-->";
+			//echo "<!--サービス費用エリア(輸入)：partN:";
+			//echo "$StrSQL\n";
+			//var_dump($partN_item);
+			//echo "-->";
 			$import_fee=0;
 			while( $partN_item = mysqli_fetch_assoc($partN_rs) ){
 				if($partN_item["DIV_ID"]==$pre_part."-Part0"){
@@ -1498,6 +1535,10 @@ function makeServiceArea($id,$str){
 
 	}
 	
+	echo "<!--import_fee:$import_fee-->";
+	$import_fee=round($import_fee,$decimal_point);
+	echo "<!--import_fee:round():$import_fee-->";
+
 	$str=str_replace("[INPUT-M2_IMPORT_FEE]",$import_fee,$str);
 
 
@@ -1539,9 +1580,9 @@ function makeServiceArea($id,$str){
 
 		$export_fee=0;
 		while($partN_item = mysqli_fetch_assoc($partN_rs)){
-			echo "<!--サービス費用エリア：part0:";
-			var_dump($partN_item);
-			echo "-->";
+			//echo "<!--サービス費用エリア：part0:";
+			//var_dump($partN_item);
+			//echo "-->";
 			if($partN_item["DIV_ID"]==$pre_part."-Part0"){
 				continue;
 			}
@@ -1576,14 +1617,14 @@ function makeServiceArea($id,$str){
 	//「見積り依頼」データの「M1_TRANS_FLG」が「なし」の場合は強制的に「0」
 	$StrSQL="SELECT ID,NEWDATE,STATUS,M1_TRANS_FLG FROM DAT_FILESTATUS WHERE ";
 	$StrSQL.=" SHODAN_ID='".$target_item["SHODAN_ID"]."' ";
-	$StrSQL.=" AND STATUS='見積り依頼' ";
+	$StrSQL.=" AND (STATUS='見積り依頼' OR STATUS='再見積り依頼') ";
 	$StrSQL.=" AND NEWDATE<'".$target_item["NEWDATE"]."' ";
 	$StrSQL.=" ORDER BY NEWDATE DESC ";
 	$irai_rs=mysqli_query(ConnDB(),$StrSQL);
 	$irai_item = mysqli_fetch_assoc($irai_rs);
-	echo "<!--サービス合計エリア irai_item:";
-	var_dump($irai_item);
-	echo "-->";
+	//echo "<!--サービス合計エリア irai_item:";
+	//var_dump($irai_item);
+	//echo "-->";
 	if($irai_item["M1_TRANS_FLG"]=="なし"){
 		$str=DispParam($str, "M1_TRANS_FLG_EXP");
 		//データはそもそもこの場合保存されてないが念のためここでも0に設定する。
@@ -1592,6 +1633,11 @@ function makeServiceArea($id,$str){
 	}else{
 		$str=DispParamNone($str, "M1_TRANS_FLG_EXP");
 	}
+
+	echo "<!--export_fee:$export_fee-->";
+	$export_fee=round($export_fee,$decimal_point);
+	echo "<!--export_fee:round():$export_fee-->";
+
 	$str=str_replace("[INPUT-MITSUMORISYO_EXPORT_FEE]",$export_fee,$str);
 
 
@@ -1607,17 +1653,28 @@ function makeServiceArea($id,$str){
 		$str=DispParamNone($str,"HIDDEN_M2_MANAGE_DISCOUNT");
 
 	}
+
+	echo "<!--mng_discount:$mng_discount-->";
+	$mng_discount=round($mng_discount,$decimal_point);
+	echo "<!--mng_discount:round():$mng_discount-->";
+
 	$str=str_replace("[INPUT-M2_MANAGE_DISCOUNT]",$mng_discount,$str);
 
 
 	//小計2
 	$syoke2=$pf_fee+$import_fee+$export_fee-$mng_discount;
 	echo "<!--syoke2:$syoke2=$pf_fee+$import_fee+$export_fee-$mng_discount-->";
+	$syoke2=round($syoke2,$decimal_point);
+	echo "<!--syoke2:round():$syoke2-->";
 	$str=str_replace("[MITSUMORISYO_SUBTOTAL2]",$syoke2,$str);
 
 
 	//税率2
 	$tax_rate2=$target_item["M2_TAX_RATE2"];
+	echo "<!--tax_rate2:$tax_rate2-->";
+	//tax_rate2は通貨に関係なく整数入力のみ
+	$tax_rate2=round($tax_rate2,0);
+	echo "<!--tax_rate2:round():$tax_rate2-->";
 	$str=str_replace("[MITSUMORISYO_TAX_RATE2]",$tax_rate2,$str);
 
 	
@@ -1625,6 +1682,8 @@ function makeServiceArea($id,$str){
 	//消費税率2
 	$tax_bill2=$syoke2*$tax_rate2/100;
 	echo "<!--tax_bill2:$tax_bill2=$syoke2*$tax_rate2/100;-->";
+	$tax_bill2=round($tax_bill2,$decimal_point);
+	echo "<!--tax_bill2:round():$tax_bill2-->";
 	$str=str_replace("[MITSUMORISYO_TAX_BILL2]",$tax_bill2,$str);
 
 
@@ -1632,13 +1691,19 @@ function makeServiceArea($id,$str){
 	//M2_CURRENCY
 	$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2;
 	echo "<!--all_charge:$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2-->";
-	if($target_item["M2_CURRENCY"]=="M2_CURRENCY:JPY"){
-		$rounded_all_charge=round($all_charge);
-	}else{
-		$rounded_all_charge=round($all_charge,1);
-	}
+	$all_charge=round($all_charge,$decimal_point);
+	echo "<!--all_charge:round():$all_charge-->";
 	$str=str_replace("[MITSUMORISYO_ALL_CHARGE]",$all_charge,$str);
-	$str=str_replace("[R_MITSUMORISYO_ALL_CHARGE]",$rounded_all_charge,$str);
+
+	//$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2;
+	//echo "<!--all_charge:$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2-->";
+	//if($target_item["M2_CURRENCY"]=="M2_CURRENCY:JPY"){
+	//	$rounded_all_charge=round($all_charge);
+	//}else{
+	//	$rounded_all_charge=round($all_charge,1);
+	//}
+	//$str=str_replace("[MITSUMORISYO_ALL_CHARGE]",$all_charge,$str);
+	//$str=str_replace("[R_MITSUMORISYO_ALL_CHARGE]",$rounded_all_charge,$str);
 
 
 	//SHIP TO
@@ -1661,6 +1726,224 @@ function makeServiceArea($id,$str){
 
 
 	return $str;
+}
+
+
+
+//=========================================================================================================
+//名前 
+//機能 見積書プレビュー（サプライヤー→CB）の宛名等のエリア表示
+//a_filestatusのサービスエリア費用計算部分ををもとにしているので、ここで不要な記述もあり。
+//引数 $id:見積り書のID, $str:置換したい文章。
+//戻値 文章
+//=========================================================================================================
+function makePreviewInfo_CB($id,$str){
+	$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID='".$id."'";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$target_item=mysqli_fetch_assoc($rs);
+
+	$tmp="";
+	$tmp=explode("-", $target_item["DIV_ID"]);
+	$part="";
+	$pre_part="";
+	if(count($tmp)==3){
+		$part=$tmp[2];
+		$pre_part=$tmp[0]."-".$tmp[1];
+	}
+	//echo "<!--makePreviewInfo：part:$part-->";
+	//echo "<!--makePreviewInfo：pre_part:$pre_part-->";
+	//echo "<!--target_item:\n";
+	//var_dump($target_item);
+	//echo "-->";
+
+	$str=str_replace("[M2_STUDY_CODE]",$target_item["M2_STUDY_CODE"],$str);
+	$str=str_replace("[M2_QUOTE_NO]",$target_item["M2_QUOTE_NO"],$str);
+	$str=str_replace("[M2_DATE]",$target_item["M2_DATE"],$str);
+	$str=str_replace("[NEWDATE]",$target_item["NEWDATE"],$str);
+	$str=str_replace("[M2_QUOTE_VALID_UNTIL]",$target_item["M2_QUOTE_VALID_UNTIL"],$str);
+	
+	$SCNo_str="";
+	$SCNo_ary=array(
+		"SCNo_yy" => "", 
+		"SCNo_mm" => "", 
+		"SCNo_dd" => "", 
+		"SCNo_cnt" => "", 
+		"SCNo_else1" => "", 
+		"SCNo_else2" => "", 
+	);
+	$SCNo_ary=array(
+		"SCNo_yy" => $target_item['SCNo_yy'], 
+		"SCNo_mm" => $target_item['SCNo_mm'], 
+		"SCNo_dd" => $target_item['SCNo_dd'], 
+		"SCNo_cnt" => $target_item['SCNo_cnt'], 
+		"SCNo_else1" => $target_item['SCNo_else1'], 
+		"SCNo_else2" => $target_item['SCNo_else2'], 
+	);
+	$SCNo_str=formatAlphabetId($SCNo_ary);
+
+	if( isset($target_item["M2_VERSION"]) && $target_item["M2_VERSION"]!="" ){
+		$SCNo_str.="-V".$target_item["M2_VERSION"];
+	}
+	
+
+	$str=str_replace("[SCNO]",$SCNo_str,$str);
+
+
+	$pdf_shoan_id=$target_item["SHODAN_ID"];
+	$pdf_mid1=$target_item["MID1"];
+	$pdf_mid2=$target_item["MID2"];
+	$StrSQL="SELECT * FROM DAT_SHODAN WHERE ID='".$pdf_shoan_id."' ";
+	$StrSQL.=" and MID1_LIST='".$pdf_mid1."' ";
+	$StrSQL.=" and MID2='".$pdf_mid2."' ";
+	//echo "<!--pdf SQL:$StrSQL-->";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$pdf_shodan_item=mysqli_fetch_assoc($rs);
+	$str=str_replace("[PDF_SHODAN_TITLE]",$pdf_shodan_item["TITLE"],$str);
+
+	$StrSQL="SELECT * FROM DAT_M1 WHERE MID='".$pdf_mid1."' ";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$pdf_m1_item=mysqli_fetch_assoc($rs);
+
+	$StrSQL="SELECT * FROM DAT_M2 WHERE MID='".$pdf_mid2."' ";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$pdf_m2_item=mysqli_fetch_assoc($rs);
+
+	$StrSQL="SELECT * FROM DAT_M3 WHERE MID='".$pdf_m2_item["M2_DVAL15"]."' ";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$pdf_m3_item=mysqli_fetch_assoc($rs);
+
+	foreach ($pdf_m1_item as $idx => $val) {
+		$str=str_replace("[PDF_M1-".$idx."]",$val,$str);
+		$str=str_replace("[D-PDF_M1-".$idx."]", str_replace($idx.":","",$val), $str);
+	}
+	foreach ($pdf_m2_item as $idx => $val) {
+		$str=str_replace("[PDF_M2-".$idx."]",$val,$str);
+		$str=str_replace("[D-PDF_M2-".$idx."]", str_replace($idx.":","",$val), $str);
+	}
+	foreach ($pdf_m3_item as $idx => $val) {
+		$str=str_replace("[PDF_M3-".$idx."]",$val,$str);
+		$str=str_replace("[D-PDF_M3-".$idx."]", str_replace($idx.":","",$val), $str);
+	}
+	//通常決済者がいない場合があるので、DAT_M3のデータをとってこれないことがある。
+	//その際の、表示タグが未変換でのこらないための処理。
+	$StrSQL="SHOW COLUMNS FROM DAT_M3;";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	while($pdf_m3_colum_name=mysqli_fetch_assoc($rs)){
+		$idx=$pdf_m3_colum_name["Field"];
+		//echo "<!--idx:$idx-->";
+		$str=str_replace("[PDF_M3-".$idx."]","",$str);
+		$str=str_replace("[D-PDF_M3-".$idx."]", str_replace($idx.":","",""), $str);
+	}
+
+	//有効期限
+	//M2_QUOTE_VALID_UNTIL
+	$originalDate = $target_item["M2_QUOTE_VALID_UNTIL"];
+	if(!is_null($originalDate) && $originalDate!=""){
+		$date = date_create($originalDate);
+		if ($date) {
+			$dispDate = $date->format('Y/m/d');
+			$str = str_replace("[FORMATTED_M2_QUOTE_VALID_UNTIL]", $dispDate, $str);
+		} 
+	}
+	$str = str_replace("[FORMATTED_M2_QUOTE_VALID_UNTIL]", "", $str);
+	
+
+	//サプライヤーのbill toの1番目のアドレス
+	$pdf_address1="";
+	$pdf_address1.=$pdf_m1_item["M1_ETC34"];
+	$pdf_address1.=!empty($pdf_m1_item["M1_ETC35"]) ? ", ".$pdf_m1_item["M1_ETC35"] : "";
+	$pdf_address1.=!empty($pdf_m1_item["M1_ETC36"]) ? ", ".$pdf_m1_item["M1_ETC36"] : "";
+	$pdf_address1.=!empty($pdf_m1_item["M1_DSEL10"]) ? ", ".str_replace("M1_DSEL10:","",$pdf_m1_item["M1_DSEL10"]) : "";
+	$str=str_replace("[PDF_ADDRESS1]",$pdf_address1,$str);
+
+	//見積り送付時に選択されたbill to
+	$pdf_address2="";
+	$pdf_address2.=$target_item["M2_BILL_TO_SPT_2"];
+	$pdf_address2.=!empty($target_item["M2_BILL_TO_SPT_3"]) ? ", ".$target_item["M2_BILL_TO_SPT_3"] : "";
+	$pdf_address2.=!empty($target_item["M2_BILL_TO_SPT_4"]) ? ", ".$target_item["M2_BILL_TO_SPT_4"] : "";
+	$pdf_address2.=!empty($target_item["M2_BILL_TO_SPT_6"]) ? ", ".$target_item["M2_BILL_TO_SPT_6"] : "";
+	$str=str_replace("[PDF_ADDRESS2]",$pdf_address2,$str);
+
+	//サプライヤーのCompany Information (基本情報)のAddress Line 1～Country
+	$pdf_address3="";
+	$pdf_address3.=$pdf_m1_item["M1_ETC129"];
+	$pdf_address3.=!empty($pdf_m1_item["M1_ETC130"]) ? ", ".$pdf_m1_item["M1_ETC130"] : "";
+	$pdf_address3.=!empty($pdf_m1_item["M1_ETC131"]) ? ", ".$pdf_m1_item["M1_ETC131"] : "";
+	$pdf_address3.=!empty($pdf_m1_item["M1_ETC132"]) ? ", ".$pdf_m1_item["M1_ETC132"] : "";
+	$pdf_address3.=!empty($pdf_m1_item["M1_ETC133"]) ? ", ".str_replace("M1_ETC133:","",$pdf_m1_item["M1_ETC133"]) : "";
+	$str=str_replace("[PDF_ADDRESS3]",$pdf_address3,$str);
+
+	//CBの見積書に表示するShip to
+	$pdf_address4="";
+	if($pdf_m1_item["M1_DVAL04"]!="M1_DVAL04:Japan"){
+	//if($pdf_m1_item["M1_ETC133"]!="M1_ETC133:Japan"){
+		//CBの物流センターの住所
+		$pdf_address4="Cosmo Bio Shinsuna Distribution Center ShinSuna 1-Chome, Koto-Ku,Tokyo 136-0075, Japan 3F 12-39 TEL: 81-3-5632-9608";
+	}else{
+		//研究者の「住所（英語表記）」
+		$pdf_address4="";
+		$pdf_address4=$pdf_m2_item["M2_DVAL20"];
+
+		////研究者に紐づけられた決済者の住所
+		//$pdf_address4="";
+		//$pdf_address4.=$pdf_m3_item["M2_DVAL03"];
+		//$pdf_address4.=!empty($pdf_m3_item["M2_DVAL07"]) ? ", ".$pdf_m3_item["M2_DVAL07"] : "";
+		//$pdf_address4.=!empty($pdf_m3_item["M2_DVAL06"]) ? ", ".$pdf_m3_item["M2_DVAL06"] : "";
+		//$pdf_address4.=!empty($pdf_m3_item["M2_DVAL05"]) ? ", ".$pdf_m3_item["M2_DVAL05"] : "";
+		//$pdf_address4.=!empty($pdf_m3_item["M2_DVAL08"]) ? ", ".$pdf_m3_item["M2_DVAL08"] : "";
+	}
+	$str=str_replace("[PDF_ADDRESS4]",$pdf_address4,$str);
+	//Number of Payments
+	//M2_PAY_TYPE
+	if($target_item["M2_PAY_TYPE"]=="Once"){
+		$number_of_payments=1;
+	}else if($target_item["M2_PAY_TYPE"]=="Split"){
+		$number_of_payments=2;
+	}else if($target_item["M2_PAY_TYPE"]=="Milestone"){
+		$tmp="";
+		$tmp=explode("-", $target_item["DIV_ID"]);
+		$part="";
+		$pre_part="";
+		if(count($tmp)==3){
+			$part=$tmp[2];
+			$pre_part=$tmp[0]."-".$tmp[1];
+		}
+		$StrSQL="SELECT ID,DIV_ID,STATUS,M2_CURRENCY,M2_IMPORT_FEE FROM DAT_FILESTATUS WHERE ";
+		$StrSQL.=" SHODAN_ID='".$target_item["SHODAN_ID"]."' ";
+		$StrSQL.=" AND DIV_ID LIKE '".$pre_part."-%' ";
+		$StrSQL.=" AND STATUS='".$target_item["STATUS"]."' ";
+		$rs=mysqli_query(ConnDB(),$StrSQL);
+		$number_of_payments=mysqli_num_rows($rs);
+	}
+	$str=str_replace("[NUMBER_OF_PAYMENTS]",$number_of_payments,$str);
+
+	return $str;
+
+}
+
+
+
+//=========================================================================================================
+//名前 
+//機能 
+//見積り依頼で指定した温度の英語表記で返す。あくまで表示に使うだけの値。[D-TEMPER]用。
+//引数 $str(日本語の)
+//戻値 英語
+//=========================================================================================================
+
+function engVersionTerms1($str){
+	$term="";
+	$s=explode(":", $str);
+	if($s[0]=="TEMPR"){
+		$eng=array(
+			"常温"=>"Ambient",
+			"冷蔵"=>"Refrigerated",
+			"冷凍"=>"Frozen",
+		);
+		$term = isset($eng[$s[1]]) ? $eng[$s[1]] : "";
+	}
+	
+	return $term;
 }
 
 ?>

@@ -1,6 +1,6 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
-
+<!--m1b_edit-->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +9,71 @@
   <meta name="description"
     content="[PAGE_TITLE]のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
   <!--template=/common/template/head2.html--><!-- 研究者側だけValidationを日本語化 -->
+
+
+  <script>
+    // 【バリデーションモジュール1】通貨によるバリデーションの変化
+    $(function () {
+      // 1-1. フォーカス時に現在の値を「変更前の値」として保存
+      /*
+      <select name="UNIT" required>
+        <option value="">選択して下さい</option>
+        <option value="UNIT:￥">￥</option>
+        <option value="UNIT:$">$</option>
+        <option value="UNIT:€">€</option>
+        <option value="UNIT:￡">￡</option>
+      </select>
+      */
+      const optJPY = '￥';
+      $('[name="UNIT"]').on('focus', function(e){
+        e.target.dataset.beforeValue = e.target.value;
+      });
+      // 1-2. 変更時に問いを表示
+      // NOTE: 問いの表示と、小数点の計算の切り替えスイッチのみここに記述する（これ以外のことを書くと不具合の原因となる）
+      $('[name="UNIT"]').on('change',function(e, init){
+        const newValue = e.target.value;
+        const oldValue = e.target.dataset.beforeValue;
+        let $input = $(this);
+        let currency = $input.val();
+        let is__JPY = currency.indexOf(optJPY)!=-1;
+
+        if( is__JPY && !init ){ // NOTE: 今からJPYに変換される時
+
+          if(confirm('円（'+optJPY+'）に変更すると、小数点以下の数値は四捨五入されますが、よろしいですか？')) {
+            e.target.dataset.beforeValue = newValue;
+
+            // 1-2-1. 小数点の切り替え
+            $('[data-change-decimal]').each(function(){
+              const $input = $(this);
+              $input.trigger('change');
+              $input.trigger('blur');
+            });
+
+            return newValue;
+          }else{
+            // 1-2-2. キャンセルでは何もしない
+            e.target.value = oldValue;
+            return oldValue;
+          }
+        }
+      });
+      // 1-3. 小数点固定
+      $(document).on('change','[data-change-decimal]',function(){
+        const $input = $(this);
+        const $currency = $('[name="UNIT"]');
+        const currency = $currency.val();
+        const is__JPY = currency.indexOf(optJPY)!=-1;
+        if(is__JPY) dataChangeDecimalOnInput($input,0);
+        if(!is__JPY) dataChangeDecimalOnInput($input,2);
+      });
+      // 1-4. 「1.00」や「1.」などを「1」へ変換
+      $(document).on('blur','[data-change-decimal]',function(){
+        const $input = $(this);
+        dataChangeDecimalOnBlur($input);
+      });
+    });
+  </script>
+
   <script>
     function go_preview() {
       $('[name=mode]').val('preview');
@@ -18,6 +83,45 @@
       $('[name=mode]').val('saveconf2');
       document.form1.submit();
     }
+  </script>
+  <script>
+    function cattype_toggle(){
+      const radio_cattype = document.getElementsByName('M1_TRANS_FLG');
+      const ImportAgencyItem = document.getElementById('ImportAgencyItem');
+      const input_TEMPR = document.getElementById('TEMPR');
+      const input_SAMPLE = document.getElementById('SAMPLE');
+      const input_ORIGIN = document.getElementById('ORIGIN');
+      const input_LEGAL = document.getElementById('LEGAL');
+
+      if(radio_cattype[0].checked) {
+        // あり
+        ImportAgencyItem.style.display = "";
+        // NOTE: disabled = falseで送信可
+        input_TEMPR.disabled = false;
+        input_SAMPLE.disabled = false;
+        input_ORIGIN.disabled = false;
+        input_LEGAL.disabled = false;
+
+      }else if(radio_cattype[1].checked) {
+        // なし
+        ImportAgencyItem.style.display = "none";
+        // NOTE: disabled = trueで送信不可
+        input_TEMPR.disabled = true;
+        input_SAMPLE.disabled = true;
+        input_ORIGIN.disabled = true;
+        input_LEGAL.disabled = true;
+
+      }else{
+        // 選択なし
+        ImportAgencyItem.style.display = "none";
+      }
+    }
+    document.addEventListener('DOMContentLoaded', function(e){
+      cattype_toggle();
+    });
+    document.addEventListener('change', function(e){
+      if (e.target.matches('[name="M1_TRANS_FLG"]')) cattype_toggle();
+    });
   </script>
 </head>
 
@@ -99,7 +203,7 @@
                 <div class="formset__ttl"></div>
                 <div class="formset__input">
                   [D-TITLE]
-                  <!--<input class="txt_w35p" type="text" name="TITLE" value="[D-TITLE]" placeholder="" required />-->
+                  <!--<input type="text" name="TITLE" value="[D-TITLE]" placeholder="" required />-->
                 </div>
               </div>
               <div class="formset__item formset__item--head">
@@ -150,23 +254,19 @@
                   <ul>
                     <li>
                       <input id="M1_TRANS_FLG-1" type="radio"
-                          name="M1_TRANS_FLG" value="あり" required [D-M1_TRANS_FLG_あり] onclick="cattype_toggle();">
+                        name="M1_TRANS_FLG" value="あり" required [D-M1_TRANS_FLG_あり]>
                       <label for="M1_TRANS_FLG-1">あり</label>
                     </li>
                     <li>
                       <input id="M1_TRANS_FLG-2" type="radio"
-                          name="M1_TRANS_FLG" value="なし" required [D-M1_TRANS_FLG_なし] onclick="cattype_toggle();">
+                        name="M1_TRANS_FLG" value="なし" required [D-M1_TRANS_FLG_なし]>
                       <label for="M1_TRANS_FLG-2">なし</label>
                     </li>
                   </ul>
-                  <!--<p>
-                    <input type="radio" name="M1_TRANS_FLG" value="あり" required [D-M1_TRANS_FLG_あり] onclick="cattype_toggle();" />あり
-                    <input type="radio" name="M1_TRANS_FLG" value="なし" required [D-M1_TRANS_FLG_なし] onclick="cattype_toggle();" />なし
-                  </p>-->
                   <!--
                   <p>
                     ありの場合は発送希望の物品詳細を記載してください。<br>
-                    <input class="txt_w35p" type="text" name="M1_TRANS_TXT" value="[D-M1_TRANS_TXT]" placeholder="" />
+                    <input type="text" name="M1_TRANS_TXT" value="[D-M1_TRANS_TXT]" placeholder="" />
                   </p>
                   -->
                 </div>
@@ -174,43 +274,32 @@
               
               <div id="ImportAgencyItem">
                 <div class="formset__item">
-                  <div class="formset__ttl">輸送温度</div>
+                  <div class="formset__ttl">輸送温度<span class="formset__must">Mandatory</span></div>
                   <div class="formset__input">
-                  <p><!--
-                    <select name="TEMPR">
-                      <option value="">▼選択</option>
-                      <option value="TEMPR:常温">常温</option>
-                      <option value="TEMPR:冷蔵">冷蔵</option>
-                      <option value="TEMPR:冷凍">冷凍</option>
-                    </select>-->
-                    <select id="TEMPR" name="TEMPR">
+                    <select id="TEMPR" name="TEMPR" required>
                       [OPT-TEMPR]
                     </select>
-                  </p>
                 </div>
               </div>
               <div class="formset__item">
-                <div class="formset__ttl">サンプルの種類</div>
+                <div class="formset__ttl">サンプルの種類<span class="formset__must">Mandatory</span></div>
                 <div class="formset__input">
-                  <p>
-                    <input class="txt_w35p" type="text" id="SAMPLE" name="SAMPLE" value="[D-SAMPLE]" placeholder="記入例：有機化合物、血漿、DNA等" />
-                  </p>
+                  <input type="text" id="SAMPLE" name="SAMPLE" value="[D-SAMPLE]" placeholder="記入例：有機化合物、血漿、DNA等"
+                    required />
                 </div>
               </div>
               <div class="formset__item">
-                <div class="formset__ttl">由来</div>
+                <div class="formset__ttl">由来<span class="formset__must">Mandatory</span></div>
                 <div class="formset__input">
-                  <p>
-                    <input class="txt_w35p" type="text" id="ORIGIN" name="ORIGIN" value="[D-ORIGIN]" placeholder="記入例：ヒト、マウス、ラット、シロイヌナズナ、合成物等" />
-                  </p>
+                  <input type="text" id="ORIGIN" name="ORIGIN" value="[D-ORIGIN]" placeholder="記入例：ヒト、マウス、ラット、シロイヌナズナ、合成物等"
+                    required />
                 </div>
               </div>
               <div class="formset__item">
-                <div class="formset__ttl">法規制</div>
+                <div class="formset__ttl">法規制<span class="formset__must">Mandatory</span></div>
                 <div class="formset__input">
-                  <p>
-                    <input class="txt_w35p" type="text" id="LEGAL" name="LEGAL" value="[D-LEGAL]" placeholder="記入例：毒劇物等" />
-                  </p>
+                  <input type="text" id="LEGAL" name="LEGAL" value="[D-LEGAL]" placeholder="記入例：毒劇物等"
+                    required />
                 </div>
               </div>
             </div>
@@ -219,29 +308,32 @@
               <div class="formset__item">
                 <div class="formset__ttl">希望予算</div>
                 <div class="formset__input">
-                  <input class="txt_w35p" type="text" name="M1_PRICE" value="[D-M1_PRICE]" placeholder="" />
+                  <input type="text" name="M1_PRICE" value="[D-M1_PRICE]" placeholder="" />
                 </div>
               </div>
             -->
               <div class="formset__item">
-                <div class="formset__ttl">希望予算<br><span style="color: tomato;">指定した通貨が取引通貨になるわけではありません。</span></div>
+                <div class="formset__ttl">希望予算<span class="formset__must">Mandatory</span><br><span style="color: tomato;">指定した通貨が取引通貨になるわけではありません。</span></div>
                 <div class="formset__input">
-                  <select name="UNIT">
+                  <select name="UNIT" required>
                     [OPT-UNIT]
                   </select>
-                  <input class="txt_w35p" type="text" name="M1_PRICE" value="[D-M1_PRICE]" placeholder="" style="max-width: 50%;"/>
+                  <input type="text" name="M1_PRICE" value="[D-M1_PRICE]"
+                    data-change-decimal
+                    required data-jquery-validate-rule="price"
+                    placeholder="" style="max-width: 50%;"/>
                 </div>
               </div>
               <div class="formset__item">
                 <div class="formset__ttl">見積り提出希望期限</div>
                 <div class="formset__input">
-                  <input class="txt_w35p" type="date" name="M1_KIGEN" value="[D-M1_KIGEN]" placeholder="" />
+                  <input type="date" name="M1_KIGEN" value="[D-M1_KIGEN]" placeholder="" data-jquery-validate-rule="minDateToday" />
                 </div>
               </div>
               <div class="formset__item">
                 <div class="formset__ttl">添付ファイル</div>
                 <div class="formset__input">
-                  <input class="txt_w35p" type="file" name="M1_FILE" value="[D-M1_FILE]" placeholder="" />
+                  <input type="file" name="M1_FILE" value="[D-M1_FILE]" placeholder="" />
                 </div>
               </div>
               <div class="btn formset__btn">
@@ -253,30 +345,6 @@
         </div>
       </div>
     </section>
-
-    <script type="text/javascript">
-      function cattype_toggle(){
-        var radio_cattype = document.getElementsByName('M1_TRANS_FLG');
-        //console.log(radio_cattype);
-        if(radio_cattype[0].checked) {
-          document.getElementById('ImportAgencyItem').style.display = "";
-
-        }else if(radio_cattype[1].checked) {
-          document.getElementById('ImportAgencyItem').style.display = "none";
-          document.getElementById('TEMPR').value="";
-          document.getElementById('SAMPLE').value="";
-          document.getElementById('ORIGIN').value="";
-          document.getElementById('LEGAL').value="";
-
-        }else{
-          document.getElementById('ImportAgencyItem').style.display = "none";
-
-        }
-      }
-
-      window.onload = cattype_toggle;
-    </script>
-
     <!-- 以下共通 -->
 
     <!--template=/common/template/footer.html-->

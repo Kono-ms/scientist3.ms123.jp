@@ -57,6 +57,17 @@
 
     });
   </script>
+  <script>
+    $(function(){
+      // 見積り書リンクはJSで開く（window.closeを効かせるため）
+      $('[data-list] [href*="/m_contact1"][href*="mode=disp_frame"]').on('click',function(e){
+        e.preventDefault();
+        let url = $(this).attr('href');
+        let target = '_blank';
+        window.open(url, target)
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -85,7 +96,7 @@
       </div>
     </section>
 
-    <section class="result schedule">
+    <section class="result schedule" data-list>
       <table>
         <tbody>
           <tr>

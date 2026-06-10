@@ -20,13 +20,13 @@ header {
   transition: all .3s ease;
 }
 
-@media screen and (max-width:959px) {
+@media screen and (max-width:959.98px) {
   header {
     padding: 0 1rem;
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   header {
     height: 5rem;
     padding: 0 0 0 1rem;
@@ -50,11 +50,11 @@ header {
   width: 14.5rem
 }
 
-@media screen and (max-width:959px) {
+@media screen and (max-width:959.98px) {
   .header__logo a {}
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .header__logo span {
     margin-left: 1.5rem;
     font-size: 1rem;
@@ -71,7 +71,7 @@ header {
   height: 100%;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .header-gnav {
     display: none;
   }
@@ -179,7 +179,7 @@ li:hover>.header-gnav__child {
   gap: 6px;
 }
 
-@media screen and (max-width:959px) {
+@media screen and (max-width:959.98px) {
   .head-btn-wrap {
     display: none;
   }
@@ -257,7 +257,7 @@ li:hover>.header-gnav__child {
   }
 }
 
-@media screen and (max-width:959px) {
+@media screen and (max-width:959.98px) {
   .head-nav {
     width: auto
   }
@@ -267,7 +267,7 @@ li:hover>.header-gnav__child {
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .head-btn-wrap {
     display: none
   }
@@ -307,7 +307,7 @@ li:hover>.header-gnav__child {
   aspect-ratio: 1 / 1;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   #nav-drawer {
     display: flex;
     flex-wrap: wrap;
@@ -445,7 +445,7 @@ li:hover>.header-gnav__child {
   width: 50%;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   #nav-content {
     max-width: 28rem;
     padding: 0 2rem 2rem
@@ -530,7 +530,7 @@ footer {
   text-align: center;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   footer {
     padding: 3rem 0
   }
@@ -567,7 +567,7 @@ footer {
   padding: 0 .5rem;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .breadcrumb__list {
     height: 3.5rem;
     line-height: 3.5rem;
@@ -637,7 +637,7 @@ footer {
   opacity: 0.8;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .innerTab {
     border-bottom: none;
     padding: 20px 0;
@@ -748,7 +748,7 @@ footer {
   gap: 20px;
 }
 
-@media screen and (max-width:959px) {
+@media screen and (max-width:959.98px) {
 
   .searchSort,
   .search__filter {
@@ -766,7 +766,7 @@ footer {
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
 
   .searchSort,
   .search__filter {
@@ -860,7 +860,7 @@ footer {
   background: #f4f7fc;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .ikkatsuBox {
     padding: 2rem;
   }
@@ -1034,7 +1034,7 @@ footer {
   padding: 1rem 2rem
 }
 
-@media only screen and (max-width:959px) {
+@media only screen and (max-width:959.98px) {
   #modal-drawer {
     width: 11rem;
     font-size: 1.2rem
@@ -1046,7 +1046,7 @@ footer {
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   #modal-content {
     width: 94%;
     left: calc(50% - 94%/2);
@@ -1148,68 +1148,90 @@ footer {
 }
 
 .result-supplier__item {
-  margin-top: 4%;
-  padding: 2rem;
-  background: #fff;
   border-top: 2px solid #4a4db7;
+  background: #fff;
+  margin: 40px 0 0;
+  padding: 20px;
 }
 
 .result-supplier__name {
   display: flex;
-  align-items: center;
-}
-
-.result-supplier__logo {
-  margin-left: 2rem;
-  height: 50px;
-  width: auto
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 0 0 12px;
+  gap: 20px;
 }
 
 .result-supplier__name p {
-  margin-left: 3rem;
-  display: inline-block;
+  /* NOTE: 共通なので文字の調整のみにとどめてください */
   font-size: inherit;
-  font-weight: 700
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.result-supplier__name label {
+  display: block;
+}
+.result-supplier__name [type="checkbox"],
+.result-supplier__name [type="radio"] {
+  margin: 0;
+}
+
+.result-supplier__logo {
+  width: auto;
+  height: 50px;
+}
+
+.result-supplier__co-logo {
+  width: auto;
+  height: 50px;
+}
+.result-supplier__co-name {
+  max-width: 50ex;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+.result-supplier__co-desc {
+  width: 50%;
+  margin: 0 0 0 auto;
 }
 
 .result-supplier__txt {
-  padding: 2rem
+  padding: 20px;
 }
 
 .result-supplier__txt--more {}
-
 .result-supplier__txt--more a {
-  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: #f4f7fc;
   color: #4a4db7;
   color: var(--c-color-site-org);
   font-weight: 700;
   text-decoration: underline;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 15px;
 }
 
-.result-supplier__websiteLink {
-  margin-left: 1.5rem;
-  padding: 0.5rem 1.2rem;
-  border: 1px solid #4a4db7;
-  border-radius: 5px;
-  color: #4a4db7;
+.result-supplier__co-link {
   display: inline-block;
+  border-radius: 5px;
+  border: 1px solid #4a4db7;
+  color: #4a4db7;
   font-size: 1rem;
   white-space: nowrap;
+  margin-left: 15px;
+  padding: 5px 12px;
 }
-
-.result-supplier__websiteLink:hover {
-  color: #fff;
+.result-supplier__co-link:hover {
   background: #4a4db7;
+  color: #fff;
 }
 
 .result-supplier__checkbox {
   border: none;
 }
-
 .result-supplier__checkbox label {
   display: flex;
   align-items: center;
@@ -1218,23 +1240,19 @@ footer {
   margin-bottom: .5em;
   cursor: pointer;
 }
-
 .result-supplier__checkbox label::before,
 .result-supplier__checkbox label:has(:checked)::after {
   content: '';
 }
-
 .result-supplier__checkbox label::before {
   width: 40px;
   height: 40px;
   border-radius: 5px;
   background-color: #fff698;
 }
-
 .result-supplier__checkbox label:has(:checked)::before {
   background-color: var(--c-color-site-red);
 }
-
 .result-supplier__checkbox label:has(:checked)::after {
   position: absolute;
   top: 7px;
@@ -1245,17 +1263,16 @@ footer {
   border: solid #fff;
   border-width: 0 4px 4px 0;
 }
-
 .result-supplier__checkbox input {
   display: none;
 }
 
 .result-supplier__btnArea {
-  width: 100%;
-  margin-top: 2rem;
-  padding: 2rem 2rem 0;
-  position: relative;
   border-top: 1px solid #ebebeb;
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 20px 0;
+  position: relative;
 }
 
 .result-supplier__btn {
@@ -1378,7 +1395,7 @@ footer {
   margin-top: 1rem
 }
 
-@media screen and (max-width:959px) {
+@media screen and (max-width:959.98px) {
   .result__item {}
 
   .result__img {
@@ -1391,7 +1408,7 @@ footer {
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .result {
     padding: 1.5rem 0
   }
@@ -1454,13 +1471,13 @@ footer {
   margin-top: 0
 }
 
-@media screen and (max-width:959px) {
+@media screen and (max-width:959.98px) {
   .card__img img {
     height: 14rem
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .card__item {
     width: 49%;
     padding: 1rem
@@ -1498,7 +1515,7 @@ footer {
   display: block
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .thread__list {
     padding: 1rem 0;
     margin-bottom: 2rem
@@ -1574,7 +1591,7 @@ footer {
   justify-content: center;
   line-height: 1;
 } */
-/* @media only screen and (max-width:959px) {
+/* @media only screen and (max-width:959.98px) {
   .guidance__btn a {
     height: 7rem;
     font-size: 2rem;
@@ -1630,7 +1647,7 @@ footer {
   background: #303030;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .pagination {
     font-size: 13px;
     padding: 20px 0;
@@ -1824,7 +1841,7 @@ footer {
   margin-bottom: .5rem
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .outline-head__item {
     flex-wrap: wrap
   }
@@ -1911,6 +1928,33 @@ footer {
   font-weight: 700;
 }
 
+.outline__txt {
+  font-size: 1.6rem;
+  font-weight: inherit;
+  line-height: 1.65;
+  margin-top: 1.25em;
+  padding-left: 1.25em;
+}
+.outline__txt[data-icon] {
+  position: relative;
+}
+.outline__txt[data-icon]::before {
+  content: attr(data-icon);
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.outline__txt p {
+  /* NOTE: line-height以外は書かない */
+  line-height: inherit;
+}
+.outline__txt *+p {
+  /* NOTE: margin-top以外は書かない */
+  margin-top: 0.375em;
+}
+
 .outline .tableset__list {
   font-size: 1.3rem
 }
@@ -1928,7 +1972,7 @@ footer {
   border-bottom: 0
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .outline-eval {
     font-size: 1.2rem
   }
@@ -1966,11 +2010,11 @@ footer {
   }
 }
 
-@media only screen and (max-width:959px) {
+@media only screen and (max-width:959.98px) {
   .outline__gallery {}
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .outline__gallery li {
     width: 49%;
     margin-right: 2%;
@@ -1991,7 +2035,6 @@ footer {
   align-items: flex-start;
   gap: 16px;
 }
-
 .outline__downloads>a {
   display: flex;
   flex-flow: column nowrap;
@@ -2010,7 +2053,15 @@ footer {
   margin: 0;
   position: relative;
 }
-
+.outline__downloads.is--ready a:nth-child(n+4) {
+  opacity: 0;
+}
+@media only screen and (max-width:767.98px) {
+  .outline__downloads>a {
+    width: calc((100% - 8px * 2) / 3);
+    height: auto;
+  }
+}
 .outline__downloads>a::before {
   content: '';
   display: block;
@@ -2091,14 +2142,6 @@ footer {
   display: block;
 }
 
-@media only screen and (max-width:767px) {
-  .outline__downloads>a {
-    width: calc((100% - 8px * 2) / 3);
-    height: auto;
-  }
-}
-
-
 .outline__downloads-preview {}
 
 .outline__downloads-preview.is--img {}
@@ -2112,6 +2155,7 @@ footer {
 .outline__downloads-preview-pdf {
   display: none;
   text-align: center;
+  container-type: inline-size;
 }
 
 .outline__downloads-preview.is--pdf .outline__downloads-preview-pdf {
@@ -2120,11 +2164,18 @@ footer {
 
 .outline__downloads-preview-pdf iframe {
   max-width: 1440px;
-  width: 100%;
-  height: auto;
+  width: 100cqw;
+  max-height: 960px;
+  height: 66cqw;
   object-fit: contain;
-  aspect-ratio: 3 / 2;
 }
+@media only screen and (max-height:960px) {
+  .modal .outline__downloads-preview-pdf iframe {
+    width: 100%;
+    height: calc( 100dvh - 120px - 80px );
+  }
+}
+
 
 .outline__downloads-preview-img {
   display: none;
@@ -2181,7 +2232,7 @@ footer {
   width: calc((100% - 20px * 1) / 2);
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
 
   .modal .outline-welcome-screen__modal-list,
   .outline-welcome-screen__modal-list {
@@ -2218,7 +2269,7 @@ footer {
   margin: 8px 0 0;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
 
   .modal .outline-welcome-screen__modal-list img,
   .outline-welcome-screen__modal-list img {
@@ -2307,7 +2358,7 @@ footer {
   color: var(--c-color-site-org)
 }
 
-@media only screen and (max-width:959px) {
+@media only screen and (max-width:959.98px) {
 
   .knowledge__txt,
   .knowledge__desc h1 {
@@ -2315,7 +2366,7 @@ footer {
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .knowledge__item {
     width: 100%;
     margin-right: 0;
@@ -2381,7 +2432,7 @@ section.column {}
   margin: 2rem 0
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .column {
     padding-top: 1.5rem
   }
@@ -2907,7 +2958,7 @@ section.forget .formset__item:first-child {
   line-height: 2.4
 }
 
-@media screen and (max-width:959px) {
+@media screen and (max-width:959.98px) {
 
   .solve__desc,
   .solve__img {
@@ -2919,7 +2970,7 @@ section.forget .formset__item:first-child {
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .solve__item {
     margin-bottom: 1rem
   }
@@ -3015,7 +3066,7 @@ section.forget .formset__item:first-child {
   margin-top: 5rem
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .flow__item {
     width: 100%;
     padding-left: 10%;
@@ -3070,7 +3121,7 @@ section.forget .formset__item:first-child {
   margin: 1.5rem auto;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .flow__num {
     font-size: 1.4rem;
   }
@@ -3139,7 +3190,7 @@ section.forget .formset__item:first-child {
   line-height: 1.45;
 }
 
-@media only screen and (max-width:959px) {
+@media only screen and (max-width:959.98px) {
   .flow_box>li {
     width: calc((100% - 20px) / 2);
     padding: 1.5rem;
@@ -3147,7 +3198,7 @@ section.forget .formset__item:first-child {
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .flow_box>li {
     width: 100%;
     border-top: navajowhite;
@@ -3183,7 +3234,7 @@ section.forget .formset__item:first-child {
   font-size: 2rem;
 }
 
-@media only screen and (max-width:959px) {
+@media only screen and (max-width:959.98px) {
   .top-faq__list {
     margin-top: 3rem;
     padding: 3rem;
@@ -3191,7 +3242,7 @@ section.forget .formset__item:first-child {
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .top-faq__list {
     max-width: 100%;
     padding: 1rem;
@@ -3259,7 +3310,7 @@ section.forget .formset__item:first-child {
   content: "A";
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .qa-001 {
     margin-bottom: 1rem;
   }
@@ -3319,7 +3370,7 @@ section.forget .formset__item:first-child {
   height: 50px
 }
 
-@media only screen and (max-width:959px) {
+@media only screen and (max-width:959.98px) {
   .l-guidance__ttl {
     font-size: 4.8rem
   }
@@ -3330,7 +3381,7 @@ section.forget .formset__item:first-child {
   }
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .l-guidance {
     padding: 4rem 1rem !important;
   }
@@ -3387,7 +3438,7 @@ section.forget .formset__item:first-child {
   font-weight: 700
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .guide__item {
     margin: 40px 0;
     flex-wrap: wrap
@@ -3448,7 +3499,7 @@ section.forget .formset__item:first-child {
   color: var(--c-color-site-org)
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .faq__area {
     margin-bottom: 4rem
   }
@@ -3541,7 +3592,7 @@ section.forget .formset__item:first-child {
   color: var(--c-color-site-org)
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
 
   .listAccordion label,
   .listAccordion input[type="checkbox"].on-off:checked+.listTips {
@@ -3624,7 +3675,7 @@ section.forget .formset__item:first-child {
   display: inline-block;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .terms__ttl {
     font-size: 1.6rem
   }
@@ -3659,7 +3710,7 @@ section.forget .formset__item:first-child {
   margin-top: 1rem
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .policy__ttl {
     font-size: 1.6rem
   }
@@ -3787,7 +3838,7 @@ span.item--new {
   margin-top: -80px;
 }
 
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   #faq-daikou {
     padding-top: 60px;
     margin-top: -60px;

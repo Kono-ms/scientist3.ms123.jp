@@ -41,7 +41,9 @@
         $('#M2_DATE').html(val['M2_DATE']);
         $('#M2_QUOTE_VALID_UNTIL').html(val['M2_QUOTE_VALID_UNTIL']);
         $('#M2_DESCRIPTION').html(val['M2_DESCRIPTION']);
-        $('#M2_CURRENCY').html(val['M2_CURRENCY']);
+         // 「M2_CURRENCY:」という文字列を削除（空文字に置換）してセット
+        $('#M2_CURRENCY').html(val['M2_CURRENCY'].replace('M2_CURRENCY:', ''));
+        //$('#M2_CURRENCY').html(val['M2_CURRENCY']);
 
         // detail
         if (val['detail'] != null && val['detail'].length > 0) {
@@ -173,10 +175,18 @@
               <div class="formset__ttl">Study code</div>
               <div id="M2_STUDY_CODE" class="formset__input">[D-M2_STUDY_CODE]</div>
             </div>
+
+            <!--この項目は直接バック出力-->
             <div class="formset__item">
+              <div class="formset__ttl">Date</div>
+              <div id="HATYU_NEWDATE" class="formset__input">[HATYU_NEWDATE]</div>
+            </div>
+            <!--使わないので非表示-->
+            <div class="formset__item" style="display:none;">
               <div class="formset__ttl">Date</div>
               <div id="M2_DATE" class="formset__input">[D-M2_DATE]</div>
             </div>
+
             <div class="formset__item">
               <div class="formset__ttl">Quote Valid Until</div>
               <div id="M2_QUOTE_VALID_UNTIL" class="formset__input">[D-M2_QUOTE_VALID_UNTIL]</div>

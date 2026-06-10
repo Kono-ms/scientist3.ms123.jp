@@ -139,7 +139,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			$item['COMMENT'] = str_replace("見積り依頼を送信しました", '<span class="system_msg">[Request for quote has been sent]</span>', $item['COMMENT']);
 			$item['COMMENT'] = str_replace("見積り書が送付されました", '<span class="system_msg">[Quote sent]</span>', $item['COMMENT']);
 			$item['COMMENT'] = str_replace("見積り書を送付しました", '<span class="system_msg">[Quote sent]</span>', $item['COMMENT']);
-			$item['COMMENT'] = str_replace("決済者により発注依頼が承認されました", '<span class="system_msg">[Order request has been approved by the payer]</span>', $item['COMMENT']);
+			$item['COMMENT'] = str_replace("決裁者により発注依頼が承認されました", '<span class="system_msg">[Order request has been approved by the payer]</span>', $item['COMMENT']);
 			$item['COMMENT'] = str_replace("決済者により発注依頼が否認されました", '<span class="system_msg">[Order request rejected by payer]</span>', $item['COMMENT']);
 
 			$tmp=str_replace("[D-COMMENT]",ChatText($item['COMMENT']),$tmp);
@@ -193,6 +193,9 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		$kessai_rs=mysqli_query(ConnDB(),$StrSQL);
 		$kessai_item = mysqli_fetch_assoc($kessai_rs);
 		$kessai_num = mysqli_num_rows($kessai_rs);
+		if(is_null($kessai_num) || $kessai_num==""){
+			$kessai_num=0;
+		}
 	}else{
 		$kessai_num=0;
 	}
@@ -220,11 +223,12 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			$sys_comment = "";
 			switch($item_div['STATUS']) {
 				case '発注依頼':
-					//受注承認できるのは運営のみに仕様変更のためコメントアウト
-					//if($kessai_num>=1){
+					//受注承認できるのは運営のみに仕様変更
+					if($kessai_num>=1){
 						$sys_comment='('.$item_div["DIV_ID"].') ';
-						$sys_comment.='決済者による発注の承認待ちです。しばらくお待ちください。(日本語で仮表示)';
-					//}
+						//$sys_comment.='決済者による発注の承認待ちです。しばらくお待ちください。(日本語で仮表示)';
+						$sys_comment.='Awaiting order approval from the authorized person. Please wait for a moment.';
+					}
 				break;
 				case '決済者発注承認':
 					//受注承認できるのは運営のみに仕様変更のためコメントアウト
@@ -241,7 +245,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 				case '受注承認(前払い)':
 						$sys_comment='('.$item_div["DIV_ID"].') ';
-						$sys_comment.= '請求書の送付をお願いします。';
+						//$sys_comment.= '受注が承認されました。請求書の送付をお願いします。';
+						$sys_comment.= 'The order has been approved. Please send the invoice.';
 						$sys_comment.= '
 						<a href="/m_contact1/?type=請求&sub_type=請求書送付(前払い)&mode=new&shodan_id='.$_GET['etc02'].'&param_div_id='.$item_div["DIV_ID"].'" target="_blank">Send invoice	</a>';
 				break;
@@ -253,7 +258,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 
 				case '納品確認':
 						$sys_comment='('.$item_div["DIV_ID"].') ';
-						$sys_comment.= '研究者が納品を承認しました。請求書の送付をお願いします。';
+						//$sys_comment.= '研究者が納品を承認しました。請求書の送付をお願いします。';
+						$sys_comment.= 'The researcher has approved the delivery. Please send the invoice.';
 						$sys_comment.= '
 						<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'&param_div_id='.$item_div["DIV_ID"].'" target="_blank">Send invoice	</a>';
 				break;
@@ -284,10 +290,11 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 	if($item_num_div==""){
 		switch($item_shodan['STATUS']) {
 			case '発注依頼':
-				//受注承認できるのは運営のみに仕様変更のためコメントアウト
-				//if($kessai_num>=1){
-					$sys_comment='決済者による発注の承認待ちです。しばらくお待ちください。(日本語で仮表示)';
-				//}
+				//受注承認できるのは運営のみに仕様変更
+				if($kessai_num>=1){
+					//$sys_comment='決済者による発注の承認待ちです。しばらくお待ちください。(日本語で仮表示)';
+					$sys_comment='Awaiting order approval from the authorized person. Please wait for a moment.';
+				}
 				break;
 			case '決済者発注承認':
 				//受注承認できるのは運営のみに仕様変更のためコメントアウト
@@ -301,7 +308,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				';
 				break;
 			case '受注承認(一括前払い)':
-				$sys_comment = '受注が承認されました。';
+				//$sys_comment = '受注が承認されました。';
+				$sys_comment = 'Your order has been approved.';
 				$sys_comment.= '
 						<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Send invoice	</a>';
 				break;
@@ -311,10 +319,12 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				$sys_comment = 'Delivered.';
 				break;
 			case '研究者が納品承認(一括前払い)':
-				$sys_comment = '研究者が納品を承認しました。';
+				//$sys_comment = '研究者が納品を承認しました。';
+				$sys_comment = 'The researcher has approved the delivery.';
 				break;
 			case '納品確認':
-				$sys_comment = '研究者が納品を承認しました。請求書の送付をお願いします。';
+				//$sys_comment = '研究者が納品を承認しました。請求書の送付をお願いします。';
+				$sys_comment = 'The researcher has approved the delivery. Please send the invoice.';
 				$sys_comment.= '
 						<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Send invoice	</a>';
 				break;

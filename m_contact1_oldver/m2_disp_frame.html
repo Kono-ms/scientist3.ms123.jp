@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+  <link rel="stylesheet" href="/common/css/style-estimate.css" />
+  <script>
+    $(document).ready(function () {
+      
+      //var subtotal = 0;
+      //$('.detail_price').each(function(key, val) {
+      //  var val = 0;
+      //  if(!isNaN($(this).html())) {
+      //    val = parseFloat($(this).html());
+      //  }
+      //  subtotal += val;
+      //});
+      //var discount = 0;
+      //if(!isNaN($('#discount').html())) {
+      //  discount = $('#discount').html();
+      //}
+      //if(discount > 0) {
+      //  discount = -discount;
+      //}
+      //subtotal += discount;
+      //var tax = parseFloat(subtotal * 0.1);
+      //var total = subtotal + tax;
+      //$('#discount').html(discount);
+      //$('#syokei_all').html(subtotal);
+      //$('#syohizei').html(tax);
+      //$('#sum_all').html(total);
+      
+
+      var subtotal = 0;
+      $('.detail_price').each(function(key, val) {
+        var val = 0;
+        if(!isNaN($(this).html()) && $(this).html()!="") {
+          val = parseFloat($(this).html());
+        }
+        subtotal += val;
+      });
+      var discount = 0;
+      if(!isNaN($('#discount').html()) && $('#discount').html()!="") {
+        discount = parseFloat($('#discount').html());
+      }
+      if(discount > 0) {
+        discount = -discount;
+      }
+      
+      //special discountの仕様変更でコメントアウト
+      //subtotal += discount;
+      //
+      //↓↓新仕様↓↓
+      //Price(サプライヤー原価)=Quantity*UNIT PRICE-Special discountに変更。
+      //（実際のカラムだと：M2_DETAIL_PRICE=M2_DETAIL_QUANTITY*M2_DETAIL_UNIT_PRICE-M2_DETAIL_SP_DISCOUNT）
+ 
+      var tax = parseFloat(subtotal * 0.1);
+      var total = subtotal + tax;
+      $('#discount').html(discount);
+      $('#syokei_all').html(subtotal);
+      $('#syohizei').html(tax);
+      $('#sum_all').html(total);
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      $('#close-btn').on('click', function (e) {
+        e.preventDefault();
+        window.close();
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+
+  <div class="recipe">
+
+    <div class="recipe-dl">
+      <label class="recipe-dl__btn"
+        onclick="javascript:print();window.opener.location.reload();window.close();">Download</label>
+      <p class="recipe-dl__notes">
+        Please make sure to close this page after downloading. (Returning to the previous page will prevent automatic
+        issuance of the estimate.)
+      </p>
+    </div>
+    <div class="recipe-close">
+      <a href="javascript:void()" class="recipe-close__btn" id="close-btn">
+        Close
+      </a>
+    </div>
+
+    <div class="recipe-header">
+      <h1 class="recipe-title">[PAGE_TITLE]</h1>
+      <figure class="recipe-logo"><img src="/common/images/logo.png" width="200"></figure><!--会社ロゴ-->
+    </div>
+
+    [S-PREVIEW_INFO_CB_AREA]
+    [PREVIEW_INFO_CB]
+    [E-PREVIEW_INFO_CB_AREA]
+
+    [S-PREVIEW_INFO_R_AREA]
+    [PREVIEW_INFO_R]
+    [E-PREVIEW_INFO_R_AREA]
+
+
+    <!--納品物情報-->
+    <!--<div>
+      <p>Project name：[D-TITLE]</p>
+      <p><span>Time for payment：</span><span>[D-M2_PAY_TYPE]</span></p>
+      <p><span>Form of 納品：</span><span>[D-M2_NOHIN_TYPE]</span></p>
+      <p><span>Payment Terms：</span><span>[D-M2_PAY_TYPE]</span></p>
+      <p><span>Currency：</span><span>[D-M2_CURRENCY]</span></p>
+      <p><span>Quote Valid Until：</span><span>[D-M2_QUOTE_VALID_UNTIL]</span></p>
+      <p><span>Study code：</span><span>[D-M2_STUDY_CODE]</span></p>
+      <p><span>Description：</span><span>[D-M2_DESCRIPTION]</span></p>
+    </div>-->
+
+    <!--Supplier 会社名など-->
+    <!--<div>
+      <p>[M1_VIEW]</p>
+      <p><span>Address：</span><span>[PDF_ADDRESS2]</span></p>
+      <p><span>TEL：</span><span>[D-M1-M1_DVAL07]</span></p>
+      <p><span>Invoice Registration Number：</span><span>[D-M1-M1_DVAL12]</span></p>
+    </div>-->
+
+    <div class="recipe-items">
+      <table class="recipe-items-table">
+        <tbody>
+          <tr class="recipe-items-table__item-header">
+            <th style="width:10%">Item</th>
+            <th style="width:20%">Qty</th>
+            <th style="width:20%">Unit Price</th>
+            <th style="width:20%">Special Discount</th>
+            <th>Total</th>
+          </tr>
+
+          [ADD_DETAIL_AREA2]
+
+          <tr class="recipe-items-table__item-footer">
+            <td colspan="4">Special discount included above.</td>
+            <td style="text-align:right" id="discount">[SUM_M2_DETAIL_SP_DISCOUNT]</td>
+          </tr>
+
+          <tr class="recipe-items-table__item-footer">
+            <td colspan="5">[D-M2_SPECIAL_NOTE]</td>
+          </tr>
+
+          <!--<tr class="recipe-items-table__item-body">
+            <td colspan="3">Subtotal</td>
+            <td style="text-align:right" id="syokei_all">0</td>
+          </tr>-->
+          <!--<tr class="recipe-items-table__item-body">
+            <td colspan="3">Tax</td>
+            <td style="text-align:right" id="syohizei">0</td>
+          </tr>-->
+          <!--<tr class="recipe-items-table__item-footer">
+            <td colspan="3">Total</td>
+            <td style="text-align:right" id="sum_all">0</td>
+          </tr>-->
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="recipe-details">
+      <input type="hidden" name="ETC23" value="[ETC23]" />
+      <input type="hidden" name="ETC27" value="[ETC27]" />
+      <input type="hidden" name="ETC31" value="[ETC31]" />
+      <input type="hidden" name="ETC35" value="[ETC35]" />
+      <input type="hidden" name="ETC39" value="[ETC39]" />
+      <input type="hidden" name="ETC43" value="[ETC43]" />
+      <input type="hidden" name="ETC47" value="[ETC47]" />
+      <input type="hidden" name="ETC51" value="[ETC51]" />
+      <input type="hidden" name="ETC55" value="[ETC55]" />
+      <input type="hidden" name="ETC59" value="[ETC59]" />
+      [S-SERVICE_FEE_AREA]
+      [SERVICE_FEE_AREA]
+      [E-SERVICE_FEE_AREA]
+    </div>
+
+    <div class="recipe-footer">
+
+    </div>
+  </div>
+</body>
+
+</html>

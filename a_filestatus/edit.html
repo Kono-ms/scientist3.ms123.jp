@@ -9,7 +9,7 @@
         $('#popup_mcontact2').fadeIn();
     }
 
-    // 見積書（研究者宛）
+    // 見積り書（研究者宛）
     function popup_preview_r(id) {
         var url=document.getElementById('OPT_PREVIEW_LIST_R_'+id).value;
         //console.log('preview url:'+url);
@@ -23,9 +23,38 @@
         });
         $('.ifrm_mcontact2').attr('src', url);// loadイベントを強制的に再発行する
     }
-    // 見積書（CB宛）
+    // 見積り書（CB宛）
     function popup_preview_cb(id) {
         var url=document.getElementById('OPT_PREVIEW_LIST_CB_'+id).value;
+        //console.log('preview url:'+url);
+        if(url=="") return false;
+
+        $('.ifrm_mcontact2').off('load');// イベントを一度削除
+        // iframe ロード後に表示させる
+        $('.ifrm_mcontact2').on('load',function(){
+            $('#mask_mcontact2').stop().show();
+            $('#popup_mcontact2').stop().fadeIn();
+        });
+        $('.ifrm_mcontact2').attr('src', url);// loadイベントを強制的に再発行する
+    }
+
+     // アコーディオン用：見積り書（研究者宛）
+    function popup_accordion_preview_r(id) {
+        var url=document.getElementById('OPT_ACCORDION_PREVIEW_LIST_R_'+id).value;
+        //console.log('preview url:'+url);
+        if(url=="") return false;
+
+        $('.ifrm_mcontact2').off('load');// イベントを一度削除
+        // iframe ロード後に表示させる
+        $('.ifrm_mcontact2').on('load',function(){
+            $('#mask_mcontact2').stop().show();
+            $('#popup_mcontact2').stop().fadeIn();
+        });
+        $('.ifrm_mcontact2').attr('src', url);// loadイベントを強制的に再発行する
+    }
+    // アコーディオン用：見積り書（CB宛）
+    function popup_accordion_preview_cb(id) {
+        var url=document.getElementById('OPT_ACCORDION_PREVIEW_LIST_CB_'+id).value;
         //console.log('preview url:'+url);
         if(url=="") return false;
 
@@ -41,6 +70,34 @@
     // 発注書
     function popup_preview_hk(id) {
         var url=document.getElementById('OPT_PREVIEW_LIST_HK_'+id).value;
+        //console.log('preview url:'+url);
+        if(url=="") return false;
+
+        $('.ifrm_mcontact2').off('load');// イベントを一度削除
+        // iframe ロード後に表示させる
+        $('.ifrm_mcontact2').on('load',function(){
+            $('#mask_mcontact2').stop().show();
+            $('#popup_mcontact2').stop().fadeIn();
+        });
+        $('.ifrm_mcontact2').attr('src', url);// loadイベントを強制的に再発行する
+    }
+
+    function popup_preview_hk_cb(id) {
+        var url=document.getElementById('OPT_PREVIEW_LIST_HK_CB_'+id).value;
+        //console.log('preview url:'+url);
+        if(url=="") return false;
+
+        $('.ifrm_mcontact2').off('load');// イベントを一度削除
+        // iframe ロード後に表示させる
+        $('.ifrm_mcontact2').on('load',function(){
+            $('#mask_mcontact2').stop().show();
+            $('#popup_mcontact2').stop().fadeIn();
+        });
+        $('.ifrm_mcontact2').attr('src', url);// loadイベントを強制的に再発行する
+    }
+
+    function popup_preview_hk_r(id) {
+        var url=document.getElementById('OPT_PREVIEW_LIST_HK_R_'+id).value;
         //console.log('preview url:'+url);
         if(url=="") return false;
 
@@ -228,6 +285,9 @@
                         <input type="hidden" name="S_STATUS" value="[S_STATUS]">
                         <input type="hidden" name="S_ADD_CHARGE1" value="[S_ADD_CHARGE1]">
                         <input type="hidden" name="S_ADD_CHARGE2" value="[S_ADD_CHARGE2]">
+                        <input type="hidden" name="H_SHIP_TO_SPT_1" value="[H_SHIP_TO_SPT_1]">
+                        <input type="hidden" name="H_SHIP_TO_SPT_2" value="[H_SHIP_TO_SPT_2]">
+                        <input type="hidden" name="H_SHIP_TO_SPT_3" value="[H_SHIP_TO_SPT_3]">
                         <!--【hiddenもれ防止のための念のための処置 END】-->
 
                         <input type="hidden" name="mode" value="save" id="mode">
@@ -819,7 +879,7 @@
                                 </tr>
                                 <tr>
                                     <th>合計金額</th>
-                                    <td>[R_MITSUMORISYO_ALL_CHARGE] ([MITSUMORISYO_ALL_CHARGE])</td>
+                                    <td>[MITSUMORISYO_ALL_CHARGE]</td>
                                 </tr>
                                 [E-FORM_M2_SUB]
                                 <tr>
@@ -831,7 +891,7 @@
                                     <td>[VIEW-BILL_TO]</td>
                                 </tr>
                                 <tr>
-                                    <th>見積書（CB宛）</th>
+                                    <th>見積り書（CB宛)</th>
                                     <td>
                                         [S-PREVIEW_LIST_CB]
                                         <select name="OPT_PREVIEW_LIST_CB" id="OPT_PREVIEW_LIST_CB_[ID]" class="input_select form-control">
@@ -843,7 +903,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>見積書（研究者宛）</th>
+                                    <th>見積り書（研究者宛)</th>
                                     <td>
                                         [S-PREVIEW_LIST_R]
                                         <select name="OPT_PREVIEW_LIST_R" id="OPT_PREVIEW_LIST_R_[ID]" class="input_select form-control">
@@ -876,6 +936,51 @@
                         </table>
                         [E-FORM_H]
 
+                        [S-FORM_H_DISPONLY]
+                        <!--発注書の表示のみ-->
+                        ＜発注書＞
+                        <table class="table table-bordered table_edit">
+                            <tbody>
+                                <tr>
+                                    <th>見積りID</th>
+                                    <td>[DISPONLY_SCNO]</td>
+                                </tr>
+                                <tr>
+                                    <th>研究者からのコメント<br>(研究者が発注依頼のフォームに書いた内容)</th>
+                                    <td>[DISPONLY_H_COMMENT]</td>
+                                </tr>
+                                <tr>
+                                    <th>サプライヤーへのコメント<br>(決済者発注承認の際の決済者が入力したコメント)</th>
+                                    <td>[DISPONLY_H3A_MESSAGE]</td>
+                                </tr>
+                                <tr>
+                                    <th>Po No</th>
+                                    <td>[DISPONLY_PONO]</td>
+                                </tr>
+                                <tr>
+                                    <th>発注書(CB宛て)</th>
+                                    <td>
+                                        <select name="OPT_PREVIEW_LIST_HK_CB" id="OPT_PREVIEW_LIST_HK_CB_[ID]" class="input_select form-control">
+                                            <option value="">▼選択して下さい</option>
+                                            [OPT_PREVIEW_LIST_HK_CB_DISPONLY]
+                                        </select>
+                                        <a href="javascript:popup_preview_hk_cb([ID]);" id="preview_btn_hk" class="btn btn-default btn-xs">プレビュー</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>発注書(R宛て)</th>
+                                    <td>
+                                        <select name="OPT_PREVIEW_LIST_HK_R" id="OPT_PREVIEW_LIST_HK_R_[ID]" class="input_select form-control">
+                                            <option value="">▼選択して下さい</option>
+                                            [OPT_PREVIEW_LIST_HK_R_DISPONLY]
+                                        </select>
+                                        <a href="javascript:popup_preview_hk_r([ID]);" id="preview_btn_hk" class="btn btn-default btn-xs">プレビュー</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        [E-FORM_H_DISPONLY]
+
                         [S-FORM_K_OK]
                         ＜発注書（決済者発注承認用）＞
                         <table class="table table-bordered table_edit">
@@ -897,14 +1002,24 @@
                                     <td><input type="text" name="PONO" class="input_w10 form-control"
                                             value="[PONO]" size="90"></td>
                                 </tr>
-                                <tr>
-                                    <th>発注書</th>
+                                 <tr>
+                                    <th>発注書（CB宛て閲覧用）</th>
                                     <td>
-                                        <select name="OPT_PREVIEW_LIST_HK" id="OPT_PREVIEW_LIST_HK_[ID]" class="input_select form-control">
+                                        <select name="OPT_PREVIEW_LIST_HK_CB" id="OPT_PREVIEW_LIST_HK_CB_[ID]" class="input_select form-control">
                                             <option value="">▼選択して下さい</option>
-                                            [OPT_PREVIEW_LIST_HK]
+                                            [OPT_PREVIEW_LIST_HK_CB]
                                         </select>
-                                        <a href="javascript:popup_preview_hk([ID]);" id="preview_btn_hk" class="btn btn-default btn-xs">プレビュー</a>
+                                        <a href="javascript:popup_preview_hk_cb([ID]);" id="preview_btn_hk" class="btn btn-default btn-xs">プレビュー</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>発注書(研究者宛て発行用)</th>
+                                    <td>
+                                        <select name="OPT_PREVIEW_LIST_HK_R" id="OPT_PREVIEW_LIST_HK_R_[ID]" class="input_select form-control">
+                                            <option value="">▼選択して下さい</option>
+                                            [OPT_PREVIEW_LIST_HK_R]
+                                        </select>
+                                        <a href="javascript:popup_preview_hk_r([ID]);" id="preview_btn_hk" class="btn btn-default btn-xs">プレビュー</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1203,21 +1318,23 @@
 .popup_mcontact,
 .popup_mcontact2 {
 	--pop-offset: 40px;
-	--pop-iframe-ratio: 0.707;/* A2,A3,A4 = 210/297 */
     display: none;
     border: 1px solid #000;
     background: #ddd;
     position: fixed;
-    inset: 50% auto auto 50%;
+    inset: var(--pop-offset);
     z-index: 10002;
-    transform: translate(-50%,-50%);
 }
+.ifrm_mcontact,
+.ifrm_mcontact2,
 .popup_mcontact iframe,
 .popup_mcontact2 iframe {
     border: none;
     width: 100%;
     height: 100%;
     vertical-align: top;
+    overflow-x: auto;
+    overflow-y: auto;
 }
 .mask_mcontact {
     display: none;
@@ -1225,22 +1342,6 @@
     position: fixed;
     inset: 0;
     z-index: 10001;
-}
-@media (min-aspect-ratio: 210/297) {
-  /* A2,A3,A4 = 210/297 よりも横が長い */
-  .popup_mcontact,
-  .popup_mcontact2 {
-    width: calc( (100dvh - var(--pop-offset) * 2) * var(--pop-iframe-ratio) );
-    height: calc( 100dvh - var(--pop-offset) * 2 );/* NOTE: 縦を基準にして変形させる */
-  }
-}
-@media (max-aspect-ratio: 210/297) {
-  /* A2,A3,A4 = 210/297 よりも縦が長い */
-  .popup_mcontact,
-  .popup_mcontact2 {
-    width: calc( 100vw - var(--pop-offset) * 2 );/* NOTE: 横を基準にして変形させる */
-    height: calc( (100vw - var(--pop-offset) * 2) / var(--pop-iframe-ratio) );
-  }
 }
 </style>
 

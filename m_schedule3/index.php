@@ -511,13 +511,15 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 // if($_SESSION['MID']=="M200001"){
 // $mid3="M300001";
 // }
-		//mid3に対応するmid2
-		$StrSQL="SELECT MID FROM DAT_M2 WHERE M2_DVAL15='".$mid3."'";
-		$mid2_rs=mysqli_query(ConnDB(),$StrSQL);
-		$mid2_item=mysqli_fetch_assoc($mid2_rs);
-		$mid2="";
-		$mid2=$mid2_item["MID"];
-		//echo "<!--mid2:$mid2-->";
+		////mid3に対応するmid2
+		//$StrSQL="SELECT MID FROM DAT_M2 WHERE M2_DVAL15='".$mid3."'";
+		//$mid2_rs=mysqli_query(ConnDB(),$StrSQL);
+		//$mid2_item=mysqli_fetch_assoc($mid2_rs);
+		//$mid2="";
+		//$mid2=$mid2_item["MID"];
+		////echo "<!--mid2:$mid2-->";
+
+
 
 //		$StrSQL="
 //			SELECT
@@ -555,11 +557,20 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 //						AND DAT_FILESTATUS.SHODAN_ID NOT IN (
 //							SELECT SHODAN_ID 
 //							FROM DAT_FILESTATUS 
-//							WHERE STATUS = '見積り送付'
+//							WHERE (STATUS = '見積り送付' OR STATUS = '運営手数料追加')
 //							AND MID2 = '" . $mid2 . "'
-//							AND DIV_ID NOT LIKE '%Part0'
+//							#AND DIV_ID NOT LIKE '%Part0'
 //						)
 //					)
+//					##OR (
+//					##	DAT_FILESTATUS.STATUS = '運営手数料追加'
+//					##	AND DAT_FILESTATUS.DIV_ID NOT IN (
+//					##		SELECT DIV_ID
+//					##		FROM DAT_FILESTATUS
+//					##		WHERE STATUS = '見積り送付'
+//					##		AND MID2 = '" . $mid2 . "' 
+//					##	)
+//					##)
 //				)
 //				AND DAT_FILESTATUS.DIV_ID NOT LIKE '%Part0'
 //			GROUP BY
@@ -571,7 +582,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 //				DAT_FILESTATUS.MID1 ASC,
 //				FILESTATUS_ID DESC
 //		";
-
+		
 		$StrSQL="
 			SELECT
 				DAT_FILESTATUS.SHODAN_ID,
@@ -609,19 +620,10 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 							SELECT SHODAN_ID 
 							FROM DAT_FILESTATUS 
 							WHERE (STATUS = '見積り送付' OR STATUS = '運営手数料追加')
-							AND MID2 = '" . $mid2 . "'
-							AND DIV_ID NOT LIKE '%Part0'
+							AND MID2 = DAT_M2.MID
+							#AND DIV_ID NOT LIKE '%Part0'
 						)
 					)
-					##OR (
-					##	DAT_FILESTATUS.STATUS = '運営手数料追加'
-					##	AND DAT_FILESTATUS.DIV_ID NOT IN (
-					##		SELECT DIV_ID
-					##		FROM DAT_FILESTATUS
-					##		WHERE STATUS = '見積り送付'
-					##		AND MID2 = '" . $mid2 . "' 
-					##	)
-					##)
 				)
 				AND DAT_FILESTATUS.DIV_ID NOT LIKE '%Part0'
 			GROUP BY
@@ -635,7 +637,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 		";
 //echo('<!--'.$StrSQL.'-->');
 
-//  var_dump($StrSQL);
+  //var_dump($StrSQL);
 		$rs=mysqli_query(ConnDB(),$StrSQL);
 		$item=mysqli_num_rows($rs); 
 //echo('<!--件数:'.$item.'-->');
@@ -684,7 +686,10 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 
 				$str=$strM;
 
-				$str=str_replace("[SHODAN_ID]",$item['SHODAN_ID'],$str);
+				$mid2=$item["MID2"];
+
+				$str=str_replace("[SHODAN_ID]",$item['SHODAN_ID']."<br>(debug:".$item['FILESTATUS_ID'].")"."<br>(debug:".$item["MID2"].")",$str);
+				//$str=str_replace("[SHODAN_ID]",$item['SHODAN_ID'],$str);
 				$str=str_replace("[FILESTATUS_ID]",$item['FILESTATUS_ID'],$str);
 
 				$str=str_replace("[TITLE]",'<a href="javascript:popup_file_btn(\''.$item['MID1'].'-'.$item['MID2'].'\',\''.$item['SHODAN_ID'].'\')">'.$item['TITLE'].'</a>',$str);
@@ -692,13 +697,28 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 				$str=str_replace("[M1_DVAL01]",$item['M1_DVAL01'],$str);
 				$str=str_replace("[M2_DVAL01]",$item['M2_DVAL01'].'<br>'.$item['M2_DVAL16'].' '.$item['M2_DVAL17'],$str);
 
+				if(strpos($item['STATUS'], '再見積り依頼') !== false) {
+					$str=str_replace("[CATEGORY]","再見積り依頼",$str);
+				}
+				else if(strpos($item['STATUS'], '見積り依頼') !== false) {
+					$str=str_replace("[CATEGORY]","見積り依頼",$str);
+				}
+				else if(strpos($item['STATUS'], '問い合わせ') !== false) {
+					$str=str_replace("[CATEGORY]","問い合わせ",$str);
+				}
 
+
+				//以下、「見積り送付」のデータ。つまり、「見積り送付」以降
 				$StrSQL="SELECT ID, STATUS FROM DAT_SHODAN WHERE ID='".$item["SHODAN_ID"]."' limit 1";
 				$shodan_rs=mysqli_query(ConnDB(),$StrSQL);
 				$shodan_item=mysqli_fetch_assoc($shodan_rs);
 
 				if(strpos($shodan_item['STATUS'], '完了') !== false) {
 					$str=str_replace("[CATEGORY]",'完了',$str);
+				}
+				else if(strpos($shodan_item['STATUS'], '発注否認') !== false) {
+					//発注否認された場合、ステータス表示が見積りの状態に戻る
+					$str=str_replace("[CATEGORY]","見積り",$str);
 				}
 				else if(strpos($shodan_item['STATUS'], 'キャンセル依頼') !== false) {
 					$str=str_replace("[CATEGORY]","実施中",$str);
@@ -754,24 +774,55 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 				else if(strpos($shodan_item['STATUS'], '受注承認') !== false) {
 					$str=str_replace("[CATEGORY]",'実施中',$str);
 				}
+				else if(strpos($shodan_item['STATUS'], '決済者発注承認') !== false) {
+					$str=str_replace("[CATEGORY]",'発注',$str);
+				}
 				else if(strpos($shodan_item['STATUS'], '発注承認') !== false) {
+					//「発注承認」は「決済者発注承認」
 					//$str=str_replace("[CATEGORY]",'見積り',$str);
 					$str=str_replace("[CATEGORY]",'発注承認済',$str);
 				}
 				else if(strpos($shodan_item['STATUS'], '発注依頼') !== false) {
 					// 発注依頼の場合だけ特殊処理
+					$StrSQL="SELECT ID, NEWDATE, SHODAN_ID, STATUS, DIV_ID";
+					$StrSQL.=" FROM DAT_FILESTATUS ";
+					$StrSQL.=" WHERE SHODAN_ID='".$item["SHODAN_ID"]."' ";
+					$StrSQL.=" and DIV_ID='".$item["DIV_ID"]."' ";
+					$StrSQL.=" and STATUS='発注依頼' ";
+					$hatyu_rs=mysqli_query(ConnDB(),$StrSQL);
+					$hatyu_item =  mysqli_fetch_assoc($hatyu_rs);
+					$hatyu_num=mysqli_num_rows($hatyu_rs);
+
 					$StrSQL="SELECT ID, MID, M2_DVAL15,KESSAI_SYONIN";
 					$StrSQL.=" FROM DAT_M2 ";
 					$StrSQL.=" WHERE MID='".$item["MID2"]."' ";
 					$m2_k_rs=mysqli_query(ConnDB(),$StrSQL);
 					$m2_k_item =  mysqli_fetch_assoc($m2_k_rs);
-
-					if($m2_k_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+					
+					if($m2_k_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり" && $hatyu_num>0){
 						$str=str_replace("[CATEGORY]",'<span style="color:red;">発注<br>(承認してください)</span>',$str);
-					}
+					
+					}else if($m2_k_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:なし" && $hatyu_num>0){
+						$str=str_replace("[CATEGORY]",'発注',$str);
 
-					$str=str_replace("[CATEGORY]",'発注',$str);
+					}else{
+						$str=str_replace("[CATEGORY]",'見積り',$str);
+					}
 				}
+				//else if(strpos($shodan_item['STATUS'], '発注依頼') !== false) {
+				//	// 発注依頼の場合だけ特殊処理
+				//	$StrSQL="SELECT ID, MID, M2_DVAL15,KESSAI_SYONIN";
+				//	$StrSQL.=" FROM DAT_M2 ";
+				//	$StrSQL.=" WHERE MID='".$item["MID2"]."' ";
+				//	$m2_k_rs=mysqli_query(ConnDB(),$StrSQL);
+				//	$m2_k_item =  mysqli_fetch_assoc($m2_k_rs);
+				//	
+				//	if($m2_k_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+				//		$str=str_replace("[CATEGORY]",'<span style="color:red;">発注<br>(承認してください)</span>',$str);
+				//	}
+				//	
+				//	$str=str_replace("[CATEGORY]",'発注',$str);
+				//}
 				else if(strpos($shodan_item['STATUS'], '見積り送付') !== false) {
 					//2回払い、マイルストーン払いのときにステータス更新がとまるが、決済者発注承認だけステータスが変わらないと困るので、臨時対応。
 					if( checkDIV_ID($item["DIV_ID"])!="" ){
@@ -780,11 +831,11 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 						$StrSQL.=" WHERE SHODAN_ID='".$item["SHODAN_ID"]."' ";
 						$StrSQL.=" and DIV_ID='".$item["DIV_ID"]."'";
 						$StrSQL.=" order by NEWDATE desc,ID desc";
-						$hatyu_rs=mysqli_query(ConnDB(),$StrSQL);
-						$hatyu_item =  mysqli_fetch_assoc($hatyu_rs);
+						$last_rs=mysqli_query(ConnDB(),$StrSQL);
+						$last_item =  mysqli_fetch_assoc($last_rs);
 						//echo "<!--発注SQL:$StrSQL-->";
-						//echo "<!--hattyu:";
-						//var_dump($hatyu_item);
+						//echo "<!--last item:";
+						//var_dump($last_item);
 						//echo "-->";
 
 						$StrSQL="SELECT ID, MID, M2_DVAL15,KESSAI_SYONIN";
@@ -796,15 +847,20 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 						//var_dump($m2_k_item);
 						//echo "-->";
 
-						if($hatyu_item["STATUS"]=="発注依頼" && $m2_k_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+						if($last_item["STATUS"]=="発注依頼" && $m2_k_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
 							$str=str_replace("[CATEGORY]",'<span style="color:red;">発注<br>(承認してください)</span>',$str);
+						
+						}else if($last_item["STATUS"]=="発注依頼" && $m2_k_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:なし"){
+							$str=str_replace("[CATEGORY]",'発注',$str);
 						}
+
 					}
 
 					$str=str_replace("[CATEGORY]",'見積り',$str);
 				}
 				else if(strpos($shodan_item['STATUS'], '見積り依頼') !== false) {
 					$str=str_replace("[CATEGORY]",'見積り',$str);
+
 				}
 				else if(strpos($shodan_item['STATUS'], '問い合わせ') !== false) {
 					$str=str_replace("[CATEGORY]",'問い合わせ',$str);
@@ -835,15 +891,28 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 	
 					//「前払い」の欄
 					$in_advance="";
-					if( ($item["M2_PAY_TYPE"]=="Split" || $item["M2_PAY_TYPE"]=="Milestone") && 
-						($item["M_STATUS"]=="直接送付(前払い)" || $item["M_STATUS"]=="手数料追加(前払い)") ){
+					if( $item["M_STATUS"]=="直接送付(前払い)" || $item["M_STATUS"]=="手数料追加(前払い)" ){
 						$tmp="";
 						$tmp=explode("-", $item["DIV_ID"]);
-						if(count($tmp)==3 && $tmp[2]=="Part1"){
+						if( ($item["M2_PAY_TYPE"]=="Split" || $item["M2_PAY_TYPE"]=="Milestone") &&
+							(count($tmp)==3 && $tmp[2]!="Part0") ){
+							$in_advance="〇";
+
+						}else if($item["M2_PAY_TYPE"]=="Once"){
 							$in_advance="〇";
 						}
 					}
 					$str=str_replace("[IN_ADVANCE]",$in_advance,$str);
+					//$in_advance="";
+					//if( ($item["M2_PAY_TYPE"]=="Split" || $item["M2_PAY_TYPE"]=="Milestone") && 
+					//	($item["M_STATUS"]=="直接送付(前払い)" || $item["M_STATUS"]=="手数料追加(前払い)") ){
+					//	$tmp="";
+					//	$tmp=explode("-", $item["DIV_ID"]);
+					//	if(count($tmp)==3 && $tmp[2]=="Part1"){
+					//		$in_advance="〇";
+					//	}
+					//}
+					//$str=str_replace("[IN_ADVANCE]",$in_advance,$str);
 	
 	
 					//「見積り書」の欄

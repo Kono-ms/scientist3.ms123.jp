@@ -429,14 +429,38 @@
                 </tr>
                 <!--
                 <tr>
-                    <th>見積書（CB宛）</th>
+                    <th>見積り書（CB宛）</th>
                     <td><a href="#" class="btn btn-block btn-default btn-xs">プレビュー</a></td>
                 </tr>
                 <tr>
-                    <th>見積書（研究者宛）</th>
+                    <th>見積り書（研究者宛）</th>
                     <td><a href="#" class="btn btn-block btn-default btn-xs">プレビュー</a></td>
                 </tr>-->
 
+                <tr>
+                    <th>見積り書（CB宛)</th>
+                    <td>
+                        [S-PREVIEW_LIST_CB]
+                        <select name="OPT_ACCORDION_PREVIEW_LIST_CB" id="OPT_ACCORDION_PREVIEW_LIST_CB_[ID]" class="input_select form-control">
+                            <option value="">▼選択して下さい</option>
+                            [OPT_ACCORDION_PREVIEW_LIST_CB]
+                        </select>
+                        <a href="javascript:popup_accordion_preview_cb([ID]);" id="accordion_preview_btn_cb" class="btn btn-default btn-xs">プレビュー</a>
+                        [E-PREVIEW_LIST_CB]
+                    </td>
+                </tr>
+                <tr>
+                    <th>見積り書（研究者宛)</th>
+                    <td>
+                        [S-PREVIEW_LIST_R]
+                        <select name="OPT_ACCORDION_PREVIEW_LIST_R" id="OPT_ACCORDION_PREVIEW_LIST_R_[ID]" class="input_select form-control">
+                            <option value="">▼選択して下さい</option>
+                            [OPT_ACCORDION_PREVIEW_LIST_R]
+                        </select>
+                        <a href="javascript:popup_accordion_preview_r([ID]);" id="accordion_preview_btn_r" class="btn btn-default btn-xs">プレビュー</a>[S-SENT_MITSU_MARK]（送信済み）[E-SENT_MITSU_MARK]
+                        [E-PREVIEW_LIST_R]
+                    </td>
+                </tr>
                 <tr>
                     <th>登録日時</th>
                     <td>[NEWDATE]</td>

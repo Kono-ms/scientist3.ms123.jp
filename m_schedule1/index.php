@@ -618,7 +618,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 							FROM DAT_FILESTATUS 
 							WHERE (STATUS = '見積り送付' OR STATUS = '運営手数料追加')
 							AND MID1 = '" . $_SESSION['MID'] . "'
-							AND DIV_ID NOT LIKE '%Part0'
+							#AND DIV_ID NOT LIKE '%Part0'
 						)
 					)
 					OR (
@@ -716,6 +716,10 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 				if(strpos($shodan_item['STATUS'], '完了') !== false) {
 					$str=str_replace("[CATEGORY]",showStatus('完了'),$str);
 				}
+				else if(strpos($shodan_item['STATUS'], '発注否認') !== false) {
+					//発注否認された場合、ステータス表示が見積りの状態に戻る
+					$str=str_replace("[CATEGORY]",showStatus('見積り'),$str);
+				}
 				else if(strpos($shodan_item['STATUS'], 'キャンセル依頼') !== false) {
 					$str=str_replace("[CATEGORY]",showStatus('キャンセル依頼'),$str);
 				}
@@ -808,15 +812,28 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 
 					//In advance欄
 					$in_advance="";
-					if( ($item["M2_PAY_TYPE"]=="Split" || $item["M2_PAY_TYPE"]=="Milestone") && 
-						($item["M_STATUS"]=="直接送付(前払い)" || $item["M_STATUS"]=="手数料追加(前払い)") ){
+					if( $item["M_STATUS"]=="直接送付(前払い)" || $item["M_STATUS"]=="手数料追加(前払い)" ){
 						$tmp="";
 						$tmp=explode("-", $item["DIV_ID"]);
-						if(count($tmp)==3 && $tmp[2]=="Part1"){
+						if( ($item["M2_PAY_TYPE"]=="Split" || $item["M2_PAY_TYPE"]=="Milestone") &&
+							(count($tmp)==3 && $tmp[2]!="Part0") ){
+							$in_advance="〇";
+
+						}else if($item["M2_PAY_TYPE"]=="Once"){
 							$in_advance="〇";
 						}
 					}
 					$str=str_replace("[IN_ADVANCE]",$in_advance,$str);
+					//$in_advance="";
+					//if( ($item["M2_PAY_TYPE"]=="Split" || $item["M2_PAY_TYPE"]=="Milestone") && 
+					//	($item["M_STATUS"]=="直接送付(前払い)" || $item["M_STATUS"]=="手数料追加(前払い)") ){
+					//	$tmp="";
+					//	$tmp=explode("-", $item["DIV_ID"]);
+					//	if(count($tmp)==3 && $tmp[2]=="Part1"){
+					//		$in_advance="〇";
+					//	}
+					//}
+					//$str=str_replace("[IN_ADVANCE]",$in_advance,$str);
 	
 	
 					//Quotationの欄

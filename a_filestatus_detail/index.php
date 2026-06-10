@@ -69,7 +69,8 @@ function Main()
 		
 					if(count($tmp)==3 && $tmp[0]!="" && $tmp[1]!=""){
 						$invoice_no=$tmp[0]."-".$tmp[1];
-						$StrSQL="SELECT * from DAT_FILESTATUS_DETAIL where DIV_ID LIKE '".$invoice_no."-PART%' ";
+						$StrSQL="SELECT * from DAT_FILESTATUS_DETAIL where DIV_ID LIKE '".$invoice_no."-Part%' ";
+						//$StrSQL="SELECT * from DAT_FILESTATUS_DETAIL where DIV_ID LIKE '".$invoice_no."-PART%' ";
 						$StrSQL.=" and DIV_ITEM_NO IS NOT NULL ";
 						$StrSQL.=" and DIV_ITEM_NO!='' ";
 						$StrSQL.=" and DIV_ITEM_NO='".$item_this["DIV_ITEM_NO"]."'";
@@ -130,10 +131,43 @@ function Main()
 				$m2_detail_quantity=is_numeric($FieldValue[11]) ? $FieldValue[11] : 0;
 				$m2_detail_unit_price=is_numeric($FieldValue[12]) ? $FieldValue[12] : 0;
 				$m2_detail_sp_discount=is_numeric($FieldValue[17]) ? $FieldValue[17] : 0;
+
+				//丸め処理1
+				//FILESTATUS_ID
+				$StrSQL="SELECT ID,SHODAN_ID,MID1,M2_CURRENCY FROM DAT_FILESTATUS WHERE ID='".$FieldValue[1]."' ";
+				$StrSQL.=" AND ID!='' ";
+				$StrSQL.=" AND ID IS NOT NULL ";
+				$StrSQL.=" AND STATUS='見積り送付' ";
+				echo "<!--StrSQL:save:$StrSQL-->";
+				$cry_rs=mysqli_query(ConnDB(),$StrSQL);
+				$cry_num=mysqli_num_rows($cry_rs);
+				$cry_item = mysqli_fetch_assoc($cry_rs);
+				echo "<!--";
+				var_dump($cry_item);
+				echo "-->";
+				//通貨に対応する四捨五入のまるめる桁指定
+				$m2_currency=$cry_item["M2_CURRENCY"];
+				//Quantityは必ず整数
+				$m2_detail_quantity=round($m2_detail_quantity,0);
+				if($cry_num>0){
+					if($m2_currency=="M2_CURRENCY:JPY"){
+						$decimal_point=0;
+					}else{
+						$decimal_point=2;
+					}
+					echo "<!--decimal_point:$decimal_point-->";
+					$m2_detail_unit_price=round($m2_detail_unit_price,$decimal_point);
+					$m2_detail_sp_discount=round($m2_detail_sp_discount,$decimal_point);
+				}
+				
 				if(is_numeric($FieldValue[11]) && is_numeric($FieldValue[12])){
 					//$FieldValue[4]=$m2_detail_quantity*$m2_detail_unit_price;
 					$FieldValue[4]=$m2_detail_quantity*$m2_detail_unit_price-$m2_detail_sp_discount;
 				}
+				
+				$FieldValue[11]=$m2_detail_quantity;
+				$FieldValue[12]=$m2_detail_unit_price;
+				$FieldValue[17]=$m2_detail_sp_discount;
 
 				//TOTAL PRICE(M2_DETAIL_TOTAL_PRICE)の計算
 				if(is_numeric($FieldValue[4]) && is_numeric($FieldValue[8])){
@@ -143,16 +177,21 @@ function Main()
 					$FieldValue[10]="";
 				}
 
+				//丸め処理2
+				if($cry_num>0){
+					$FieldValue[10]=round($FieldValue[10],$decimal_point);
+				}
+
 				$msg=ErrorCheck();
 				if ($msg==""){
 					SaveData($key,$sync_item_ary);
 					$url=BASE_URL . "/a_filestatus_detail/?word=".$word."&page=".$page;
-					header("Location: {$url}");
+					//header("Location: {$url}");
 					//debug
-					//$mode="list";
-					//if ($page==""){
-					//	$page=1;
-					//} 
+					$mode="list";
+					if ($page==""){
+						$page=1;
+					} 
 				}
 			}
 			break;
@@ -1157,7 +1196,7 @@ function SubmitMitsumori($key)
 		$disp_part="";
 		if($new_item_FS["M2_PAY_TYPE"]!='Once' && count($tmp)==3){
 			$part=$tmp[2];
-			$disp_part="Split ".$part;
+			//$disp_part="Split ".$part;
 		}
 
 		//マイルストーンの場合はPart0はユーザには表示しない

@@ -586,11 +586,21 @@ function makeServiceArea($id,$str){
 		$part=$tmp[2];
 		$pre_part=$tmp[0]."-".$tmp[1];
 	}
-	echo "<!--サービス費用エリア：part:$part-->";
-	echo "<!--サービス費用エリア：pre_part:$pre_part-->";
-	echo "<!--target_item:\n";
-	var_dump($target_item);
-	echo "-->";
+	//echo "<!--サービス費用エリア：part:$part-->";
+	//echo "<!--サービス費用エリア：pre_part:$pre_part-->";
+	//echo "<!--target_item:\n";
+	//var_dump($target_item);
+	//echo "-->";
+
+
+	//通貨に対応する四捨五入のまるめる桁指定
+	$m2_currency=$target_item["M2_CURRENCY"];
+	if($m2_currency=="M2_CURRENCY:JPY"){
+		$decimal_point=0;
+	}else{
+		$decimal_point=2;
+	}
+	echo "<!--decimal_point:$decimal_point-->";
 
 	//小計1
 	//※先方の要望により、
@@ -627,7 +637,13 @@ function makeServiceArea($id,$str){
 	}
 	
 	echo "<!--M2_detail_SP_DISCOUNTの合計:$sum_m2_detail_sp_discount-->";
+	$sum_m2_detail_sp_discount=round($sum_m2_detail_sp_discount,$decimal_point);
+	echo "<!--sum_m2_detail_sp_discount:round():$sum_m2_detail_sp_discount-->";
+
 	echo "<!--syoke1:$syoke1-->";
+	$syoke1=round($syoke1,$decimal_point);
+	echo "<!--syoke1:round():$syoke1-->";
+
 	$str=str_replace("[SUM_M2_DETAIL_SP_DISCOUNT]", $sum_m2_detail_sp_discount, $str); //PDF対応
 	$str=str_replace("[MITSUMORISYO_SUBTOTAL1]", $syoke1, $str);
 
@@ -648,17 +664,28 @@ function makeServiceArea($id,$str){
 			$tax_rate1=0;
 		}
 	}
+
+	echo "<!--tax_rate1:$tax_rate1-->";
+			//tax_rate1は通貨に関係なく整数入力のみ
+	$tax_rate1=round($tax_rate1,0);
+	echo "<!--tax_rate1:round():$tax_rate1-->";
 	$str=str_replace("[MITSUMORISYO_TAX_RATE1]",$tax_rate1,$str);
 
 
 	//消費税
 	$tax_bill1=$tax_rate1*$syoke1/100;
+	echo "<!--tax_bill1:$tax_bill1-->";
+	$tax_bill1=round($tax_bill1,$decimal_point);
+	echo "<!--tax_bill1:round():$tax_bill1-->";
 	$str=str_replace("[MITSUMORISYO_TAX_BILL1]",$tax_bill1,$str);
 
 
 	//PDF対応
 	//PDF用の表示
 	$pdf_total1=$syoke1+$tax_bill1;
+	echo "<!--pdf_total1:$pdf_total1-->";
+	$pdf_total1=round($pdf_total1,$decimal_point);
+	echo "<!--pdf_total1:round():$pdf_total1-->";
 	$str=str_replace("[PDF_TOTAL1]", $pdf_total1, $str);
 
 
@@ -672,6 +699,11 @@ function makeServiceArea($id,$str){
 	}else{
 		$pf_fee=0;
 	}
+
+	echo "<!--pf_fee:$pf_fee-->";
+	$pf_fee=round($pf_fee,$decimal_point);
+	echo "<!--pf_fee:round():$pf_fee-->";
+
 	$str=str_replace("[MITSUMORISYO_PF_FEE]",$pf_fee,$str);
 
 	echo "<!--M2_ETC02:".$itemM2["M2_ETC02"]."-->";
@@ -712,11 +744,11 @@ function makeServiceArea($id,$str){
 		$StrSQL.=" ORDER BY CAST(SUBSTRING_INDEX(DIV_ID, 'Part', -1) AS UNSIGNED) DESC;";
 		$partLAST_rs=mysqli_query(ConnDB(),$StrSQL);
 		$partLAST_item = mysqli_fetch_assoc($partLAST_rs);
-		echo "<!--サービス費用エリア(輸入)：partLAST:";
-		echo "$StrSQL\n";
-		var_dump($partLAST_item);
-		echo "-->";
-		echo "<!--54:".$target_item["DIV_ID"].", prepart合体：".$pre_part."-Part0"."-->";
+		//echo "<!--サービス費用エリア(輸入)：partLAST:";
+		//echo "$StrSQL\n";
+		//var_dump($partLAST_item);
+		//echo "-->";
+		//echo "<!--54:".$target_item["DIV_ID"].", prepart合体：".$pre_part."-Part0"."-->";
 		if($target_item["DIV_ID"]==$pre_part."-Part0"){
 			//Part0だったら
 			if(is_numeric($partLAST_item["M2_IMPORT_FEE"])){
@@ -748,10 +780,10 @@ function makeServiceArea($id,$str){
 			$StrSQL.=" AND STATUS='".$target_item["STATUS"]."' ";
 			$partN_rs=mysqli_query(ConnDB(),$StrSQL);
 
-			echo "<!--サービス費用エリア(輸入)：partN:";
-			echo "$StrSQL\n";
-			var_dump($partN_item);
-			echo "-->";
+			//echo "<!--サービス費用エリア(輸入)：partN:";
+			//echo "$StrSQL\n";
+			//var_dump($partN_item);
+			//echo "-->";
 			$import_fee=0;
 			while( $partN_item = mysqli_fetch_assoc($partN_rs) ){
 				if($partN_item["DIV_ID"]==$pre_part."-Part0"){
@@ -779,6 +811,10 @@ function makeServiceArea($id,$str){
 
 	}
 	
+	echo "<!--import_fee:$import_fee-->";
+	$import_fee=round($import_fee,$decimal_point);
+	echo "<!--import_fee:round():$import_fee-->";
+
 	$str=str_replace("[INPUT-M2_IMPORT_FEE]",$import_fee,$str);
 
 
@@ -820,9 +856,9 @@ function makeServiceArea($id,$str){
 
 		$export_fee=0;
 		while($partN_item = mysqli_fetch_assoc($partN_rs)){
-			echo "<!--サービス費用エリア：part0:";
-			var_dump($partN_item);
-			echo "-->";
+			//echo "<!--サービス費用エリア：part0:";
+			//var_dump($partN_item);
+			//echo "-->";
 			if($partN_item["DIV_ID"]==$pre_part."-Part0"){
 				continue;
 			}
@@ -857,14 +893,14 @@ function makeServiceArea($id,$str){
 	//「見積り依頼」データの「M1_TRANS_FLG」が「なし」の場合は強制的に「0」
 	$StrSQL="SELECT ID,NEWDATE,STATUS,M1_TRANS_FLG FROM DAT_FILESTATUS WHERE ";
 	$StrSQL.=" SHODAN_ID='".$target_item["SHODAN_ID"]."' ";
-	$StrSQL.=" AND STATUS='見積り依頼' ";
+	$StrSQL.=" AND (STATUS='見積り依頼' OR STATUS='再見積り依頼') ";
 	$StrSQL.=" AND NEWDATE<'".$target_item["NEWDATE"]."' ";
 	$StrSQL.=" ORDER BY NEWDATE DESC ";
 	$irai_rs=mysqli_query(ConnDB(),$StrSQL);
 	$irai_item = mysqli_fetch_assoc($irai_rs);
-	echo "<!--サービス合計エリア irai_item:";
-	var_dump($irai_item);
-	echo "-->";
+	//echo "<!--サービス合計エリア irai_item:";
+	//var_dump($irai_item);
+	//echo "-->";
 	if($irai_item["M1_TRANS_FLG"]=="なし"){
 		$str=DispParam($str, "M1_TRANS_FLG_EXP");
 		//データはそもそもこの場合保存されてないが念のためここでも0に設定する。
@@ -873,6 +909,11 @@ function makeServiceArea($id,$str){
 	}else{
 		$str=DispParamNone($str, "M1_TRANS_FLG_EXP");
 	}
+
+	echo "<!--export_fee:$export_fee-->";
+	$export_fee=round($export_fee,$decimal_point);
+	echo "<!--export_fee:round():$export_fee-->";
+
 	$str=str_replace("[INPUT-MITSUMORISYO_EXPORT_FEE]",$export_fee,$str);
 
 
@@ -888,17 +929,28 @@ function makeServiceArea($id,$str){
 		$str=DispParamNone($str,"HIDDEN_M2_MANAGE_DISCOUNT");
 
 	}
+
+	echo "<!--mng_discount:$mng_discount-->";
+	$mng_discount=round($mng_discount,$decimal_point);
+	echo "<!--mng_discount:round():$mng_discount-->";
+
 	$str=str_replace("[INPUT-M2_MANAGE_DISCOUNT]",$mng_discount,$str);
 
 
 	//小計2
 	$syoke2=$pf_fee+$import_fee+$export_fee-$mng_discount;
 	echo "<!--syoke2:$syoke2=$pf_fee+$import_fee+$export_fee-$mng_discount-->";
+	$syoke2=round($syoke2,$decimal_point);
+	echo "<!--syoke2:round():$syoke2-->";
 	$str=str_replace("[MITSUMORISYO_SUBTOTAL2]",$syoke2,$str);
 
 
 	//税率2
 	$tax_rate2=$target_item["M2_TAX_RATE2"];
+	echo "<!--tax_rate2:$tax_rate2-->";
+	//tax_rate2は通貨に関係なく整数入力のみ
+	$tax_rate2=round($tax_rate2,0);
+	echo "<!--tax_rate2:round():$tax_rate2-->";
 	$str=str_replace("[MITSUMORISYO_TAX_RATE2]",$tax_rate2,$str);
 
 	
@@ -906,6 +958,8 @@ function makeServiceArea($id,$str){
 	//消費税率2
 	$tax_bill2=$syoke2*$tax_rate2/100;
 	echo "<!--tax_bill2:$tax_bill2=$syoke2*$tax_rate2/100;-->";
+	$tax_bill2=round($tax_bill2,$decimal_point);
+	echo "<!--tax_bill2:round():$tax_bill2-->";
 	$str=str_replace("[MITSUMORISYO_TAX_BILL2]",$tax_bill2,$str);
 
 
@@ -913,13 +967,19 @@ function makeServiceArea($id,$str){
 	//M2_CURRENCY
 	$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2;
 	echo "<!--all_charge:$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2-->";
-	if($target_item["M2_CURRENCY"]=="M2_CURRENCY:JPY"){
-		$rounded_all_charge=round($all_charge);
-	}else{
-		$rounded_all_charge=round($all_charge,1);
-	}
+	$all_charge=round($all_charge,$decimal_point);
+	echo "<!--all_charge:round():$all_charge-->";
 	$str=str_replace("[MITSUMORISYO_ALL_CHARGE]",$all_charge,$str);
-	$str=str_replace("[R_MITSUMORISYO_ALL_CHARGE]",$rounded_all_charge,$str);
+
+	//$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2;
+	//echo "<!--all_charge:$all_charge=$syoke1+$tax_bill1+$syoke2+$tax_bill2-->";
+	//if($target_item["M2_CURRENCY"]=="M2_CURRENCY:JPY"){
+	//	$rounded_all_charge=round($all_charge);
+	//}else{
+	//	$rounded_all_charge=round($all_charge,1);
+	//}
+	//$str=str_replace("[MITSUMORISYO_ALL_CHARGE]",$all_charge,$str);
+	//$str=str_replace("[R_MITSUMORISYO_ALL_CHARGE]",$rounded_all_charge,$str);
 
 
 	//SHIP TO

@@ -147,8 +147,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			$item['COMMENT'] = str_replace("見積り依頼を送信しました", '<span class="system_msg">[見積り依頼を送信しました]</span>', $item['COMMENT']);
 			$item['COMMENT'] = str_replace("見積り書が送付されました", '<span class="system_msg">[見積り書が送付されました]</span>', $item['COMMENT']);
 			$item['COMMENT'] = str_replace("見積り書を送付しました", '<span class="system_msg">[I have sent the 見積り書]</span>', $item['COMMENT']);
-			$item['COMMENT'] = str_replace("決済者により発注依頼が承認されました", '<span class="system_msg">[決済者により発注依頼が承認されました]</span>', $item['COMMENT']);
-			$item['COMMENT'] = str_replace("決済者により発注依頼が否認されました", '<span class="system_msg">[決済者により発注依頼が否認されました]</span>', $item['COMMENT']);
+			$item['COMMENT'] = str_replace("決裁者により発注依頼が承認されました", '<span class="system_msg">[決裁者により発注依頼が承認されました]</span>', $item['COMMENT']);
+			$item['COMMENT'] = str_replace("決裁者により発注依頼が否認されました", '<span class="system_msg">[決裁者により発注依頼が否認されました]</span>', $item['COMMENT']);
 
 			$tmp=str_replace("[D-COMMENT]",ChatText($item['COMMENT']),$tmp);
 
@@ -221,11 +221,11 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			switch($item_div['STATUS']) {
 				case '発注依頼':
 					$sys_comment='('.$item_div["DIV_ID"].') ';
-					$sys_comment.='決済者による発注の承認待ちです。しばらくお待ちください。';
+					$sys_comment.='決裁者による発注の承認待ちです。しばらくお待ちください。';
 				break;
 				case '決済者発注承認':
 					// 決済者機能から承認否認するとメッセージが重複する
-					if(strpos($comment_back, '決済者により発注依頼が承認されました') === false) {
+					if(strpos($comment_back, '決裁者により発注依頼が承認されました') === false) {
 						$sys_comment='('.$item_div["DIV_ID"].') ';
 						$sys_comment.='発注依頼が承認されました
 						サプライヤーからの受注承認をお待ちください。
@@ -233,11 +233,13 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 					}
 					break;
 				case '発注否認':
-					// 決済者機能から承認否認するとメッセージが重複する
-					if(strpos($comment_back, '決済者により発注依頼が否認されました') === false) {
-						$sys_comment='('.$item_div["DIV_ID"].') ';
-						$sys_comment.='発注が否認されました';
-					}
+					$sys_comment='('.$item_div["DIV_ID"].') ';
+					$sys_comment.='決裁者により発注依頼が承認されました。';
+					//// 決済者機能から承認否認するとメッセージが重複する
+					//if(strpos($comment_back, '決裁者により発注依頼が否認されました') === false) {
+					//	$sys_comment='('.$item_div["DIV_ID"].') ';
+					//	$sys_comment.='発注が否認されました';
+					//}
 				break;
 
 				case '受注承認':
@@ -290,6 +292,58 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		}
 	}
 
+	//echo "<!--サプライヤーキャンセル開始-->";
+	$cancel_scno_ary=array();
+	if($item_shodan['STATUS']=="キャンセル承認"){
+
+		$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS,H_M2_ID FROM DAT_FILESTATUS WHERE SHODAN_ID = '" . $_GET['etc02'] . "' ";
+		$StrSQL.=" AND STATUS='発注依頼' ";
+		$StrSQL.=" order by ID asc";
+		$c_hatyu_rs=mysqli_query(ConnDB(),$StrSQL);
+		//echo "<!--キャンセル依頼(発注依頼)：$StrSQL-->";
+		while( $c_hatyu_item = mysqli_fetch_assoc($c_hatyu_rs) ){
+			//echo "<!--キャンセル依頼(発注依頼)：";
+			//var_dump($c_hatyu_item);
+			//echo "-->";
+			$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS,SCNo_yy,SCNo_mm,SCNo_dd,SCNo_cnt,SCNo_else1,SCNo_else2,M2_VERSION ";
+			$StrSQL.=" FROM DAT_FILESTATUS WHERE SHODAN_ID = '" . $_GET['etc02'] . "' ";
+			$StrSQL.=" AND ID='".$c_hatyu_item["H_M2_ID"]."' ";
+			$StrSQL.=" AND STATUS='見積り送付' ";
+			$StrSQL.=" order by ID desc";
+			$c_mitsu_rs=mysqli_query(ConnDB(),$StrSQL);
+			$c_mitsu_item = mysqli_fetch_assoc($c_mitsu_rs);
+			//echo "<!--キャンセル依頼(見積り送付)：$StrSQL-->";
+			//echo "<!--キャンセル依頼(見積り送付)：";
+			//var_dump($c_mitsu_item);
+			//echo "-->";
+
+			$SCNo_ary=array(
+				"SCNo_yy" => "", 
+				"SCNo_mm" => "", 
+				"SCNo_dd" => "", 
+				"SCNo_cnt" => "", 
+				"SCNo_else1" => "", 
+				"SCNo_else2" => "", 
+			);
+			$m2_quote_no="";
+
+			$SCNo_ary["SCNo_yy"]=$c_mitsu_item["SCNo_yy"];
+			$SCNo_ary["SCNo_mm"]=$c_mitsu_item["SCNo_mm"];
+			$SCNo_ary["SCNo_dd"]=$c_mitsu_item["SCNo_dd"];
+			$SCNo_ary["SCNo_cnt"]=$c_mitsu_item["SCNo_cnt"];
+			$SCNo_ary["SCNo_else1"]=$c_mitsu_item["SCNo_else1"];
+			$SCNo_ary["SCNo_else2"]=$c_mitsu_item["SCNo_else2"];
+			$SCNo_str=formatAlphabetId($SCNo_ary);
+			if($SCNo_str!=""){
+				$cancel_scno_ary[]=$SCNo_str."-Version".$c_mitsu_item["M2_VERSION"];
+			}
+		}
+
+		//echo "<!--キャンセル依頼(SCNO)：";
+		//var_dump($cancel_scno_ary);
+		//echo "-->";
+	}
+
 	$sys_comment = '';
 	if($item_num_div==""){
 		switch($item_shodan['STATUS']) {
@@ -299,11 +353,11 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				}
 			break;
 			case '発注依頼':
-				$sys_comment = '決済者による発注の承認待ちです。しばらくお待ちください。';
+				$sys_comment = '決裁者による発注の承認待ちです。しばらくお待ちください。';
 				break;
 			case '決済者発注承認':
 				// 決済者機能から承認否認するとメッセージが重複する
-				if(strpos($comment_back, '決済者により発注依頼が承認されました') === false) {
+				if(strpos($comment_back, '決裁者により発注依頼が承認されました') === false) {
 					$sys_comment = '発注依頼が承認されました
 						サプライヤーからの受注承認をお待ちください。
 					';
@@ -311,9 +365,12 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 			case '発注否認':
 				// 決済者機能から承認否認するとメッセージが重複する
-				if(strpos($comment_back, '決済者により発注依頼が否認されました') === false) {
-					$sys_comment = '発注が否認されました';
-				}
+				$sys_comment = '決裁者により発注依頼が否認されました。';
+
+				//// 決済者機能から承認否認するとメッセージが重複する
+				//if(strpos($comment_back, '決裁者により発注依頼が否認されました') === false) {
+				//	$sys_comment = '発注が否認されました';
+				//}
 				break;
 	
 			case '受注承認':
@@ -351,6 +408,21 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			case 'キャンセル':
 				$sys_comment = 'この商談はキャンセルされました。誤ってキャンセルした場合には管理者にご連絡ください。';
 							break;
+			case 'キャンセル承認':
+				$c_hatyu_str="";
+				if( count($cancel_scno_ary)>0 ){
+					foreach ($cancel_scno_ary as $idx => $val) {
+						if($val!=""){
+							$c_hatyu_str.=$val."<br>";
+						}
+					}
+				}
+				if($c_hatyu_str!=""){
+					$c_hatyu_str="発注No:<br>".$c_hatyu_str;
+				}
+				
+				$sys_comment = ''.$c_hatyu_str.'はキャンセルされました。誤ってキャンセルした場合は、<a href="/contact/" target="_blank">管理者にご連絡</a>ください。';
+				break;
 		}
 	}
 
@@ -358,11 +430,11 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 	$sys_comment = '';
 	switch($item_shodan['STATUS']) {
 		case '発注依頼':
-			$sys_comment = '決済者による発注の承認待ちです。しばらくお待ちください。';
+			$sys_comment = '決裁者による発注の承認待ちです。しばらくお待ちください。';
 			break;
 		case '決済者発注承認':
 			// 決済者機能から承認否認するとメッセージが重複する
-			if(strpos($comment_back, '決済者により発注依頼が承認されました') === false) {
+			if(strpos($comment_back, '決裁者により発注依頼が承認されました') === false) {
 				$sys_comment = '発注依頼が承認されました
 					サプライヤーからの受注承認をお待ちください。
 				';
@@ -370,7 +442,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			break;
 		case '発注否認':
 			// 決済者機能から承認否認するとメッセージが重複する
-			if(strpos($comment_back, '決済者により発注依頼が否認されました') === false) {
+			if(strpos($comment_back, '決裁者により発注依頼が否認されました') === false) {
 				$sys_comment = '発注が否認されました';
 			}
 			break;

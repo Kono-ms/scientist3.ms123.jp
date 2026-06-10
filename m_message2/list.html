@@ -14,13 +14,13 @@
   <script>
 
     $(document).ready(function () {
-      [S - ADMIN - ON]
+      [S-ADMIN-ON]
       $('.shodan__item-body').show();
       $('.shodan__item-title').addClass('is--active');
       $('.shodan__item-func').hide();
       $('.shodan__item-query').hide();
       $('.shodan__item-contacts').hide();
-      [E - ADMIN - ON]
+      [E-ADMIN-ON]
     });
 
     // NOTE: ifrm_shodan_chatのリサイズはCSSで行っているのでJSは追加しないでください。
@@ -246,9 +246,11 @@
                     [E-MITSUMORI_IRAI]
                     <div class="btn--small btn--plain"><a
                         href="/m_filestatus2/?mode=list&etc02=[SHODAN_ID]">全案件の履歴一覧</a></div>
+                    [S-CANCEL_BTN]
                     <div class="btn--small btn--plain"><a
                         href="/m_contact2/?type=案件の取り下げ&mode=new&shodan_id=[SHODAN_ID]" target="_top">キャンセル</a>
                     </div>
+                    [E-CANCEL_BTN]
                   </div>
                   [E-NOT_M1_SYSTEM_MID]
                 </div>

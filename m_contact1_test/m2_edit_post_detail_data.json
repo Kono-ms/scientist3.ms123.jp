@@ -1,0 +1,16 @@
+[
+    {
+        "M2_DETAIL_ITEM": "item1",
+        "M2_DETAIL_DESCRIPTION": "dsc1",
+        "M2_DETAIL_PRICE": "950",
+        "M2_DETAIL_NOTE": "d1",
+        "M2_SPECIAL_NOTE_TMP": null
+    },
+    {
+        "M2_DETAIL_ITEM": "item2",
+        "M2_DETAIL_DESCRIPTION": "dsc2",
+        "M2_DETAIL_PRICE": "1950",
+        "M2_DETAIL_NOTE": "d2",
+        "M2_SPECIAL_NOTE_TMP": null
+    }
+]

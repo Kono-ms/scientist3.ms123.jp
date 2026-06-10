@@ -1127,7 +1127,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		}*/
 
 
-		//プレビュー関連
+		//プレビュー関連：見積り書
 		$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND STATUS='見積り送付';";
 		//echo('<!--previewSQL:'.$StrSQL.'-->');
 		$preview_rs=mysqli_query(ConnDB(),$StrSQL);
@@ -1168,6 +1168,93 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		$str=str_replace("[OPT_PREVIEW_LIST_R]",$opt_preview_list_r,$str);
 		$str=str_replace("[OPT_PREVIEW_LIST_CB]",$opt_preview_list_cb,$str);
 		//$str=str_replace("[OPT_TEST]",$opt_test,$str);
+
+
+		//プレビュー関連:発注書CB宛て
+		$StrSQL="SELECT ID,SHODAN_ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND STATUS='発注依頼' ";
+		//echo('<!--previewSQL:'.$StrSQL.'-->');
+		$preview_jyutyu_rs=mysqli_query(ConnDB(),$StrSQL);
+		$opt_preview_list_r="";
+		$opt_preview_list_cb="";
+		$opt_preview_list_h="";
+		while($preview_jyutyu_item = mysqli_fetch_assoc($preview_jyutyu_rs)){
+			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$preview_jyutyu_item["DIV_ID"]."' ";
+			$StrSQL.=" AND STATUS='見積り送付'";
+			//echo('<!--previewSQL:'.$StrSQL.'-->');
+			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+			while($preview_item = mysqli_fetch_assoc($preview_rs)){
+
+				$SCNo_ary=array(
+					"SCNo_yy" => "", 
+					"SCNo_mm" => "", 
+					"SCNo_dd" => "", 
+					"SCNo_cnt" => "", 
+					"SCNo_else1" => "", 
+					"SCNo_else2" => "", 
+				);
+				$SCNo_str="";
+				$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
+				$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
+				$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
+				$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
+				$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
+				$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
+				$SCNo_str=formatAlphabetId($SCNo_ary);
+				$preview_m2_version="";
+				$preview_m2_version=$preview_item["M2_VERSION"];
+
+				//送信ボタンない状態で表示
+				$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hcb&btn_version=1&key=".$preview_item["ID"]."'>";
+				$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
+			}
+
+		}
+		$str=str_replace("[OPT_PREVIEW_LIST_HK_CB]",$opt_preview_list_h,$str);
+		
+
+
+		//プレビュー関連:発注書R宛て
+		$StrSQL="SELECT ID,SHODAN_ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND STATUS='受注承認' ";
+		//echo('<!--previewSQL:'.$StrSQL.'-->');
+		$preview_jyutyu_rs=mysqli_query(ConnDB(),$StrSQL);
+		$opt_preview_list_r="";
+		$opt_preview_list_cb="";
+		$opt_preview_list_h="";
+		while($preview_jyutyu_item = mysqli_fetch_assoc($preview_jyutyu_rs)){
+			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$preview_jyutyu_item["DIV_ID"]."' ";
+			$StrSQL.=" AND STATUS='見積り送付'";
+			//echo('<!--previewSQL:'.$StrSQL.'-->');
+			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+			while($preview_item = mysqli_fetch_assoc($preview_rs)){
+
+				$SCNo_ary=array(
+					"SCNo_yy" => "", 
+					"SCNo_mm" => "", 
+					"SCNo_dd" => "", 
+					"SCNo_cnt" => "", 
+					"SCNo_else1" => "", 
+					"SCNo_else2" => "", 
+				);
+				$SCNo_str="";
+				$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
+				$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
+				$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
+				$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
+				$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
+				$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
+				$SCNo_str=formatAlphabetId($SCNo_ary);
+				$preview_m2_version="";
+				$preview_m2_version=$preview_item["M2_VERSION"];
+
+				//送信ボタンない状態で表示
+				$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hr&btn_version=1&key=".$preview_item["ID"]."'>";
+				$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
+			}
+
+		}
+		$str=str_replace("[OPT_PREVIEW_LIST_HK_R]",$opt_preview_list_h,$str);
+		
+
 
 
 		$str=str_replace("[MSG]",$msg01,$str);
@@ -1313,9 +1400,14 @@ echo "<!--".$StrSQL."-->";
 				$str=str_replace("[D-MID2]",$m2['M2_DVAL03'],$str);
 
 				$StrSQL="SELECT * from DAT_M1 where MID = '".$item['MID1']."';";
-				$rs_m2=mysqli_query(ConnDB(),$StrSQL);
-				$m2 = mysqli_fetch_assoc($rs_m2);
-				$str=str_replace("[D-MID1]",$m2['M1_DVAL01'],$str);
+				$rs_m1=mysqli_query(ConnDB(),$StrSQL);
+				$m1 = mysqli_fetch_assoc($rs_m1);
+				$str=str_replace("[D-MID1]",$m1['M1_DVAL01'],$str);
+
+				$StrSQL="SELECT * FROM DAT_M3 WHERE MID='".$m2["M2_DVAL15"]."'";
+				$rs_m3=mysqli_query(ConnDB(),$StrSQL);
+				$m3 = mysqli_fetch_assoc($rs_m3);
+				$num_m3=mysqli_num_rows($rs_m3);
 
 				// サプライヤーは名前を表示
 				// ただし、発注依頼以降は対象のサプライヤーだけ表示
@@ -1351,15 +1443,45 @@ echo "<!--".$StrSQL."-->";
 				$str=str_replace("[D-MID1_LIST]",$mid1_name,$str);
 
 
+
 				//1回払い
 				$ext_msg = '';
-				if($item['STATUS'] == '受注承認(一括前払い)'){
+				if($item["STATUS"] == "受注承認(一括前払い)"){
 					$ext_msg .= '<p style="color:red;font-weight:bold;">[要請求書発行（サプライヤーから請求書送付後）]<p>';
 				}
 
+				//1回払い
+				//・決済者承認が「なし」：「発注依頼」後の段階で「[要承認対応]」のマークを出力
+				//・決済者承認が「あり」：「決済者発注承認」後の段階で「[要承認対応]」のマークを出力
+				if( !is_null($m2["M2_DVAL15"]) && $m2["M2_DVAL15"]!="" && $num_m3>0 
+					&& $m2["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+					//決済者承認が「あり」の場合
+					if($item["STATUS"] == "決済者発注承認"){
+						//2重の文言表示を防止
+						$disp_word="[要承認対応]";
+						if(strpos($ext_msg, $disp_word)!==false){
+							$ext_msg .='';
+						}else{
+							$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+						}
+					}
+				}else{
+					//決済者が存在しないもしくは、決済者承認が「なし」の場合
+					if($item["STATUS"] == "発注依頼"){
+						//2重の文言表示を防止
+						$disp_word="[要承認対応]";
+						if(strpos($ext_msg, $disp_word)!==false){
+							$ext_msg .='';
+						}else{
+							$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+						}
+					}
+				}
+
+
 				//2回払い、マイルストーン
 				$StrSQL="SELECT * FROM DAT_SHODAN_DIV WHERE SHODAN_ID='".$item["ID"]."'";
-				echo "<!--".$item["ID"].": $StrSQL-->";
+				//echo "<!--".$item["ID"].": $StrSQL-->";
 				$shodan_div_rs=mysqli_query(ConnDB(),$StrSQL);
 				while( $shodan_div_item=mysqli_fetch_assoc($shodan_div_rs) ){
 					if($shodan_div_item["STATUS"]=="受注承認(前払い)"){
@@ -1371,15 +1493,47 @@ echo "<!--".$StrSQL."-->";
 							$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
 						}
 					
-					}else if($shodan_div_item['STATUS'] == '決済者発注承認') {
-						//2重の文言表示を防止
-						$disp_word="[要承認対応]";
-						if(strpos($ext_msg, $disp_word)!==false){ 
-							$ext_msg .='';
+					}
+					//・決済者承認が「なし」：「発注依頼」後の段階で「[要承認対応]」のマークを出力
+					//・決済者承認が「あり」：「決済者発注承認」後の段階で「[要承認対応]」のマークを出力
+					else if($shodan_div_item["STATUS"] == "決済者発注承認" 
+						|| $shodan_div_item["STATUS"] == "発注依頼"){
+
+						if( !is_null($m2["M2_DVAL15"]) && $m2["M2_DVAL15"]!="" && $num_m3>0 
+							&& $m2["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+							
+							//決済者承認が「あり」の場合
+							if($shodan_div_item["STATUS"] == "決済者発注承認"){
+								//2重の文言表示を防止
+								$disp_word="[要承認対応]";
+								if(strpos($ext_msg, $disp_word)!==false){
+									$ext_msg .='';
+								}else{
+									$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+								}
+							}
 						}else{
-							$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+							//決済者が存在しないもしくは、決済者承認が「なし」の場合
+							if($shodan_div_item["STATUS"] == "発注依頼"){
+								//2重の文言表示を防止
+								$disp_word="[要承認対応]";
+								if(strpos($ext_msg, $disp_word)!==false){
+									$ext_msg .='';
+								}else{
+									$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+								}
+							}
 						}
 					}
+					//else if($shodan_div_item['STATUS'] == '決済者発注承認') {
+					//	//2重の文言表示を防止
+					//	$disp_word="[要承認対応]";
+					//	if(strpos($ext_msg, $disp_word)!==false){ 
+					//		$ext_msg .='';
+					//	}else{
+					//		$ext_msg .= '<p style="color:red;font-weight:bold;">'.$disp_word.'<p>';
+					//	}
+					//}
 				}
 				$str=str_replace("[EXT-MSG]",$ext_msg,$str);
 

@@ -119,15 +119,31 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			continue;
 		}
 
-		if($category != $item['CATEGORY']) {
+		//ラベル
+		$s_category=$item['CATEGORY'];
+		if($item['STATUS']=="発注依頼" || $item['STATUS']=="決済者発注承認"){
+			$s_category="発注";
+		}
+		$s_status_color=showStatusColor($s_category);
+		if($category != $s_category) {
 			$tmp .= '
-				<div class="chat__status">
-					<p>Status' . $item['CATEGORY'] . '</p>
-				</div>
-				<div style="clear:both;"></div>
+			<div class="chat__status" style="background:' . $s_status_color . ';">
+				<p>ステータス：' . $s_category . '</p>
+			</div>
+			<div style="clear:both;"></div>
 			';
 		}
-		$category = $item['CATEGORY'];
+		$category = $s_category;
+
+		//if($category != $item['CATEGORY']) {
+		//	$tmp .= '
+		//		<div class="chat__status">
+		//			<p>Status' . $item['CATEGORY'] . '</p>
+		//		</div>
+		//		<div style="clear:both;"></div>
+		//	';
+		//}
+		//$category = $item['CATEGORY'];
 
 		//分割払い対応
 		$div_id=$item["DIV_ID"];
@@ -160,6 +176,58 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				continue;
 			}
 		}
+
+
+		$cancel_scno_ary=array();
+		if($item["STATUS"]=="キャンセル依頼" || $item["STATUS"]=="サプライヤーキャンセル承認" || $item["STATUS"]=="サプライヤーキャンセル否認"){
+			$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS,H_M2_ID FROM DAT_FILESTATUS WHERE SHODAN_ID = '" . $_GET['etc02'] . "' ";
+			$StrSQL.=" AND STATUS='発注依頼' ";
+			$StrSQL.=" order by ID asc";
+			$c_hatyu_rs=mysqli_query(ConnDB(),$StrSQL);
+			
+			while( $c_hatyu_item = mysqli_fetch_assoc($c_hatyu_rs) ){
+				echo "<!--キャンセル依頼(発注依頼)：";
+				var_dump($c_hatyu_item);
+				echo "-->";
+				$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS,SCNo_yy,SCNo_mm,SCNo_dd,SCNo_cnt,SCNo_else1,SCNo_else2,M2_VERSION ";
+				$StrSQL.=" FROM DAT_FILESTATUS WHERE SHODAN_ID = '" . $_GET['etc02'] . "' ";
+				$StrSQL.=" AND ID='".$c_hatyu_item["H_M2_ID"]."' ";
+				$StrSQL.=" AND STATUS='見積り送付' ";
+				$StrSQL.=" order by ID desc";
+				$c_mitsu_rs=mysqli_query(ConnDB(),$StrSQL);
+				$c_mitsu_item = mysqli_fetch_assoc($c_mitsu_rs);
+				echo "<!--キャンセル依頼(見積り送付)：";
+				var_dump($c_mitsu_item);
+				echo "-->";
+
+				$SCNo_ary=array(
+					"SCNo_yy" => "", 
+					"SCNo_mm" => "", 
+					"SCNo_dd" => "", 
+					"SCNo_cnt" => "", 
+					"SCNo_else1" => "", 
+					"SCNo_else2" => "", 
+				);
+				$m2_quote_no="";
+
+				$SCNo_ary["SCNo_yy"]=$c_mitsu_item["SCNo_yy"];
+				$SCNo_ary["SCNo_mm"]=$c_mitsu_item["SCNo_mm"];
+				$SCNo_ary["SCNo_dd"]=$c_mitsu_item["SCNo_dd"];
+				$SCNo_ary["SCNo_cnt"]=$c_mitsu_item["SCNo_cnt"];
+				$SCNo_ary["SCNo_else1"]=$c_mitsu_item["SCNo_else1"];
+				$SCNo_ary["SCNo_else2"]=$c_mitsu_item["SCNo_else2"];
+				$SCNo_str=formatAlphabetId($SCNo_ary);
+				if($SCNo_str!=""){
+					$cancel_scno_ary[]=$SCNo_str."-Version".$c_mitsu_item["M2_VERSION"];
+				}
+			}
+
+			echo "<!--キャンセル依頼(SCNO)：";
+			var_dump($cancel_scno_ary);
+			echo "-->";
+		}
+
+
 
 		//「Scientist3 control No.」が設定されていたら整形
 		$SCNo_ary=array(
@@ -344,6 +412,14 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 	  	    		</div>
 					";
 				break;
+			case '決済者発注承認':
+				$tmp .= '
+				<div class="filestatus_content">
+					<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+					<div>決済者により発注が承認されました</div>
+				</div>
+				';
+				break;
 			case '発注承認':
 				$tmp .= '
  		    	<div class="filestatus_content">
@@ -364,12 +440,19 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 			case '受注承認':
 				$tmp .= '
- 		    	<div class="filestatus_content">
-						<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
-  		      <div>' . $m1_item['M1_DVAL01'] . 'より受注が承認されました
- 	     	  	</div>
-	  	    </div>
+				<div class="filestatus_content">
+				<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				<div>受注が承認されました。' . $m1_item['M1_DVAL01'] . 'からの納品をお待ちください。
+				</div>
+				</div>
 				';
+				//$tmp .= '
+				//<div class="filestatus_content">
+				//<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				//<div>' . $m1_item['M1_DVAL01'] . 'より受注が承認されました
+				//</div>
+				//</div>
+				//';
 				break;
 			case 'データ納品':
 				$tmp .= '
@@ -423,41 +506,104 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				';
 				break;
 			case 'キャンセル依頼':
+				$c_hatyu_str="";
+				if( count($cancel_scno_ary)>0 ){
+					foreach ($cancel_scno_ary as $idx => $val) {
+						if($val!=""){
+							$c_hatyu_str.=$val."<br>";
+						}
+					}
+				}
+				if($c_hatyu_str!=""){
+					$c_hatyu_str="発注No:<br>".$c_hatyu_str;
+				}
 				$tmp.='
 				<div class="filestatus_content">
-							<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
-	  		      	<div>
-	  		      		発注依頼キャンセル中です
-	 	     	  	</div>
-	 	     	  </div>
+				<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				<div>
+				'.$c_hatyu_str.'
+				発注依頼キャンセル中です
+				</div>
+				</div>
 				';
+				//$tmp.='
+				//<div class="filestatus_content">
+				//			<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+	  		    //  	<div>
+	  		    //  		発注依頼キャンセル中です
+	 	     	//  	</div>
+	 	     	//  </div>
+				//';
 				break;
 			case 'サプライヤーキャンセル承認':
+				$c_hatyu_str="";
+				if( count($cancel_scno_ary)>0 ){
+					foreach ($cancel_scno_ary as $idx => $val) {
+						if($val!=""){
+							$c_hatyu_str.=$val."<br>";
+						}
+					}
+				}
+				if($c_hatyu_str!=""){
+					$c_hatyu_str="発注No:<br>".$c_hatyu_str;
+				}
+
 				$tmp.='
 				<div class="filestatus_content">
-							<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
-	  		      	<div>
-	  		      		'.$sup_item["M1_DVAL01"].'が発注のキャンセル依頼を承認しました。キャンセル手続きが完了するまでお待ちください。
-	 	     	  	</div>
-	 	     	  </div>
+				<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				<div>
+				'.$sup_item["M1_DVAL01"].'が<br>
+				'.$c_hatyu_str.'
+				のキャンセル依頼を承認しました。キャンセル手続きが完了するまでお待ちください。
+				</div>
+				</div>
 				';
+				//$tmp.='
+				//<div class="filestatus_content">
+				//<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				//<div>
+				//'.$sup_item["M1_DVAL01"].'が発注のキャンセル依頼を承認しました。キャンセル手続きが完了するまでお待ちください。
+				//</div>
+				//</div>
+				//';
 				break;
 			case 'サプライヤーキャンセル否認':
+				$c_hatyu_str="";
+				if( count($cancel_scno_ary)>0 ){
+					foreach ($cancel_scno_ary as $idx => $val) {
+						if($val!=""){
+							$c_hatyu_str.=$val."<br>";
+						}
+					}
+				}
+				if($c_hatyu_str!=""){
+					$c_hatyu_str="発注No:<br>".$c_hatyu_str;
+				}
+
 				$tmp.='
 				<div class="filestatus_content">
-							<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
-	  		      	<div>
-	  		      		発注はキャンセルされました。誤ってキャンセルした場合は、<a href="/contact/">管理者</a>にご連絡ください。
-	 	     	  	</div>
-	 	     	  </div>
+				<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				<div>
+				'.$c_hatyu_str.'
+				発注はキャンセルされました。誤ってキャンセルした場合は、<a href="/contact/">管理者</a>にご連絡ください。
+				</div>
+				</div>
 				';
+				//$tmp.='
+				//<div class="filestatus_content">
+				//<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				//<div>
+				//発注はキャンセルされました。誤ってキャンセルした場合は、<a href="/contact/">管理者</a>にご連絡ください。
+				//</div>
+				//</div>
+				//';
 				break;
 			case 'キャンセル承認':
 				$tmp.='
 				<div class="filestatus_content">
 							<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
 	  		      	<div>
-	  		      		発注はキャンセルされました。誤ってキャンセルした場合は、<a href="/contact/" target="_blank">管理者</a>にご連絡ください。
+	  		      		発注はキャンセルされました。
 	 	     	  	</div>
 	 	     	  </div>
 				';

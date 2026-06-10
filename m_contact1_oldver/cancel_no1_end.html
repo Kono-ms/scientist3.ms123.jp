@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]（完了）｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]（完了）のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+  <script>
+    /*
+    function chat_close() {
+      console.log("chat_close");
+      $('#mask_shodan_chat', parent.document).hide();
+      $('#popup_shodan_chat', parent.document).fadeOut();
+    }*/
+    $(document).ready(function () {
+      $('header').hide();
+      $('.breadcrumb').hide();
+      $('footer').hide();
+
+      if (location.search.indexOf('frame=on') != -1) {
+        $('header').hide();
+        $('.breadcrumb').hide();
+        $('.c-head').hide();
+        $('footer').hide();
+        $('.wrap').css('padding', '0px');
+        $('.edit').css('padding', '0px');
+        $('.container').css('padding', '0px');
+        $('.form-box').css('padding', '3rem');
+      }
+
+      $('#close_btn').on('click', function () {
+        close_popup();
+      });
+
+      if (location.search.indexOf('contact_status=3') != -1) {
+        $('#price_form').hide();
+      }
+
+      $('#price').on('input', function () {
+        var val = $(this).val();
+        $(this).val(val.replace(/[^0-9]+/g, ''));
+      });
+
+
+    });
+    function close_popup() {
+      $('#mask_mcontact2', parent.document).hide();
+      $('#popup_mcontact2', parent.document).fadeOut();
+    }
+  </script>
+</head>
+
+<body style="background:white;">
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
+        </div>
+        <div class="c-formend">
+          <p class="c-formend__txt">We have accepted your declination.</p>
+
+          <div class="btn formset__btn">
+            <!--<a href="/m_message1/">Return to Opportunity List</a>-->
+            <a href="javascript:close_popup();">close</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 以下共通 -->
+
+    [CATEGORY_TAGLIST]
+
+    <!--template=/common/template/footer_en.html-->
+
+  </div>
+</body>
+
+</html>

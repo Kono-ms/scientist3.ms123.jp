@@ -9,6 +9,7 @@ echo "現在: ".date("Y-m-d H:i:s")."<br>\n";
 echo "閾値: ".$base_date."<br><br>\n\n";
 
 //DAT_MESSAGEで研究者送信の未読メッセージで素チャット以外のものを探す。
+//【目的】研究者がサプライヤーへの「問合せ」が完了後、スレッショルド後にサプライヤーが未読だったらメールを送信。
 //【DAT_MESSAGE】
 //RID: 送信者のMID
 //ETC02: shodan_id
@@ -38,7 +39,7 @@ while($item=mysqli_fetch_assoc($rs)){
 	$StrSQL="SELECT * from DAT_FILESTATUS WHERE ID='".$item["ETC04"]."' AND CATEGORY='問い合わせ' limit 1";
 	$rs3=mysqli_query(ConnDB(),$StrSQL);
 	$num3=mysqli_num_rows($rs3);
-	if($num3==0){
+	if($num3==0 || $item["ETC04"]==""){
 		continue;
 	}
 	$item3=mysqli_fetch_assoc($rs3);
@@ -93,9 +94,7 @@ echo "---------------------------------<br><br>\n\n";
 //=========================================================================================================
 function SendMail($item,$mid2)
 {
-	
-	//$maildata = GetMailTemplateCron('サプライヤーへの問合せ(M1)');
-	$maildata = GetMailTemplateCron('研究者からサプライヤーにメッセージ送信(M1)');
+	$maildata = GetMailTemplateCron('サプライヤーへの問合せ(M1)');
 	$MailBody = $maildata['BODY'];
 	$subject = $maildata['TITLE'];
 

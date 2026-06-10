@@ -214,6 +214,7 @@
                 $('select').addClass('glayout');
                 $('textarea').addClass('glayout');
                 $('label.input-file').addClass('glayout');
+                $('button.input-file-delete').addClass('glayout');
             }
 
         });
@@ -593,8 +594,12 @@
                         </div>[E-NEWDATA]
                         [S-EDITDATA]<div class="formset__item">
                             <div class="formset__ttl">logo</div>
-                            <div class="formset__input"><img src="[M1_DFIL02]" width="200"> Delete <input
-                                    type="checkbox" name="DEL_IMAGE_M1_DFIL02"><br><input type="file"
+                            <div class="formset__input"><img src="[M1_DFIL02]" width="200">
+                                <label class="input-file-remove-flag">
+                                    <span>Delete</span>
+                                    <input type="checkbox" name="DEL_IMAGE_M1_DFIL02">
+                                </label>
+                                <br><input type="file"
                                     accept=".pdf,.jpg,.jpeg,.tif,.png" name="EP_M1_DFIL02" value="[M1_DFIL02]"
                                     size="90"><input type="hidden" name="M1_DFIL02" value="[M1_DFIL02]">
                             </div>

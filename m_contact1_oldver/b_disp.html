@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+</head>
+
+<body>
+  <div class="wrap sub">
+
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <div class="formset">
+            <div class="formset__item">
+              <div class="formset__ttl"><span>Project name</span></div>
+              <div class="formset__input">[D-TITLE]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>Supplier</span></div>
+              <div class="formset__input">[M1_VIEW]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>納品 check</span></div>
+              <div class="formset__input">納品物の送付完了</div>
+            </div>
+
+
+            <div class="formset__item">
+              <div class="formset__ttl">Attach date（PDF）</div>
+              <div class="formset__input"><a href="/a_filestatus/data/[KEY]/[D-N_PDF]" download>[D-N_PDF]</a></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Shipment date</div>
+              <div class="formset__input">[D-N_SHUKKA]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Transport temperature</div>
+              <div class="formset__input">[D-N_TEMP1]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Storage temperature</div>
+              <div class="formset__input">[D-N_TEMP2]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">AWB</div>
+              <div class="formset__input">[D-N_AWB]</div>
+            </div>
+
+
+            <div class="formset__item">
+              <div class="formset__ttl"><span>Message</span></div>
+              <div class="formset__input">[D-N_MESSAGE]</div>
+            </div>
+          </div>
+          <form method="post" action="./" enctype="multipart/form-data">
+            <input type="hidden" name="type" value="[TYPE]">
+            <input type="hidden" name="mode" value="back">
+            <input type="hidden" name="key" value="[KEY]">
+            <input type="hidden" name="shodan_id" value="[SHODAN_ID]">
+            <input type="hidden" name="word" value="[WORD]">
+            <input type="hidden" name="word2" value="[WORD2]">
+            <input type="hidden" name="mid_list" value="[MID_LIST]">
+            <input type="hidden" name="ID" value="[ID]">
+            <input type="hidden" name="N_FILE" value="[N_FILE]">
+
+            <input type="hidden" name="N_PDF" value="[N_PDF]">
+            <input type="hidden" name="N_SHUKKA" value="[N_SHUKKA]">
+            <input type="hidden" name="N_TEMP1" value="[N_TEMP1]">
+            <input type="hidden" name="N_TEMP2" value="[N_TEMP2]">
+            <input type="hidden" name="N_AWB" value="[N_AWB]">
+
+            <input type="hidden" name="N_MESSAGE" value="[N_MESSAGE]">
+            <div class="btn formset__btn btn--small formset__btn--back">
+              <button type="button" onclick="history.back();">Go back</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer_en.html-->
+  </div>
+</body>
+
+</html>

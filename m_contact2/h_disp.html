@@ -22,7 +22,9 @@
         $('#M2_DATE').html(val['M2_DATE']);
         $('#M2_QUOTE_VALID_UNTIL').html(val['M2_QUOTE_VALID_UNTIL']);
         $('#M2_DESCRIPTION').html(val['M2_DESCRIPTION']);
-        $('#M2_CURRENCY').html(val['M2_CURRENCY']);
+         // 「M2_CURRENCY:」という文字列を削除（空文字に置換）してセット
+        $('#M2_CURRENCY').html(val['M2_CURRENCY'].replace('M2_CURRENCY:', ''));
+        //$('#M2_CURRENCY').html(val['M2_CURRENCY']);
 
         // detail
         if (val['detail'] != null && val['detail'].length > 0) {

@@ -244,6 +244,12 @@ function Main()
 		case "save":
 			RequestData($obj,$a,$b,$key,$mode);
 
+			if($type=="発注依頼" 
+				&& ($_POST['H_M2_ID']=="" || is_null($_POST['H_M2_ID'])) ){
+				$mode="h_err";
+				break;
+			}
+
 			$StrSQL="SELECT * from DAT_M2 where MID = '".$_SESSION['MID']."';";
 			$rs=mysqli_query(ConnDB(),$StrSQL);
 			$m2 = mysqli_fetch_assoc($rs);
@@ -280,6 +286,15 @@ function Main()
 			if($key!="" && $type=="再見積り依頼"){
 				SendMail_v1($key);
 				SendMail_v1_2($key);
+
+			}else if($shodan_id!="" && $m1_mid!="" && $type=="再見積り依頼"){
+				$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE SHODAN_ID='".$shodan_id."' ";
+				$StrSQL.="AND MID1='".$m1_mid."' ";
+				$StrSQL.="AND STATUS='見積り依頼' ";
+				$rs=mysqli_query(ConnDB(),$StrSQL);
+				$x_item = mysqli_fetch_assoc($rs);
+				SendMail_v1($x_item["ID"]);
+				SendMail_v1_2($x_item["ID"]);
 			}
 
 			break;
@@ -311,18 +326,25 @@ function SendMail($type,$m1_list,$m2)
 	if($type == '問い合わせ'){
 		$maildata1 = GetMailTemplate('サプライヤーへの問合せ(M1)');
 
-	} else {
-		//'見積り依頼 再見積り依頼'
+	} else if($type=="見積り依頼") {
 		$maildata1 = GetMailTemplate('サプライヤーへの見積もり依頼(M1)');
 		$maildataAdmin = GetMailTemplate('研究者からサプライヤーへの見積もり依頼(ADMIN)');
-	} 
-
 	
-	$MailBody1 = $maildata1['BODY'];
-	$subject1 = $maildata1['TITLE'];
+	} else if($type=="再見積り依頼"){
+		$maildataAdmin = GetMailTemplate('研究者からサプライヤーへの見積もり依頼(ADMIN)');
+	}
 
-	$MailBodyAdmin = $maildataAdmin['BODY'];
-	$subjectAdmin = $maildataAdmin['TITLE'];
+	$MailBody1 = empty($maildata1['BODY']) ? "" : $maildata1['BODY'];
+	$subject1 = empty($maildata1['TITLE']) ? "" : $maildata1['TITLE'];
+
+	$MailBodyAdmin = empty($maildataAdmin['BODY']) ? "" : $maildataAdmin['BODY'];
+	$subjectAdmin = empty($maildataAdmin['TITLE']) ? "" : $maildataAdmin['TITLE'];
+
+	//$MailBody1 = $maildata1['BODY'];
+	//$subject1 = $maildata1['TITLE'];
+	//
+	//$MailBodyAdmin = $maildataAdmin['BODY'];
+	//$subjectAdmin = $maildataAdmin['TITLE'];
 
 
 	$MailBody1=str_replace("[D-TITLE]",$FieldValue[4],$MailBody1);
@@ -383,21 +405,27 @@ function SendMail($type,$m1_list,$m2)
 		mb_internal_encoding("UTF-8");
 		// var_dump($mailto);
 //echo "<!--M1_mailto:".$mailto."-->";
-		mb_send_mail($mailto, $subject1, $MailBody1, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
+		if( $mailto!="" && ($MailBody1!="" || $subject1!="") ){
+			mb_send_mail($mailto, $subject1, $MailBody1, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
+		}
+		
 		// mb_send_mail($mailto, $subject1.$item['EMAIL'], $MailBody2, "Content-Type: multipart/mixed;boundary=\"__BOUNDARY__\"\nFrom:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
 
-		mb_send_mail(SENDER_EMAIL, $subjectAdmin, $MailBodyAdmin, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
+		if($MailBodyAdmin!="" || $subjectAdmin!=""){
+			mb_send_mail(SENDER_EMAIL, $subjectAdmin, $MailBodyAdmin, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
+		}
+		
 	}
 
 	if($type == '問い合わせ'){
 		$maildata2 = GetMailTemplate('サプライヤーへの問合せ(M2)');
-	} else {
+	} else if($type == '見積り依頼') {
 		//'見積り依頼 再見積り依頼'
 		$maildata2 = GetMailTemplate('サプライヤーへの見積もり依頼(M2)');
 	} 
-	$MailBody2 = $maildata2['BODY'];
 
-	$subject2 = $maildata2['TITLE'];
+	$MailBody2 = empty($maildata2['BODY']) ? "" : $maildata2['BODY'];
+	$subject2 = empty($maildata2['TITLE'])? "" : $maildata2['TITLE'];
 
 	$MailBody2=str_replace("[SEND_DATE]",date('Y/m/d'),$MailBody2);
 
@@ -435,7 +463,10 @@ function SendMail($type,$m1_list,$m2)
 	mb_language("Japanese");
 	mb_internal_encoding("UTF-8");
 //echo "<!--M2_mailto:".$mailto."-->";
-	mb_send_mail($mailto, $subject2, $MailBody2, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
+	if($mailto!="" && ($subject2!="" || $MailBody2!="" )){
+		mb_send_mail($mailto, $subject2, $MailBody2, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
+	}
+	
 		
 	
 
@@ -1366,6 +1397,11 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 
 		$str = MakeHTML($str,0,$lid);
 
+		if($type=="発注依頼" && $mode == 'h_err' 
+			&& ($_POST['H_M2_ID']=="" || is_null($_POST['H_M2_ID'])) ){
+			$str="不正なデータです";
+		}
+
 		if ($mode=="new"){
 			$str=str_replace("[S-NEWDATA]","",$str);
 			$str=str_replace("[E-NEWDATA]","",$str);
@@ -1454,6 +1490,47 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			} 
 		}
 		*/
+
+	//「発注依頼」のSHIP TO
+	//決済者情報の「国」、「郵便番号」、「住所」
+	$StrSQL="SELECT ID,MID,M2_DVAL15 FROM DAT_M2 WHERE MID='".$_SESSION['MID']."';";
+	$rsM2tmp=mysqli_query(ConnDB(),$StrSQL);
+	$itemM2tmp = mysqli_fetch_assoc($rsM2tmp);
+	$h_ship_to=array();
+	if(!is_null($itemM2tmp["M2_DVAL15"]) && $itemM2tmp["M2_DVAL15"]!=""){
+		$StrSQL="SELECT ID,MID,M2_DVAL05,M2_DVAL06,M2_DVAL07 FROM DAT_M3 WHERE MID='".$itemM2tmp["M2_DVAL15"]."';";
+		$rsM3tmp=mysqli_query(ConnDB(),$StrSQL);
+		$itemM3tmp_num = mysqli_num_rows($rsM3tmp);
+		$itemM3tmp = mysqli_fetch_assoc($rsM3tmp);
+		if($itemM3tmp_num>0){
+			$str=DispParam($str,"KESAISYA_SHIP_TO");
+		}
+		//国
+		$h_ship_to["v1"]["H_SHIP_TO_SPT_1"]=$itemM3tmp["M2_DVAL05"];
+		//郵便番号
+		$h_ship_to["v1"]["H_SHIP_TO_SPT_2"]=$itemM3tmp["M2_DVAL06"];
+		//住所
+		$h_ship_to["v1"]["H_SHIP_TO_SPT_3"]=$itemM3tmp["M2_DVAL07"];
+	}
+	//上記でひょうじになってなかったら非表示
+	$str=DispParamNone($str,"KESAISYA_SHIP_TO");
+	$str=str_replace("[H_SHIP_TO]",json_encode($h_ship_to),$str);
+
+	$num_chr=16;
+	foreach ($h_ship_to as $idx1 => $val1) {
+		$addr="";
+		foreach ($val1 as $idx2 => $val2) {
+			if($idx2=="H_SHIP_TO_SPT_1"){
+				continue;
+			}
+			$addr.=$val2;
+		}
+		if(mb_strlen($addr, 'UTF-8') >= $num_chr){
+			$str=str_replace("[name_h_ship_to_".$idx1."]", mb_substr($addr, 0, $num_chr, 'UTF-8')."...", $str);
+		}else{
+			$str=str_replace("[name_h_ship_to_".$idx1."]", $addr, $str);
+		}
+	}
 
 
 	//分割支払い対応
@@ -1563,7 +1640,9 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 	if($mode == 'saveconf' || $mode == 'preview' || $mode == 'saveconf2') {
 		foreach($_FILES as $file_key => $file_val) {
 			$filename = $_FILES[$file_key]["name"];
-			move_uploaded_file($_FILES[$file_key]["tmp_name"], __dir__."/../a_filestatus/data/".$filename);
+			if($filename!="" && !is_null($filename)){
+				move_uploaded_file($_FILES[$file_key]["tmp_name"], __dir__."/../a_filestatus/data/".$filename);
+			}
 		}
 	}
 
@@ -1588,12 +1667,30 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 
 			$str=str_replace("[D-TITLE]",$item_shodan['TITLE'],$str);
 		}
+
+		//echo "<!--_FILES:";
+		//var_dump($_FILES);
+		//echo "-->";
+		//echo "<!--_POST:";
+		//var_dump($_POST);
+		//echo "-->";
+		//echo "<!--評価式：";
+		//echo ((isset($_FILES['EP_FILE']['name']) && $_FILES['EP_FILE']['name']!="") ? "ファイルある" : "ファイルなし");
+		//echo "-->";
+
 		$str=str_replace("[D-COMMENT]",str_replace("\n", '<br>', $_POST['COMMENT']),$str); // Dはbr変換
-		$str=str_replace("[D-FILE]",(isset($_POST['FILE']) ? $_POST['FILE'] : $_FILES['FILE']['name']),$str);
-		$str=str_replace("[D-FILE2]",(isset($_POST['FILE2']) ? $_POST['FILE2'] : $_FILES['FILE2']['name']),$str);
-		$str=str_replace("[D-FILE3]",(isset($_POST['FILE3']) ? $_POST['FILE3'] : $_FILES['FILE3']['name']),$str);
-		$str=str_replace("[D-FILE4]",(isset($_POST['FILE4']) ? $_POST['FILE4'] : $_FILES['FILE4']['name']),$str);
-		$str=str_replace("[D-FILE5]",(isset($_POST['FILE5']) ? $_POST['FILE5'] : $_FILES['FILE5']['name']),$str);
+
+		$str=str_replace("[D-FILE]",((isset($_FILES['EP_FILE']['name']) && $_FILES['EP_FILE']['name']!="") ? $_FILES['EP_FILE']['name'] : $_POST['FILE']),$str);
+		$str=str_replace("[D-FILE2]",((isset($_FILES['EP_FILE2']['name']) && $_FILES['EP_FILE2']['name']!="") ? $_FILES['EP_FILE2']['name'] : $_POST['FILE2']),$str);
+		$str=str_replace("[D-FILE3]",((isset($_FILES['EP_FILE3']['name']) && $_FILES['EP_FILE3']['name']!="") ? $_FILES['EP_FILE3']['name'] : $_POST['FILE3']),$str);
+		$str=str_replace("[D-FILE4]",((isset($_FILES['EP_FILE4']['name']) && $_FILES['EP_FILE4']['name']!="") ? $_FILES['EP_FILE4']['name'] : $_POST['FILE4']),$str);
+		$str=str_replace("[D-FILE5]",((isset($_FILES['EP_FILE5']['name']) && $_FILES['EP_FILE5']['name']!="") ? $_FILES['EP_FILE5']['name'] : $_POST['FILE5']),$str);
+		//$str=str_replace("[D-FILE]",(isset($_POST['FILE']) ? $_POST['FILE'] : $_FILES['FILE']['name']),$str);
+		//$str=str_replace("[D-FILE2]",(isset($_POST['FILE2']) ? $_POST['FILE2'] : $_FILES['FILE2']['name']),$str);
+		//$str=str_replace("[D-FILE3]",(isset($_POST['FILE3']) ? $_POST['FILE3'] : $_FILES['FILE3']['name']),$str);
+		//$str=str_replace("[D-FILE4]",(isset($_POST['FILE4']) ? $_POST['FILE4'] : $_FILES['FILE4']['name']),$str);
+		//$str=str_replace("[D-FILE5]",(isset($_POST['FILE5']) ? $_POST['FILE5'] : $_FILES['FILE5']['name']),$str);
+		
 		$str=str_replace("[D-KIGEN]",$_POST['KIGEN'],$str);
 		$str=str_replace("[D-NEWDATE]",date('Y/m/d'),$str);
 
@@ -1603,11 +1700,18 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 		$str=str_replace("[D-M1_TRANS_FLG_なし]",($_POST['M1_TRANS_FLG'] == 'なし' ? 'checked' : ''),$str);
 		$str=str_replace("[D-M1_TRANS_TXT]",$_POST['M1_TRANS_TXT'],$str);
 		$str=str_replace("[D-M1_PRICE]",$_POST['M1_PRICE'],$str);
-		$str=str_replace("[D-M1_FILE]",(isset($_POST['M1_FILE']) ? $_POST['M1_FILE'] : $_FILES['M1_FILE']['name']),$str);
-		$str=str_replace("[D-M1_FILE2]",(isset($_POST['M1_FILE2']) ? $_POST['M1_FILE2'] : $_FILES['M1_FILE2']['name']),$str);
-		$str=str_replace("[D-M1_FILE3]",(isset($_POST['M1_FILE3']) ? $_POST['M1_FILE3'] : $_FILES['M1_FILE3']['name']),$str);
-		$str=str_replace("[D-M1_FILE4]",(isset($_POST['M1_FILE4']) ? $_POST['M1_FILE4'] : $_FILES['M1_FILE4']['name']),$str);
-		$str=str_replace("[D-M1_FILE5]",(isset($_POST['M1_FILE5']) ? $_POST['M1_FILE5'] : $_FILES['M1_FILE5']['name']),$str);
+
+		$str=str_replace("[D-M1_FILE]",((isset($_FILES['EP_M1_FILE']['name']) && $_FILES['EP_M1_FILE']['name']!="") ? $_FILES['EP_M1_FILE']['name'] : $_POST['M1_FILE']),$str);
+		$str=str_replace("[D-M1_FILE2]",((isset($_FILES['EP_M1_FILE2']['name']) && $_FILES['EP_M1_FILE2']['name']!="") ? $_FILES['EP_M1_FILE2']['name'] : $_POST['M1_FILE2']),$str);
+		$str=str_replace("[D-M1_FILE3]",((isset($_FILES['EP_M1_FILE3']['name']) && $_FILES['EP_M1_FILE3']['name']!="") ? $_FILES['EP_M1_FILE3']['name'] : $_POST['M1_FILE3']),$str);
+		$str=str_replace("[D-M1_FILE4]",((isset($_FILES['EP_M1_FILE4']['name']) && $_FILES['EP_M1_FILE4']['name']!="") ? $_FILES['EP_M1_FILE4']['name'] : $_POST['M1_FILE4']),$str);
+		$str=str_replace("[D-M1_FILE5]",((isset($_FILES['EP_M1_FILE5']['name']) && $_FILES['EP_M1_FILE5']['name']!="") ? $_FILES['EP_M1_FILE5']['name'] : $_POST['M1_FILE5']),$str);
+		//$str=str_replace("[D-M1_FILE]",(isset($_POST['M1_FILE']) ? $_POST['M1_FILE'] : $_FILES['M1_FILE']['name']),$str);
+		//$str=str_replace("[D-M1_FILE2]",(isset($_POST['M1_FILE2']) ? $_POST['M1_FILE2'] : $_FILES['M1_FILE2']['name']),$str);
+		//$str=str_replace("[D-M1_FILE3]",(isset($_POST['M1_FILE3']) ? $_POST['M1_FILE3'] : $_FILES['M1_FILE3']['name']),$str);
+		//$str=str_replace("[D-M1_FILE4]",(isset($_POST['M1_FILE4']) ? $_POST['M1_FILE4'] : $_FILES['M1_FILE4']['name']),$str);
+		//$str=str_replace("[D-M1_FILE5]",(isset($_POST['M1_FILE5']) ? $_POST['M1_FILE5'] : $_FILES['M1_FILE5']['name']),$str);
+		
 		$str=str_replace("[D-M1_KIGEN]",$_POST['M1_KIGEN'],$str);
 
 		$str=str_replace("[D-M2_TITLE]",$_POST['M2_TITLE'],$str);
@@ -1755,7 +1859,11 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
             </div>
             <div class="formset__item">
               <div class="formset__ttl">Price</div>
-              <div class="formset__input">[D-M2_DETAIL_PRICE_XXX]</div>
+              <div class="formset__input">[D-M2_DETAIL_PRICE_ORIGIN_XXX]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Special discount</div>
+              <div class="formset__input">[D-M2_DETAIL_SP_DISCOUNT_XXX]</div>
             </div>
             <div class="formset__item">
               <div class="formset__ttl">Note</div>
@@ -1772,9 +1880,18 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 				$detail_no = $detail_key + 1;
 				$add_detail_area .= str_replace('XXX', $detail_no, $detail_template);
 
+				$origin_price=0;
+				$m2_detail_quantity = is_numeric($item_filestatus_detail['M2_DETAIL_QUANTITY']) ? $item_filestatus_detail['M2_DETAIL_QUANTITY'] : 0;
+				$m2_detail_unit_price = is_numeric($item_filestatus_detail['M2_DETAIL_UNIT_PRICE']) ? $item_filestatus_detail['M2_DETAIL_UNIT_PRICE'] : 0;
+				$origin_price=$m2_detail_quantity*$m2_detail_unit_price;
+				echo "<!--debug:[D-M2_DETAIL_PRICE_ORIGIN_$detail_no]-->";
+				echo "<!--debug:origin_price:$origin_price-->";
+				$add_detail_area=str_replace("[D-M2_DETAIL_PRICE_ORIGIN_".$detail_no."]",$origin_price,$add_detail_area);
+
 				$add_detail_area=str_replace("[D-M2_DETAIL_ITEM_".$detail_no."]",$item_filestatus_detail['M2_DETAIL_ITEM'],$add_detail_area);
 				$add_detail_area=str_replace("[D-M2_DETAIL_DESCRIPTION_".$detail_no."]",str_replace("\n", '<br>', $item_filestatus_detail['M2_DETAIL_DESCRIPTION']),$add_detail_area); // Dはbr変換
 				$add_detail_area=str_replace("[D-M2_DETAIL_PRICE_".$detail_no."]",$item_filestatus_detail['M2_DETAIL_PRICE'],$add_detail_area);
+				$add_detail_area=str_replace("[D-M2_DETAIL_SP_DISCOUNT_".$detail_no."]",$item_filestatus_detail['M2_DETAIL_SP_DISCOUNT'],$add_detail_area);
 				$add_detail_area=str_replace("[D-M2_DETAIL_NOTE_".$detail_no."]",str_replace("\n", '<br>', $item_filestatus_detail['M2_DETAIL_NOTE']),$add_detail_area); // Dはbr変換
 
 				$detail_key++;
@@ -1807,7 +1924,11 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
             </div>
             <div class="formset__item">
               <div class="formset__ttl">Price</div>
-              <div class="formset__input">[D-M2_DETAIL_PRICE_XXX]</div>
+              <div class="formset__input">[D-M2_DETAIL_PRICE_ORIGIN_XXX]</div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl">Special discount</div>
+              <div class="formset__input">[D-M2_DETAIL_SP_DISCOUNT_XXX]</div>
             </div>
             <div class="formset__item">
               <div class="formset__ttl">Note</div>
@@ -1824,9 +1945,18 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 
 		for($detail_key = 0; $detail_key < count($_POST['M2_DETAIL_ITEM']) - 1; $detail_key++) {
 			$detail_no = $detail_key + 1;
+			
+			$origin_price=0;
+			$m2_detail_quantity = is_numeric($_POST['M2_DETAIL_QUANTITY'][$detail_key]) ? $_POST['M2_DETAIL_QUANTITY'][$detail_key] : 0;
+			$m2_detail_unit_price = is_numeric($_POST['M2_DETAIL_UNIT_PRICE'][$detail_key]) ? $_POST['M2_DETAIL_UNIT_PRICE'][$detail_key] : 0;
+			$origin_price=$m2_detail_quantity*$m2_detail_unit_price;
+			$str=str_replace("[D-M2_DETAIL_PRICE_ORIGIN_".$detail_no."]",$origin_price,$str);
+			
+
 			$str=str_replace("[D-M2_DETAIL_ITEM_".$detail_no."]",$_POST['M2_DETAIL_ITEM'][$detail_key],$str);
 			$str=str_replace("[D-M2_DETAIL_DESCRIPTION_".$detail_no."]",str_replace("\n", '<br>', $_POST['M2_DETAIL_DESCRIPTION'][$detail_key]),$str); // Dはbr変換
 			$str=str_replace("[D-M2_DETAIL_PRICE_".$detail_no."]",$_POST['M2_DETAIL_PRICE'][$detail_key],$str);
+			$str=str_replace("[D-M2_DETAIL_SP_DISCOUNT_".$detail_no."]",$_POST['M2_DETAIL_SP_DISCOUNT'][$detail_key],$str);
 			$str=str_replace("[D-M2_DETAIL_NOTE_".$detail_no."]",str_replace("\n", '<br>', $_POST['M2_DETAIL_NOTE'][$detail_key]),$str); // Dはbr変換
 		}
 
@@ -1841,20 +1971,29 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 
 		$str=str_replace("[D-H_COMMENT]",str_replace("\n", '<br>', $_POST['H_COMMENT']),$str); // Dはbr変換
 
-		$str=str_replace("[D-N_FILE]",(isset($_POST['N_FILE']) ? $_POST['N_FILE'] : $_FILES['N_FILE']['name']),$str);
+		$str=str_replace("[D-N_FILE]",((isset($_FILES['EP_N_FILE']['name']) && $_FILES['EP_N_FILE']['name']!="") ? $_FILES['EP_N_FILE']['name'] : $_POST['N_FILE']),$str);
+		//$str=str_replace("[D-N_FILE]",(isset($_POST['N_FILE']) ? $_POST['N_FILE'] : $_FILES['N_FILE']['name']),$str);
 		$str=str_replace("[D-N_MESSAGE]",str_replace("\n", '<br>', $_POST['N_MESSAGE']),$str); // Dはbr変換
 
-		$str=str_replace("[D-S_FILE]",(isset($_POST['S_FILE']) ? $_POST['S_FILE'] : $_FILES['S_FILE']['name']),$str);
+		$str=str_replace("[D-S_FILE]",((isset($_FILES['EP_S_FILE']['name']) && $_FILES['EP_S_FILE']['name']!="") ? $_FILES['EP_S_FILE']['name'] : $_POST['S_FILE']),$str);
+		//$str=str_replace("[D-S_FILE]",(isset($_POST['S_FILE']) ? $_POST['S_FILE'] : $_FILES['S_FILE']['name']),$str);
 		$str=str_replace("[D-S_MESSAGE]",str_replace("\n", '<br>', $_POST['S_MESSAGE']),$str); // Dはbr変換
 
 
 		$str=str_replace("[TITLE]",$_POST['TITLE'],$str);
 		$str=str_replace("[COMMENT]",$_POST['COMMENT'],$str);
-		$str=str_replace("[FILE]",(isset($_POST['FILE']) ? $_POST['FILE'] : $_FILES['FILE']['name']),$str);
-		$str=str_replace("[FILE2]",(isset($_POST['FILE2']) ? $_POST['FILE2'] : $_FILES['FILE2']['name']),$str);
-		$str=str_replace("[FILE3]",(isset($_POST['FILE3']) ? $_POST['FILE3'] : $_FILES['FILE3']['name']),$str);
-		$str=str_replace("[FILE4]",(isset($_POST['FILE4']) ? $_POST['FILE4'] : $_FILES['FILE4']['name']),$str);
-		$str=str_replace("[FILE5]",(isset($_POST['FILE5']) ? $_POST['FILE5'] : $_FILES['FILE5']['name']),$str);
+
+		$str=str_replace("[FILE]",((isset($_FILES['EP_FILE']['name']) && $_FILES['EP_FILE']['name']!="") ? $_FILES['EP_FILE']['name'] : $_POST['FILE']),$str);
+		$str=str_replace("[FILE2]",((isset($_FILES['EP_FILE2']['name']) && $_FILES['EP_FILE2']['name']!="") ? $_FILES['EP_FILE2']['name'] : $_POST['FILE2']),$str);
+		$str=str_replace("[FILE3]",((isset($_FILES['EP_FILE3']['name']) && $_FILES['EP_FILE3']['name']!="") ? $_FILES['EP_FILE3']['name'] : $_POST['FILE3']),$str);
+		$str=str_replace("[FILE4]",((isset($_FILES['EP_FILE4']['name']) && $_FILES['EP_FILE4']['name']!="") ? $_FILES['EP_FILE4']['name'] : $_POST['FILE4']),$str);
+		$str=str_replace("[FILE5]",((isset($_FILES['EP_FILE5']['name']) && $_FILES['EP_FILE5']['name']!="") ? $_FILES['EP_FILE5']['name'] : $_POST['FILE5']),$str);
+		//$str=str_replace("[FILE]",(isset($_POST['FILE']) ? $_POST['FILE'] : $_FILES['FILE']['name']),$str);
+		//$str=str_replace("[FILE2]",(isset($_POST['FILE2']) ? $_POST['FILE2'] : $_FILES['FILE2']['name']),$str);
+		//$str=str_replace("[FILE3]",(isset($_POST['FILE3']) ? $_POST['FILE3'] : $_FILES['FILE3']['name']),$str);
+		//$str=str_replace("[FILE4]",(isset($_POST['FILE4']) ? $_POST['FILE4'] : $_FILES['FILE4']['name']),$str);
+		//$str=str_replace("[FILE5]",(isset($_POST['FILE5']) ? $_POST['FILE5'] : $_FILES['FILE5']['name']),$str);
+		
 		$str=str_replace("[KIGEN]",$_POST['KIGEN'],$str);
 		$str=str_replace("[NEWDATE]",date('Y/m/d'),$str);
 
@@ -1862,7 +2001,8 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 		$str=str_replace("[M1_TRANS_FLG]",$_POST['M1_TRANS_FLG'],$str);
 		$str=str_replace("[M1_TRANS_TXT]",$_POST['M1_TRANS_TXT'],$str);
 		$str=str_replace("[M1_PRICE]",$_POST['M1_PRICE'],$str);
-		$str=str_replace("[M1_FILE]",(isset($_POST['M1_FILE']) ? $_POST['M1_FILE'] : $_FILES['M1_FILE']['name']),$str);
+		$str=str_replace("[M1_FILE]",((isset($_FILES['EP_M1_FILE']['name']) && $_FILES['EP_M1_FILE']['name']!="") ? $_FILES['EP_M1_FILE']['name'] : $_POST['M1_FILE']),$str);
+		//$str=str_replace("[M1_FILE]",(isset($_POST['M1_FILE']) ? $_POST['M1_FILE'] : $_FILES['M1_FILE']['name']),$str);
 		$str=str_replace("[M1_KIGEN]",$_POST['M1_KIGEN'],$str);
 
 		$str=str_replace("[M2_TITLE]",$_POST['M2_TITLE'],$str);
@@ -1889,6 +2029,7 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
             <input type="hidden" name="M2_DETAIL_ITEM[]" value="[M2_DETAIL_ITEM_XXX]">
             <input type="hidden" name="M2_DETAIL_DESCRIPTION[]" value="[M2_DETAIL_DESCRIPTION_XXX]">
             <input type="hidden" name="M2_DETAIL_PRICE[]" value="[M2_DETAIL_PRICE_XXX]">
+            <input type="hidden" name="M2_DETAIL_SP_DISCOUNT[]" value="[M2_DETAIL_SP_DISCOUNT_XXX]">
             <input type="hidden" name="M2_DETAIL_NOTE[]" value="[M2_DETAIL_NOTE_XXX]">
 		';
 							
@@ -1904,6 +2045,7 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			$str=str_replace("[M2_DETAIL_ITEM_".$detail_no."]",$_POST['M2_DETAIL_ITEM'][$detail_key],$str);
 			$str=str_replace("[M2_DETAIL_DESCRIPTION_".$detail_no."]",$_POST['M2_DETAIL_DESCRIPTION'][$detail_key],$str);
 			$str=str_replace("[M2_DETAIL_PRICE_".$detail_no."]",$_POST['M2_DETAIL_PRICE'][$detail_key],$str);
+			$str=str_replace("[M2_DETAIL_SP_DISCOUNT_".$detail_no."]",$_POST['M2_DETAIL_SP_DISCOUNT'][$detail_key],$str);
 			$str=str_replace("[M2_DETAIL_NOTE_".$detail_no."]",$_POST['M2_DETAIL_NOTE'][$detail_key],$str);
 		}
 
@@ -1915,11 +2057,24 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 		$str=str_replace("[M1_M2_ID]",$_POST['M1_M2_ID'],$str);
 		$str=str_replace("[H_COMMENT]",$_POST['H_COMMENT'],$str);
 
-		$str=str_replace("[N_FILE]",(isset($_POST['N_FILE']) ? $_POST['N_FILE'] : $_FILES['N_FILE']['name']),$str);
+		$str=str_replace("[N_FILE]",((isset($_FILES['EP_N_FILE']['name']) && $_FILES['EP_N_FILE']['name']!="") ? $_FILES['EP_N_FILE']['name'] : $_POST['N_FILE']),$str);
+		//$str=str_replace("[N_FILE]",(isset($_POST['N_FILE']) ? $_POST['N_FILE'] : $_FILES['N_FILE']['name']),$str);
 		$str=str_replace("[N_MESSAGE]",$_POST['N_MESSAGE'],$str);
 
-		$str=str_replace("[S_FILE]",(isset($_POST['S_FILE']) ? $_POST['S_FILE'] : $_FILES['S_FILE']['name']),$str);
+		$str=str_replace("[S_FILE]",((isset($_FILES['EP_S_FILE']['name']) && $_FILES['EP_S_FILE']['name']!="") ? $_FILES['EP_S_FILE']['name'] : $_POST['S_FILE']),$str);
+		//$str=str_replace("[S_FILE]",(isset($_POST['S_FILE']) ? $_POST['S_FILE'] : $_FILES['S_FILE']['name']),$str);
 		$str=str_replace("[S_MESSAGE]",$_POST['S_MESSAGE'],$str);
+
+
+		//「発注依頼」のSHIP TO
+		//決済者情報の「国」、「郵便番号」、「住所」
+		$str=str_replace("[H_SHIP_TO_SPT_1]",$_POST['H_SHIP_TO_SPT_1'],$str);
+		$str=str_replace("[H_SHIP_TO_SPT_2]",$_POST['H_SHIP_TO_SPT_2'],$str);
+		$str=str_replace("[H_SHIP_TO_SPT_3]",$_POST['H_SHIP_TO_SPT_3'],$str);
+
+		$str=str_replace("[D-H_SHIP_TO_SPT_1]",$_POST['H_SHIP_TO_SPT_1'],$str);
+		$str=str_replace("[D-H_SHIP_TO_SPT_2]",$_POST['H_SHIP_TO_SPT_2'],$str);
+		$str=str_replace("[D-H_SHIP_TO_SPT_3]",$_POST['H_SHIP_TO_SPT_3'],$str);
 
 
 		if($type == '見積り送付' || $type=="追加見積り" || $type=="再見積り依頼") {
@@ -2225,14 +2380,43 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			$str=str_replace("[INVOICE_URL]",$pdf_invoice_url2,$str);
 			$str=str_replace("[S2_FILE]",$done1_item["S2_FILE"],$str);
 			$str=str_replace("[S2_MESSAGE]",$done1_item["S2_MESSAGE"],$str);
+			$str=str_replace("[S2_NEWDATE]",$done1_item["NEWDATE"],$str);
 			$str=str_replace("[S_ADD_CHARGE2]",$item_filestatus["S_ADD_CHARGE2"],$str);
 
 			$str=str_replace("[D-S2_FILE]",$done1_item["S2_FILE"],$str);
 			$str=str_replace("[D-S2_MESSAGE]",$done1_item["S2_MESSAGE"],$str);
+			$str=str_replace("[D-S2_NEWDATE]",$done1_item["NEWDATE"],$str);
 			$str=str_replace("[D-S_ADD_CHARGE2]",$item_filestatus["S_ADD_CHARGE2"],$str);
 
 
 		}
+
+		//発注書プレビュープルダウンのプレビュー内容の日付は「見積り送付」ではなく、「決済者発注承認」または、「発注依頼」のデータをもってくる。
+		//（１）管理画面の発注書の発注日：③決裁者ありの場合：決裁者が発注承認した日
+		//（２）管理が目の発注書の発注日：④決裁者なしの場合：研究者が発注依頼した日
+		//上記を実現するために、「決済者発注承認」のデータがあればそのデータのNEWDATEを使い、
+		//それがなければ、「発注依頼」のデータを使うようにした。
+
+		$StrSQL="SELECT ID,SHODAN_ID,STATUS,NEWDATE FROM DAT_FILESTATUS WHERE DIV_ID='".$item_filestatus["DIV_ID"]."' ";
+		$StrSQL.=" AND STATUS='決済者発注承認' ";
+		$preview_k_rs=mysqli_query(ConnDB(),$StrSQL);
+		$preview_k_item=mysqli_fetch_assoc($preview_k_rs);
+		$preview_k_num=mysqli_num_rows($preview_k_rs);
+
+		$StrSQL="SELECT ID,SHODAN_ID,STATUS,NEWDATE FROM DAT_FILESTATUS WHERE DIV_ID='".$item_filestatus["DIV_ID"]."' ";
+		$StrSQL.=" AND STATUS='発注依頼' ";
+		$preview_h_rs=mysqli_query(ConnDB(),$StrSQL);
+		$preview_h_item=mysqli_fetch_assoc($preview_h_rs);
+		$preview_h_num=mysqli_num_rows($preview_h_rs);
+
+		if($preview_k_num>0){
+			$str=str_replace("[HATYU_NEWDATE]",$preview_k_item["NEWDATE"],$str);
+		}else if($preview_h_num>0){
+			$str=str_replace("[HATYU_NEWDATE]",$preview_h_item["NEWDATE"],$str);
+		}else{
+			$str=str_replace("[HATYU_NEWDATE]","",$str);
+		}
+
 
 		$str=str_replace("[D-TITLE]",$item_shodan['TITLE'],$str);
 		$str=str_replace("[D-COMMENT]",str_replace("\n", '<br>', $item_filestatus['T_COMMENT']),$str); // Dはbr変換
@@ -2326,6 +2510,7 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			$add_detail_area=str_replace("[D-M2_DETAIL_ITEM_".$detail_no."]",$item_filestatus_detail['M2_DETAIL_ITEM'],$add_detail_area);
 			$add_detail_area=str_replace("[D-M2_DETAIL_DESCRIPTION_".$detail_no."]",str_replace("\n", '<br>', $item_filestatus_detail['M2_DETAIL_DESCRIPTION']),$add_detail_area); // Dはbr変換
 			$add_detail_area=str_replace("[D-M2_DETAIL_PRICE_".$detail_no."]",$item_filestatus_detail['M2_DETAIL_PRICE'],$add_detail_area);
+			$add_detail_area=str_replace("[D-M2_DETAIL_SP_DISCOUNT_".$detail_no."]",$item_filestatus_detail['M2_DETAIL_SP_DISCOUNT'],$add_detail_area);
 			$add_detail_area=str_replace("[D-M2_DETAIL_NOTE_".$detail_no."]",str_replace("\n", '<br>', $item_filestatus_detail['M2_DETAIL_NOTE']),$add_detail_area); // Dはbr変換
 
 			$detail_key++;
@@ -2333,7 +2518,115 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 		$str=str_replace("[ADD_DETAIL_AREA]",$add_detail_area,$str);
 		// -------------------------------------------------------------------------------
 
-		if($type == '発注依頼') {
+		if($type == '発注依頼' && $mode!="disp_frame" && $mode!="disp") {
+		//if($type == '見積り送付' || $type == '発注依頼' || $type=="追加見積り") {
+			//$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID=".$key." and STATUS='見積り送付' order by ID desc;";
+			//$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE SHODAN_ID=".$item_shodan['ID']." and STATUS='見積り送付' order by ID desc;";
+			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE SHODAN_ID=".$item_filestatus['SHODAN_ID']." and MID1='".$item_filestatus["MID1"]."' and (STATUS='見積り送付' or STATUS='追加見積り') order by ID desc;";
+			//echo('<!--'.$StrSQL.'-->');
+			//echo('<!--'.$key.'-->');
+			$rs=mysqli_query(ConnDB(),$StrSQL);
+			$h_m2_list = '';
+			$h_m2_detail = array();
+			while($item_filestatus2 = mysqli_fetch_assoc($rs)) {
+				//分割払いの処理
+				$div_id=$item_filestatus2["DIV_ID"];
+				$tmp="";
+				$tmp=explode("-", $div_id);
+				//echo "<!--";
+				//var_dump($tmp);
+				//echo "-->";
+				$part="";
+				$disp_part="";
+				$pre_part="";
+				if($item_filestatus2["M2_PAY_TYPE"]!='Once' && count($tmp)==3){
+					$part=$tmp[2];
+					$pre_part=$tmp[0]."-".$tmp[1];
+					$disp_part="分割払い".$part;
+				}
+
+				if( $item_filestatus2["M2_PAY_TYPE"]=='Milestone' && $part=="Part0" ){
+					continue;
+				}
+				//2回払いの場合は、Part0の発注書を表示させ、保存の段階でPart1のデータに替える。
+				if($item_filestatus2["M2_PAY_TYPE"]=='Split' && $part!="Part0"){
+					continue;
+				}
+
+				//既に発注依頼されてるものは表示しない
+				$StrSQL="SELECT ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$item_filestatus['SHODAN_ID']." and MID1='".$m1_mid."' and STATUS='発注依頼' ";
+				$StrSQL.=" and DIV_ID='".$div_id."' ";
+				$StrSQL.=" order by ID desc ";
+				$h_done_rs=mysqli_query(ConnDB(),$StrSQL);
+				$h_done_num = mysqli_num_rows($h_done_rs);
+				//echo "<!--発注依頼プルダウン SQL：$StrSQL-->";
+				//echo "<!--発注依頼プルダウン num：$h_done_num-->";
+				if($h_done_num >=1){
+					continue;
+				}
+
+				//2回払いの場合はPart1に発注依頼があったらその後は発注できないようにする
+				//既に発注依頼されてるものは表示しない
+				if($item_filestatus2["M2_PAY_TYPE"]=='Split' && $part=="Part0"){
+					$StrSQL="SELECT ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$item_filestatus['SHODAN_ID']." and MID1='".$m1_mid."' and STATUS='発注依頼' ";
+					$StrSQL.=" and DIV_ID='".$pre_part."-Part1' ";
+					$StrSQL.=" order by ID desc ";
+					$h_done_rs=mysqli_query(ConnDB(),$StrSQL);
+					$h_done_num = mysqli_num_rows($h_done_rs);
+					if($h_done_num >=1){
+						continue;
+					}
+				}
+
+				$selected = '';
+				if($item_filestatus2['ID'] == $key) {
+					$selected = ' selected ';
+				}
+
+				$SCNo_str="";
+				$SCNo_ary=array(
+					"SCNo_yy" => "", 
+					"SCNo_mm" => "", 
+					"SCNo_dd" => "", 
+					"SCNo_cnt" => "", 
+					"SCNo_else1" => "", 
+					"SCNo_else2" => "", 
+				);
+				$SCNo_ary=array(
+					"SCNo_yy" => $item_filestatus2['SCNo_yy'], 
+					"SCNo_mm" => $item_filestatus2['SCNo_mm'], 
+					"SCNo_dd" => $item_filestatus2['SCNo_dd'], 
+					"SCNo_cnt" => $item_filestatus2['SCNo_cnt'], 
+					"SCNo_else1" => $item_filestatus2['SCNo_else1'], 
+					"SCNo_else2" => $item_filestatus2['SCNo_else2'], 
+				);
+				$SCNo_str=formatAlphabetId($SCNo_ary);
+				
+
+				$h_m2_list .= '<option value="' . $item_filestatus2['ID'] . '" ' . $selected . ' >' . $SCNo_str.' Version'.$item_filestatus2['M2_VERSION']. '</option>';
+				$h_m2_detail[$item_filestatus2['ID']] = $item_filestatus2;
+				$h_m2_detail[$item_filestatus2['ID']]['detail'] = array();
+				
+
+				$StrSQL="SELECT * FROM DAT_FILESTATUS_DETAIL WHERE FILESTATUS_ID=".$item_filestatus2['ID']." order by ID asc;";
+				//echo('<!--'.$StrSQL.'-->');
+				$rs2=mysqli_query(ConnDB(),$StrSQL);
+				while($item_filestatus_detail2 = mysqli_fetch_assoc($rs2)) {
+					$h_m2_detail[$item_filestatus2['ID']]['detail'][] = $item_filestatus_detail2;
+				}
+
+				if($type == '発注依頼') {
+					$str=str_replace("[M2_ID]",$item_filestatus2['M2_ID'],$str);
+					$str=str_replace("[M2_VERSION]",$item_filestatus2['M2_VERSION'],$str);
+				}
+			}
+			$str=str_replace("[H_M2_LIST]",$h_m2_list,$str);
+			$str=str_replace("[H_M2_DETAIL]",json_encode($h_m2_detail),$str);
+			
+		}
+
+
+		if($type == '発注依頼' && ($mode=="disp_frame" || $mode=="disp") ) {
 		//if($type == '見積り送付' || $type == '発注依頼' || $type=="追加見積り") {
 			//$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID=".$key." and STATUS='見積り送付' order by ID desc;";
 			//$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE SHODAN_ID=".$item_shodan['ID']." and STATUS='見積り送付' order by ID desc;";
@@ -2367,10 +2660,11 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 					"SCNo_else2" => $item_filestatus2['SCNo_else2'], 
 				);
 				$SCNo_str=formatAlphabetId($SCNo_ary);
-				$h_m2_list .= '<option value="' . $item_filestatus2['ID'] . '" ' . $selected . ' >' . $SCNo_str.' Version'.$item_filestatus2['M2_VERSION']. '</option>';
 
+				$h_m2_list .= '<option value="' . $item_filestatus2['ID'] . '" ' . $selected . ' >' . $SCNo_str.' Version'.$item_filestatus2['M2_VERSION']. '</option>';
 				$h_m2_detail[$item_filestatus2['ID']] = $item_filestatus2;
 				$h_m2_detail[$item_filestatus2['ID']]['detail'] = array();
+				
 
 				$StrSQL="SELECT * FROM DAT_FILESTATUS_DETAIL WHERE FILESTATUS_ID=".$item_filestatus2['ID']." order by ID asc;";
 				//echo('<!--'.$StrSQL.'-->');
@@ -2386,6 +2680,7 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			}
 			$str=str_replace("[H_M2_LIST]",$h_m2_list,$str);
 			$str=str_replace("[H_M2_DETAIL]",json_encode($h_m2_detail),$str);
+
 
 			//2回払いの発注依頼はPart0を表示。
 			$m2_pay_type=check_M2_PAY_TYPE($item_filestatus["SHODAN_ID"], $item_filestatus["MID1"]);
@@ -2439,7 +2734,9 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 
 		$str=str_replace("[D-S2_FILE]",(isset($item_filestatus['S2_FILE']) ? $item_filestatus['S2_FILE'] : $_FILES['S2_FILE']['name']),$str);
 		$str=str_replace("[D-S2_MESSAGE]",str_replace("\n", '<br>', $item_filestatus['S2_MESSAGE']),$str); // Dはbr変換
-		
+
+		$str=str_replace("[D-S2_NEWDATE]",$item_filestatus["NEWDATE"],$str);
+
 		$str=str_replace("[TITLE]",$item_shodan['TITLE'],$str);
 		$str=str_replace("[COMMENT]",$item_filestatus['T_COMMENT'],$str);
 		$str=str_replace("[FILE]",$item_filestatus['T_FILE'],$str);
@@ -2474,6 +2771,9 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 
 		$str=str_replace("[S2_FILE]",(isset($item_filestatus['S2_FILE']) ? $item_filestatus['S2_FILE'] : $_FILES['S2_FILE']['name']),$str);
 		$str=str_replace("[S2_MESSAGE]",$item_filestatus['S2_MESSAGE'],$str);
+
+		$str=str_replace("[S2_NEWDATE]",$item_filestatus["NEWDATE"],$str);
+
 
 		//キャンセル依頼用
 		$str=str_replace("[C_COMMENT]",str_replace("\n", '<br>', $item_filestatus['C_COMMENT']),$str); // Dはbr変換
@@ -2754,6 +3054,81 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 
 		}
 
+		$h_m2_detail = array();
+		if($type == '再見積り依頼') {
+			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE SHODAN_ID='".$shodan_id."' ";
+			$StrSQL.=" and MID1='".$m1_mid."' ";
+			$StrSQL.=" and (STATUS='見積り送付' or STATUS='追加見積り') order by ID desc;";
+			//echo('<!--saimitsu:'.$StrSQL.'-->');
+			$rs=mysqli_query(ConnDB(),$StrSQL);
+			$h_m2_list = '';
+			$h_m2_detail = array();
+			while($item_filestatus = mysqli_fetch_assoc($rs)) {
+				//echo "<!--";
+				//var_dump($item_filestatus);
+				//echo "-->";
+				$str=str_replace("[M2_ID]",$item_filestatus['M2_ID'],$str);
+				$str=str_replace("[M2_VERSION]",$item_filestatus['M2_VERSION'],$str);
+
+				$selected = '';
+				if($item_filestatus['ID'] == $key) {
+					$selected = ' selected ';
+				}
+
+				//再見積り依頼の際は、Part0以外はプルダウンに表示しない。
+				$div_id=$item_filestatus["DIV_ID"];
+				$tmp="";
+				$tmp=explode("-", $div_id);
+				echo "<!--";
+				var_dump($tmp);
+				echo "-->";
+				$part="";
+				$disp_part="";
+				if($item_filestatus["M2_PAY_TYPE"]!='Once' && count($tmp)==3){
+					$part=$tmp[2];
+					if($part!="Part0"){
+						echo "<!--debug:パート0以外-->";
+						continue;
+					}
+				}
+
+				$SCNo_str="";
+				$SCNo_ary=array(
+					"SCNo_yy" => "", 
+					"SCNo_mm" => "", 
+					"SCNo_dd" => "", 
+					"SCNo_cnt" => "", 
+					"SCNo_else1" => "", 
+					"SCNo_else2" => "", 
+				);
+				$SCNo_ary=array(
+					"SCNo_yy" => $item_filestatus['SCNo_yy'], 
+					"SCNo_mm" => $item_filestatus['SCNo_mm'], 
+					"SCNo_dd" => $item_filestatus['SCNo_dd'], 
+					"SCNo_cnt" => $item_filestatus['SCNo_cnt'], 
+					"SCNo_else1" => $item_filestatus['SCNo_else1'], 
+					"SCNo_else2" => $item_filestatus['SCNo_else2'], 
+				);
+				$SCNo_str=formatAlphabetId($SCNo_ary);
+				$h_m2_list .= '<option value="' . $item_filestatus['ID'] . '" ' . $selected . ' >' .$SCNo_str. ' Version' . $item_filestatus['M2_VERSION'] .'</option>';
+
+				$h_m2_detail[$item_filestatus['ID']] = $item_filestatus;
+				$h_m2_detail[$item_filestatus['ID']]['detail'] = array();
+
+				$StrSQL="SELECT * FROM DAT_FILESTATUS_DETAIL WHERE FILESTATUS_ID=".$item_filestatus['ID']." order by ID asc;";
+				//echo('<!--'.$StrSQL.'-->');
+				$rs2=mysqli_query(ConnDB(),$StrSQL);
+				while($item_filestatus_detail2 = mysqli_fetch_assoc($rs2)) {
+					$h_m2_detail[$item_filestatus['ID']]['detail'][] = $item_filestatus_detail2;
+				}
+			}
+			if($h_m2_list==""){
+				$h_m2_list="<option value=''>サプライヤーからの見積り送付なし</option>";
+			}
+			$str=str_replace("[H_M2_LIST]",$h_m2_list,$str);
+			$str=str_replace("[H_M2_DETAIL]",json_encode($h_m2_detail),$str);
+		}
+
 	}
 
 	$str=str_replace("[D-TITLE]",'',$str);
@@ -2795,6 +3170,7 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 	$str=str_replace("[D-M2_DETAIL_ITEM_".$detail_no."]",'',$str);
 	$str=str_replace("[D-M2_DETAIL_DESCRIPTION_".$detail_no."]",'',$str);
 	$str=str_replace("[D-M2_DETAIL_PRICE_".$detail_no."]",'',$str);
+	$str=str_replace("[D-M2_DETAIL_SP_DISCOUNT_".$detail_no."]",'',$str);
 	$str=str_replace("[D-M2_DETAIL_NOTE_".$detail_no."]",'',$str);
 
 	$str=str_replace("[D-M2_SPECIAL_DISCOUNT]",'',$str);
@@ -2813,6 +3189,8 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 
 	$str=str_replace("[D-S2_FILE]",'',$str);
 	$str=str_replace("[D-S2_MESSAGE]",'',$str);
+	$str=str_replace("[D-S2_NEWDATE]",'',$str);
+
 
 	//キャンセル依頼用
 	$str=str_replace("[D-C_COMMENT]",str_replace("\n", '<br>', $item_filestatus['C_COMMENT']),$str); // Dはbr変換
@@ -2857,6 +3235,7 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 	$str=str_replace("[M2_DETAIL_ITEM_".$detail_no."]",'',$str);
 	$str=str_replace("[M2_DETAIL_DESCRIPTION_".$detail_no."]",'',$str);
 	$str=str_replace("[M2_DETAIL_PRICE_".$detail_no."]",'',$str);
+	$str=str_replace("[M2_DETAIL_SP_DISCOUNT_".$detail_no."]",'',$str);
 	$str=str_replace("[M2_DETAIL_NOTE_".$detail_no."]",'',$str);
 
 	$str=str_replace("[M2_SPECIAL_DISCOUNT]",'',$str);
@@ -2895,6 +3274,15 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 	$str=str_replace("[CHKNOHIN_MESSAGE]",'',$str);
 
 
+	//「発注依頼」のSHIP TO
+	//決済者情報の「国」、「郵便番号」、「住所」
+	$str=str_replace("[H_SHIP_TO_SPT_1]","",$str);
+	$str=str_replace("[H_SHIP_TO_SPT_2]","",$str);
+	$str=str_replace("[H_SHIP_TO_SPT_3]","",$str);
+
+	$str=str_replace("[D-H_SHIP_TO_SPT_1]","",$str);
+	$str=str_replace("[D-H_SHIP_TO_SPT_2]","",$str);
+	$str=str_replace("[D-H_SHIP_TO_SPT_3]","",$str);
 
 
 	$strtmp="";
@@ -3174,30 +3562,75 @@ function SaveData2($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$word,$word2,
 	if(!file_exists($file_dir . $key . '/')) {
 		mkdir($file_dir . $key, 0777, true);
 	}
+	
 	if($_POST['FILE'] != '') {
-		copy($file_dir . $_POST['FILE'], $file_dir . $key . '/' . $_POST['FILE']);
+		$save_filename=basename($_POST['FILE']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['FILE2'] != '') {
-		copy($file_dir . $_POST['FILE2'], $file_dir . $key . '/' . $_POST['FILE2']);
+		$save_filename=basename($_POST['FILE2']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['FILE3'] != '') {
-		copy($file_dir . $_POST['FILE3'], $file_dir . $key . '/' . $_POST['FILE3']);
+		$save_filename=basename($_POST['FILE3']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['FILE4'] != '') {
-		copy($file_dir . $_POST['FILE4'], $file_dir . $key . '/' . $_POST['FILE4']);
+		$save_filename=basename($_POST['FILE4']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+
 	if($_POST['FILE5'] != '') {
-		copy($file_dir . $_POST['FILE5'], $file_dir . $key . '/' . $_POST['FILE5']);
+		$save_filename=basename($_POST['FILE5']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['M1_FILE'] != '') {
-		copy($file_dir . $_POST['M1_FILE'], $file_dir . $key . '/' . $_POST['M1_FILE']);
+		$save_filename=basename($_POST['M1_FILE']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['N_FILE'] != '') {
-		copy($file_dir . $_POST['N_FILE'], $file_dir . $key . '/' . $_POST['N_FILE']);
+		$save_filename=basename($_POST['N_FILE']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['S_FILE'] != '') {
-		copy($file_dir . $_POST['S_FILE'], $file_dir . $key . '/' . $_POST['S_FILE']);
+		$save_filename=basename($_POST['S_FILE']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
+	//$file_dir = __dir__ . '/../a_filestatus/data/';
+	//if(!file_exists($file_dir . $key . '/')) {
+	//	mkdir($file_dir . $key, 0777, true);
+	//}
+	//if($_POST['FILE'] != '') {
+	//	copy($file_dir . $_POST['FILE'], $file_dir . $key . '/' . $_POST['FILE']);
+	//}
+	//if($_POST['FILE2'] != '') {
+	//	copy($file_dir . $_POST['FILE2'], $file_dir . $key . '/' . $_POST['FILE2']);
+	//}
+	//if($_POST['FILE3'] != '') {
+	//	copy($file_dir . $_POST['FILE3'], $file_dir . $key . '/' . $_POST['FILE3']);
+	//}
+	//if($_POST['FILE4'] != '') {
+	//	copy($file_dir . $_POST['FILE4'], $file_dir . $key . '/' . $_POST['FILE4']);
+	//}
+	//if($_POST['FILE5'] != '') {
+	//	copy($file_dir . $_POST['FILE5'], $file_dir . $key . '/' . $_POST['FILE5']);
+	//}
+	//if($_POST['M1_FILE'] != '') {
+	//	copy($file_dir . $_POST['M1_FILE'], $file_dir . $key . '/' . $_POST['M1_FILE']);
+	//}
+	//if($_POST['N_FILE'] != '') {
+	//	copy($file_dir . $_POST['N_FILE'], $file_dir . $key . '/' . $_POST['N_FILE']);
+	//}
+	//if($_POST['S_FILE'] != '') {
+	//	copy($file_dir . $_POST['S_FILE'], $file_dir . $key . '/' . $_POST['S_FILE']);
+	//}
 
 	} // 複数サプライヤーのforeach
 
@@ -3246,6 +3679,7 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 	$post_chknohin_message=str_replace("'","''",htmlspecialchars($_POST['CHKNOHIN_MESSAGE']));
 
 	//2回払いの発注依頼はPart0のデータが送られてくるが、Part1に発注をかけるため変数おきかえる。
+	//ここでは準備
 	$h_m2_id=$_POST['H_M2_ID'];
 
 
@@ -3384,7 +3818,7 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 		&& $type!="見積り送付"
 		&& $type!="運営手数料追加"
 		&& $type!="発注依頼"){
-		//発注以降、一括払い時にも扱いを一律にするために、便宜上DIV_IDを設定するようにした。
+		//発注以降、「一括払い」時にも扱いを一律にするために、便宜上DIV_IDを設定するようにした。
 		//2回払い、マイルストーンの場合は、m_chat1,m_chat2でDIV_ID（$param_div_id）を指定してここにおくってくる。
 		//最新の発注依頼をとってきて、その発注依頼の対象の見積り送付データをとってきて、1括払いの時に、$h_div_idを設定
 		//発注は1商談内に1つしか存在しない仕様と決定したが、念のため最新の発注依頼をとってくるようにしている。
@@ -3681,6 +4115,10 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 	
 				S_FILE,
 				S_MESSAGE,
+
+				H_SHIP_TO_SPT_1,
+				H_SHIP_TO_SPT_2,
+				H_SHIP_TO_SPT_3,
 	
 				TEMPR,
 				SAMPLE,
@@ -3728,6 +4166,10 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 	
 				'".$_POST['S_FILE']."',
 				'".$s_message."',
+
+				'".$_POST['H_SHIP_TO_SPT_1']."',
+				'".$_POST['H_SHIP_TO_SPT_2']."',
+				'".$_POST['H_SHIP_TO_SPT_3']."',
 	
 				'".$post_tempr."',
 				'".$post_sample."',
@@ -3783,6 +4225,10 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 	
 				S_FILE,
 				S_MESSAGE,
+
+				H_SHIP_TO_SPT_1,
+				H_SHIP_TO_SPT_2,
+				H_SHIP_TO_SPT_3,
 	
 				TEMPR,
 				SAMPLE,
@@ -3830,6 +4276,10 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 	
 				'".$_POST['S_FILE']."',
 				'".$s_message."',
+
+				'".$_POST['H_SHIP_TO_SPT_1']."',
+				'".$_POST['H_SHIP_TO_SPT_2']."',
+				'".$_POST['H_SHIP_TO_SPT_3']."',
 	
 				'".$post_tempr."',
 				'".$post_sample."',
@@ -3860,35 +4310,85 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 	$item_filestatus = mysqli_fetch_assoc($rs);
 	$key = $item_filestatus['ID'];
 
+
 	// ファイルを移動
 	$file_dir = __dir__ . '/../a_filestatus/data/';
 	if(!file_exists($file_dir . $key . '/')) {
 		mkdir($file_dir . $key, 0777, true);
 	}
+	
 	if($_POST['FILE'] != '') {
-		copy($file_dir . $_POST['FILE'], $file_dir . $key . '/' . $_POST['FILE']);
+		$save_filename=basename($_POST['FILE']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['FILE2'] != '') {
-		copy($file_dir . $_POST['FILE2'], $file_dir . $key . '/' . $_POST['FILE2']);
+		$save_filename=basename($_POST['FILE2']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['FILE3'] != '') {
-		copy($file_dir . $_POST['FILE3'], $file_dir . $key . '/' . $_POST['FILE3']);
+		$save_filename=basename($_POST['FILE3']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['FILE4'] != '') {
-		copy($file_dir . $_POST['FILE4'], $file_dir . $key . '/' . $_POST['FILE4']);
+		$save_filename=basename($_POST['FILE4']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+
 	if($_POST['FILE5'] != '') {
-		copy($file_dir . $_POST['FILE5'], $file_dir . $key . '/' . $_POST['FILE5']);
+		$save_filename=basename($_POST['FILE5']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['M1_FILE'] != '') {
-		copy($file_dir . $_POST['M1_FILE'], $file_dir . $key . '/' . $_POST['M1_FILE']);
+		$save_filename=basename($_POST['M1_FILE']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['N_FILE'] != '') {
-		copy($file_dir . $_POST['N_FILE'], $file_dir . $key . '/' . $_POST['N_FILE']);
+		$save_filename=basename($_POST['N_FILE']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+	
 	if($_POST['S_FILE'] != '') {
-		copy($file_dir . $_POST['S_FILE'], $file_dir . $key . '/' . $_POST['S_FILE']);
+		$save_filename=basename($_POST['S_FILE']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
+
+
+	//$file_dir = __dir__ . '/../a_filestatus/data/';
+	//if(!file_exists($file_dir . $key . '/')) {
+	//	mkdir($file_dir . $key, 0777, true);
+	//}
+	//if($_POST['FILE'] != '') {
+	//	copy($file_dir . $_POST['FILE'], $file_dir . $key . '/' . $_POST['FILE']);
+	//}
+	//if($_POST['FILE2'] != '') {
+	//	copy($file_dir . $_POST['FILE2'], $file_dir . $key . '/' . $_POST['FILE2']);
+	//}
+	//if($_POST['FILE3'] != '') {
+	//	copy($file_dir . $_POST['FILE3'], $file_dir . $key . '/' . $_POST['FILE3']);
+	//}
+	//if($_POST['FILE4'] != '') {
+	//	copy($file_dir . $_POST['FILE4'], $file_dir . $key . '/' . $_POST['FILE4']);
+	//}
+	//if($_POST['FILE5'] != '') {
+	//	copy($file_dir . $_POST['FILE5'], $file_dir . $key . '/' . $_POST['FILE5']);
+	//}
+	//if($_POST['M1_FILE'] != '') {
+	//	copy($file_dir . $_POST['M1_FILE'], $file_dir . $key . '/' . $_POST['M1_FILE']);
+	//}
+	//if($_POST['N_FILE'] != '') {
+	//	copy($file_dir . $_POST['N_FILE'], $file_dir . $key . '/' . $_POST['N_FILE']);
+	//}
+	//if($_POST['S_FILE'] != '') {
+	//	copy($file_dir . $_POST['S_FILE'], $file_dir . $key . '/' . $_POST['S_FILE']);
+	//}
+
+
+
 
 
 	//
@@ -3920,7 +4420,95 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 	//		die;
 	//	}
 
-	
+
+
+	$StrSQL="SELECT DIV_ID FROM DAT_FILESTATUS where MID2='".$_SESSION['MID']."' and ID='".$key."' order by ID desc;";
+	//echo('<!--'.$StrSQL.'-->');
+	$tmp_rs=mysqli_query(ConnDB(),$StrSQL);
+	$tmp_item = mysqli_fetch_assoc($tmp_rs);
+
+	$StrSQL="SELECT * FROM DAT_FILESTATUS where MID2='".$_SESSION['MID']."' ";
+	$StrSQL.=" and DIV_ID='".$tmp_item["DIV_ID"]."' and STATUS='見積り送付' order by ID desc ";
+	//echo('<!--'.$StrSQL.'-->');
+	$scn_rs=mysqli_query(ConnDB(),$StrSQL);
+	$scn_item = mysqli_fetch_assoc($scn_rs);
+
+
+	//Scientist Control No.
+	$SCNo_str="";
+	$SCNo_ary=array(
+		"SCNo_yy" => "", 
+		"SCNo_mm" => "", 
+		"SCNo_dd" => "", 
+		"SCNo_cnt" => "", 
+		"SCNo_else1" => "", 
+		"SCNo_else2" => "", 
+	);
+	$SCNo_ary=array(
+		"SCNo_yy" => $scn_item['SCNo_yy'], 
+		"SCNo_mm" => $scn_item['SCNo_mm'], 
+		"SCNo_dd" => $scn_item['SCNo_dd'], 
+		"SCNo_cnt" => $scn_item['SCNo_cnt'], 
+		"SCNo_else1" => $scn_item['SCNo_else1'], 
+		"SCNo_else2" => $scn_item['SCNo_else2'], 
+	);
+	$SCNo_str=formatAlphabetId($SCNo_ary);
+	$SCNo_str.="-Version".$scn_item["M2_VERSION"];
+
+
+
+	$cancel_scno_ary=array();
+	if($type=="キャンセル依頼"){
+
+		$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS,H_M2_ID FROM DAT_FILESTATUS WHERE SHODAN_ID = '" . $shodan_id . "' ";
+		$StrSQL.=" AND STATUS='発注依頼' ";
+		$StrSQL.=" order by ID asc";
+		$c_hatyu_rs=mysqli_query(ConnDB(),$StrSQL);
+		
+		while( $c_hatyu_item = mysqli_fetch_assoc($c_hatyu_rs) ){
+			//echo "<!--キャンセル依頼(発注依頼)：";
+			//var_dump($c_hatyu_item);
+			//echo "-->";
+			$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS,SCNo_yy,SCNo_mm,SCNo_dd,SCNo_cnt,SCNo_else1,SCNo_else2,M2_VERSION ";
+			$StrSQL.=" FROM DAT_FILESTATUS WHERE SHODAN_ID = '" . $shodan_id . "' ";
+			$StrSQL.=" AND ID='".$c_hatyu_item["H_M2_ID"]."' ";
+			$StrSQL.=" AND STATUS='見積り送付' ";
+			$StrSQL.=" order by ID desc";
+			$c_mitsu_rs=mysqli_query(ConnDB(),$StrSQL);
+			$c_mitsu_item = mysqli_fetch_assoc($c_mitsu_rs);
+			//echo "<!--キャンセル依頼(見積り送付)：";
+			//var_dump($c_mitsu_item);
+			//echo "-->";
+
+			$SCNo_ary=array(
+				"SCNo_yy" => "", 
+				"SCNo_mm" => "", 
+				"SCNo_dd" => "", 
+				"SCNo_cnt" => "", 
+				"SCNo_else1" => "", 
+				"SCNo_else2" => "", 
+			);
+			$m2_quote_no="";
+
+			$SCNo_ary["SCNo_yy"]=$c_mitsu_item["SCNo_yy"];
+			$SCNo_ary["SCNo_mm"]=$c_mitsu_item["SCNo_mm"];
+			$SCNo_ary["SCNo_dd"]=$c_mitsu_item["SCNo_dd"];
+			$SCNo_ary["SCNo_cnt"]=$c_mitsu_item["SCNo_cnt"];
+			$SCNo_ary["SCNo_else1"]=$c_mitsu_item["SCNo_else1"];
+			$SCNo_ary["SCNo_else2"]=$c_mitsu_item["SCNo_else2"];
+			$SCNo_str=formatAlphabetId($SCNo_ary);
+			if($SCNo_str!=""){
+				$cancel_scno_ary[]=$SCNo_str."-Version".$c_mitsu_item["M2_VERSION"];
+			}
+		}
+
+		//echo "<!--キャンセル依頼(SCNO)：";
+		//var_dump($cancel_scno_ary);
+		//echo "-->";
+	}
+
+
+
 
 // 自分へのメッセージ
 	$comment = '';
@@ -3977,35 +4565,55 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 			//発注依頼のときは、param_div_idではなくdiv_id
 			$comment = $h_comment . '
 			<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact2/?type=発注依頼&mode=disp_frame&key='.$key.'\'\');">
-				発注依頼 '.$h_div_id.'
+				発注依頼 '.$SCNo_str.'
 			</a>
 			';
+			//$comment = $h_comment . '
+			//<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact2/?type=発注依頼&mode=disp_frame&key='.$key.'\'\');">
+			//	発注依頼 '.$h_div_id.'
+			//</a>
+			//';
 		break;
 		case 'データ納品':
 			$comment = $n_message . '
 			<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=データ納品&mode=disp_frame&key='.$key.'\'\');">
-				納品データ '.$param_div_id.'
+				納品データ '.$SCNo_str.'
 			</a>
 			';
+			//$comment = $n_message . '
+			//<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=データ納品&mode=disp_frame&key='.$key.'\'\');">
+			//	納品データ '.$param_div_id.'
+			//</a>
+			//';
 		break;
 		case '物品納品':
 			$comment = $n_message . '
 			<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=物品納品&mode=disp_frame&key='.$key.'\'\');">
-				Report '.$param_div_id.'
+				Report '.$SCNo_str.'
 			</a>
 			';
+			//$comment = $n_message . '
+			//<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=物品納品&mode=disp_frame&key='.$key.'\'\');">
+			//	Report '.$param_div_id.'
+			//</a>
+			//';
 		break;
 		case '請求':
-		$comment = $s_message . '
-		<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=請求&mode=disp_frame&key='.$key.'\'\');">
-			請求書 '.$param_div_id.'
-		</a>
-		';
+			$comment = $s_message . '
+			<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=請求&mode=disp_frame&key='.$key.'\'\');">
+				請求書 '.$SCNo_str.'
+			</a>
+			';
+			//$comment = $s_message . '
+			//<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=請求&mode=disp_frame&key='.$key.'\'\');">
+			//	請求書 '.$param_div_id.'
+			//</a>
+			//';
 		break;
 		case 'キャンセル依頼':
-		$comment = 'キャンセル依頼中です<br>
-		発注キャンセルの理由：'.$c_comment.'<br>
-		';
+			$comment = 'キャンセル依頼中です<br>
+			発注キャンセルの理由：'.$c_comment.'<br>
+			';
 		break;
 	}
 
@@ -4120,12 +4728,31 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 			';
 		break;
 		case 'キャンセル依頼':
-		$comment = 'キャンセル依頼中です<br>
-		発注キャンセルの理由：'.$c_comment.'<br>
-		<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=サプライヤーキャンセル承認&mode=save&shodan_id='.$shodan_id.'\'\');">承認する（請求あり）</a>
-		<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=キャンセル承認&mode=save&shodan_id='.$shodan_id.'\'\');">承認する（請求なし）</a>
-		<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=サプライヤーキャンセル否認&mode=save&shodan_id='.$shodan_id.'\'\');">否認する</a>
+		$c_hatyu_str="";
+		if( count($cancel_scno_ary)>0 ){
+			foreach ($cancel_scno_ary as $idx => $val) {
+				if($val!=""){
+					$c_hatyu_str.=$val."<br>";
+				}
+			}
+		}
+		if($c_hatyu_str!=""){
+			$c_hatyu_str="Order No:<br>".$c_hatyu_str;
+		}
+
+		$comment = 'A cancellation request has been received from the researcher.<br>
+		'.$c_hatyu_str.'
+		Reason for order cancellation：'.$c_comment.'<br>
+		<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=サプライヤーキャンセル承認&mode=save&shodan_id='.$shodan_id.'\'\');">Approve (Already billed)</a>
+		<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=キャンセル承認&mode=save&shodan_id='.$shodan_id.'\'\');">Approve (Not yet billed)</a>
+		<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=サプライヤーキャンセル否認&mode=save&shodan_id='.$shodan_id.'\'\');">Decline</a>
 		';
+		//$comment = 'キャンセル依頼中です<br>
+		//発注キャンセルの理由：'.$c_comment.'<br>
+		//<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=サプライヤーキャンセル承認&mode=save&shodan_id='.$shodan_id.'\'\');">承認する（請求あり）</a>
+		//<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=キャンセル承認&mode=save&shodan_id='.$shodan_id.'\'\');">承認する（請求なし）</a>
+		//<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=サプライヤーキャンセル否認&mode=save&shodan_id='.$shodan_id.'\'\');">否認する</a>
+		//';
 		break;
 	}
 

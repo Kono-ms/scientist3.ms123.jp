@@ -52,7 +52,7 @@ button, input.btn, select, textarea {
 .select select::-ms-expand {
   display: none
 }
-@media screen and (max-width:959px) {
+@media screen and (max-width:959.98px) {
   .select select {
     padding-left: 1rem;
     font-size: 1.2rem
@@ -231,7 +231,7 @@ img {
 .left_balloon {
   justify-content: flex-start;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .right_balloon {
     padding-left: 40px;/* NOTE: 既読マーク用の余白（余白を設けないと横スクロールが出るので必須） */
   }
@@ -257,7 +257,7 @@ img {
   aspect-ratio: 1 / 1;
   object-fit: cover;
 }
-@media only screen and (max-width:767px) {
+@media only screen and (max-width:767.98px) {
   .balloon_div_left > img {
     width: 32px;
     height: auto;

@@ -1751,7 +1751,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			//「見積り依頼」データの「M1_TRANS_FLG」が「なし」の場合は強制的に「0」
 			$StrSQL="SELECT ID,NEWDATE,STATUS,M1_TRANS_FLG FROM DAT_FILESTATUS WHERE ";
 			$StrSQL.=" SHODAN_ID='".$FieldValue[1]."' ";
-			$StrSQL.=" AND STATUS='見積り依頼' ";
+			$StrSQL.=" AND (STATUS='見積り依頼' OR STATUS='再見積り依頼') ";
 			$StrSQL.=" AND NEWDATE<'".$FieldValue[32]."' ";
 			$StrSQL.=" ORDER BY NEWDATE DESC ";
 			$irai_rs=mysqli_query(ConnDB(),$StrSQL);
@@ -3986,7 +3986,7 @@ function SubmitMitsumori($key)
 		$disp_part="";
 		if($new_item_FS["M2_PAY_TYPE"]!='Once' && count($tmp)==3){
 			$part=$tmp[2];
-			$disp_part="Split ".$part;
+			//$disp_part="Split ".$part;
 		}
 
 		//マイルストーンの場合はPart0はユーザには表示しない

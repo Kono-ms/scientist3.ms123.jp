@@ -11,6 +11,23 @@
  * NOTE: ページ共通部品、使いまわし可能な関数など
 **/
 
+// bfcache
+// event.persisted が true なら、bfcache（キャッシュ）から復元された
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    // bfcache
+    $('body').removeClass('on--bfcache');// リセット
+    $('body').addClass('on--bfcache');
+    $(document).trigger('sc3Bfcache');
+
+  } else {
+    // 通常の新規読み込み
+    $('body').removeClass('on--bfcache');
+  }
+});
+
+
+
 // loading
 $(function () {
   var h = $(window).height();
@@ -189,6 +206,8 @@ $(window).on('load', function () {
 
 
 // input file
+// NOTE: 2026.05.21
+// NOTE: 2026.03.18
 // NOTE: 2024.03.15
 $(function(){
   $('[type="file"]').each(function(inputID){
@@ -196,7 +215,7 @@ $(function(){
     let $input = $(this);
 
     // cancel
-    if($input.is(':hidden')) return true;
+    //if($input.is(':hidden')) return true;
 
     // label
     $input.wrap('<label class="input-file" data-input-file-id="'+inputID+'"></label>');
@@ -213,6 +232,13 @@ $(function(){
     // file name
     let fileNameDefault = 'no file selected';
     $label.after('<div class="input-file-name" data-input-file-name-id="'+inputID+'">'+fileNameDefault+'</div>');
+
+    // delete
+    // NOTE: without font awesome 7
+    let $delete = $('<button type="button" class="input-file-delete" data-input-file-delete-id="'+inputID+'"><i class="fa-solid fa-file-circle-xmark"></i></button>');
+    $label.after($delete);
+
+    // name
     let $name = $('[data-input-file-name-id="'+inputID+'"]');
 
     // event init (onload)
@@ -220,6 +246,8 @@ $(function(){
 
     // event change
     $input.on('change',function(){inputFileHandler()});
+    // TODO: ラッパーからinput fileに辿る必要がある
+    $delete.on('click',function(){$input.val('').trigger('change')});
 
     function inputFileHandler(is__init){
       let fileName = fileNameDefault;
@@ -238,16 +266,50 @@ $(function(){
             }
           }
         }else{
-          fileName = $input[0].files[0].name;
+          fileName = $input[0]?.files[0]?.name || fileNameDefault;
         }
       }
       // rename
       $name.text(fileName);
       // change style
       $group.toggleClass('is--selected',fileName !== fileNameDefault);
+      // reset hidden
+      resetHiddenFileBuffer($input,$group,fileName === fileNameDefault);
+    }
+    function resetHiddenFileBuffer($input,$group,is__reset){
+      // NOTE: 実行時に$groupが生成されていない場合があるので実行タイミングに注意が必要
+
+      // on input
+      if(!is__reset) return;
+
+      // on delete
+      const $hidden1 = $('[type="hidden"]',$group);
+      const $hidden2 = $group.siblings('[type="hidden"]');
+      const name = $input.attr('name');
+      $hidden1.add($hidden2).each(function() {
+        const $hidden = $(this);
+        const key = $hidden.attr('name');
+        if(name.indexOf(key)!=-1){
+          // matches
+          $hidden.val('');
+        }
+      });
     }
   });
 });
+$(document).on('sc3Bfcache',function(){
+  $('[type="file"]').each(function(inputID){
+    let $input = $(this);
+    let $group = $input.closest('[data-input-file-group-id]');
+    let $name = $('[data-input-file-name-id]',$group);
+    let fileNameDefault = 'no file selected';
+    // rename
+    $name.text(fileNameDefault);
+    // change style
+    $group.removeClass('is--selected');
+  });
+});
+
 
 
 // pdf preview (by browser)
@@ -471,36 +533,102 @@ $(function () {
  * NOTE: フォーム関連は以下に記載
 **/
 
-// 必須マークの調整（html調整）
+// フォームの項目名の調整（html調整）
 $(function () {
+  editFormRequiredMark();
+});
+function editFormRequiredMark(){
+
+  // NOTE: 以下の処置をすると、マークや文字、リンクなどの順番の制御が base.cssより可能になります。
+
+  // 1. 項目名クラス .formset__ttl内部のテキストコンテンツを全てhtmlで囲う（html調整）
+  $('.formset__ttl').each(function(i){
+    const $ttl = $(this);
+    $ttl.contents().filter(function() {
+      // NOTE: nodeType === 3 はテキストノード
+      return this.nodeType === 3 && $.trim(this.textContent).length > 0;
+    }).wrap('<label></label>');
+  });
+
+  // 2. 必須マークの調整（html調整）
   $('.formset__must').each(function(key, val) {
-    $(this).hide();
-    var html = $(this).parent().html();
-    html = '<span style="color:#c80000;">*</span>' + html;
-    $(this).parent().html(html);
+    const $mark = $(this);
+    $mark.addClass('formset__must--simple');
+    $mark.html('<i>*</i>');
+  });
+}
+
+// マイナス値の入力を自動で拒否
+$(function () {
+  $('[data-jquery-validate-rule="positive"').on('change',function() {
+    let $input = $(this)
+    let text = $input.val();
+    if(!isNaN(text)){
+      // NOTE: 入力値が数字なら、数値として取り扱う（それ以外の処理はバリデーションに任せる）
+      if(Number(text)<1) $input.val(1);
+    }
   });
 });
 
+// 小数点第3位以下を自動で拒否（フォーム系のタグ以外でも指定可能）
+function dataChangeDecimalOnInput($input,decimalPlaces){
+  console.log('dataChangeDecimalOnInput common.js');
+  decimalPlaces = isNaN(Number(decimalPlaces)) ? 2 : Number(decimalPlaces);// デフォルトは第3位以下を拒否（＝2をセット）
+  let is__formTag = ['input','select','textarea'].indexOf($input.prop('tagName').toLocaleLowerCase())!=-1;
+  let value = is__formTag ? $input.val() :  $input.text();
+  // 1. 数字と小数点以外を除去
+  value = value.replace(/[^0-9.]/g, '');
+  // 2. 小数点が2つ以上入力されないように制御
+  const parts = value.split('.');
+  if (parts.length > 2) {
+    value = parts[0] + '.' + parts.slice(1).join('');
+  }
+  // 3. 小数点第2位までに制限
+  if (parts.length > 1 && parts[1].length > decimalPlaces) {
+    value = roundToN(Number(parts[0]+'.'+parts[1]), decimalPlaces);
+  }
+  // 4. タグのタイプに合わせて動作を変更
+  console.log('dataChangeDecimalOnInput common.js',is__formTag,value);
+  if(is__formTag) $input.val(value);
+  if(!is__formTag) $input.text(value);
+}
+function dataChangeDecimalOnBlur($input){
+  console.log('dataChangeDecimalOnBlur common.js');
+  let is__formTag = ['input','select','textarea'].indexOf($input.prop('tagName').toLocaleLowerCase())!=-1;
+  let value = $input.val();
+  if (value !== '' && !isNaN(value)) {
+    // 1.00や 1. を 1へ変換
+    value = parseFloat(value).toString();
+    // タグのタイプに合わせて動作を変更
+    if(is__formTag) $input.val(value);
+    if(!is__formTag) $input.text(value);
+  }
+}
+
+
 // .select（html調整）
 $(function () {
-  $('.formset__input select').each(function() {
-    let $select = $(this);
-    if($select.closest('.select').length) return true;// .formset__input .select selectは飛ばす
-    // 次要素を追加し、クローンを入れる
-    let $selectClone = $select.clone(true);
-    $selectClone.attr('class');// bootstrapなどの影響を防ぐため、クラス名は消す
-    $select.after('<span class="select"></span>');
-    $select.next().append($selectClone);// イベントもコピー
-    // 不要な ▼文字を消す
-    $('option',$selectClone).each(function() {
-      let $option = $(this);
-      let text = $option.text();
-      $option.text(text.replace('▼',''));
-    });
-    // オリジナルを消す
-    $select.remove();
-  });
+  setRichSelectTag();
 });
+function setRichSelectTag(){
+  $('.formset__input select').each(function() {
+  let $select = $(this);
+  if($select.closest('.select').length) return true;// .formset__input .select selectは飛ばす
+  // 次要素を追加し、クローンを入れる
+  let $selectClone = $select.clone(true);
+  $selectClone.attr('class');// bootstrapなどの影響を防ぐため、クラス名は消す
+  $select.after('<span class="select"></span>');
+  $select.next().append($selectClone);// イベントもコピー
+  // 不要な ▼文字を消す
+  $('option',$selectClone).each(function() {
+    let $option = $(this);
+    let text = $option.text();
+    $option.text(text.replace('▼',''));
+  });
+  // オリジナルを消す
+  $select.remove();
+});
+}
 
 // パスワード表示
 $(function () {
@@ -559,3 +687,63 @@ $(function () {
   }
 });
 
+// ローケルな金額の文字列の取得と出力
+function getLocalPriceFormat($element,currency,value) {
+  const isQty = false;
+  // 数値変換用に標準化（EURのカンマをドットに置換）
+  let cleanVal = String(value).replace(/,/g, '.');
+  let num = parseFloat(cleanVal);
+  if (isNaN(num)) return;
+  // ロケール判定
+  const locale = {
+    'JPY': 'ja-JP',
+    'USD': 'en-US',
+    'GBP': 'en-GB',
+    'EUR': 'de-DE' // ドイツ形式：1.234,56
+  }[currency] || 'en-US';
+  // フォーマット設定
+  const options = {
+    minimumFractionDigits: (currency === 'JPY' || isQty) ? 0 : 2,
+    maximumFractionDigits: (currency === 'JPY' || isQty) ? 0 : 2
+  };
+  $element.text(new Intl.NumberFormat(locale, options).format(num));
+}
+
+// 確認画面の金額フォーマットを自動で調整
+$(function () {
+  setLocalPriceFormatAutomatically();
+});
+function setLocalPriceFormatAutomatically(){
+
+  const currency = $('[data-currency]:eq(0)').text();
+  $('[data-text-format="price"]').each(function() {
+    let $price = $(this);
+    getLocalPriceFormat($price,currency,$price.text());
+  });
+}
+
+
+// [data-set-next-month-today]に一か月後の今日をセット
+$(function () {
+  if(!$('[data-set-next-month-today]')[0]) return;
+  const date = new Date();
+  date.setMonth(date.getMonth() + 1);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 月は0始まりなので+1
+  const day = String(date.getDate()).padStart(2, '0');  
+  const targetDate = `${year}-${month}-${day}`;
+  setTimeout(function(){
+    $('[data-set-next-month-today]').each(function(){
+      let $date = $(this);
+      $date.val(targetDate).trigger('change');
+      console.log('[data-set-next-month-today]', targetDate);
+    });
+  },10);
+});
+
+// 小数点の四捨五入
+// console.log(roundToN(1.356, 2)); // 1.36
+function roundToN(val, precision){
+  const digit = Math.pow(10, precision);
+  return Math.round(val * digit) / digit;
+};

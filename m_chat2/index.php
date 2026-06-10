@@ -475,7 +475,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 			$btn_area.= '
 					<div>
 						<span style="color:tomato;">共通操作:</span>
-						<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">発注キャンセル</a>
+						<!--発注用のキャンセル：発注キャンセル-->
+						<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">キャンセル</a>
 						<!--<a href="javascript:shodan_cancel('.$_GET['etc02'].');">キャンセル</a>-->
 					</div>
 					';
@@ -502,7 +503,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 		case '再見積り依頼':
 		$btn_area = '
         <div>
-					<a href="/m_contact2/?type=見積り依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_parent">再見積りを依頼する</a>
+					<a href="/m_contact2/?type=再見積り依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_parent">再見積りを依頼する</a>
         </div>
         <div>
 					<!--<a href="javascript:shodan_cancel('.$_GET['etc02'].');">キャンセル</a>-->
@@ -515,7 +516,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 			$btn_area = '
 				<!--
         <div>
-					<a href="/m_contact2/?type=見積り依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_parent">再見積りを依頼する</a>
+					<a href="/m_contact2/?type=再見積り依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_parent">再見積りを依頼する</a>
         </div>
 				-->
         <div>
@@ -557,8 +558,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 									<a href="/m_contact2/?type=発注依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_parent">発注を依頼する</a>
 						</div>
 						<div>
-									<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">発注キャンセル</a>
-									<!--<a href="javascript:shodan_cancel('.$_GET['etc02'].');">キャンセル</a>-->
+									<a href="/m_contact2/?type=案件の取り下げ&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">キャンセル</a>
 						</div>
 					';
 				}
@@ -569,7 +569,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 		case '発注依頼':
 			$btn_area = '
         <div>
-        			<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">発注キャンセル</a>
+        			<!--発注用のキャンセル：発注キャンセル-->
+        			<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">キャンセル</a>
 					<!--<a href="javascript:shodan_cancel('.$_GET['etc02'].');">キャンセル</a>-->
         </div>
 			';
@@ -577,7 +578,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 		case '決済者発注承認':
 			$btn_area = '
         <div>
-        			<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">発注キャンセル</a>
+        			<!--発注用のキャンセル：発注キャンセル-->
+        			<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">キャンセル</a>
 					<!--<a href="javascript:shodan_cancel('.$_GET['etc02'].');">キャンセル</a>-->
         </div>
 			';
@@ -587,26 +589,28 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 
 			$btn_area = '
 				<div>
-							<a href="/m_contact2/?type=見積り依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_parent">再見積りを依頼する</a>
+							<a href="/m_contact2/?type=再見積り依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_parent">再見積りを依頼する</a>
 				</div>
 				<div>
 							<a href="javascript:void(0)" onclick="alert(\'仮登録中のため、発注できません。\')">発注を依頼する</a>
 				</div>
 				<div>
-							<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">発注キャンセル</a>
+							<!--発注用のキャンセル：発注キャンセル-->
+							<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">キャンセル</a>
 							<!--<a href="javascript:shodan_cancel('.$_GET['etc02'].');">キャンセル</a>-->
 				</div>
 					';
 			} else {
 			$btn_area = '
 				<div>
-							<a href="/m_contact2/?type=見積り依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_parent">再見積りを依頼する</a>
+							<a href="/m_contact2/?type=再見積り依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_parent">再見積りを依頼する</a>
 				</div>
 				<div>
 							<a href="/m_contact2/?type=発注依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_parent">発注を依頼する</a>
 				</div>
 				<div>
-							<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">発注キャンセル</a>
+							<!--発注用のキャンセル：発注キャンセル-->
+							<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">キャンセル</a>
 							<!--<a href="javascript:shodan_cancel('.$_GET['etc02'].');">キャンセル</a>-->
 				</div>
 					';
@@ -618,7 +622,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 		case '受注承認':
 			$btn_area = '
         <div>
-        			<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">発注キャンセル</a>
+        			<!--発注用のキャンセル：発注キャンセル-->
+        			<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">キャンセル</a>
 					<!--<a href="javascript:shodan_cancel('.$_GET['etc02'].');">キャンセル</a>-->
         </div>
 			';
@@ -804,6 +809,10 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 
 	if($item_shodan['STATUS']=="請求書送付(一括前払い)" || $item_shodan['STATUS']=="請求書送付(前払い)"){
 		$status="実施中";
+	}
+
+	if($item_shodan['STATUS']=="発注依頼" || $item_shodan['STATUS']=="決済者発注承認"){
+		$status="発注";
 	}
 
 	$str=str_replace("[TITLE]",$item_shodan['TITLE'],$str);
