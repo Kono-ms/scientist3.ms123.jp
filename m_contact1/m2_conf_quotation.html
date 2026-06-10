@@ -1,0 +1,52 @@
+<!-- 見積り送付の確認画面（saveconf）用：見積書（CB宛て英語版）1枚分の枠 -->
+<!-- 送信後にm_message1のリンクから表示される見積書（mode=disp_frame）と同じ部品で組み立てる -->
+[S-QUOTATION_LABEL]
+<p class="recipe-conf-label" style="max-width:1024px;margin:2em auto 0.5em;font-weight:bold;">[QUOTATION_LABEL]</p>
+[E-QUOTATION_LABEL]
+<div class="recipe">
+
+  <div class="recipe-header">
+    <h1 class="recipe-title">Quotation</h1>
+    <figure class="recipe-logo"><img src="/common/images/logo.png" width="200"></figure><!--会社ロゴ-->
+  </div>
+
+  [PREVIEW_INFO_CB]
+
+  <div class="recipe-items">
+    <table class="recipe-items-table">
+      <tbody>
+
+        <tr class="recipe-items-table__item-header">
+          <th style="width:30%"><!--Item--></th>
+          <th style="width:10%">Qty</th>
+          <th style="width:20%">Unit Price</th>
+          <th style="width:20%">Special Discount</th>
+          <th>Total</th>
+        </tr>
+
+        [ADD_DETAIL_AREA2]
+      </tbody>
+    </table>
+    <table class="recipe-items-table">
+      <tbody>
+        <tr class="recipe-items-table__item-header">
+          <td colspan="4">Special discount included above.</td>
+          <td style="text-align:right" id="discount">[SUM_M2_DETAIL_SP_DISCOUNT]</td>
+        </tr>
+
+        <tr class="recipe-items-table__item-footer">
+          <td colspan="5">[D-M2_SPECIAL_NOTE]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="recipe-details">
+    <!--小計やサービス料金表示-->
+    [SERVICE_FEE_AREA]
+  </div>
+
+  <div class="recipe-footer">
+
+  </div>
+</div>
