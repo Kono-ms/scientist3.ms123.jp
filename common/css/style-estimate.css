@@ -480,3 +480,33 @@ p.recipe-details--title {
 .recipe-details__table th:first-child+td:last-child {
   text-align: right;
 }
+
+/* 明細のQtyなどをLabel+Valueでまとめて表示（見出し行を廃止） */
+.recipe-item-metric {
+  display: inline-block;
+  margin: 0 1.5em 0.25em 0;
+  white-space: nowrap;
+}
+
+/* 見積書 右下の透かしロゴ（透かしを置く帳票のみに限定） */
+.recipe-watermark-area {
+  position: relative;
+  min-height: calc( var(--recipe-fs) * 7 );
+}
+.recipe-watermark {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: calc( var(--recipe-fs) * 9 );
+  max-width: 40%;
+  height: auto;
+  opacity: 0.2;
+  z-index: 0;
+  pointer-events: none;
+}
+@media print {
+  .recipe-watermark {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
