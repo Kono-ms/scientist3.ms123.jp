@@ -41,14 +41,9 @@
 <div class="recipe-address">
   <table class="recipe-address__table">
     <tbody>
-      <tr class="recipe-address__item-ttl">
-        <td>Bill to:</td>
-        <td>Ship to:</td>
-        <td></td>
-      </tr>
       <tr class="recipe-address__item-info">
         <td>[PDF_M2-M2_DVAL03]<!--研究者会社名--></td>
-        <td>サプライヤー名:[PDF_M1-M1_DVAL01]<!--[M2_SHIP_TO_SPT_2]--></td>
+        <td>[PDF_M1-M1_DVAL01]<!--[M2_SHIP_TO_SPT_2]--></td>
         <td>コスモ・バイオ株式会社</td>
       </tr>
       <tr class="recipe-address__item-ttl item--no-border">
@@ -69,24 +64,12 @@
   <p class="recipe-items__text">下記の通り、御見積り申し上げます。</p>
   <table class="recipe-items-table">
     <tbody>
-      <tr class="recipe-items-table__item-header">
-        <th style="width:30%"><!--Item--></th>
-        <th style="width:10%">数量<!--Qty--></th>
-        <th style="width:20%">単価<!--Unit Price--></th>
-        <th style="width:20%">値引き<!--Special Discount--></th>
-        <th>合計<!--Total--></th>
-      </tr>
-
       [AREA-FDETAIL-ITEMS]
     </tbody>
   </table>
 
   <table class="recipe-items-table">
     <tbody>
-      <tr class="recipe-items-table__item-header">
-        <td colspan="4">値引き合計</td>
-        <td style="text-align:right" id="discount">[SUM_M2_DETAIL_SP_DISCOUNT]</td>
-      </tr>
       <tr class="recipe-items-table__item-footer">
         <td colspan="5">特記事項:<br>[D-M2_SPECIAL_NOTE]</td>
       </tr>
@@ -97,11 +80,9 @@
 <div class="recipe-details">
   
   <!--Start calc-->
+  <p style="font-size:0.875em;font-weight:700;margin:1em 0 0.4em;">サービス費用</p>
   <table class="recipe-details__table">
     <tbody>
-      <tr>
-        <th colspan="2">サービス費用</th>
-      </tr>
       <!-- <tr>
         <td>特別値引き</td>
         <td></td>
@@ -124,11 +105,9 @@
     </tbody>
   </table>
 
+  <p style="font-size:0.875em;font-weight:700;margin:1em 0 0.4em;">手数料</p>
   <table class="recipe-details__table">
     <tbody>
-      <tr>
-        <th colspan="2">手数料</th>
-      </tr>
       <tr>
         <th>PF手数料</th>
         <td>[MITSUMORISYO_PF_FEE][D-M2_CURRENCY]</td>
