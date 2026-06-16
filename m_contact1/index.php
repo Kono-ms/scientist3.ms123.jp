@@ -5671,7 +5671,7 @@ function makeConfQuotationPreview($key,$shodan_id)
 	$pdf_address4="";
 	if($pdf_m1_item["M1_DVAL04"]!="M1_DVAL04:Japan"){
 		//CBの物流センターの住所
-		$pdf_address4="Cosmo Bio Shinsuna Distribution Center ShinSuna 1-Chome, Koto-Ku,Tokyo 136-0075, Japan 3F 12-39 TEL: 81-3-5632-9608";
+		$pdf_address4="Cosmo Bio Shinsuna Distribution Center<br> ShinSuna 1-Chome, Koto-Ku,Tokyo 136-0075, Japan 3F 12-39 TEL: 81-3-5632-9608";
 	}else{
 		//研究者の「住所（英語表記）」
 		$pdf_address4=$pdf_m2_item["M2_DVAL20"];

@@ -189,11 +189,31 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 	//echo "<!--s_item:";
 	//var_dump($s_item);
 	//echo "-->";
+
+
 	// m2情報
 	$StrSQL="SELECT * FROM DAT_M2 WHERE MID='".$item_shodan['MID2']."';";
-	//echo('<!--'.$StrSQL.'-->');
 	$rs=mysqli_query(ConnDB(),$StrSQL);
 	$item_m2 = mysqli_fetch_assoc($rs);
+	//echo "<!--strsql:$StrSQL-->";
+	//echo "<!--";
+	//var_dump($item_m2);
+	//echo "-->";
+
+	//決済者承認フラグのフロー
+	//・決済者なしパターン：「発注依頼」→運営による「受注承認」
+	//・決済者ありパターン：「発注依頼」→決裁者による「決済者発注承認」→運営による「受注承認」
+	$StrSQL="SELECT ID,MID FROM DAT_M3 where MID='".$item_m2["M2_DVAL15"]."' ";
+	$StrSQL.=" and MID IS NOT NULL and MID!='' order by ID desc;";
+	$kessai_rs=mysqli_query(ConnDB(),$StrSQL);
+	$kessai_item = mysqli_fetch_assoc($kessai_rs);
+	$kessai_num = mysqli_num_rows($kessai_rs);
+	//echo "<!--strsql:$StrSQL-->";
+	//echo "<!--";
+	//var_dump($kessai_item);
+	//echo "-->";
+
+
 
 	//分割払い（2回払い、マイルストーン払い）の処理
 	//分割払いのときは、見積り送付でDAT_SHODANステータス更新は一端とまる
@@ -204,9 +224,9 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		$rs_div=mysqli_query(ConnDB(),$StrSQL);
 		$item_num_div=mysqli_num_rows($rs_div);
 
-		$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE SHODAN_ID='".$_GET['etc02']."' "; 
-		$StrSQL.=" and (STATUS = '請求' or STATUS = '請求書送付(一括前払い)' or STATUS = '請求書送付(前払い)') and S_STATUS='請求（研究者）'";
-		$StrSQL.=" order by ID desc";
+		//$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE SHODAN_ID='".$_GET['etc02']."' "; 
+		//$StrSQL.=" and (STATUS = '請求' or STATUS = '請求書送付(一括前払い)' or STATUS = '請求書送付(前払い)') and S_STATUS='請求（研究者）'";
+		//$StrSQL.=" order by ID desc";
 		
 		//echo('<!--seikyu:'.$StrSQL.'-->');
 		//$s_rs=mysqli_query(ConnDB(),$StrSQL);
@@ -216,12 +236,35 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		//echo "-->";
 		
 		while( $item_div=mysqli_fetch_assoc($rs_div) ){
+			$div_id=$item_div["DIV_ID"];
+			$tmp="";
+			$tmp=explode("-", $div_id);
+
+			//DIV_IDに対応する見積りデータの情報をとってくる
+			$StrSQL="SELECT ID,SHODAN_ID,MID1,MID2,DIV_ID,STATUS,M2_PAY_TYPE FROM DAT_FILESTATUS ";
+			$StrSQL.=" WHERE DIV_ID='".$item_div["DIV_ID"]."' ";
+			$StrSQL.=" AND STATUS='見積り送付'";
+			$mitsu_origin_rs=mysqli_query(ConnDB(),$StrSQL);
+			$mitsu_origin_item=mysqli_fetch_assoc($mitsu_origin_rs);
+			$mitsu_origin_item_num=mysqli_num_rows($mitsu_origin_rs);
+			//echo "<!--";
+			//var_dump($mitsu_origin_item);
+			//echo "-->";
+
 			
 			$sys_comment = "";
 			switch($item_div['STATUS']) {
 				case '発注依頼':
+					//決済者ありの場合はメッセージを変える
 					$sys_comment='('.$item_div["DIV_ID"].') ';
-					$sys_comment.='決裁者による発注の承認待ちです。しばらくお待ちください。';
+
+					if($kessai_num>0 && $item_m2["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+						//$sys_comment.='';
+						$sys_comment.='決裁者による発注の承認待ちです。しばらくお待ちください。';
+					}else{
+						$sys_comment.='発注の承認待ちです。しばらくお待ちください。';
+					}
+					//$sys_comment.='決裁者による発注の承認待ちです。しばらくお待ちください。';
 				break;
 				case '決済者発注承認':
 					// 決済者機能から承認否認するとメッセージが重複する
@@ -272,7 +315,17 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 				case '完了':
 					$sys_comment='('.$item_div["DIV_ID"].') ';
-					$sys_comment.='本案件はクローズしました。この度はScitentist3をご利用いただきありがとうございました。';
+					if($mitsu_origin_item["M2_PAY_TYPE"]=="Split"){
+						if(count($tmp)==3 && $tmp[0]!="" && $tmp[1]!="" && $tmp[2]!="" && $tmp[2]=="Part1"){
+							$sys_comment.='手続きは完了しました。';
+						}else{
+							$sys_comment.='本案件はクローズしました。この度はScitentist3をご利用いただきありがとうございました。';
+						}
+
+					}else{
+						$sys_comment.='本案件はクローズしました。この度はScitentist3をご利用いただきありがとうございました。';
+					}
+					//$sys_comment.='本案件はクローズしました。この度はScitentist3をご利用いただきありがとうございました。';
 				break;
 				case '辞退':
 					$sys_comment='('.$item_div["DIV_ID"].') ';
@@ -353,7 +406,14 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				}
 			break;
 			case '発注依頼':
-				$sys_comment = '決裁者による発注の承認待ちです。しばらくお待ちください。';
+				//決済者ありの場合はメッセージを変える
+				if($kessai_num>0 && $item_m2["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+						//$sys_comment='';
+						$sys_comment='決裁者による発注の承認待ちです。しばらくお待ちください。';
+				}else{
+					$sys_comment='発注の承認待ちです。しばらくお待ちください。';
+				}
+				//$sys_comment = '決裁者による発注の承認待ちです。しばらくお待ちください。';
 				break;
 			case '決済者発注承認':
 				// 決済者機能から承認否認するとメッセージが重複する
@@ -400,7 +460,17 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				';
 				break;
 			case '完了':
-				$sys_comment = '本案件はクローズしました。この度はScitentist3をご利用いただきありがとうございました。';
+				if($mitsu_origin_item["M2_PAY_TYPE"]=="Split"){
+					if(count($tmp)==3 && $tmp[0]!="" && $tmp[1]!="" && $tmp[2]!="" && $tmp[2]=="Part1"){
+						$sys_comment='手続きは完了しました。';
+					}else{
+						$sys_comment='本案件はクローズしました。この度はScitentist3をご利用いただきありがとうございました。';
+					}
+
+				}else{
+					$sys_comment='本案件はクローズしました。この度はScitentist3をご利用いただきありがとうございました。';
+				}
+				//$sys_comment = '本案件はクローズしました。この度はScitentist3をご利用いただきありがとうございました。';
 				break;
 			case '辞退':
 				$sys_comment = 'この商談は辞退されました。';

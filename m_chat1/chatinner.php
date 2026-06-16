@@ -219,16 +219,38 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			//echo('<!--'.$StrSQL.'-->');
 			$h_rs=mysqli_query(ConnDB(),$StrSQL);
 			$h_item = mysqli_fetch_assoc($h_rs);
+
+			$div_id=$item_div["DIV_ID"];
+			$tmp="";
+			$tmp=explode("-", $div_id);
+
+			//DIV_IDに対応する見積りデータの情報をとってくる
+			$StrSQL="SELECT ID,SHODAN_ID,MID1,MID2,DIV_ID,STATUS,M2_PAY_TYPE FROM DAT_FILESTATUS ";
+			$StrSQL.=" WHERE DIV_ID='".$item_div["DIV_ID"]."' ";
+			$StrSQL.=" AND STATUS='見積り送付'";
+			$mitsu_origin_rs=mysqli_query(ConnDB(),$StrSQL);
+			$mitsu_origin_item=mysqli_fetch_assoc($mitsu_origin_rs);
+			$mitsu_origin_item_num=mysqli_num_rows($mitsu_origin_rs);
 			
 			$sys_comment = "";
 			switch($item_div['STATUS']) {
 				case '発注依頼':
 					//受注承認できるのは運営のみに仕様変更
-					if($kessai_num>=1){
-						$sys_comment='('.$item_div["DIV_ID"].') ';
-						//$sys_comment.='決済者による発注の承認待ちです。しばらくお待ちください。(日本語で仮表示)';
+					//決済者ありの場合はメッセージを表示しない。
+					$sys_comment='('.$item_div["DIV_ID"].') ';
+
+					if($kessai_num>0 && $item_m2["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+						$sys_comment.='';
+						//$sys_comment.='Awaiting order approval from the authorized person. Please wait for a moment.';
+					}else{
 						$sys_comment.='Awaiting order approval from the authorized person. Please wait for a moment.';
 					}
+
+					//if($kessai_num>=1){
+					//	$sys_comment='('.$item_div["DIV_ID"].') ';
+					//	//$sys_comment.='決済者による発注の承認待ちです。しばらくお待ちください。(日本語で仮表示)';
+					//	$sys_comment.='Awaiting order approval from the authorized person. Please wait for a moment.';
+					//}
 				break;
 				case '決済者発注承認':
 					//受注承認できるのは運営のみに仕様変更のためコメントアウト
@@ -265,7 +287,17 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 				case '完了':
 					$sys_comment='('.$item_div["DIV_ID"].') ';
-					$sys_comment.='This case has been closed. Thank you for using Scitentist3.';
+					if($mitsu_origin_item["M2_PAY_TYPE"]=="Split"){
+						if(count($tmp)==3 && $tmp[0]!="" && $tmp[1]!="" && $tmp[2]!="" && $tmp[2]=="Part1"){
+							$sys_comment.='procedure completed.';
+						}else{
+							$sys_comment.='This case has been closed. Thank you for using Scitentist3.';
+						}
+
+					}else{
+						$sys_comment.='This case has been closed. Thank you for using Scitentist3.';
+					}
+					//$sys_comment.='This case has been closed. Thank you for using Scitentist3.';
 				break;
 				case '辞退':
 					$sys_comment='('.$item_div["DIV_ID"].') ';
@@ -291,10 +323,18 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		switch($item_shodan['STATUS']) {
 			case '発注依頼':
 				//受注承認できるのは運営のみに仕様変更
-				if($kessai_num>=1){
-					//$sys_comment='決済者による発注の承認待ちです。しばらくお待ちください。(日本語で仮表示)';
+				//決済者ありの場合はメッセージを表示しない。
+				if($kessai_num>0 && $item_m2["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
+						$sys_comment='';
+						//$sys_comment='Awaiting order approval from the authorized person. Please wait for a moment.';
+				}else{
 					$sys_comment='Awaiting order approval from the authorized person. Please wait for a moment.';
 				}
+
+				//if($kessai_num>=1){
+				//	//$sys_comment='決済者による発注の承認待ちです。しばらくお待ちください。(日本語で仮表示)';
+				//	$sys_comment='Awaiting order approval from the authorized person. Please wait for a moment.';
+				//}
 				break;
 			case '決済者発注承認':
 				//受注承認できるのは運営のみに仕様変更のためコメントアウト
@@ -334,7 +374,17 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 			*/
 			case '完了':
-				$sys_comment = 'This case has been closed. Thank you for using Scitentist3.';
+				if($mitsu_origin_item["M2_PAY_TYPE"]=="Split"){
+					if(count($tmp)==3 && $tmp[0]!="" && $tmp[1]!="" && $tmp[2]!="" && $tmp[2]=="Part1"){
+						$sys_comment='procedure completed.';
+					}else{
+						$sys_comment='This case has been closed. Thank you for using Scitentist3.';
+					}
+
+				}else{
+					$sys_comment='This case has been closed. Thank you for using Scitentist3.';
+				}
+				//$sys_comment = 'This case has been closed. Thank you for using Scitentist3.';
 				break;
 			case '辞退':
 				$sys_comment = 'This deal has been declined. If you have mistakenly declined this opportunity, please contact the administrator.';

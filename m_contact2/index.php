@@ -2227,6 +2227,11 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			}
 			$str=str_replace("[H_M2_LIST]",$h_m2_list,$str);
 			$str=str_replace("[H_M2_DETAIL]",json_encode($h_m2_detail),$str);
+			if($h_m2_list==""){
+				$str=DispParam($str,"HATYU_CAUTION");
+			}else{
+				$str=DispParamNone($str,"HATYU_CAUTION");
+			}
 		}
 
 
@@ -2622,6 +2627,11 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			}
 			$str=str_replace("[H_M2_LIST]",$h_m2_list,$str);
 			$str=str_replace("[H_M2_DETAIL]",json_encode($h_m2_detail),$str);
+			if($h_m2_list==""){
+				$str=DispParam($str,"HATYU_CAUTION");
+			}else{
+				$str=DispParamNone($str,"HATYU_CAUTION");
+			}
 			
 		}
 
@@ -2976,6 +2986,11 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			}
 			$str=str_replace("[H_M2_LIST]",$h_m2_list,$str);
 			$str=str_replace("[H_M2_DETAIL]",json_encode($h_m2_detail),$str);
+			if($h_m2_list==""){
+				$str=DispParam($str,"HATYU_CAUTION");
+			}else{
+				$str=DispParamNone($str,"HATYU_CAUTION");
+			}
 		}
 
 		if($type == '案件の取り下げ') {

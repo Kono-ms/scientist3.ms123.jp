@@ -618,7 +618,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			if($pdf_m1_item["M1_DVAL04"]!="M1_DVAL04:Japan"){
 			//if($pdf_m1_item["M1_ETC133"]!="M1_ETC133:Japan"){
 				//CBの物流センターの住所
-				$pdf_address4="Cosmo Bio Shinsuna Distribution Center ShinSuna 1-Chome, Koto-Ku,Tokyo 136-0075, Japan 3F 12-39<br>TEL: 81-3-5632-9608";
+				$pdf_address4="Cosmo Bio Shinsuna Distribution Center<br> ShinSuna 1-Chome, Koto-Ku,Tokyo 136-0075, Japan 3F 12-39<br>TEL: 81-3-5632-9608";
 			}else{
 				//研究者の「住所（英語表記）」
 				$pdf_address4="";
@@ -3363,7 +3363,9 @@ where
 				//echo "<!--".$shodan_item["ID"].": $StrSQL-->";
 				$shodan_div_rs=mysqli_query(ConnDB(),$StrSQL);
 				while( $shodan_div_item=mysqli_fetch_assoc($shodan_div_rs) ){
-					if($shodan_div_item["STATUS"]=="受注承認(前払い)"){
+
+					if($shodan_div_item["STATUS"]=="受注承認(前払い)" &&
+						$item["STATUS"]=="受注承認(前払い)"){
 						//2重の文言表示を防止
 						$disp_word="[受注承認（前払い） サプライヤーから受領次第、要請求書発行]";
 						if(strpos($ext_msg, $disp_word)!==false){
@@ -3382,7 +3384,8 @@ where
 							&& $m2["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
 							
 							//決済者承認が「あり」の場合
-							if($shodan_div_item["STATUS"] == "決済者発注承認"){
+							if($shodan_div_item["STATUS"] == "決済者発注承認" &&
+								$item["STATUS"]=="決済者発注承認"){
 								//2重の文言表示を防止
 								$disp_word="[要承認対応]";
 								if(strpos($ext_msg, $disp_word)!==false){
@@ -3393,7 +3396,8 @@ where
 							}
 						}else{
 							//決済者が存在しないもしくは、決済者承認が「なし」の場合
-							if($shodan_div_item["STATUS"] == "発注依頼"){
+							if($shodan_div_item["STATUS"] == "発注依頼" &&
+								$item["STATUS"]=="発注依頼"){
 								//2重の文言表示を防止
 								$disp_word="[要承認対応]";
 								if(strpos($ext_msg, $disp_word)!==false){
