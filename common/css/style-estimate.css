@@ -481,13 +481,6 @@ p.recipe-details--title {
   text-align: right;
 }
 
-/* 明細のQtyなどをLabel+Valueでまとめて表示（見出し行を廃止） */
-.recipe-item-metric {
-  display: inline-block;
-  margin: 0 1.5em 0.25em 0;
-  white-space: nowrap;
-}
-
 /* 見積書 右下の透かしロゴ（透かしを置く帳票のみに限定） */
 .recipe-watermark-area {
   position: relative;
