@@ -1174,7 +1174,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		$StrSQL="SELECT ID,SHODAN_ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND STATUS='発注依頼' ";
 		//echo('<!--previewSQL:'.$StrSQL.'-->');
 		$preview_jyutyu_rs=mysqli_query(ConnDB(),$StrSQL);
-		$opt_preview_list_r="";
+		$opt_preview_list_s="";
 		$opt_preview_list_cb="";
 		$opt_preview_list_h="";
 		while($preview_jyutyu_item = mysqli_fetch_assoc($preview_jyutyu_rs)){
@@ -1213,11 +1213,12 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		
 
 
-		//プレビュー関連:発注書R宛て
-		$StrSQL="SELECT ID,SHODAN_ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND STATUS='受注承認' ";
+		//プレビュー関連:発注書サプライヤー宛て
+		$StrSQL="SELECT ID,SHODAN_ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND ( STATUS='受注承認' OR STATUS='受注承認(前払い)' ) ";
+		//$StrSQL="SELECT ID,SHODAN_ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND STATUS='受注承認' ";
 		//echo('<!--previewSQL:'.$StrSQL.'-->');
 		$preview_jyutyu_rs=mysqli_query(ConnDB(),$StrSQL);
-		$opt_preview_list_r="";
+		$opt_preview_list_s="";
 		$opt_preview_list_cb="";
 		$opt_preview_list_h="";
 		while($preview_jyutyu_item = mysqli_fetch_assoc($preview_jyutyu_rs)){
@@ -1247,13 +1248,115 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				$preview_m2_version=$preview_item["M2_VERSION"];
 
 				//送信ボタンない状態で表示
-				$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hr&btn_version=1&key=".$preview_item["ID"]."'>";
+				$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hs&btn_version=1&key=".$preview_item["ID"]."'>";
 				$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
 			}
 
 		}
-		$str=str_replace("[OPT_PREVIEW_LIST_HK_R]",$opt_preview_list_h,$str);
+		$str=str_replace("[OPT_PREVIEW_LIST_HK_S]",$opt_preview_list_h,$str);
 		
+
+
+		//分割払い（2回払い、マイルストーン時のステータス表記）
+		$div_status="";
+		$StrSQL="SELECT ID,SHODAN_ID,MID1,STATUS,DIV_ID,M2_PAY_TYPE FROM DAT_FILESTATUS ";
+		$StrSQL.=" WHERE SHODAN_ID='".$FieldValue[0]."' ";
+		$StrSQL.=" AND (STATUS='見積り送付' OR STATUS='運営手数料追加') ";
+		$StrSQL.=" ORDER BY NEWDATE DESC ";
+		$tmp_rs1=mysqli_query(ConnDB(),$StrSQL);
+		$tmp_item1 = mysqli_fetch_assoc($tmp_rs1);
+		$tmp_num1=mysqli_num_rows($tmp_rs1);
+		//echo "<!--$StrSQL-->";
+		//echo "<!--";
+		//var_dump($tmp_item1);
+		//echo "-->";
+
+		$div_id=$tmp_item1["DIV_ID"];
+		$tmp="";
+		$tmp=explode("-", $div_id);
+		if(count($tmp)==3 && $tmp[0]!="" && $tmp[1]!="" && $tmp[2]!=""){
+			$pre_part=$tmp[0]."-".$tmp[1];
+			$part=$tmp[2];
+		}
+
+		if($tmp_num1>0 && 
+			($tmp_item1["M2_PAY_TYPE"]=="Split" || $tmp_item1["M2_PAY_TYPE"]=="Milestone") ){
+
+			$str=DispParamNone($str,"TRUE_STATUS");
+			$str=DispParam($str,"DIV_STATUS");
+
+			$StrSQL="SELECT * FROM DAT_SHODAN_DIV ";
+			$StrSQL.=" WHERE SHODAN_ID='".$FieldValue[0]."' ";
+			$StrSQL.=" AND DIV_ID LIKE '".$pre_part."-%' ";
+			$tmp_rs2=mysqli_query(ConnDB(),$StrSQL);
+			$tmp_num2=mysqli_num_rows($tmp_rs2);
+
+			$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS FROM DAT_FILESTATUS ";
+			$StrSQL.=" WHERE SHODAN_ID='".$FieldValue[0]."' ";
+			$StrSQL.=" AND DIV_ID LIKE '".$pre_part."-%' ";
+			$StrSQL.=" AND STATUS='見積り送付'";
+			$tmp_rs3=mysqli_query(ConnDB(),$StrSQL);
+			$tmp_num3=mysqli_num_rows($tmp_rs2);
+
+			$StrSQL="SELECT * FROM DAT_FILESTATUS ";
+			$StrSQL.=" WHERE SHODAN_ID='".$FieldValue[0]."' ";
+			$StrSQL.=" AND DIV_ID LIKE '".$pre_part."-%' ";
+			$tmp_rs4=mysqli_query(ConnDB(),$StrSQL);
+			$tmp_num4=mysqli_num_rows($tmp_rs4);
+
+			$tmp_status=array();
+			while($tmp_item4 = mysqli_fetch_assoc($tmp_rs4)){
+				$tmp_status[]=$tmp_item4["STATUS"];
+				//echo "<!--$StrSQL-->";
+				//echo "<!--";
+				//var_dump($tmp_item4)	
+				//echo "-->";
+
+			}
+
+			if(in_array("受注承認", $tmp_status, true) ||
+				in_array("受注承認(前払い)", $tmp_status, true)){
+				$div_status="受注承認";
+
+			}else if(in_array("決済者発注承認", $tmp_status, true)){
+				$div_status="決済者発注承認";
+
+			}else if(in_array("発注依頼", $tmp_status, true)){
+				$div_status="発注依頼";
+
+			}else if(in_array("見積り送付", $tmp_status, true)){
+				$div_status="見積り送付";
+
+			}else if(in_array("運営手数料追加", $tmp_status, true)){
+				$div_status="運営手数料追加";
+
+			}
+
+			//完了の数が分割数と同じだったら完了で上書き
+			if(in_array("完了", $tmp_status, true)){
+				$cou=array_count_values($tmp_status);
+				echo "<!--cou:".$cou["完了"]."-->";
+				echo "<!--";
+				var_dump($cou);
+				echo "-->";
+				$div_num=$tmp_num3-1;
+				echo "<!--div_num:$div_num-->";
+				if($cou["完了"]>=$div_num ){
+					$div_status="完了";
+				}
+			}
+
+			//echo "<!--";
+			//var_dump($tmp_status);
+			//echo "-->";
+			$str=str_replace("[DIV_STATUS]","[分割] ".$div_status,$str);
+
+		}
+		$str=str_replace("[DIV_STATUS]","",$str);
+		$str=DispParam($str,"TRUE_STATUS");
+		$str=DispParamNone($str,"DIV_STATUS");
+
+
 
 
 
@@ -1387,7 +1490,7 @@ echo "<!--".$StrSQL."-->";
 			$CurrentRecord=1;
 			$strMain="";
 			while ($item = mysqli_fetch_assoc($rs)) {
-				//echo "<!--";
+				//echo "<!--item:";
 				//var_dump($item);
 				//echo "-->";
 
@@ -1536,6 +1639,110 @@ echo "<!--".$StrSQL."-->";
 					//}
 				}
 				$str=str_replace("[EXT-MSG]",$ext_msg,$str);
+
+
+
+				//分割払い（2回払い、マイルストーン時のステータス表記）
+				$div_status="";
+				$StrSQL="SELECT ID,SHODAN_ID,MID1,STATUS,DIV_ID,M2_PAY_TYPE FROM DAT_FILESTATUS ";
+				$StrSQL.=" WHERE SHODAN_ID='".$item["ID"]."' ";
+				$StrSQL.=" AND (STATUS='見積り送付' OR STATUS='運営手数料追加') ";
+				$StrSQL.=" ORDER BY NEWDATE DESC ";
+				$tmp_rs1=mysqli_query(ConnDB(),$StrSQL);
+				$tmp_item1 = mysqli_fetch_assoc($tmp_rs1);
+				$tmp_num1=mysqli_num_rows($tmp_rs1);
+				//echo "<!--$StrSQL-->";
+				//echo "<!--";
+				//var_dump($tmp_item1);
+				//echo "-->";
+
+				$div_id=$tmp_item1["DIV_ID"];
+				$tmp="";
+				$tmp=explode("-", $div_id);
+				if(count($tmp)==3 && $tmp[0]!="" && $tmp[1]!="" && $tmp[2]!=""){
+					$pre_part=$tmp[0]."-".$tmp[1];
+					$part=$tmp[2];
+				}
+
+				if($tmp_num1>0 && 
+					($tmp_item1["M2_PAY_TYPE"]=="Split" || $tmp_item1["M2_PAY_TYPE"]=="Milestone") ){
+
+					$str=DispParamNone($str,"TRUE_STATUS");
+					$str=DispParam($str,"DIV_STATUS");
+
+					$StrSQL="SELECT * FROM DAT_SHODAN_DIV ";
+					$StrSQL.=" WHERE SHODAN_ID='".$item["ID"]."' ";
+					$StrSQL.=" AND DIV_ID LIKE '".$pre_part."-%' ";
+					$tmp_rs2=mysqli_query(ConnDB(),$StrSQL);
+					$tmp_num2=mysqli_num_rows($tmp_rs2);
+
+					$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS FROM DAT_FILESTATUS ";
+					$StrSQL.=" WHERE SHODAN_ID='".$item["ID"]."' ";
+					$StrSQL.=" AND DIV_ID LIKE '".$pre_part."-%' ";
+					$StrSQL.=" AND STATUS='見積り送付'";
+					$tmp_rs3=mysqli_query(ConnDB(),$StrSQL);
+					$tmp_num3=mysqli_num_rows($tmp_rs2);
+
+
+					$StrSQL="SELECT * FROM DAT_FILESTATUS ";
+					$StrSQL.=" WHERE SHODAN_ID='".$item["ID"]."' ";
+					$StrSQL.=" AND DIV_ID LIKE '".$pre_part."-%' ";
+					$tmp_rs4=mysqli_query(ConnDB(),$StrSQL);
+					$tmp_num4=mysqli_num_rows($tmp_rs4);
+
+					$tmp_status=array();
+					while($tmp_item4 = mysqli_fetch_assoc($tmp_rs4)){
+						$tmp_status[]=$tmp_item4["STATUS"];
+					//echo "<!--$StrSQL-->";
+					//echo "<!--";
+					//var_dump($tmp_item4)	
+					//echo "-->";
+
+					}
+
+					if(in_array("受注承認", $tmp_status, true) ||
+						in_array("受注承認(前払い)", $tmp_status, true)){
+						$div_status="受注承認";
+
+					}else if(in_array("決済者発注承認", $tmp_status, true)){
+						$div_status="決済者発注承認";
+
+					}else if(in_array("発注依頼", $tmp_status, true)){
+						$div_status="発注依頼";
+
+					}else if(in_array("見積り送付", $tmp_status, true)){
+						$div_status="見積り送付";
+
+					}else if(in_array("運営手数料追加", $tmp_status, true)){
+						$div_status="運営手数料追加";
+
+					}
+
+					//完了の数が分割数と同じだったら完了で上書き
+					if(in_array("完了", $tmp_status, true)){
+						$cou=array_count_values($tmp_status);
+						echo "<!--cou:".$cou["完了"]."-->";
+						echo "<!--";
+						var_dump($cou);
+						echo "-->";
+						$div_num=$tmp_num3-1;
+						echo "<!--div_num:$div_num-->";
+						if($cou["完了"]>=$div_num ){
+							$div_status="完了";
+						}
+					}
+
+					//echo "<!--";
+					//var_dump($tmp_status);
+					//echo "-->";
+					$str=str_replace("[DIV_STATUS]","[分割] ".$div_status,$str);
+
+				}
+				$str=str_replace("[DIV_STATUS]","",$str);
+				$str=DispParam($str,"TRUE_STATUS");
+				$str=DispParamNone($str,"DIV_STATUS");
+
+
 
 
 				//「ファイル・ステータス」ボタンの未読表示

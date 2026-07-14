@@ -240,7 +240,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 					$sys_comment='('.$item_div["DIV_ID"].') ';
 
 					if($kessai_num>0 && $item_m2["KESSAI_SYONIN"]=="KESSAI_SYONIN:あり"){
-						$sys_comment.='';
+						$sys_comment='';
 						//$sys_comment.='Awaiting order approval from the authorized person. Please wait for a moment.';
 					}else{
 						$sys_comment.='Awaiting order approval from the authorized person. Please wait for a moment.';
@@ -305,7 +305,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 				case 'キャンセル':
 					$sys_comment='('.$item_div["DIV_ID"].') ';
-					$sys_comment.='This opportunity has been cancelled.';
+					$sys_comment.='This deal has been closed by the researcher.';
 				break;
 			}
 
@@ -390,7 +390,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				$sys_comment = 'This deal has been declined. If you have mistakenly declined this opportunity, please contact the administrator.';
 				break;
 			case 'キャンセル':
-				$sys_comment = 'This opportunity has been cancelled.';
+				$sys_comment = 'This deal has been closed by the researcher.';
 				break;
 		}
 	}
@@ -428,7 +428,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			$sys_comment = 'This deal has been declined. If you have mistakenly declined this opportunity, please contact the administrator.';
 			break;
 		case 'キャンセル':
-			$sys_comment = 'This opportunity has been cancelled.';
+			$sys_comment = 'This deal has been closed by the researcher.';
 			break;
 	}
 	*/

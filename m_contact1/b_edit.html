@@ -112,15 +112,23 @@
                 <div class="formset__ttl"><strong>Description</strong></div>
               </div>
               <div class="formset__item">
+                <div class="formset__ttl">Delivery confirmation<span class="formset__must">Mandatory</span></div>
+                <div class="formset__input">
+                  <input type="checkbox" name="N_FILE" value="[D-B_FILE]" required />
+                  Check this box once the order has been shipped to the customer.
+                </div>
+              </div>
+              <!--
+              <div class="formset__item">
                 <div class="formset__ttl">納品 check<span class="formset__must">Mandatory</span></div>
                 <div class="formset__input">
                   <input type="checkbox" name="N_FILE" value="[D-B_FILE]" required />Please check the box if the
                   納品 has been sent.
                 </div>
-              </div>
+              </div>-->
 
               <div class="formset__item">
-                <div class="formset__ttl">Attach date（PDF）</div>
+                <div class="formset__ttl">Attach date（PDF）<span class="formset__must">Mandatory</span></div>
                 <div class="formset__input">
                   <input class="txt_w35p" type="file" name="EP_N_PDF" value="[D-N_PDF]" placeholder="" required />
                   <input type="hidden" name="N_PDF" value="[D-N_PDF]" />
@@ -153,10 +161,10 @@
               </div>
 
               <div class="formset__item">
-                <div class="formset__ttl">Message</div>
+                <div class="formset__ttl">Message<span class="formset__must">Mandatory</span></div>
                 <div class="formset__input">
                   <textarea class="textarea_w73p" cols="40" rows="8" name="N_MESSAGE"
-                    placeholder="">[N_MESSAGE]</textarea>
+                    placeholder="" required>[N_MESSAGE]</textarea>
                 </div>
               </div>
               <div class="btn formset__btn">

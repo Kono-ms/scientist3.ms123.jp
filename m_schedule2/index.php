@@ -697,7 +697,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 					$str=str_replace("[CATEGORY]","請求",$str);
 				}
 				else if(strpos($shodan_item['STATUS'], 'キャンセル') !== false) {
-					$str=str_replace("[CATEGORY]",'キャンセル',$str);
+					$str=str_replace("[CATEGORY]",'クローズ',$str);
 				}
 				else if(strpos($shodan_item['STATUS'], '辞退') !== false) {
 					$str=str_replace("[CATEGORY]",'辞退',$str);
@@ -732,10 +732,10 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 					$str=str_replace("[CATEGORY]",'発注',$str);
 				}
 				else if(strpos($shodan_item['STATUS'], '発注承認') !== false) {
-					$str=str_replace("[CATEGORY]",'見積り',$str);
+					$str=str_replace("[CATEGORY]",'発注',$str);
 				}
 				else if(strpos($shodan_item['STATUS'], '発注依頼') !== false) {
-					$str=str_replace("[CATEGORY]",'見積り',$str);
+					$str=str_replace("[CATEGORY]",'発注',$str);
 				}else if(strpos($shodan_item['STATUS'], '運営手数料追加') !== false) {
 					$str=str_replace("[CATEGORY]",'見積り',$str);
 				}

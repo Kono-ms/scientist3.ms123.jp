@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scientist3 取引書類フロー — あるべき姿と現状</title>
+<style>
+  :root {
+    --paper: #f4f1ea;
+    --paper-2: #ece7db;
+    --card: #fbfaf6;
+    --ink: #23262e;
+    --ink-2: #4a4e59;
+    --ink-3: #71757f;
+    --rule: #d8d2c4;
+    --rule-strong: #b9b2a0;
+    --accent: #2f5d8a;      /* document blue */
+    --accent-soft: #dbe6f0;
+    --seal: #b23b32;        /* hanko red */
+    --ok: #3f7d4e;
+    --ok-soft: #dbecdf;
+    --warn: #b0721e;
+    --warn-soft: #f2e6cd;
+    --bad: #b23b32;
+    --bad-soft: #f2dcd9;
+    --keep: #6b6f79;
+    --keep-soft: #e6e4dd;
+    --mono: "SFMono-Regular", "Consolas", "Menlo", monospace;
+    --sans: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+    --mincho: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "MS PMincho", serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #16181d;
+      --paper-2: #1c1f26;
+      --card: #1f232b;
+      --ink: #e7e4db;
+      --ink-2: #b6b3aa;
+      --ink-3: #85837c;
+      --rule: #333842;
+      --rule-strong: #454b57;
+      --accent: #7ba7d0;
+      --accent-soft: #223444;
+      --seal: #d9756c;
+      --ok: #7cc08b;
+      --ok-soft: #1e2e23;
+      --warn: #d6a94e;
+      --warn-soft: #322813;
+      --bad: #e08a82;
+      --bad-soft: #331e1c;
+      --keep: #9a9ea8;
+      --keep-soft: #262a31;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #16181d; --paper-2: #1c1f26; --card: #1f232b;
+    --ink: #e7e4db; --ink-2: #b6b3aa; --ink-3: #85837c;
+    --rule: #333842; --rule-strong: #454b57;
+    --accent: #7ba7d0; --accent-soft: #223444; --seal: #d9756c;
+    --ok: #7cc08b; --ok-soft: #1e2e23; --warn: #d6a94e; --warn-soft: #322813;
+    --bad: #e08a82; --bad-soft: #331e1c; --keep: #9a9ea8; --keep-soft: #262a31;
+  }
+  :root[data-theme="light"] {
+    --paper: #f4f1ea; --paper-2: #ece7db; --card: #fbfaf6;
+    --ink: #23262e; --ink-2: #4a4e59; --ink-3: #71757f;
+    --rule: #d8d2c4; --rule-strong: #b9b2a0;
+    --accent: #2f5d8a; --accent-soft: #dbe6f0; --seal: #b23b32;
+    --ok: #3f7d4e; --ok-soft: #dbecdf; --warn: #b0721e; --warn-soft: #f2e6cd;
+    --bad: #b23b32; --bad-soft: #f2dcd9; --keep: #6b6f79; --keep-soft: #e6e4dd;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: var(--sans); line-height: 1.75;
+    font-feature-settings: "palt" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: clamp(28px, 5vw, 64px) clamp(18px, 4vw, 44px) 96px; }
+
+  /* Masthead */
+  .masthead { border-bottom: 3px double var(--rule-strong); padding-bottom: 22px; margin-bottom: 10px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 12px;
+  }
+  h1 {
+    font-family: var(--mincho); font-weight: 600; letter-spacing: .01em;
+    font-size: clamp(26px, 4.4vw, 42px); line-height: 1.28; margin: 0 0 12px; text-wrap: balance;
+  }
+  .lede { color: var(--ink-2); font-size: clamp(15px, 1.7vw, 17px); max-width: 64ch; margin: 0; }
+
+  /* Legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 22px 0 4px; padding: 0; list-style: none; }
+  .legend li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+    font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: .02em;
+    padding: 3px 9px; border-radius: 3px; border: 1px solid transparent;
+  }
+  .badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .9; }
+  .b-ok   { color: var(--ok);   background: var(--ok-soft);   border-color: color-mix(in srgb, var(--ok) 30%, transparent); }
+  .b-warn { color: var(--warn); background: var(--warn-soft); border-color: color-mix(in srgb, var(--warn) 30%, transparent); }
+  .b-bad  { color: var(--bad);  background: var(--bad-soft);  border-color: color-mix(in srgb, var(--bad) 30%, transparent); }
+  .b-keep { color: var(--keep); background: var(--keep-soft); border-color: color-mix(in srgb, var(--keep) 34%, transparent); }
+
+  section { margin-top: 54px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
+  .sec-num { font-family: var(--mono); font-size: 13px; color: var(--seal); font-weight: 700; }
+  h2 { font-family: var(--mincho); font-weight: 600; font-size: clamp(20px, 2.6vw, 27px); margin: 0; letter-spacing: .01em; }
+  .sec-sub { color: var(--ink-3); font-size: 13.5px; margin-left: auto; text-align: right; font-family: var(--mono); }
+
+  p.note { color: var(--ink-2); font-size: 14.5px; margin: 0 0 20px; max-width: 72ch; }
+
+  /* Parties diagram */
+  .parties {
+    display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; gap: 0;
+    background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 20px clamp(14px,2.5vw,26px); overflow-x: auto;
+  }
+  .party { text-align: center; padding: 14px 10px; min-width: 150px; }
+  .party .role { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+  .party .name { font-family: var(--mincho); font-size: clamp(17px, 2.2vw, 22px); font-weight: 600; margin: 6px 0 2px; }
+  .party .tbl  { font-family: var(--mono); font-size: 11.5px; color: var(--accent); }
+  .party .desc { font-size: 12.5px; color: var(--ink-2); margin-top: 6px; }
+  .party.mid { background: color-mix(in srgb, var(--accent-soft) 60%, transparent); border-radius: 8px; }
+  .conn { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 88px; color: var(--ink-3); padding: 0 4px; }
+  .conn .arw { font-size: 20px; line-height: 1; color: var(--accent); letter-spacing: -.05em; }
+  .conn .lab { font-size: 10.5px; margin-top: 4px; text-align: center; line-height: 1.35; }
+  .flow-caption { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 14px; font-size: 12.5px; color: var(--ink-2); }
+  .flow-caption b { color: var(--ink); font-weight: 600; }
+
+  /* Chain table */
+  .table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; }
+  table.chain { border-collapse: collapse; width: 100%; min-width: 760px; background: var(--card); font-size: 14px; }
+  table.chain th, table.chain td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  table.chain thead th {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-3); background: var(--paper-2); position: sticky; top: 0; font-weight: 600;
+  }
+  table.chain tbody tr:last-child td { border-bottom: none; }
+  table.chain .doc { font-weight: 600; font-size: 14.5px; }
+  table.chain .file { font-family: var(--mono); font-size: 11.5px; color: var(--accent); display: block; margin-top: 3px; }
+  table.chain .dir { font-family: var(--mono); font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+  table.chain .dir b { color: var(--ink); }
+  .phase-row td { background: var(--paper-2); font-family: var(--mincho); font-weight: 600; font-size: 13.5px; color: var(--seal); letter-spacing: .04em; padding-top: 9px; padding-bottom: 9px; }
+  .lang { font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+
+  /* Compare cards */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 720px) { .compare { grid-template-columns: 1fr; } }
+  .cc {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 18px 20px;
+    border-top: 3px solid var(--accent);
+  }
+  .cc.should { border-top-color: var(--accent); }
+  .cc.current { border-top-color: var(--warn); }
+  .cc h4 { margin: 0 0 4px; font-size: 12px; font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+  .cc.should h4 { color: var(--accent); }
+  .cc.current h4 { color: var(--warn); }
+  .cc ul { margin: 12px 0 0; padding-left: 0; list-style: none; }
+  .cc li { position: relative; padding: 7px 0 7px 22px; font-size: 14px; border-bottom: 1px dashed var(--rule); }
+  .cc li:last-child { border-bottom: none; }
+  .cc li::before { position: absolute; left: 0; top: 7px; font-family: var(--mono); font-size: 13px; }
+  .cc.should li::before { content: "→"; color: var(--accent); }
+  .cc.current li::before { content: "!"; color: var(--warn); font-weight: 700; }
+  .cc li code, p code, td code, .callout code { font-family: var(--mono); font-size: 12.5px; background: var(--paper-2); padding: 1px 5px; border-radius: 3px; color: var(--ink); }
+
+  /* two-variant PO */
+  .variants { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 6px; }
+  @media (max-width: 720px) { .variants { grid-template-columns: 1fr; } }
+  .variant { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+  .variant .vh { padding: 14px 18px; border-bottom: 1px solid var(--rule); }
+  .variant .vh .vtag { font-family: var(--mono); font-size: 11px; color: #fff; background: var(--accent); padding: 2px 8px; border-radius: 3px; letter-spacing: .05em; }
+  .variant .vh .vname { font-family: var(--mincho); font-size: 17px; font-weight: 600; margin-top: 8px; }
+  .variant .vh .vdir { font-family: var(--mono); font-size: 12px; color: var(--ink-2); margin-top: 3px; }
+  .variant .vb { padding: 14px 18px; font-size: 13.5px; }
+  .variant .vb dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; }
+  .variant .vb dt { color: var(--ink-3); font-size: 12px; font-family: var(--mono); white-space: nowrap; }
+  .variant .vb dd { margin: 0; color: var(--ink); }
+
+  /* callout */
+  .callout {
+    background: var(--seal); background: color-mix(in srgb, var(--seal) 10%, var(--card));
+    border: 1px solid color-mix(in srgb, var(--seal) 34%, transparent);
+    border-left: 4px solid var(--seal); border-radius: 6px; padding: 14px 18px; margin: 18px 0 0;
+    font-size: 14px; color: var(--ink);
+  }
+  .callout b { color: var(--seal); }
+
+  /* TODO list */
+  .todo { display: flex; flex-direction: column; gap: 10px; }
+  .todo-item {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: start;
+    background: var(--card); border: 1px solid var(--rule); border-radius: 7px; padding: 13px 16px;
+  }
+  .todo-item .t-body { font-size: 14px; }
+  .todo-item .t-body .t-title { font-weight: 600; }
+  .todo-item .t-body .t-desc { color: var(--ink-2); font-size: 13px; margin-top: 2px; }
+  .todo-item .t-src { font-family: var(--mono); font-size: 11px; color: var(--ink-3); text-align: right; white-space: nowrap; }
+  .sev { font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .06em; padding: 3px 8px; border-radius: 3px; height: fit-content; }
+  .sev.hi { color: var(--bad); background: var(--bad-soft); }
+  .sev.mid { color: var(--warn); background: var(--warn-soft); }
+
+  footer { margin-top: 70px; padding-top: 20px; border-top: 3px double var(--rule-strong); color: var(--ink-3); font-size: 12.5px; font-family: var(--mono); }
+
+  .kw { color: var(--accent); font-weight: 600; }
+  strong.hl { color: var(--ink); }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Scientist3 ／ 帳票発行フロー仕様メモ</p>
+    <h1>発注書以降の書類は「どうあるべきか」と「現状どうなっているか」</h1>
+    <p class="lede">
+      研究者・コスモバイオ（運営）・サプライヤーの三者を仲介するモデルにおいて、サイトから発行される取引書類を発行者→宛先で棚卸ししたもの。
+      見積書（CB宛・研究者宛の2種）は既に把握済みの前提とし、その先の<strong class="hl">発注書・納品書・請求書</strong>に焦点を当てる。
+    </p>
+    <ul class="legend">
+      <li><span class="badge b-ok">実装済</span> テンプレートも宛先も揃い、発行できる</li>
+      <li><span class="badge b-warn">半完成</span> 枠はあるが宛先・タイトル等が未整備／仮実装</li>
+      <li><span class="badge b-bad">未実装</span> 書類そのものが存在しない</li>
+      <li><span class="badge b-keep">仕様どおり</span> サイト発行せず添付（変更不要）</li>
+    </ul>
+  </header>
+
+  <!-- ============ 0. PARTIES ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">00</span>
+      <h2>登場人物とお金・書類の流れ</h2>
+      <span class="sec-sub">仲介 = コスモバイオ / Scientist3</span>
+    </div>
+    <p class="note">
+      コスモバイオ（CB）が中央に立ち、研究者とは日本語・円/ドル/ユーロで、サプライヤーとは主に英語で取引する。
+      したがって同じ案件でも<strong class="hl">「研究者⇔CB」面</strong>と<strong class="hl">「CB⇔サプライヤー」面</strong>の2面があり、書類も基本的に2系統発生する。
+    </p>
+    <div class="parties">
+      <div class="party">
+        <div class="role">Client · 発注側</div>
+        <div class="name">研究者</div>
+        <div class="tbl">DAT_M2</div>
+        <div class="desc">日本語・手数料込みの総額を負担</div>
+      </div>
+      <div class="conn">
+        <div class="arw">⇄</div>
+        <div class="lab">日本語<br>円/ドル/ユーロ</div>
+      </div>
+      <div class="party mid">
+        <div class="role">仲介 · 運営</div>
+        <div class="name">コスモバイオ</div>
+        <div class="tbl">CB / Scientist3</div>
+        <div class="desc">両者と個別契約。手数料（PF手数料等）を上乗せ</div>
+      </div>
+      <div class="conn">
+        <div class="arw">⇄</div>
+        <div class="lab">主に英語<br>素の金額</div>
+      </div>
+      <div class="party">
+        <div class="role">Supplier · 受注側</div>
+        <div class="name">サプライヤー</div>
+        <div class="tbl">DAT_M1</div>
+        <div class="desc">受託サービスを提供（多くは海外）</div>
+      </div>
+    </div>
+    <div class="flow-caption">
+      <span><b>見積：</b>サプライヤー→CB（英）、CB→研究者（和）の2本</span>
+      <span><b>発注：</b>研究者→CB、CB→サプライヤーの2本</span>
+      <span><b>請求：</b>サプライヤー→CB（添付）、CB→研究者（サイト発行）</span>
+    </div>
+  </section>
+
+  <!-- ============ 1. CHAIN ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>書類チェーン全体像</h2>
+      <span class="sec-sub">生成の実体はすべて a_filestatus/</span>
+    </div>
+    <p class="note">
+      すべてのPDFは管理側 <code>a_filestatus/index.php</code> が <code>preview_type</code> で分岐して生成する。会員画面（<code>m_contact1/2</code>）は生成せずリンクを開くだけ。
+      見積の2行は前提として掲載し、以降が本題。
+    </p>
+    <div class="table-scroll">
+      <table class="chain">
+        <thead>
+          <tr>
+            <th style="width:23%">書類</th>
+            <th style="width:20%">あるべき 発行者→宛先</th>
+            <th style="width:11%">言語</th>
+            <th style="width:16%">preview_type</th>
+            <th style="width:14%">状態</th>
+            <th>ひとこと</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="phase-row"><td colspan="6">■ 見積フェーズ（把握済みの前提）</td></tr>
+          <tr>
+            <td class="doc">見積書（CB宛）<span class="file">pdf_cb.html · Quotation</span></td>
+            <td><span class="dir">サプライヤー → <b>CB</b></span></td>
+            <td class="lang">英語</td>
+            <td><code>cb</code></td>
+            <td><span class="badge b-ok">実装済</span></td>
+            <td>Bill to = Cosmo Bio（固定）。CBが支払者の見積</td>
+          </tr>
+          <tr>
+            <td class="doc">見積書（研究者宛）<span class="file">pdf_r.html · 見積書</span></td>
+            <td><span class="dir"><b>CB</b> → 研究者</span></td>
+            <td class="lang">日本語</td>
+            <td><code>r</code></td>
+            <td><span class="badge b-ok">実装済</span></td>
+            <td>宛先＝研究者会社名＋「様」。CB住所は直書き</td>
+          </tr>
+
+          <tr class="phase-row"><td colspan="6">■ 発注フェーズ ← 本題</td></tr>
+          <tr>
+            <td class="doc">発注書（研究者面）<span class="file">pdf_h.html [PDF_H_TO_R]</span></td>
+            <td><span class="dir">研究者 ⇄ <b>CB</b></span></td>
+            <td class="lang">英+和混在</td>
+            <td><code>hr</code></td>
+            <td><span class="badge b-warn">半完成</span></td>
+            <td>手数料内訳・合計を表示。宛先ブロックはテスト文言のまま</td>
+          </tr>
+          <tr>
+            <td class="doc">発注書（サプライヤー面）<span class="file">pdf_h.html [PDF_H_TO_CB]</span></td>
+            <td><span class="dir"><b>CB</b> → サプライヤー</span></td>
+            <td class="lang">英語</td>
+            <td><code>hcb</code></td>
+            <td><span class="badge b-warn">半完成</span></td>
+            <td>手数料を伏せた素の金額。中身はテスト文言のみ</td>
+          </tr>
+
+          <tr class="phase-row"><td colspan="6">■ 納品フェーズ</td></tr>
+          <tr>
+            <td class="doc">納品書</td>
+            <td><span class="dir">（CB ⇄ 研究者 想定）</span></td>
+            <td class="lang">—</td>
+            <td>—</td>
+            <td><span class="badge b-bad">未実装</span></td>
+            <td>PDF書類なし。ステータス「納品確認」＋ファイル授受で代替</td>
+          </tr>
+
+          <tr class="phase-row"><td colspan="6">■ 請求フェーズ</td></tr>
+          <tr>
+            <td class="doc">請求書（サプライヤー→CB）<span class="file">S2_FILE（添付）</span></td>
+            <td><span class="dir">サプライヤー → <b>CB</b></span></td>
+            <td class="lang">—</td>
+            <td>—</td>
+            <td><span class="badge b-keep">仕様どおり</span></td>
+            <td>サイト発行せずサプライヤーがアップロード。<b>維持でOK</b></td>
+          </tr>
+          <tr>
+            <td class="doc">請求書（研究者宛）<span class="file">pdf_s.html · 請求書</span></td>
+            <td><span class="dir"><b>CB</b> → 研究者</span></td>
+            <td class="lang">日本語</td>
+            <td><code>s</code></td>
+            <td><span class="badge b-warn">半完成</span></td>
+            <td>金額を組版せず、添付Invoiceファイルへのリンク付きカバーシート</td>
+          </tr>
+          <tr>
+            <td class="doc">追加請求書（研究者宛）<span class="file">pdf_s_add.html · 請求書</span></td>
+            <td><span class="dir"><b>CB</b> → 研究者</span></td>
+            <td class="lang">日本語</td>
+            <td><code>s_add</code></td>
+            <td><span class="badge b-warn">半完成</span></td>
+            <td>同じくカバーシート型＋「追加請求金額」</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 2. 発注書 ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>発注書 ── 2系統（hcb / hr）の意味</h2>
+      <span class="sec-sub">pdf_h.html / index.php:507-520</span>
+    </div>
+    <p class="note">
+      発注書は仲介モデルの2面に対応して2バージョン用意されている。分岐は <code>hcb</code>→<code>[PDF_H_TO_CB]</code>を表示、<code>hr</code>→<code>[PDF_H_TO_R]</code>を表示、というシンプルなもの。
+      現状 <span class="kw">実装上の唯一の実差分は「hr版だけ手数料内訳表を出す／hcb版はそれを隠す」点</span>で、宛先の描き分けはまだ入っていない。
+    </p>
+
+    <div class="variants">
+      <div class="variant">
+        <div class="vh">
+          <span class="vtag">hr</span>
+          <div class="vname">研究者面の発注書</div>
+          <div class="vdir">研究者 ⇄ CB（手数料込みの総額）</div>
+        </div>
+        <div class="vb">
+          <dl>
+            <dt>あるべき</dt><dd>研究者がCBへ発注した内容の確定書。PF手数料・輸入/輸出代行・運営値引を含む合計金額を提示</dd>
+            <dt>現状</dt><dd>手数料内訳〜合計金額の表は表示される（pdf_h.html:104-188）が、上部の宛先は「R宛て（テスト用）」のダミー</dd>
+            <dt>管理画面</dt><dd>「発注書(研究者宛て発行用)」プルダウン</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="variant">
+        <div class="vh">
+          <span class="vtag">hcb</span>
+          <div class="vname">サプライヤー面の発注書</div>
+          <div class="vdir">CB → サプライヤー（素の金額・手数料非表示）</div>
+        </div>
+        <div class="vb">
+          <dl>
+            <dt>あるべき</dt><dd>CBがサプライヤーへ発注する書類。CBの取り分（手数料）を伏せた素の金額のみ。送付で「受注承認」フローが起動</dd>
+            <dt>現状</dt><dd>手数料表を隠すだけで、中身は「CB宛て（テスト用）」のダミー。タイトルも住所も未整備</dd>
+            <dt>管理画面</dt><dd>「発注書(CB宛て / CB宛て閲覧用)」プルダウン</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <b>注意（宛先の向きは要確認）：</b>管理画面のラベルは「CB宛て」「研究者宛て発行用」と紛らわしく命名されている。
+      コード上で確実なのは<strong class="hl">「hrは手数料込み＝研究者に見せる総額」「hcbは手数料抜き＝サプライヤー/CB間の素の金額」</strong>という金額の出し分けのみ。
+      「どちらを誰に送るか」の最終確定は業務側の意図に合わせて要レビュー。
+    </div>
+
+    <div class="compare" style="margin-top:18px;">
+      <div class="cc should">
+        <h4>あるべき姿</h4>
+        <ul>
+          <li>タイトルに <code>PURCHASE ORDER / 発注書</code> を明示（現状 <code>&lt;h1&gt;</code> 欠落、見積のQuote No.流用）</li>
+          <li>hr / hcb それぞれに正しい Bill to / Ship to と発行者情報</li>
+          <li>研究者面＝手数料込み、サプライヤー面＝素の金額、で金額を出し分け</li>
+          <li>プレビューの「送信」ボタンが発注書テンプレを指す</li>
+        </ul>
+      </div>
+      <div class="cc current">
+        <h4>現状の実装</h4>
+        <ul>
+          <li>宛先ブロックが「※出分けテスト用の記述部分です」のダミー（pdf_h.html:2-13）</li>
+          <li>タイトル <code>&lt;h1&gt;</code> なし。ヘッダは見積書のQuote No.を流用</li>
+          <li>変数名の誤り：Bill to会社名が <code>M2_SHIP_TO_SPT_2</code>（Ship to名の名残）</li>
+          <li>disp_frame2の送信が <code>preview_type=cb</code>（見積CB）を誤指定して再ロード</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3. 納品書 ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>納品書 ── 現状は存在しない</h2>
+      <span class="sec-sub">要・要否判断</span>
+    </div>
+    <div class="compare">
+      <div class="cc should">
+        <h4>あるべき姿（要検討）</h4>
+        <ul>
+          <li>成果物/物品の納品時に、CB→研究者の納品書PDFを発行できると帳票が揃う</li>
+          <li>「データ納品」「物品納品」の各ステータス遷移点で生成するのが自然</li>
+          <li>そもそも納品書を紙で出す運用が必要か、という業務判断が先</li>
+        </ul>
+      </div>
+      <div class="cc current">
+        <h4>現状の実装</h4>
+        <ul>
+          <li>納品書 / DELIVERY のテンプレート・モードは<strong class="hl">一切なし</strong></li>
+          <li>「納品」はステータス（納品確認 等）＋成果物ファイルの授受で代替</li>
+          <li>明細行の「Deliverable:（納品物）」表記はあるが書類ではない</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4. 請求書 ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>請求書 ── 添付は維持、研究者向けは組版が未整備</h2>
+      <span class="sec-sub">pdf_s.html / pdf_s_add.html</span>
+    </div>
+    <p class="note">
+      補足いただいたとおり<strong class="hl">サプライヤー→CBの請求書はサイト発行せず、サプライヤーが <code>S2_FILE</code> として添付する仕様</strong>で、ここは変更不要。
+      問題はその先、<span class="kw">CB→研究者の請求書</span>の作り方。
+    </p>
+    <div class="compare">
+      <div class="cc should">
+        <h4>あるべき姿</h4>
+        <ul>
+          <li>CB→研究者の請求金額（サービス費用＋手数料＝見積の合計）を組版した請求書PDF</li>
+          <li>案件名・請求番号・支払期限・振込先が揃った正式帳票</li>
+          <li>追加請求も同じ様式で金額を明示</li>
+        </ul>
+      </div>
+      <div class="cc current">
+        <h4>現状の実装</h4>
+        <ul>
+          <li>金額を組版せず、アップロード済Invoiceファイルへの<strong class="hl">リンク付きカバーシート</strong>止まり</li>
+          <li>プレビュー分岐（送信前/後）が仮実装で、両方フル表示している</li>
+          <li>メール添付送信 <code>sendPDF()</code> は宛先・件名がハードコードのデバッグ状態＆呼び出しコメントアウト</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">
+      <b>整理：</b>請求は「サプライヤーがInvoiceを添付 → CBが研究者向け請求レコード化 → <code>pdf_s.html</code> がそのファイルへのリンク付きカバーを生成」という流れ。
+      見積書・発注書と違い<strong class="hl">サイトが金額から組版する請求書PDFは存在しない（ファイル参照型）</strong>。
+    </div>
+  </section>
+
+  <!-- ============ 5. TODO ============ -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2>発注書以降で片付けるべき不備</h2>
+      <span class="sec-sub">重大度つき</span>
+    </div>
+    <div class="todo">
+      <div class="todo-item">
+        <span class="sev hi">発注書</span>
+        <div class="t-body">
+          <div class="t-title">宛先ブロックがテスト用スタブのまま</div>
+          <div class="t-desc">hcb/hr両方が「※出分けテスト用の記述部分です」のダミー。Bill to/Ship to/発行者を実装する必要</div>
+        </div>
+        <div class="t-src">pdf_h.html:2-13</div>
+      </div>
+      <div class="todo-item">
+        <span class="sev hi">発注書</span>
+        <div class="t-body">
+          <div class="t-title">送信ボタンが preview_type=cb を誤指定</div>
+          <div class="t-desc">disp_frame2の送信が発注書ではなく見積CBテンプレを再ロード。hr/hcbを指すよう修正</div>
+        </div>
+        <div class="t-src">disp_frame2.html:38</div>
+      </div>
+      <div class="todo-item">
+        <span class="sev mid">発注書</span>
+        <div class="t-body">
+          <div class="t-title">タイトル欠落・見積ヘッダの流用・変数名の誤り</div>
+          <div class="t-desc"><code>&lt;h1&gt;</code>なし、Quote No.流用、Bill to会社名が<code>M2_SHIP_TO_SPT_2</code></div>
+        </div>
+        <div class="t-src">pdf_h.html:15-64</div>
+      </div>
+      <div class="todo-item">
+        <span class="sev mid">納品書</span>
+        <div class="t-body">
+          <div class="t-title">書類そのものが未実装</div>
+          <div class="t-desc">要否を業務判断のうえ、必要ならCB→研究者の納品書テンプレを新設</div>
+        </div>
+        <div class="t-src">— なし</div>
+      </div>
+      <div class="todo-item">
+        <span class="sev mid">請求書</span>
+        <div class="t-body">
+          <div class="t-title">研究者向け請求書が組版されずカバーシート止まり</div>
+          <div class="t-desc">見積合計から金額を組版する正式帳票にするか、現行の添付参照型を正式仕様とするか要決定</div>
+        </div>
+        <div class="t-src">pdf_s.html</div>
+      </div>
+      <div class="todo-item">
+        <span class="sev mid">請求書</span>
+        <div class="t-body">
+          <div class="t-title">プレビュー分岐が仮実装／メール添付がデバッグ状態</div>
+          <div class="t-desc">送信前後の出し分け未反映。<code>sendPDF()</code>の宛先・件名ハードコードを解消し呼び出しを有効化</div>
+        </div>
+        <div class="t-src">index.php:690-701 / 4556-4593</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Scientist3 帳票フロー仕様メモ ／ 出典: a_filestatus/index.php・pdf_*.html・m_contact1,2 ／ 根拠行番号は各項に記載
+  </footer>
+
+</div>
+</body>
+</html>

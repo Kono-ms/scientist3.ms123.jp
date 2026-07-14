@@ -94,9 +94,21 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		$m2_item = mysqli_fetch_assoc($m2_rs);
 
 		//ラベル
+		// 発注依頼の段階ではサプライヤーに通知なし
+		// 発注承認で通知する方向に仕様変更
 		$s_category=$item['CATEGORY'];
-		if($item['STATUS']=="発注依頼" || $item['STATUS']=="決済者発注承認"){
+		if($item['STATUS']=="決済者発注承認"){
+		//if($item['STATUS']=="発注依頼" || $item['STATUS']=="決済者発注承認"){
 			$s_category="発注";
+		}
+		if($item['STATUS']=="キャンセル依頼" || 
+			$item['STATUS']=="サプライヤーキャンセル承認" || 
+			$item['STATUS']=="サプライヤーキャンセル否認" || 
+			$item['STATUS']=="サプライヤーキャンセル承認（追加見積り）" ||
+			$item['STATUS']=="キャンセル承認" ||
+			$item['STATUS']=="キャンセル承認（請求あり）"){
+			//別の画面でのステータス表示と乖離しているための対策
+			$s_category="キャンセル関連ステータス特別表示分け用";
 		}
 		$s_status_color=showStatusColor($s_category);
 		if($category != $s_category) {
@@ -110,19 +122,23 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		}
 		$category = $s_category;
 
-		//// もしここの請求と完了も出さない方が良ければ上の方を有効化
-		////if($category != $item['CATEGORY'] && $item['CATEGORY'] != '請求' && $item['CATEGORY'] != '完了') {
-		//// 水際英訳
-		//// 変更前：			<p>Status' . $item['CATEGORY'] . '</p>
-		//if($category != $item['CATEGORY']) {
+		//$s_category=$item['CATEGORY'];
+		//if($item['STATUS']=="発注依頼" || $item['STATUS']=="決済者発注承認"){
+		//	$s_category="発注";
+		//}
+		//$s_status_color=showStatusColor($s_category);
+		//if($category != $s_category) {
+		//	$s_category_eng=showStatus($s_category);
 		//	$tmp .= '
-		//		<div class="chat__status" style="background:' . showStatusColor($item['CATEGORY']) . ';">
-		//			<p>Status: ' . showStatus($item['CATEGORY']) . '</p>
-		//		</div>
-		//		<div style="clear:both;"></div>
+		//	<div class="chat__status" style="background:' . $s_status_color . ';">
+		//		<p>Status : ' . $s_category_eng . '</p>
+		//	</div>
+		//	<div style="clear:both;"></div>
 		//	';
 		//}
-		//$category = $item['CATEGORY'];
+		//$category = $s_category;
+
+
 
 		//分割払い対応
 		$div_id=$item["DIV_ID"];
@@ -158,9 +174,9 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 
 
 
-		$cancel_scno_ary=array();
 		if($item["STATUS"]=="キャンセル依頼" || $item["STATUS"]=="サプライヤーキャンセル承認" || 
 			$item["STATUS"]=="キャンセル承認" || $item["STATUS"]=="サプライヤーキャンセル否認"){
+			$cancel_scno_ary=array();
 
 			$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS,H_M2_ID FROM DAT_FILESTATUS WHERE SHODAN_ID = '" . $_GET['etc02'] . "' ";
 			$StrSQL.=" AND STATUS='発注依頼' ";
@@ -210,6 +226,48 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		}
 
 		
+		
+		if($item["STATUS"]=="キャンセル"){
+			$cancel_scno_ary=array();
+			
+			$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS,SCNo_yy,SCNo_mm,SCNo_dd,SCNo_cnt,SCNo_else1,SCNo_else2,M2_VERSION ";
+			$StrSQL.=" FROM DAT_FILESTATUS WHERE SHODAN_ID = '" . $_GET['etc02'] . "' ";
+			$StrSQL.=" AND STATUS='見積り送付' ";
+			$StrSQL.=" order by ID asc";
+			$c_hatyu_rs=mysqli_query(ConnDB(),$StrSQL);
+			
+			while( $c_hatyu_item = mysqli_fetch_assoc($c_hatyu_rs) ){
+				//echo "<!--キャンセル：";
+				//var_dump($c_hatyu_item);
+				//echo "-->";
+
+				$SCNo_ary=array(
+					"SCNo_yy" => "", 
+					"SCNo_mm" => "", 
+					"SCNo_dd" => "", 
+					"SCNo_cnt" => "", 
+					"SCNo_else1" => "", 
+					"SCNo_else2" => "", 
+				);
+				$m2_quote_no="";
+
+				$SCNo_ary["SCNo_yy"]=$c_hatyu_item["SCNo_yy"];
+				$SCNo_ary["SCNo_mm"]=$c_hatyu_item["SCNo_mm"];
+				$SCNo_ary["SCNo_dd"]=$c_hatyu_item["SCNo_dd"];
+				$SCNo_ary["SCNo_cnt"]=$c_hatyu_item["SCNo_cnt"];
+				$SCNo_ary["SCNo_else1"]=$c_hatyu_item["SCNo_else1"];
+				$SCNo_ary["SCNo_else2"]=$c_hatyu_item["SCNo_else2"];
+				$SCNo_str=formatAlphabetId($SCNo_ary);
+				if($SCNo_str!=""){
+					$cancel_scno_ary[]=$SCNo_str."-Version".$c_hatyu_item["M2_VERSION"];
+				}
+			}
+			//echo "<!--キャンセル(SCNO)：";
+			//var_dump($cancel_scno_ary);
+			//echo "-->";
+		}
+
+
 
 		//「Scientist3 control No.」が設定されていたら整形
 			$SCNo_ary=array(
@@ -690,6 +748,38 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				</div>
 				';
 				break;
+
+				case 'キャンセル':
+				$tmp .= '
+				<div class="filestatus_content">
+				<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				<div>This deal has been closed by the researcher.
+				</div>
+				</div>
+				';
+				//$c_hatyu_str="";
+				//if( count($cancel_scno_ary)>0 ){
+				//	foreach ($cancel_scno_ary as $idx => $val) {
+				//		if($val!=""){
+				//			$c_hatyu_str.=$val."<br>";
+				//		}
+				//	}
+				//}
+				//if($c_hatyu_str!=""){
+				//	$c_hatyu_str="発注No:".$c_hatyu_str;
+				//}
+				//
+				//$tmp.='
+				//<div class="filestatus_content">
+				//<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				//<div>
+				//'.$sup_item["M1_DVAL01"].'が
+				//'.$c_hatyu_str.'
+				//の依頼をキャンセルしました。
+				//</div>
+				//</div>
+				//';
+				break;
 		}
 
 		$strMain=$strMain.$tmp.chr(13);
@@ -737,30 +827,37 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			';
 			break;
 		case '見積り送付':
-		case '発注依頼':
+		//case '発注依頼':
 			$strMain .= '
-        <div class="filestatus_content">
-          <div>Waiting for order from ' . $m2_item['M2_ETC20'] . '
-            <br><br>
-            <div>
-	    		    <a href="/m_contact1/?type=見積り送付&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Click here to add a quote</a>
-	    		    　<a href="/m_contact1/?type=見積り送付&mode=new&shodan_id='.$_GET['etc02'].'&upd_mode=1" target="_blank">Click here to modify the estimate</a>
-            </div>
-          </div>
-        </div>
+			<div class="filestatus_content">
+			<div>Waiting for order from ' . $m2_item['M2_ETC20'] . '
+			<br><br>
+			<div>
+			<a href="/m_contact1/?type=見積り送付&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Click here to add a quote</a>
+			　<a href="/m_contact1/?type=見積り送付&mode=new&shodan_id='.$_GET['etc02'].'&upd_mode=1" target="_blank">Click here to modify the estimate</a>
+			</div>
+			</div>
+			</div>
 			';
 			break;
 		// 発注依頼の段階ではサプライヤーに通知なし
 		// 発注承認で通知する
+		case '発注依頼':
+
+			break;
 		case '決済者発注承認':
+			//非表示に変更
+		
 			//受注承認できるのは運営のみに仕様変更
-			$strMain .= '
-			<div class="filestatus_content">
-				<div>
-					<a href="javascript:window.parent.shodan_cancel(' . $_GET['etc02'] . ');">decline</a>
-				</div>
-			</div>
-			';
+			//$strMain .= '
+			//<div class="filestatus_content">
+			//	<div>
+			//		<a href="javascript:window.parent.shodan_cancel(' . $_GET['etc02'] . ');">decline</a>
+			//	</div>
+			//</div>
+			//';
+
+
 			//$strMain .= '
 			//<div class="filestatus_content">
 			//<div>

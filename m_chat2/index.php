@@ -443,6 +443,13 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 			}
 		}
 
+		$StrSQL="SELECT ID,SHODAN_ID,MID1,MID2,STATUS FROM DAT_FILESTATUS where SHODAN_ID='".$_GET['etc02']."' ";
+		$StrSQL.=" and STATUS='発注依頼'";
+		$f_hatyu_rs=mysqli_query(ConnDB(),$StrSQL);
+		$f_hatyu_item_num=mysqli_num_rows($f_hatyu_rs);
+		//echo "<!--StrSQL:$StrSQL-->";
+		//echo "<!--f_hatyu_item_num:$f_hatyu_item_num-->";
+
 		//共通ボタン
 		if( in_array("見積り送付", $tmp_status) ||
 				in_array("運営手数料追加", $tmp_status) ){
@@ -458,13 +465,24 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 				//発注依頼
 				//div_idは、m_contact2で発注依頼の「H_M2_ID」に対応するdiv_idを
 				//m_contact2で取得しているので、ここで渡していない。
-				$btn_area.= '
-				<div>
-					<span style="color:tomato;">共通操作:</span>
-					<a href="/m_contact2/?type=発注依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" 
-					target="_parent">発注を依頼する</a>
-				</div>
-				';
+				if($f_hatyu_item_num>0){
+					$btn_area.= '
+					<div>
+						<span style="color:tomato;">共通操作:</span>
+						<a href="/m_contact2/?type=発注依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" 
+						target="_parent">発注を依頼する</a>
+					</div>
+					';
+				}else{
+					$btn_area.= '
+					<div>
+						<span style="color:tomato;">共通操作:</span>
+						<a href="/m_contact2/?type=発注依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" 
+						target="_parent">発注を依頼する</a>
+						<a href="/m_contact2/?type=案件の取り下げ&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">キャンセル</a>
+					</div>
+					';
+				}
 			}
 		}
 		if(//in_array("見積り送付", $tmp_status) ||
@@ -652,6 +670,16 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 				</div>
 			';
 			break;
+
+		case 'サプライヤーキャンセル否認':
+			$btn_area = '
+			<div>
+			<!--発注用のキャンセル：発注キャンセル-->
+			<a href="/m_contact2/?type=キャンセル依頼&mode=new&shodan_id='.$_GET['etc02'].'" target="_parent">キャンセル</a>
+			<!--<a href="javascript:shodan_cancel('.$_GET['etc02'].');">キャンセル</a>-->
+			</div>
+			';
+			break;
 	}
 	$str=str_replace("[HEADER_BUTTON_AREA]",$btn_area,$str);
 
@@ -813,6 +841,10 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 
 	if($item_shodan['STATUS']=="発注依頼" || $item_shodan['STATUS']=="決済者発注承認"){
 		$status="発注";
+	}
+
+	if($item_shodan['STATUS']=="キャンセル"){
+		$status="クローズ";
 	}
 
 	$str=str_replace("[TITLE]",$item_shodan['TITLE'],$str);

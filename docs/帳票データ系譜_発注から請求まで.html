@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>帳票データ系譜 — 発注書から請求書まで、引き継ぎ元と現状</title>
+<style>
+  :root {
+    --paper: #f4f1ea; --paper-2: #ece7db; --card: #fbfaf6;
+    --ink: #23262e; --ink-2: #4a4e59; --ink-3: #71757f;
+    --rule: #d8d2c4; --rule-strong: #b9b2a0;
+    --accent: #2f5d8a; --accent-soft: #dbe6f0; --seal: #b23b32;
+    --ok: #3f7d4e; --ok-soft: #dbecdf;
+    --warn: #b0721e; --warn-soft: #f2e6cd;
+    --bad: #b23b32; --bad-soft: #f2dcd9;
+    --supp: #6a4d8c; --supp-soft: #e6ddf0;
+    --res: #2f6f78;  --res-soft: #d6ebec;
+    --mono: "SFMono-Regular","Consolas","Menlo",monospace;
+    --sans: "Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Meiryo",system-ui,sans-serif;
+    --mincho: "Hiragino Mincho ProN","Yu Mincho","YuMincho","MS PMincho",serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #16181d; --paper-2: #1c1f26; --card: #1f232b;
+      --ink: #e7e4db; --ink-2: #b6b3aa; --ink-3: #85837c;
+      --rule: #333842; --rule-strong: #454b57;
+      --accent: #7ba7d0; --accent-soft: #223444; --seal: #d9756c;
+      --ok: #7cc08b; --ok-soft: #1e2e23; --warn: #d6a94e; --warn-soft: #322813;
+      --bad: #e08a82; --bad-soft: #331e1c;
+      --supp: #b49ad6; --supp-soft: #2a2237; --res: #6bbcc4; --res-soft: #16302f;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #16181d; --paper-2: #1c1f26; --card: #1f232b;
+    --ink: #e7e4db; --ink-2: #b6b3aa; --ink-3: #85837c;
+    --rule: #333842; --rule-strong: #454b57;
+    --accent: #7ba7d0; --accent-soft: #223444; --seal: #d9756c;
+    --ok: #7cc08b; --ok-soft: #1e2e23; --warn: #d6a94e; --warn-soft: #322813;
+    --bad: #e08a82; --bad-soft: #331e1c;
+    --supp: #b49ad6; --supp-soft: #2a2237; --res: #6bbcc4; --res-soft: #16302f;
+  }
+  :root[data-theme="light"] {
+    --paper: #f4f1ea; --paper-2: #ece7db; --card: #fbfaf6;
+    --ink: #23262e; --ink-2: #4a4e59; --ink-3: #71757f;
+    --rule: #d8d2c4; --rule-strong: #b9b2a0;
+    --accent: #2f5d8a; --accent-soft: #dbe6f0; --seal: #b23b32;
+    --ok: #3f7d4e; --ok-soft: #dbecdf; --warn: #b0721e; --warn-soft: #f2e6cd;
+    --bad: #b23b32; --bad-soft: #f2dcd9;
+    --supp: #6a4d8c; --supp-soft: #e6ddf0; --res: #2f6f78; --res-soft: #d6ebec;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){ html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.75; font-feature-settings:"palt" 1; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: clamp(28px,5vw,64px) clamp(18px,4vw,44px) 96px; }
+
+  .masthead { border-bottom: 3px double var(--rule-strong); padding-bottom: 22px; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing:.18em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+  h1 { font-family: var(--mincho); font-weight: 600; font-size: clamp(25px,4.2vw,40px); line-height: 1.3; margin: 0 0 12px; text-wrap: balance; }
+  .lede { color: var(--ink-2); font-size: clamp(15px,1.7vw,17px); max-width: 70ch; margin: 0; }
+
+  .keypoint { margin: 22px 0 0; background: color-mix(in srgb, var(--accent-soft) 55%, var(--card)); border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent); border-left: 4px solid var(--accent); border-radius: 6px; padding: 15px 20px; font-size: 15px; }
+  .keypoint b { color: var(--accent); }
+
+  /* TOC */
+  .toc { margin: 24px 0 0; background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 20px; }
+  .toc h3 { font-family: var(--mono); font-size: 11px; letter-spacing:.12em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 8px; }
+  .toc ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 32px; }
+  @media (max-width: 640px){ .toc ol { columns: 1; } }
+  .toc li { font-size: 14px; margin: 4px 0; }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .toc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  section { margin-top: 54px; scroll-margin-top: 20px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
+  .sec-num { font-family: var(--mono); font-size: 13px; color: var(--seal); font-weight: 700; }
+  h2 { font-family: var(--mincho); font-weight: 600; font-size: clamp(20px,2.6vw,27px); margin: 0; }
+  .sec-sub { color: var(--ink-3); font-size: 12.5px; margin-left: auto; text-align: right; font-family: var(--mono); }
+  p.note { color: var(--ink-2); font-size: 14.5px; margin: 0 0 22px; max-width: 78ch; }
+  code { font-family: var(--mono); font-size: 12.5px; background: var(--paper-2); padding: 1px 5px; border-radius: 3px; color: var(--ink); }
+  .hl { color: var(--ink); font-weight: 600; }
+
+  /* verdict pills */
+  .verdict { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 600; padding: 5px 11px; border-radius: 6px; }
+  .verdict .mk { font-family: var(--mono); font-size: 14px; }
+  .v-ok { color: var(--ok); background: var(--ok-soft); }
+  .v-part { color: var(--warn); background: var(--warn-soft); }
+  .v-no { color: var(--bad); background: var(--bad-soft); }
+
+  /* summary strip */
+  .summary { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-top: 22px; }
+  @media (max-width: 900px){ .summary { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 520px){ .summary { grid-template-columns: 1fr; } }
+  .sum { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 15px; }
+  .sum .s-doc { font-family: var(--mincho); font-size: 15.5px; font-weight: 600; margin-bottom: 2px; line-height: 1.35; }
+  .sum .s-sub { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); margin-bottom: 9px; }
+  .sum .s-one { font-size: 12px; color: var(--ink-2); margin-top: 9px; }
+
+  /* provenance diagram */
+  .prov { display: flex; flex-direction: column; align-items: center; gap: 0; overflow-x: auto; padding: 4px; }
+  .node { background: var(--card); border: 1px solid var(--rule); border-radius: 9px; padding: 16px 20px; width: min(600px, 94%); }
+  .node.source { border: 2px solid var(--seal); box-shadow: 0 0 0 4px color-mix(in srgb, var(--seal) 12%, transparent); }
+  .node .n-tag { font-family: var(--mono); font-size: 10.5px; letter-spacing:.12em; text-transform: uppercase; color: var(--ink-3); }
+  .node .n-title { font-family: var(--mincho); font-size: 19px; font-weight: 600; margin: 3px 0 2px; }
+  .node.source .n-title { color: var(--seal); }
+  .node .n-desc { font-size: 13px; color: var(--ink-2); }
+  .node .n-fields { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-family: var(--mono); font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--paper-2); color: var(--ink-2); border: 1px solid var(--rule); }
+  .chip.base { color: var(--supp); background: var(--supp-soft); border-color: color-mix(in srgb,var(--supp) 30%,transparent); }
+  .chip.fee  { color: var(--res); background: var(--res-soft); border-color: color-mix(in srgb,var(--res) 30%,transparent); }
+  .down { display: flex; flex-direction: column; align-items: center; color: var(--ink-3); padding: 8px 0; }
+  .down .ln { width: 2px; height: 16px; background: var(--rule-strong); }
+  .down .lab { font-family: var(--mono); font-size: 11px; color: var(--accent); background: var(--paper); padding: 2px 8px; border: 1px dashed var(--rule-strong); border-radius: 4px; }
+
+  /* vertical status chain */
+  .chain { position: relative; margin: 6px 0 0; padding-left: 26px; }
+  .chain::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: var(--rule-strong); }
+  .cstep { position: relative; padding: 10px 0 18px; }
+  .cstep::before { content: ""; position: absolute; left: -23px; top: 14px; width: 12px; height: 12px; border-radius: 50%; background: var(--card); border: 2px solid var(--accent); }
+  .cstep.src::before { border-color: var(--seal); background: var(--seal); }
+  .cstep.doc::before { border-color: var(--res); }
+  .cstep .cs-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .cstep .cs-status { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--ink); }
+  .cstep.src .cs-status { color: var(--seal); }
+  .cstep .cs-who { font-size: 12px; color: var(--ink-3); }
+  .cstep .cs-desc { font-size: 13px; color: var(--ink-2); margin-top: 3px; }
+  .cstep .cs-doc { display: inline-flex; align-items: center; gap: 6px; margin-top: 7px; font-size: 12px; background: var(--res-soft); color: var(--res); border: 1px solid color-mix(in srgb,var(--res) 30%,transparent); padding: 3px 9px; border-radius: 999px; }
+  .cstep .cs-key { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 6px; }
+
+  /* two POs compare */
+  .po { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 760px){ .po { grid-template-columns: 1fr; } }
+  .pocard { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+  .pocard.res { border-top: 4px solid var(--res); }
+  .pocard.supp { border-top: 4px solid var(--supp); }
+  .pocard .ph { padding: 15px 18px 12px; border-bottom: 1px solid var(--rule); }
+  .pocard .ph .ptype { font-family: var(--mono); font-size: 11px; color:#fff; padding: 2px 8px; border-radius: 3px; }
+  .pocard.res .ph .ptype { background: var(--res); }
+  .pocard.supp .ph .ptype { background: var(--supp); }
+  .pocard .ph .pname { font-family: var(--mincho); font-size: 18px; font-weight: 600; margin-top: 8px; }
+  .pocard .ph .pdir { font-family: var(--mono); font-size: 12px; color: var(--ink-2); margin-top: 2px; }
+  .pocard .pb { padding: 6px 18px 16px; }
+  .row { padding: 11px 0; border-bottom: 1px dashed var(--rule); }
+  .row:last-child { border-bottom: none; }
+  .row .r-lab { font-family: var(--mono); font-size: 10.5px; letter-spacing:.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; }
+  .row .r-val { font-size: 13.5px; }
+
+  /* doc block */
+  .docblock { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 4px 20px 8px; margin-bottom: 18px; border-top: 4px solid var(--res); }
+  .docblock.supplier { border-top-color: var(--supp); }
+  .docblock.neutral { border-top-color: var(--accent); }
+  .docblock .db-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; padding: 16px 0 10px; border-bottom: 1px solid var(--rule); }
+  .docblock .db-name { font-family: var(--mincho); font-size: 19px; font-weight: 600; }
+  .docblock .db-file { font-family: var(--mono); font-size: 11.5px; color: var(--accent); }
+  .docblock .db-dir { font-family: var(--mono); font-size: 12px; color: var(--ink-2); margin-left: auto; }
+  .docblock .db-lin { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; padding: 14px 0; font-size: 13.5px; }
+  .docblock .db-lin dt { font-family: var(--mono); font-size: 11px; color: var(--ink-3); text-transform: uppercase; letter-spacing:.06em; white-space: nowrap; padding-top: 2px; }
+  .docblock .db-lin dd { margin: 0; }
+  .docblock .db-verdict { padding: 0 0 14px; }
+
+  /* field table */
+  .table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 8px; }
+  table.sc { border-collapse: collapse; width: 100%; min-width: 820px; background: var(--card); font-size: 13.5px; }
+  table.sc th, table.sc td { text-align: left; padding: 12px 15px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  table.sc thead th { font-family: var(--mono); font-size: 11px; letter-spacing:.08em; text-transform: uppercase; color: var(--ink-3); background: var(--paper-2); font-weight: 600; }
+  table.sc tbody tr:last-child td { border-bottom: none; }
+  table.sc .item { font-weight: 600; }
+  .mk-badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 4px; white-space: nowrap; }
+  .mk-badge.ok { color: var(--ok); background: var(--ok-soft); }
+  .mk-badge.part { color: var(--warn); background: var(--warn-soft); }
+  .mk-badge.no { color: var(--bad); background: var(--bad-soft); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 16px; padding: 0; list-style: none; font-size: 13px; color: var(--ink-2); }
+  .legend li { display: flex; align-items: center; gap: 7px; }
+
+  .callout { background: color-mix(in srgb,var(--seal) 9%,var(--card)); border: 1px solid color-mix(in srgb,var(--seal) 26%,transparent); border-left: 4px solid var(--seal); border-radius: 8px; padding: 13px 18px; margin: 8px 0 0; font-size: 13.5px; }
+  .callout b { color: var(--seal); }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 720px){ .split { grid-template-columns: 1fr; } }
+
+  footer { margin-top: 66px; padding-top: 18px; border-top: 3px double var(--rule-strong); color: var(--ink-3); font-size: 12px; font-family: var(--mono); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Scientist3 ／ 帳票データ系譜メモ · 統合版（発注〜請求）</p>
+    <h1>発注書から請求書まで ── 各帳票は何から引き継ぎ、現状それが出来ているか</h1>
+    <p class="lede">
+      研究者 ⇄ コスモバイオ ⇄ サプライヤーの仲介取引で、発注・納品・請求の各帳票が
+      どのDAT_FILESTATUSレコードのどの項目から作られるべきか。実装が実際にそのデータを引けているかを、レコードの系譜で通しで整理する。
+    </p>
+    <div class="keypoint">
+      <b>核心：</b>金額・明細の唯一の源は<span class="hl">単一の「見積り送付」レコード</span>（<code>DAT_FILESTATUS</code>＋明細<code>DAT_FILESTATUS_DETAIL</code>）。
+      見積書CB宛・研究者宛はその別ビュー、発注書2種も同じレコードを <code>key</code> にして読む。
+      納品・請求は<span class="hl">サプライヤーのアップロードファイル（納品物 <code>N_FILE</code>／請求書 <code>S2_FILE</code>）が実体</span>で、サイトは金額を組版しない。
+      発注依頼・承認・請求の各レコードは、源への参照（<code>DIV_ID</code>／<code>H_M2_ID</code>）とステータス印を持つ。
+    </div>
+
+    <div class="summary">
+      <div class="sum">
+        <div class="s-doc">発注書（研究者→CB）</div>
+        <div class="s-sub">pdf_h · hr</div>
+        <div class="verdict v-part"><span class="mk">△</span>部分的</div>
+        <div class="s-one">見積り送付から手数料込み合計まで引けている。宛先がテストスタブ。</div>
+      </div>
+      <div class="sum">
+        <div class="s-doc">発注書（CB→サプライヤー）</div>
+        <div class="s-sub">pdf_h · hcb</div>
+        <div class="verdict v-no"><span class="mk">✕</span>未実装</div>
+        <div class="s-one">手数料抜きの原価を引かず、研究者面と同額から手数料表を隠すだけ。</div>
+      </div>
+      <div class="sum">
+        <div class="s-doc">納品書</div>
+        <div class="s-sub">組版なし</div>
+        <div class="verdict v-ok"><span class="mk">○</span>成立</div>
+        <div class="s-one">サプライヤーの <code>N_FILE</code>/<code>N_PDF</code> が実体（仕様どおり）。</div>
+      </div>
+      <div class="sum">
+        <div class="s-doc">請求書（研究者宛）</div>
+        <div class="s-sub">pdf_s · s</div>
+        <div class="verdict v-part"><span class="mk">△</span>部分的</div>
+        <div class="s-one">S2_FILEコピーは動く。金額非組版・支払期限マスタ依存。</div>
+      </div>
+      <div class="sum">
+        <div class="s-doc">追加請求書</div>
+        <div class="s-sub">pdf_s_add · s_add</div>
+        <div class="verdict v-part"><span class="mk">△</span>部分的</div>
+        <div class="s-one">追加金額のみ組版。Invoiceは元請求の <code>S2_FILE</code> 流用。</div>
+      </div>
+    </div>
+
+    <nav class="toc">
+      <h3>目次</h3>
+      <ol>
+        <li><a href="#s1">取引全体の状態遷移とデータ系譜</a></li>
+        <li><a href="#s2">見積り送付レコード（すべての源）</a></li>
+        <li><a href="#s3">発注書（研究者→CB／CB→サプライヤー）</a></li>
+        <li><a href="#s4">納品書</a></li>
+        <li><a href="#s5">請求書（研究者宛）＋項目別判定</a></li>
+        <li><a href="#s6">追加請求書</a></li>
+        <li><a href="#s7">前払い/後払い・サプライヤー→CB請求書</a></li>
+        <li><a href="#s8">総括 ── 埋めるべき穴</a></li>
+      </ol>
+    </nav>
+  </header>
+
+  <!-- 1. full chain -->
+  <section id="s1">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>取引全体の状態遷移とデータ系譜</h2>
+      <span class="sec-sub">DAT_FILESTATUS · STATUS / S_STATUS</span>
+    </div>
+    <p class="note">
+      1件の取引が STATUS の異なる複数レコードとして積み上がる。金額・明細は先頭の「見積り送付」だけが持ち、以降は
+      参照（<code>DIV_ID</code>／<code>H_M2_ID</code>）とアップロードファイルで繋がる。●=源データ、緑丸=書類の起点。
+    </p>
+    <div class="chain">
+      <div class="cstep src">
+        <div class="cs-row"><span class="cs-status">見積り送付</span><span class="cs-who">運営（m_contact1/2 起点）</span></div>
+        <div class="cs-desc">金額・明細の唯一の源。DETAIL＋手数料フィールドを保持。→ 見積書CB宛/研究者宛・発注書2種の源。</div>
+        <div class="cs-doc">📄 見積書（CB宛 pdf_cb ／ 研究者宛 pdf_r）</div>
+      </div>
+      <div class="cstep doc">
+        <div class="cs-row"><span class="cs-status">発注依頼 → 決済者発注承認 → 受注承認（/前払い/一括前払い）</span><span class="cs-who">研究者 · 決裁者 · 運営→サプライヤー</span></div>
+        <div class="cs-desc">金額は複製せず参照のみ。受注承認は薄いステータス印。<code>発注依頼.H_M2_ID → 見積り送付.ID</code>。</div>
+        <div class="cs-doc">📄 発注書（hr 研究者面 ／ hcb サプライヤー面）</div>
+      </div>
+      <div class="cstep doc">
+        <div class="cs-row"><span class="cs-status">データ納品 / 物品納品 / サプライヤーが納品(一括前払い)</span><span class="cs-who">サプライヤー（m_contact1）</span></div>
+        <div class="cs-desc">納品物・出荷情報をアップロード。<code>N_FILE〜N_FILE5, N_PDF, N_SHUKKA, N_AWB</code> を保持。</div>
+        <div class="cs-doc">📄 納品書＝アップロードファイルが実体（サイト組版なし）</div>
+      </div>
+      <div class="cstep">
+        <div class="cs-row"><span class="cs-status">納品確認 / 研究者が納品承認(一括前払い)</span><span class="cs-who">研究者（m_contact2）→ 運営が S2_FILE 投入</span></div>
+        <div class="cs-desc">研究者が検収。作成時は <code>S2_FILE</code> を持たず、運営が a_filestatus の FORM_S2 でサプライヤー請求書ファイルを投入する。</div>
+        <div class="cs-key">投入先: この納品確認レコード自身の S2_FILE ／ data/{納品確認ID}/</div>
+      </div>
+      <div class="cstep doc">
+        <div class="cs-row"><span class="cs-status">請求 / 請求書送付(前払い) / 請求書送付(一括前払い) ＋ S_STATUS='請求（研究者）'</span><span class="cs-who">運営 SubmitSeikyu()</span></div>
+        <div class="cs-desc">起点レコードの <code>S2_FILE/S2_MESSAGE/DIV_ID</code> をコピーした新レコード。金額・支払期限はコピーしない。</div>
+        <div class="cs-doc">📄 請求書（研究者宛）pdf_s</div>
+        <div class="cs-key">見積番号/SC番号は DIV_ID の見積り送付から取得</div>
+      </div>
+      <div class="cstep doc">
+        <div class="cs-row"><span class="cs-status">完了後対応 ＋ S_STATUS='請求（研究者）'</span><span class="cs-who">運営 SubmitSeikyu_add()</span></div>
+        <div class="cs-desc">追加金額 <code>S_ADD_CHARGE2</code> のみ新規保存。Invoiceは元の請求（研究者）レコードの <code>S2_FILE</code> を流用。</div>
+        <div class="cs-doc">📄 追加請求書 pdf_s_add</div>
+        <div class="cs-key">前提: 通常の 請求（研究者） レコードが既にあること</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. source record -->
+  <section id="s2">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>見積り送付レコード ── すべての源</h2>
+      <span class="sec-sub">DAT_FILESTATUS / _DETAIL</span>
+    </div>
+    <p class="note">
+      この1レコードが、<span style="color:var(--supp);font-weight:600">サプライヤーの素の金額（明細の単価・数量）</span>と
+      <span style="color:var(--res);font-weight:600">コスモバイオの手数料（PF手数料・輸入/輸出代行・運営値引）</span>の両方を持つ。
+      この2要素をどう見せるかで、見積書2種・発注書2種が派生する。
+    </p>
+    <div class="prov">
+      <div class="node source">
+        <div class="n-tag">源データ · STATUS = 見積り送付</div>
+        <div class="n-title">見積り送付レコード</div>
+        <div class="n-desc">DAT_FILESTATUS 1行 ＋ 明細 DAT_FILESTATUS_DETAIL（FILESTATUS_ID = このレコードID）</div>
+        <div class="n-fields">
+          <span class="chip base">明細 単価/数量/SP値引</span>
+          <span class="chip base">小計1＝サービス費用</span>
+          <span class="chip fee">PF手数料 M2_ETC02%</span>
+          <span class="chip fee">輸入代行 M2_IMPORT_FEE</span>
+          <span class="chip fee">輸出代行</span>
+          <span class="chip fee">運営値引 M2_MANAGE_DISCOUNT</span>
+          <span class="chip">通貨 M2_CURRENCY（単一）</span>
+        </div>
+      </div>
+      <div class="down"><span class="lab">同一レコードの別ビュー（テンプレート違い）</span><span class="ln"></span></div>
+      <div class="po" style="width:min(760px,100%);">
+        <div class="pocard supp">
+          <div class="ph"><span class="ptype">preview_type=cb · 英</span><div class="pname">見積書（CB宛）</div><div class="pdir">サプライヤー → コスモバイオ</div></div>
+          <div class="pb"><div class="row"><div class="r-val">明細 ＋ 小計/TOTAL（<b style="color:var(--supp)">手数料を含まない素の金額</b>）。Bill to = Cosmo Bio。</div></div></div>
+        </div>
+        <div class="pocard res">
+          <div class="ph"><span class="ptype">preview_type=r · 和</span><div class="pname">見積書（研究者宛）</div><div class="pdir">コスモバイオ → 研究者</div></div>
+          <div class="pb"><div class="row"><div class="r-val">明細 ＋ <b style="color:var(--res)">手数料一式 ＋ 合計金額</b>（研究者が払う総額）。宛先＝研究者「様」。</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. purchase orders -->
+  <section id="s3">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2>発注書 ── 研究者→CB（hr）／ CB→サプライヤー（hcb）</h2>
+      <span class="sec-sub">pdf_h.html · index.php:503-527</span>
+    </div>
+    <p class="note">
+      両発注書とも<span class="hl">同じ「見積り送付」レコードのID（PH_ID）を <code>key</code> にして開く</span>（hr/hcb共通）。
+      明細も <code>WHERE FILESTATUS_ID = key</code> で同じ源から。手数料計算は preview_type 分岐なしで走り、
+      現状の実差分は「hr版だけ手数料内訳表を出す／hcb版は隠す」だけ。
+    </p>
+    <div class="po">
+      <div class="pocard res">
+        <div class="ph">
+          <span class="ptype">preview_type = hr</span>
+          <div class="pname">発注書（研究者 → コスモバイオ）</div>
+          <div class="pdir">研究者面 · 手数料込みの総額</div>
+        </div>
+        <div class="pb">
+          <div class="row"><div class="r-lab">引き継ぐべきデータ</div><div class="r-val"><b class="hl">見積書（研究者宛）相当</b>＝見積り送付の明細 ＋ 手数料一式 ＋ 合計金額</div></div>
+          <div class="row"><div class="r-lab">現状</div><div class="r-val">key＝見積り送付ID で読み、手数料計算（<code>index.php:1499-2214</code>）を通し合計まで表示（<code>pdf_h.html:104-188</code>）</div></div>
+          <div class="row"><div class="r-lab">判定</div><div class="verdict v-part"><span class="mk">△</span>データ系譜は成立（○）／宛先ブロックがテストスタブ（要仕上げ）</div></div>
+        </div>
+      </div>
+      <div class="pocard supp">
+        <div class="ph">
+          <span class="ptype">preview_type = hcb</span>
+          <div class="pname">発注書（コスモバイオ → サプライヤー）</div>
+          <div class="pdir">サプライヤー面 · 手数料抜きの素の金額</div>
+        </div>
+        <div class="pb">
+          <div class="row"><div class="r-lab">引き継ぐべきデータ</div><div class="r-val"><b class="hl">見積書（CB宛）相当</b>＝見積り送付の明細 ＋ 小計1（サービス費用）まで。<b style="color:var(--supp)">手数料を除いたサプライヤー原価</b></div></div>
+          <div class="row"><div class="r-lab">現状</div><div class="r-val">key＝<b>研究者面と同じ見積り送付ID</b>。同じ明細・同じ金額を生成し、手数料表 <code>[PDF_H_TO_R]</code> を <code>DispParamNone</code> で<b class="hl">非表示にするだけ</b>（<code>index.php:511-513</code>）</div></div>
+          <div class="row"><div class="r-lab">判定</div><div class="verdict v-no"><span class="mk">✕</span>「サプライヤーの素の金額」を引く仕組みは未実装（手数料を隠すだけ）</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-scroll" style="margin-top:18px;">
+      <table class="sc">
+        <thead><tr><th style="width:18%">項目</th><th style="width:26%">あるべき取得元</th><th style="width:32%">現状の実装</th><th style="width:12%">判定</th></tr></thead>
+        <tbody>
+          <tr><td class="item">明細（品目・単価・数量）</td><td>見積り送付の <code>DAT_FILESTATUS_DETAIL</code>（両発注書とも共通でよい）</td><td><code>WHERE FILESTATUS_ID = 見積り送付ID</code>（<code>:2278</code>）。hr/hcb同一</td><td><span class="mk-badge ok">○ OK</span></td></tr>
+          <tr><td class="item">研究者面の合計（手数料込み）</td><td>見積り送付の手数料＋小計から算出</td><td><code>[MITSUMORISYO_ALL_CHARGE]</code> まで表示（hrのみ）</td><td><span class="mk-badge ok">○ OK</span></td></tr>
+          <tr><td class="item">サプライヤー面の金額（手数料抜き）</td><td>見積り送付の<b>小計1＝サービス費用まで</b>を手数料抜きで組版</td><td>専用計算なし。研究者面と同額を出し手数料表だけ非表示</td><td><span class="mk-badge no">✕ 未実装</span></td></tr>
+          <tr><td class="item">通貨</td><td>研究者面＝研究者通貨、サプライヤー面＝サプライヤー通貨（本来別々が理想）</td><td>単一 <code>M2_CURRENCY</code> を両面で共用</td><td><span class="mk-badge part">△ 単一のみ</span></td></tr>
+          <tr><td class="item">発注日</td><td>決裁者ありは決済者発注承認日、なしは発注依頼日</td><td>実装済（<code>:715-733</code> [HATYU_NEWDATE]）</td><td><span class="mk-badge ok">○ OK</span></td></tr>
+          <tr><td class="item">見積番号 / SC番号 / Version</td><td>発注依頼.H_M2_ID が指す見積り送付から</td><td><code>WHERE ID = 発注依頼.H_M2_ID AND STATUS='見積り送付'</code>（<code>:761-777</code>）</td><td><span class="mk-badge ok">○ OK</span></td></tr>
+          <tr><td class="item">宛先（Bill to / Ship to）</td><td>hr＝研究者宛、hcb＝サプライヤー宛に描き分け</td><td><code>[PDF_H_TO_CB]</code>/<code>[PDF_H_TO_R]</code> が「※出分けテスト用」のスタブ（<code>pdf_h.html:2-13</code>）</td><td><span class="mk-badge no">✕ 未整備</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4. delivery -->
+  <section id="s4">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2>納品書</h2>
+      <span class="sec-sub">サイト組版PDFなし</span>
+    </div>
+    <div class="docblock supplier">
+      <div class="db-head">
+        <span class="db-name">納品書</span>
+        <span class="db-file">サイト組版PDFなし</span>
+        <span class="db-dir">サプライヤー → 研究者（成果物）</span>
+      </div>
+      <dl class="db-lin">
+        <dt>あるべき</dt><dd>納品物・出荷情報をサプライヤーが提示（アップロード方式でよい）</dd>
+        <dt>現状</dt><dd><code>データ納品</code>/<code>物品納品</code> レコードの <code>N_FILE〜N_FILE5, N_PDF, N_SHUKKA, N_AWB, N_TEMP</code>（<code>m_contact1</code> INSERT）。サイトが組版する「納品書PDF」は存在しない</dd>
+      </dl>
+      <div class="db-verdict"><span class="verdict v-ok"><span class="mk">○</span>アップロード方式として成立（サイト組版の納品書は元々ない＝仕様どおり）</span></div>
+    </div>
+  </section>
+
+  <!-- 5. invoice -->
+  <section id="s5">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2>請求書（研究者宛）</h2>
+      <span class="sec-sub">pdf_s.html · preview_type=s</span>
+    </div>
+    <div class="docblock">
+      <div class="db-head">
+        <span class="db-name">請求書（研究者宛）</span>
+        <span class="db-file">pdf_s.html · SubmitSeikyu()</span>
+        <span class="db-dir">コスモバイオ → 研究者</span>
+      </div>
+      <dl class="db-lin">
+        <dt>あるべき</dt><dd>研究者が払う<b class="hl">総額（見積り送付の研究者向け合計）を組版</b>し、サプライヤーInvoiceを添付、取引ごとの支払期限を伴う</dd>
+        <dt>現状の起点</dt><dd>開いている <code>納品確認</code>/<code>受注承認(前払い)</code>/<code>受注承認(一括前払い)</code> レコード（key）</dd>
+        <dt>コピー処理</dt><dd><code>SubmitSeikyu()</code> が <code>S2_FILE(30)/S2_MESSAGE(31)/DIV_ID(54)</code> を新 <code>請求（研究者）</code> レコードへコピー（ファイルも <code>data/{新ID}/</code> へ copy）</dd>
+        <dt>表示</dt><dd><code>pdf_s.html</code> は案件名/会社名/日付/支払期限/<b>Invoiceファイルへのリンク</b>/メッセージのみ。<span class="hl">金額欄なし</span>＝総額は <code>S2_FILE</code> の中身にだけ存在</dd>
+      </dl>
+      <div class="db-verdict"><span class="verdict v-part"><span class="mk">△</span>コピー機構は動作。ただし下表の穴あり</span></div>
+    </div>
+
+    <ul class="legend">
+      <li><span class="mk-badge ok">○ OK</span></li>
+      <li><span class="mk-badge part">△ 部分的</span></li>
+      <li><span class="mk-badge no">✕ 未実装/欠落</span></li>
+    </ul>
+    <div class="table-scroll">
+      <table class="sc">
+        <thead><tr><th style="width:17%">項目</th><th style="width:25%">あるべき取得元</th><th style="width:34%">現状の実装</th><th style="width:12%">判定</th></tr></thead>
+        <tbody>
+          <tr><td class="item">Invoiceファイル（サプライヤー→CB請求書）</td><td>サプライヤーがアップロード → 研究者向けにコピー</td><td>コピーは <code>SubmitSeikyu()</code> で動作。だが<b class="hl">一次投入がサプライヤー画面(<code>m_contact1</code>)でなく管理側 FORM_S2 頼み</b>（<code>m_contact1</code> の請求INSERTに S2_FILE カラムが無い）</td><td><span class="mk-badge part">△</span></td></tr>
+          <tr><td class="item">請求金額（研究者の総額）</td><td>見積り送付の研究者向け合計を組版してPDFに明示</td><td><b class="hl">組版されない</b>。金額欄がなく、総額はアップロードPDF（S2_FILE）の中にだけ存在</td><td><span class="mk-badge no">✕</span></td></tr>
+          <tr><td class="item">支払期限</td><td>その取引ごとの支払期限</td><td><b class="hl">決裁者マスタ <code>DAT_M3.M2_ETC03</code> の静的値</b>（取引レコードの値でない／決裁者未登録だと空）</td><td><span class="mk-badge part">△</span></td></tr>
+          <tr><td class="item">見積番号 / SC番号 / Version</td><td>DIV_ID が指す見積り送付レコードから</td><td><code>WHERE DIV_ID=… AND STATUS='見積り送付'</code>（<code>:5286-5297</code>）</td><td><span class="mk-badge ok">○</span></td></tr>
+          <tr><td class="item">前払い / 後払いの分岐</td><td>起点レコードのSTATUSで請求STATUSを出し分け</td><td>納品確認→請求 ／ 受注承認(前払い)→請求書送付(前払い) ／ (一括前払い)→請求書送付(一括前払い)（<code>:5316-5330</code>）</td><td><span class="mk-badge ok">○</span></td></tr>
+          <tr><td class="item">プレビュー表示（送信前/後）</td><td>PREVIEW1（生成済み請求）とPREVIEW2（納品確認自身の保存）を出し分け</td><td>「どちらか不明のため一旦フル表示」で<b class="hl">両方表示の仮実装</b>（<code>:685-706</code>）</td><td><span class="mk-badge part">△</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6. additional invoice -->
+  <section id="s6">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <h2>追加請求書</h2>
+      <span class="sec-sub">pdf_s_add.html · preview_type=s_add</span>
+    </div>
+    <div class="docblock">
+      <div class="db-head">
+        <span class="db-name">追加請求書</span>
+        <span class="db-file">pdf_s_add.html · SubmitSeikyu_add()</span>
+        <span class="db-dir">コスモバイオ → 研究者</span>
+      </div>
+      <dl class="db-lin">
+        <dt>あるべき</dt><dd>完了後の追加金額を新レコードに保存し、Invoice参照と支払期限を伴う</dd>
+        <dt>現状</dt><dd><code>SubmitSeikyu_add()</code> が <code>S_ADD_CHARGE2(90)</code> を <code>STATUS='完了後対応', S_STATUS='請求（研究者）'</code> で INSERT。<b>前提として通常の 請求（研究者） レコードが既存でないと作られない</b></dd>
+        <dt>Invoice参照</dt><dd>新ファイルは作らず<b class="hl">元の請求（研究者）の <code>S2_FILE</code> を流用</b>。追加金額のみ pdf_s_add に組版表示</dd>
+      </dl>
+      <div class="db-verdict"><span class="verdict v-part"><span class="mk">△</span>追加金額の保存・表示は動作。S2_FILE流用・支払期限マスタ依存の穴は請求書と共通</span></div>
+    </div>
+  </section>
+
+  <!-- 7. prepaid + supplier invoice -->
+  <section id="s7">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <h2>補足 ── 前払い/後払いの起点、サプライヤー→CB請求書</h2>
+      <span class="sec-sub"></span>
+    </div>
+    <div class="split">
+      <div class="docblock neutral">
+        <div class="db-head"><span class="db-name">請求の起点は支払形態で変わる</span></div>
+        <dl class="db-lin">
+          <dt>後払い</dt><dd>納品 → <code>納品確認</code> 後に請求。STATUS=<code>請求</code>。作成は<b>納品後</b></dd>
+          <dt>前払い</dt><dd>起点=<code>受注承認(前払い)</code>。STATUS=<code>請求書送付(前払い)</code>。作成は<b>発注承認直後（納品前）</b></dd>
+          <dt>一括前払い</dt><dd>起点=<code>受注承認(一括前払い)</code>。STATUS=<code>請求書送付(一括前払い)</code></dd>
+          <dt>共通</dt><dd>いずれも同型でコピー（S2_FILE/S2_MESSAGE/DIV_ID＋<code>S_STATUS='請求（研究者）'</code>固定）。差は起点STATUSと生成STATUS文字列のみ</dd>
+        </dl>
+      </div>
+      <div class="docblock supplier">
+        <div class="db-head"><span class="db-name">サプライヤー → CB 請求書</span><span class="db-dir">維持でOK</span></div>
+        <dl class="db-lin">
+          <dt>方式</dt><dd>サイトで組版せず、<b class="hl">サプライヤーがInvoiceファイルを添付</b>（＝上の S2_FILE の中身）</dd>
+          <dt>現状の穴</dt><dd>ただし添付の一次投入が実運用では<b>管理側 FORM_S2</b>で行われている（サプライヤー画面の請求保存に S2_FILE 永続化が無い）。運用意図と合っているか要確認</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. summary -->
+  <section id="s8">
+    <div class="sec-head">
+      <span class="sec-num">08</span>
+      <h2>総括 ── 埋めるべき穴</h2>
+      <span class="sec-sub">優先課題</span>
+    </div>
+    <div class="callout" style="margin-bottom:14px;">
+      <b>発注書：</b>
+      ① 発注書（CB→サプライヤー, hcb）に<span class="hl">手数料抜きのサプライヤー原価</span>を組版（現状は研究者面と同額から手数料表を隠すだけ）。
+      ② hr/hcb の<span class="hl">宛先ブロックとタイトル</span>を実装（現状テストスタブ）。
+      ③ 送信ボタンの <code>preview_type=cb</code> 誤指定を hr/hcb に修正。
+    </div>
+    <div class="callout">
+      <b>請求書：</b>
+      ① 研究者向け請求書に<span class="hl">総額を組版</span>する（現状ファイル参照のみ）。
+      ② 支払期限を<span class="hl">取引ごとの値</span>にする（現状は決裁者マスタ <code>DAT_M3.M2_ETC03</code>）。
+      ③ サプライヤー画面での <code>S2_FILE</code> 保存経路を正す、または管理側投入を正式運用と決める。
+      ④ pdf_s の PREVIEW1/2 出し分けを確定する。
+    </div>
+  </section>
+
+  <footer>
+    Scientist3 帳票データ系譜メモ · 統合版（発注〜請求） ／ 出典: a_filestatus/index.php・pdf_h/s/s_add.html・pdf_items_*.html・m_contact1,2,3・config.php ／ 根拠行番号は各項に記載
+  </footer>
+
+</div>
+</body>
+</html>

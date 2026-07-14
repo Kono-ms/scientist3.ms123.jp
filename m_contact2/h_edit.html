@@ -232,11 +232,22 @@
               <div class="formset__item">
                 <div class="formset__ttl">管理番号<span class="formset__must">Mandatory</span></div>
                 <div class="formset__input">
+                  [S-HATYU_TYPICAL]
                   <select name="H_M2_ID" class="input_select form-control" required>
                     <option value=""></option>
                     [H_M2_LIST]
                   </select>
-                  [S-HATYU_CAUTION]<span>※発注可能な見積りがありません</span><br>[E-HATYU_CAUTION]
+                  [E-HATYU_TYPICAL]
+                  
+                  [S-HATYU_CAUTION]
+                  <div style="display:none;">
+                    <select name="H_M2_ID" class="input_select form-control" required>
+                      <option value=""></option>
+                      [H_M2_LIST]
+                    </select>
+                  </div>
+                  <span>※発注可能な見積りがありません</span><br>
+                  [E-HATYU_CAUTION]
                 </div>
               </div>
 
@@ -406,7 +417,12 @@
 
 
               <div class="btn formset__btn">
+                [S-HATYU_TYPICAL]
                 <input type="submit" value="確認画面" />
+                [E-HATYU_TYPICAL]
+                [S-HATYU_CAUTION]
+                <input type="submit" value="確認画面" disabled="disabled" style="background-color: #ccc;" />
+                [E-HATYU_CAUTION]
               </div>
               <button type="button" onclick="history.back();">戻る</button>
             </div>

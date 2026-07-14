@@ -655,6 +655,9 @@ function showStatus($val){
 	$status=$key;
 	if($_SESSION['MATT']=="1"){
 		switch($key){
+			case "キャンセル関連ステータス特別表示分け用";
+				$status="Cancellation";
+				break;
 			case "問い合わせ":
 				$status="Inquiry";
 				break;
@@ -674,6 +677,8 @@ function showStatus($val){
 				$status="Done.";
 				break;
 			case "キャンセル":
+				$status="Closed";
+				break;
 			case "サプライヤーキャンセル承認":
 			case "キャンセル承認":
 			case "キャンセル承認（請求あり）":
@@ -806,6 +811,9 @@ function showStatusColor($val){
 	$color='#f0f0f0';
 	if($_SESSION['MATT']=="1"){
 		switch($key){
+			case "キャンセル関連ステータス特別表示分け用":
+				$color="#8080d0";
+				break;
 			case "問い合わせ":
 				$color="#d08080";
 				break;
@@ -826,6 +834,9 @@ function showStatusColor($val){
 				$color="Done.";
 				break;
 			case "キャンセル":
+				$color="#8080d0";
+				break;
+			case "クローズ":
 				$color="#8080d0";
 				break;
 			case "辞退":
@@ -863,6 +874,9 @@ function showStatusColor($val){
 				$color="Done.";
 				break;
 			case "キャンセル":
+				$color="#8080d0";
+				break;
+			case "クローズ":
 				$color="#8080d0";
 				break;
 			case "辞退":

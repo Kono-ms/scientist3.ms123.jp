@@ -381,6 +381,11 @@ function DispData($mode,$sort,$word,$word2,$key,$page,$lid,$token)
 				//「見積り」表記にもどる
 				$status="見積り";
 			}
+
+			if($status=="キャンセル"){
+				$status="クローズ";
+			}
+
 			if($status=="キャンセル承認"){
 				$status="キャンセル";
 			}
@@ -409,6 +414,7 @@ function DispData($mode,$sort,$word,$word2,$key,$page,$lid,$token)
 			}else{
 				$str=DispParamNone($str,"MITSUMORI_IRAI");
 			}
+
 
 			
 

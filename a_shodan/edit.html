@@ -45,8 +45,8 @@
         $('#mask_mcontact2').show();
         $('#popup_mcontact2').fadeIn();
     }
-    function popup_preview_hk_r() {
-        var url=document.getElementById('OPT_PREVIEW_LIST_HK_R').value;
+    function popup_preview_hk_s() {
+        var url=document.getElementById('OPT_PREVIEW_LIST_HK_S').value;
         //console.log('preview url:'+url);
         if(url==""){
             return false;
@@ -148,7 +148,10 @@
                                 </tr>
                                 <tr>
                                     <th>ステータス</th>
-                                    <td>[STATUS]</td>
+                                    <td>
+                                        [S-TRUE_STATUS][D-STATUS][E-TRUE_STATUS]
+                                        [S-DIV_STATUS][DIV_STATUS][E-DIV_STATUS]
+                                    </td>
                                     <!--<td><select name="STATUS" class="input_select form-control">[OPT-STATUS]</select>
                                     </td>-->
                                 </tr>
@@ -196,13 +199,13 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>発注書（R宛て）<span style="color: tomato;font-size: 1.4rem;"></span></th>
+                                    <th>発注書（サプライヤー宛て）<span style="color: tomato;font-size: 1.4rem;"></span></th>
                                     <td>
-                                        <select name="OPT_PREVIEW_LIST_HK_R" id="OPT_PREVIEW_LIST_HK_R" class="input_select form-control">
+                                        <select name="OPT_PREVIEW_LIST_HK_S" id="OPT_PREVIEW_LIST_HK_S" class="input_select form-control">
                                             <option value="">▼選択して下さい</option>
-                                            [OPT_PREVIEW_LIST_HK_R]
+                                            [OPT_PREVIEW_LIST_HK_S]
                                         </select>
-                                        <a href="javascript:popup_preview_hk_r();" id="preview_btn_hk_r" class="btn btn-default btn-xs">プレビュー</a>
+                                        <a href="javascript:popup_preview_hk_s();" id="preview_btn_hk_s" class="btn btn-default btn-xs">プレビュー</a>
                                     </td>
                                 </tr>
                             </tbody>

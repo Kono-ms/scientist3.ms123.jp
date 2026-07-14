@@ -96,8 +96,8 @@
         $('.ifrm_mcontact2').attr('src', url);// loadイベントを強制的に再発行する
     }
 
-    function popup_preview_hk_r(id) {
-        var url=document.getElementById('OPT_PREVIEW_LIST_HK_R_'+id).value;
+    function popup_preview_hk_s(id) {
+        var url=document.getElementById('OPT_PREVIEW_LIST_HK_S_'+id).value;
         //console.log('preview url:'+url);
         if(url=="") return false;
 
@@ -968,13 +968,13 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>発注書(R宛て)</th>
+                                    <th>発注書(サプライヤー宛て)</th>
                                     <td>
-                                        <select name="OPT_PREVIEW_LIST_HK_R" id="OPT_PREVIEW_LIST_HK_R_[ID]" class="input_select form-control">
+                                        <select name="OPT_PREVIEW_LIST_HK_S" id="OPT_PREVIEW_LIST_HK_S_[ID]" class="input_select form-control">
                                             <option value="">▼選択して下さい</option>
-                                            [OPT_PREVIEW_LIST_HK_R_DISPONLY]
+                                            [OPT_PREVIEW_LIST_HK_S_DISPONLY]
                                         </select>
-                                        <a href="javascript:popup_preview_hk_r([ID]);" id="preview_btn_hk" class="btn btn-default btn-xs">プレビュー</a>
+                                        <a href="javascript:popup_preview_hk_s([ID]);" id="preview_btn_hk" class="btn btn-default btn-xs">プレビュー</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1013,13 +1013,13 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>発注書(研究者宛て発行用)</th>
+                                    <th>発注書(サプライヤー宛て発行用)</th>
                                     <td>
-                                        <select name="OPT_PREVIEW_LIST_HK_R" id="OPT_PREVIEW_LIST_HK_R_[ID]" class="input_select form-control">
+                                        <select name="OPT_PREVIEW_LIST_HK_S" id="OPT_PREVIEW_LIST_HK_S_[ID]" class="input_select form-control">
                                             <option value="">▼選択して下さい</option>
-                                            [OPT_PREVIEW_LIST_HK_R]
+                                            [OPT_PREVIEW_LIST_HK_S]
                                         </select>
-                                        <a href="javascript:popup_preview_hk_r([ID]);" id="preview_btn_hk" class="btn btn-default btn-xs">プレビュー</a>
+                                        <a href="javascript:popup_preview_hk_s([ID]);" id="preview_btn_hk" class="btn btn-default btn-xs">プレビュー</a>
                                     </td>
                                 </tr>
                             </tbody>

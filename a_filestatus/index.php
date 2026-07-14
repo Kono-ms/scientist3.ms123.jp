@@ -504,19 +504,19 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				$pdf_view=@file_get_contents($DOCUMENT_ROOT."pdf_cb.html");
 			}else if($preview_type=="r"){
 				$pdf_view=@file_get_contents($DOCUMENT_ROOT."pdf_r.html");
-			}else if($preview_type=="h" || $preview_type=="hcb" || $preview_type=="hr"){
+			}else if($preview_type=="h" || $preview_type=="hcb" || $preview_type=="hs"){
 				$pdf_view=@file_get_contents($DOCUMENT_ROOT."pdf_h.html");
 
 				//echo "<!--プレビュータイプ：preview_type:$preview_type-->";
 				if($preview_type=="hcb"){
 					$pdf_view=DispParam($pdf_view, "PDF_H_TO_CB");
-					$pdf_view=DispParamNone($pdf_view, "PDF_H_TO_R");
-				}else if($preview_type=="hr"){
+					$pdf_view=DispParamNone($pdf_view, "PDF_H_TO_S");
+				}else if($preview_type=="hs"){
 					$pdf_view=DispParamNone($pdf_view, "PDF_H_TO_CB");
-					$pdf_view=DispParam($pdf_view, "PDF_H_TO_R");
+					$pdf_view=DispParam($pdf_view, "PDF_H_TO_S");
 				}else{
 					$pdf_view=DispParamNone($pdf_view, "PDF_H_TO_CB");
-					$pdf_view=DispParamNone($pdf_view, "PDF_H_TO_R");
+					$pdf_view=DispParamNone($pdf_view, "PDF_H_TO_S");
 				}
 
 			}else if($preview_type=="s"){
@@ -2271,7 +2271,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			$tpl_pdf_items=file_get_contents("pdf_items_cb.html");
 		}else if($preview_type=="r"){
 			$tpl_pdf_items=file_get_contents("pdf_items_r.html");
-		}else if($preview_type=="h" || $preview_type=="hcb" || $preview_type=="hr"){
+		}else if($preview_type=="h" || $preview_type=="hcb" || $preview_type=="hs"){
 			$tpl_pdf_items=file_get_contents("pdf_items_h.html");
 		}
 
@@ -3073,16 +3073,74 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 		}
 
 
+		//発注書プレビュー
+		//2回払いのときに、見かけをPart0の発注書プレビューにすることに関する処置
+		//SENDボタン（送信ボタン）のkeyの設定。
+		$tmp="";
+		$tmp=explode("-", $FieldValue[54]);
+		$part="";
+		$pre_part="";
+		if(count($tmp)==3){
+			$part=$tmp[2];
+			$pre_part=$tmp[0]."-".$tmp[1];
+		}
+
+		if($FieldValue[16]=="Split"){
+			//2回払いのときはPart1を送信できるようにする（Part2は送信ボタンは表示しない）
+			$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS FROM DAT_FILESTATUS WHERE DIV_ID='".$pre_part."-Part1' ";
+			$StrSQL.=" AND STATUS='見積り送付'";
+			$preview_tmp_rs=mysqli_query(ConnDB(),$StrSQL);
+			$preview_tmp_item=mysqli_fetch_assoc($preview_tmp_rs);
+
+			if($pre_part!=""){
+				$str=str_replace("[TMP_KEY]",$preview_tmp_item["ID"],$str);
+			}else{
+				$str=str_replace("[TMP_KEY]","",$str);
+			}
+
+		}else{
+			$str=str_replace("[TMP_KEY]",$key,$str);
+		}
+		
+
 		//pdf対応
 		//詳細ページのpdfプレビューボタンのプルダウン
 		if($FieldValue[34]=="決済者発注承認" || $FieldValue[34]=="発注依頼"){
-			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$FieldValue[54]."' ";
+
+			//発注書プレビュー
+			//2回払いのときに、見かけをPart0の発注書プレビューにすることに関する処置
+			$tmp="";
+			$tmp=explode("-", $FieldValue[54]);
+			$part="";
+			$pre_part="";
+			if(count($tmp)==3){
+				$part=$tmp[2];
+				$pre_part=$tmp[0]."-".$tmp[1];
+			}
+
+			$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS,M2_PAY_TYPE FROM DAT_FILESTATUS WHERE DIV_ID='".$FieldValue[54]."' ";
 			$StrSQL.=" AND STATUS='見積り送付'";
+			$preview_tmp_rs=mysqli_query(ConnDB(),$StrSQL);
+			$preview_tmp_item=mysqli_fetch_assoc($preview_tmp_rs);
+
+			if($preview_tmp_item["M2_PAY_TYPE"]=="Split"){
+				$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$pre_part."-Part0' ";
+				$StrSQL.=" AND STATUS='見積り送付'";
+			}else{
+				$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$FieldValue[54]."' ";
+				$StrSQL.=" AND STATUS='見積り送付'";
+			}
 			//echo('<!--previewSQL:'.$StrSQL.'-->');
 			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+
+			//$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$FieldValue[54]."' ";
+			//$StrSQL.=" AND STATUS='見積り送付'";
+			////echo('<!--previewSQL:'.$StrSQL.'-->');
+			//$preview_rs=mysqli_query(ConnDB(),$StrSQL);
 			
-			$opt_preview_list_h_r="";
+			$opt_preview_list_h_s="";
 			$opt_preview_list_h_cb="";
+			//ループになっているが、通常DIV_IDが同じ「見積り送付」のレコードは１つ
 			while($preview_item = mysqli_fetch_assoc($preview_rs)){
 
 				$SCNo_ary=array(
@@ -3104,19 +3162,40 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				$preview_m2_version="";
 				$preview_m2_version=$preview_item["M2_VERSION"];
 
-				if($FieldValue[34]=="決済者発注承認"){
+				//受注承認データがあるかチェック
+				if($preview_tmp_item["M2_PAY_TYPE"]=="Split"){
+					$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS FROM DAT_FILESTATUS WHERE DIV_ID='".$pre_part."-Part1' ";
+					$StrSQL.=" AND ( STATUS='受注承認' OR STATUS='受注承認(前払い)' )";
+				}else{
+					$StrSQL="SELECT ID,SHODAN_ID,DIV_ID,STATUS FROM DAT_FILESTATUS WHERE DIV_ID='".$preview_item["DIV_ID"]."' ";
+					$StrSQL.=" AND ( STATUS='受注承認' OR STATUS='受注承認(前払い)' )";
+				}
+				$preview_tmp_j_rs=mysqli_query(ConnDB(),$StrSQL);
+				$preview_tmp_j_item=mysqli_fetch_assoc($preview_tmp_j_rs);
+				$preview_tmp_j_item_num=mysqli_num_rows($preview_tmp_j_rs);
+				//echo "<!--受注承認があるかどうか:$StrSQL-->";
+				//echo "<!--";
+				//var_dump($preview_tmp_j_item);
+				//echo "-->";
+
+				if($preview_tmp_j_item_num>0){
+					//送信ボタンない状態で表示
+					$opt_preview_list_h_s.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hs&btn_version=1&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_h_s.=$SCNo_str."-Version".$preview_m2_version."</option>";
+
+				}else if($FieldValue[34]=="決済者発注承認"){
 					//送信ボタンある状態で表示
-					$opt_preview_list_h_r.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hr&btn_version=2&key=".$preview_item["ID"]."'>";
-					$opt_preview_list_h_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+					$opt_preview_list_h_s.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hs&btn_version=2&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_h_s.=$SCNo_str."-Version".$preview_m2_version."</option>";
 
 				}else if($kessai_num<=0 || $m2_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:なし"){
 					//送信ボタンある状態で表示
-					$opt_preview_list_h_r.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hr&btn_version=2&key=".$preview_item["ID"]."'>";
-					$opt_preview_list_h_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+					$opt_preview_list_h_s.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hs&btn_version=2&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_h_s.=$SCNo_str."-Version".$preview_m2_version."</option>";
 				}else{
 					//送信ボタンない状態で表示
-					$opt_preview_list_h_r.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hr&btn_version=1&key=".$preview_item["ID"]."'>";
-					$opt_preview_list_h_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+					$opt_preview_list_h_s.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hs&btn_version=1&key=".$preview_item["ID"]."'>";
+					$opt_preview_list_h_s.=$SCNo_str."-Version".$preview_m2_version."</option>";
 				}
 
 				//CB宛て閲覧用
@@ -3125,7 +3204,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				$opt_preview_list_h_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
 				
 			}
-			$str=str_replace("[OPT_PREVIEW_LIST_HK_R]",$opt_preview_list_h_r,$str);
+			$str=str_replace("[OPT_PREVIEW_LIST_HK_S]",$opt_preview_list_h_s,$str);
 			$str=str_replace("[OPT_PREVIEW_LIST_HK_CB]",$opt_preview_list_h_cb,$str);
 		}
 
@@ -3139,7 +3218,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 			//echo('<!--previewSQL:'.$StrSQL.'-->');
 			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
 			
-			$opt_preview_list_h_r="";
+			$opt_preview_list_h_s="";
 			$opt_preview_list_h_cb="";
 			while($preview_item = mysqli_fetch_assoc($preview_rs)){
 
@@ -3162,17 +3241,17 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 				$preview_m2_version="";
 				$preview_m2_version=$preview_item["M2_VERSION"];
 
-				//R宛て
+				//サプライヤー宛て
 				//送信ボタンない状態で表示
-				$opt_preview_list_h_r.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hr&btn_version=1&key=".$preview_item["ID"]."'>";
-				$opt_preview_list_h_r.=$SCNo_str."-Version".$preview_m2_version."</option>";
+				$opt_preview_list_h_s.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hs&btn_version=1&key=".$preview_item["ID"]."'>";
+				$opt_preview_list_h_s.=$SCNo_str."-Version".$preview_m2_version."</option>";
 
 				//CB宛て
 				//送信ボタンない状態で表示
 				$opt_preview_list_h_cb.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hcb&btn_version=1&key=".$preview_item["ID"]."'>";
 				$opt_preview_list_h_cb.=$SCNo_str."-Version".$preview_m2_version."</option>";
 			}
-			$str=str_replace("[OPT_PREVIEW_LIST_HK_R_DISPONLY]",$opt_preview_list_h_r,$str);
+			$str=str_replace("[OPT_PREVIEW_LIST_HK_S_DISPONLY]",$opt_preview_list_h_s,$str);
 			$str=str_replace("[OPT_PREVIEW_LIST_HK_CB_DISPONLY]",$opt_preview_list_h_cb,$str);
 		}
 

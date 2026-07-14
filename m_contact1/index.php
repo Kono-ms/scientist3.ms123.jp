@@ -1887,6 +1887,31 @@ echo "<!--2a-->";
 		}
 
 
+		//「見積りの辞退」のボタンDclineボタン用
+		if($mode=="disp_frame"){
+			$StrSQL="SELECT ID,SHODAN_ID,MID1,STATUS,NEWDATE FROM DAT_FILESTATUS ";
+			$StrSQL.=" WHERE SHODAN_ID='".$item_filestatus["SHODAN_ID"]."' ";
+			$StrSQL.=" AND MID1='".$item_filestatus["MID1"]."' ";
+			$StrSQL.=" AND (STATUS='見積り送付' OR STATUS='運営手数料追加') ";
+			$StrSQL.=" AND NEWDATE > '".$item_filestatus["NEWDATE"]."' ";
+
+			$tmp_mitsu_rs=mysqli_query(ConnDB(),$StrSQL);
+			$tmp_mitsu_item = mysqli_fetch_assoc($tmp_mitsu_rs);
+			$tmp_mitsu_item_num=mysqli_num_rows($tmp_mitsu_rs);
+			//echo "<!--見積りの辞退：$StrSQL-->";
+			//echo "<!--tmp_mitsu_item_num:$tmp_mitsu_item_num-->";
+			//echo "<!--";
+			//var_dump($tmp_mitsu_item);
+			//echo "-->";
+
+			if($tmp_mitsu_item_num>0){
+				$str=DispParamNone($str,"DECLINE_BTN_SUP");
+			}else{
+				$str=DispParam($str,"DECLINE_BTN_SUP");
+			}
+		}
+
+
 		$str=str_replace("[SHODAN_ID_FOR_M2]",$item_shodan['ID'],$str);
 
 		$str=str_replace("[D-TITLE]",$item_shodan['TITLE'],$str);
@@ -2388,7 +2413,8 @@ echo "<!--2a-->";
 		//（３）発注書（CBtoサプライヤー）のDate：⑤管理者が発注書を送付した日
 		//管理者が発注書のプレビューからsendした後は「受注承認」がつくられるので、「受注承認」のデータのNEWDATEにした。
 		$StrSQL="SELECT ID,SHODAN_ID,STATUS,NEWDATE FROM DAT_FILESTATUS WHERE DIV_ID='".$item_filestatus["DIV_ID"]."' ";
-		$StrSQL.=" AND STATUS='受注承認' ";
+		$StrSQL.=" AND ( STATUS='受注承認' OR STATUS='受注承認(前払い)' ) ";
+		//$StrSQL.=" AND STATUS='受注承認' ";
 		$preview_jyutyu_rs=mysqli_query(ConnDB(),$StrSQL);
 		$preview_jyutyu_item=mysqli_fetch_assoc($preview_jyutyu_rs);
 		$preview_jyutyu_num=mysqli_num_rows($preview_jyutyu_rs);

@@ -333,7 +333,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 				case 'キャンセル':
 					$sys_comment='('.$item_div["DIV_ID"].') ';
-					$sys_comment.='この商談はキャンセルされました。誤ってキャンセルした場合には管理者にご連絡ください。';
+					$sys_comment.='この商談はキャンセルされました。誤ってキャンセルした場合には<a href="/contact/" target="_blank">管理者</a>にご連絡ください。';
 				break;
 			}
 			if($sys_comment != '') {
@@ -476,7 +476,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				$sys_comment = 'この商談は辞退されました。';
 							break;
 			case 'キャンセル':
-				$sys_comment = 'この商談はキャンセルされました。誤ってキャンセルした場合には管理者にご連絡ください。';
+				$sys_comment = 'この商談はキャンセルされました。誤ってキャンセルした場合には<a href="/contact/" target="_blank">管理者</a>にご連絡ください。';
 							break;
 			case 'キャンセル承認':
 				$c_hatyu_str="";
@@ -491,7 +491,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 					$c_hatyu_str="発注No:<br>".$c_hatyu_str;
 				}
 				
-				$sys_comment = ''.$c_hatyu_str.'はキャンセルされました。誤ってキャンセルした場合は、<a href="/contact/" target="_blank">管理者にご連絡</a>ください。';
+				$sys_comment = ''.$c_hatyu_str.'はキャンセルされました。誤ってキャンセルした場合は、<a href="/contact/" target="_blank">管理者</a>にご連絡ください。';
 				break;
 		}
 	}

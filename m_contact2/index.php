@@ -2229,8 +2229,10 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			$str=str_replace("[H_M2_DETAIL]",json_encode($h_m2_detail),$str);
 			if($h_m2_list==""){
 				$str=DispParam($str,"HATYU_CAUTION");
+				$str=DispParamNone($str,"HATYU_TYPICAL");
 			}else{
 				$str=DispParamNone($str,"HATYU_CAUTION");
+				$str=DispParam($str,"HATYU_TYPICAL");
 			}
 		}
 
@@ -2629,8 +2631,10 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			$str=str_replace("[H_M2_DETAIL]",json_encode($h_m2_detail),$str);
 			if($h_m2_list==""){
 				$str=DispParam($str,"HATYU_CAUTION");
+				$str=DispParamNone($str,"HATYU_TYPICAL");
 			}else{
 				$str=DispParamNone($str,"HATYU_CAUTION");
+				$str=DispParam($str,"HATYU_TYPICAL");
 			}
 			
 		}
@@ -2988,8 +2992,10 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			$str=str_replace("[H_M2_DETAIL]",json_encode($h_m2_detail),$str);
 			if($h_m2_list==""){
 				$str=DispParam($str,"HATYU_CAUTION");
+				$str=DispParamNone($str,"HATYU_TYPICAL");
 			}else{
 				$str=DispParamNone($str,"HATYU_CAUTION");
+				$str=DispParam($str,"HATYU_TYPICAL");
 			}
 		}
 
@@ -3185,6 +3191,7 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 	$str=str_replace("[D-M2_DETAIL_ITEM_".$detail_no."]",'',$str);
 	$str=str_replace("[D-M2_DETAIL_DESCRIPTION_".$detail_no."]",'',$str);
 	$str=str_replace("[D-M2_DETAIL_PRICE_".$detail_no."]",'',$str);
+	$str=str_replace("[D-M2_DETAIL_PRICE_ORIGIN_".$detail_no."]",'',$str);
 	$str=str_replace("[D-M2_DETAIL_SP_DISCOUNT_".$detail_no."]",'',$str);
 	$str=str_replace("[D-M2_DETAIL_NOTE_".$detail_no."]",'',$str);
 

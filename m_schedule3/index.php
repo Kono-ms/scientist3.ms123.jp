@@ -739,7 +739,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 					$str=str_replace("[CATEGORY]","請求",$str);
 				}
 				else if(strpos($shodan_item['STATUS'], 'キャンセル') !== false) {
-					$str=str_replace("[CATEGORY]",'キャンセル',$str);
+					$str=str_replace("[CATEGORY]",'クローズ',$str);
 				}
 				else if(strpos($shodan_item['STATUS'], '辞退') !== false) {
 					if(strpos($shodan_item['STATUS'], '見積りの辞退') !== false){

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>帳票別 金額・宛先の実装状況（コード実測）</title>
+<style>
+  :root {
+    --paper: #f4f1ea; --paper-2: #ece7db; --card: #fbfaf6;
+    --ink: #23262e; --ink-2: #4a4e59; --ink-3: #71757f;
+    --rule: #d8d2c4; --rule-strong: #b9b2a0;
+    --accent: #2f5d8a; --accent-soft: #dbe6f0; --seal: #b23b32;
+    --ok: #3f7d4e; --ok-soft: #dbecdf;
+    --warn: #b0721e; --warn-soft: #f2e6cd;
+    --qm: #6a4d8c; --qm-soft: #e6ddf0;
+    --supp: #6a4d8c; --res: #2f6f78;
+    --mono: "SFMono-Regular","Consolas","Menlo",monospace;
+    --sans: "Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Meiryo",system-ui,sans-serif;
+    --mincho: "Hiragino Mincho ProN","Yu Mincho","YuMincho","MS PMincho",serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #16181d; --paper-2: #1c1f26; --card: #1f232b;
+      --ink: #e7e4db; --ink-2: #b6b3aa; --ink-3: #85837c;
+      --rule: #333842; --rule-strong: #454b57;
+      --accent: #7ba7d0; --accent-soft: #223444; --seal: #d9756c;
+      --ok: #7cc08b; --ok-soft: #1e2e23; --warn: #d6a94e; --warn-soft: #322813;
+      --qm: #b49ad6; --qm-soft: #2a2237; --supp: #b49ad6; --res: #6bbcc4;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #16181d; --paper-2: #1c1f26; --card: #1f232b;
+    --ink: #e7e4db; --ink-2: #b6b3aa; --ink-3: #85837c;
+    --rule: #333842; --rule-strong: #454b57;
+    --accent: #7ba7d0; --accent-soft: #223444; --seal: #d9756c;
+    --ok: #7cc08b; --ok-soft: #1e2e23; --warn: #d6a94e; --warn-soft: #322813;
+    --qm: #b49ad6; --qm-soft: #2a2237; --supp: #b49ad6; --res: #6bbcc4;
+  }
+  :root[data-theme="light"] {
+    --paper: #f4f1ea; --paper-2: #ece7db; --card: #fbfaf6;
+    --ink: #23262e; --ink-2: #4a4e59; --ink-3: #71757f;
+    --rule: #d8d2c4; --rule-strong: #b9b2a0;
+    --accent: #2f5d8a; --accent-soft: #dbe6f0; --seal: #b23b32;
+    --ok: #3f7d4e; --ok-soft: #dbecdf; --warn: #b0721e; --warn-soft: #f2e6cd;
+    --qm: #6a4d8c; --qm-soft: #e6ddf0; --supp: #6a4d8c; --res: #2f6f78;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){ html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.7; font-feature-settings:"palt" 1; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: clamp(28px,5vw,60px) clamp(18px,4vw,44px) 96px; }
+
+  .masthead { border-bottom: 3px double var(--rule-strong); padding-bottom: 20px; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing:.18em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+  h1 { font-family: var(--mincho); font-weight: 600; font-size: clamp(24px,4vw,38px); line-height: 1.3; margin: 0 0 12px; text-wrap: balance; }
+  .lede { color: var(--ink-2); font-size: clamp(14px,1.6vw,16px); max-width: 72ch; margin: 0; }
+  .lede code { font-family: var(--mono); font-size: .9em; background: var(--paper-2); padding: 1px 5px; border-radius: 3px; }
+
+  /* legend */
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 20px 0 0; padding: 0; list-style: none; }
+  .legend li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); }
+  .badge { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-family: var(--mono); font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 4px; }
+  .b-ok { color: var(--ok); background: var(--ok-soft); }
+  .b-warn { color: var(--warn); background: var(--warn-soft); }
+  .b-qm { color: var(--qm); background: var(--qm-soft); }
+
+  /* group heading */
+  .group { margin-top: 48px; }
+  .group > h2 { font-family: var(--mincho); font-weight: 600; font-size: clamp(18px,2.4vw,24px); margin: 0 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); color: var(--seal); }
+
+  /* doc card */
+  .doc { background: var(--card); border: 1px solid var(--rule); border-radius: 12px; margin-bottom: 18px; overflow: hidden; border-top: 4px solid var(--accent); }
+  .doc.supp { border-top-color: var(--supp); }
+  .doc.res { border-top-color: var(--res); }
+  .doc .dh { display: flex; align-items: baseline; gap: 10px 14px; flex-wrap: wrap; padding: 16px 20px 13px; border-bottom: 1px solid var(--rule); background: color-mix(in srgb, var(--paper-2) 45%, transparent); }
+  .doc .dh .dname { font-family: var(--mincho); font-size: 19px; font-weight: 600; }
+  .doc .dh .dfile { font-family: var(--mono); font-size: 11.5px; color: var(--accent); }
+  .doc .dh .dlang { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-left: auto; border: 1px solid var(--rule); padding: 1px 8px; border-radius: 999px; }
+
+  .fields { padding: 4px 20px 12px; }
+  .f { display: grid; grid-template-columns: 130px 1fr auto; gap: 14px; align-items: start; padding: 12px 0; border-bottom: 1px dashed var(--rule); }
+  .f:last-child { border-bottom: none; }
+  @media (max-width: 640px){ .f { grid-template-columns: 1fr; gap: 5px; } }
+  .f .f-lab { font-family: var(--mono); font-size: 11px; letter-spacing:.06em; text-transform: uppercase; color: var(--ink-3); padding-top: 3px; }
+  .f .f-val { font-size: 13.5px; color: var(--ink-2); }
+  .f .f-val b { color: var(--ink); }
+  .f .f-val code { font-family: var(--mono); font-size: 12px; background: var(--paper-2); padding: 1px 5px; border-radius: 3px; color: var(--ink); }
+  .f .f-badge { justify-self: end; }
+  @media (max-width: 640px){ .f .f-badge { justify-self: start; margin-top: 2px; } }
+
+  /* unknowns panel */
+  .unknowns { margin-top: 48px; background: color-mix(in srgb, var(--qm) 9%, var(--card)); border: 1px solid color-mix(in srgb, var(--qm) 32%, transparent); border-left: 4px solid var(--qm); border-radius: 10px; padding: 8px 24px 20px; }
+  .unknowns h2 { font-family: var(--mincho); font-weight: 600; font-size: 20px; color: var(--qm); }
+  .unknowns ol { margin: 0; padding-left: 22px; }
+  .unknowns li { font-size: 14px; margin: 9px 0; color: var(--ink); }
+  .unknowns li code { font-family: var(--mono); font-size: 12.5px; background: var(--paper-2); padding: 1px 5px; border-radius: 3px; }
+
+  footer { margin-top: 60px; padding-top: 18px; border-top: 3px double var(--rule-strong); color: var(--ink-3); font-size: 12px; font-family: var(--mono); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Scientist3 ／ 帳票メモ · 金額と宛先の実装状況</p>
+    <h1>各帳票の 金額部分・Ship to・Bill to は今どうなっているか</h1>
+    <p class="lede">
+      各帳票が<b>現在コード上どのデータを引いているか（実測）</b>と、<b>修正/実装が必要な点</b>を金額・宛先の粒度で整理。
+      コードから意図が読み取れない箇所は「判断がつかない」と明記（憶測なし）。出典は <code>a_filestatus/</code>。
+    </p>
+    <ul class="legend">
+      <li><span class="badge b-ok">✅ 成立</span> 現状のデータで問題なく出る</li>
+      <li><span class="badge b-warn">⚠ 要対応</span> 修正・実装が必要</li>
+      <li><span class="badge b-qm">❓ 判断がつかない</span> 業務仕様の確認が必要</li>
+    </ul>
+  </header>
+
+  <!-- 見積書 -->
+  <div class="group">
+    <h2>見積書（すべての源・基準）</h2>
+
+    <div class="doc supp">
+      <div class="dh"><span class="dname">見積書（CB宛）</span><span class="dfile">pdf_cb.html</span><span class="dlang">英語</span></div>
+      <div class="fields">
+        <div class="f"><div class="f-lab">金額部分</div><div class="f-val">見積り送付の明細＋小計＋TOTAL。<b>運営手数料なし＝素の金額</b>（<code>pdf_cb.html:132-160</code>）</div><div class="f-badge"><span class="badge b-ok">✅</span></div></div>
+        <div class="f"><div class="f-lab">Bill to</div><div class="f-val">Cosmo Bio Co Ltd（会社名・住所を<b>ハードコード</b>）。<code>pdf_cb.html:77-80</code></div><div class="f-badge"><span class="badge b-ok">✅</span></div></div>
+        <div class="f"><div class="f-lab">Ship to</div><div class="f-val"><code>[PDF_ADDRESS4]</code>＝サプライヤーが日本以外→CB物流センター住所／日本→研究者の住所英語表記。<code>index.php:617-635</code>。分岐の妥当性は❓</div><div class="f-badge"><span class="badge b-qm">❓</span></div></div>
+        <div class="f"><div class="f-lab">相手情報</div><div class="f-val">Researcher information＝研究者会社名 <code>[PDF_M2-M2_ETC20]</code>、右列にサプライヤー＋住所 <code>[PDF_ADDRESS3]</code></div><div class="f-badge"><span class="badge b-ok">✅</span></div></div>
+        <div class="f"><div class="f-lab">その他</div><div class="f-val">未使用hidden input <code>ETC23〜59</code> 残置、<code>[S-PDF_D_ITEMS]</code>「用途不明」コメント。クリーンアップは任意</div><div class="f-badge"><span class="badge b-warn">⚠(軽)</span></div></div>
+      </div>
+    </div>
+
+    <div class="doc res">
+      <div class="dh"><span class="dname">見積書（研究者宛）</span><span class="dfile">pdf_r.html</span><span class="dlang">日本語</span></div>
+      <div class="fields">
+        <div class="f"><div class="f-lab">金額部分</div><div class="f-val">明細＋手数料一式（PF手数料・輸入/輸出代行・運営値引）＋合計金額。<b>運営手数料あり</b>（<code>pdf_r.html:80-149</code>）</div><div class="f-badge"><span class="badge b-ok">✅</span></div></div>
+        <div class="f"><div class="f-lab">宛先</div><div class="f-val">3列併記＝研究者会社名 <code>[PDF_M2-M2_DVAL03]</code>／サプライヤー／コスモ・バイオ株式会社。宛名＝<code>[…DVAL16][DVAL17] 様</code>（<code>pdf_r.html:41-61</code>）</div><div class="f-badge"><span class="badge b-ok">✅</span></div></div>
+        <div class="f"><div class="f-lab">発行者</div><div class="f-val">コスモ・バイオ株式会社＋住所を<b>ハードコード</b>。DB化は❓</div><div class="f-badge"><span class="badge b-ok">✅</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 発注書 -->
+  <div class="group">
+    <h2>発注書（pdf_h.html｜hr / hcb で切替）</h2>
+
+    <div class="doc supp">
+      <div class="dh"><span class="dname">発注書（CB→サプライヤー）</span><span class="dfile">preview_type=hcb</span><span class="dlang">— </span></div>
+      <div class="fields">
+        <div class="f"><div class="f-lab">金額部分</div><div class="f-val">CB宛見積ベース（手数料なし）が正。<b>だが現状は合計欄が無い</b>。明細の行合計は出るが、手数料込み合計は hr 専用ブロック内でhcbは非表示、<b>手数料抜きの合計はどこにも組版されていない</b>（<code>pdf_h.html:70-100</code>、計算 <code>index.php:1499-2214</code> は分岐なし）</div><div class="f-badge"><span class="badge b-warn">⚠</span></div></div>
+        <div class="f"><div class="f-lab">Ship to</div><div class="f-val">現状＝サプライヤー <code>[PDF_M1-M1_ETC128]</code>＋<code>[PDF_ADDRESS1]</code>＋<code>[PDF_M1-M1_ETC32]</code>（<code>pdf_h.html:64</code>）。送り先＝サプライヤーで正しいかは❓</div><div class="f-badge"><span class="badge b-qm">❓</span></div></div>
+        <div class="f"><div class="f-lab">Bill to</div><div class="f-val">現状＝<code>[M2_SHIP_TO_SPT_2]</code>（<b>コード自身が「変数名の命名に誤り」と明記</b>）＋<code>[PDF_ADDRESS2]</code>（見積り送付時スナップショット）。<b>CB→サプライヤー発注書のBill toが誰であるべきかは❓・要確認</b></div><div class="f-badge"><span class="badge b-qm">❓</span></div></div>
+        <div class="f"><div class="f-lab">宛先の切替</div><div class="f-val">この住所ブロックは <b>hr/hcb 共通</b>（<code>[PDF_H_TO_*]</code> の外, <code>pdf_h.html:44-68</code>）＝<b>hcbとhrで宛先が切り替わらない</b>。出し分けは未実装</div><div class="f-badge"><span class="badge b-warn">⚠</span></div></div>
+        <div class="f"><div class="f-lab">タイトル</div><div class="f-val">無し。<code>&lt;h1&gt;</code>が無く <code>[PDF_H_TO_CB]</code> はテストスタブ（<code>pdf_h.html:2-7</code>）</div><div class="f-badge"><span class="badge b-warn">⚠</span></div></div>
+        <div class="f"><div class="f-lab">発注日 / 番号</div><div class="f-val">発注日＝<code>[HATYU_NEWDATE]</code>（承認/依頼日, <code>index.php:715-733</code>）は✅。番号は Quote No. 流用で、PO番号にすべきかは❓</div><div class="f-badge"><span class="badge b-qm">一部❓</span></div></div>
+      </div>
+    </div>
+
+    <div class="doc res">
+      <div class="dh"><span class="dname">発注書（研究者→CB）</span><span class="dfile">preview_type=hr</span><span class="dlang">—</span></div>
+      <div class="fields">
+        <div class="f"><div class="f-lab">金額部分</div><div class="f-val">見積り送付の明細＋手数料一式＋合計金額。<b>運営手数料あり＝研究者宛見積ベース</b>（<code>pdf_h.html:104-188</code>）</div><div class="f-badge"><span class="badge b-ok">✅</span></div></div>
+        <div class="f"><div class="f-lab">Ship to / Bill to</div><div class="f-val"><b>hcbと同一の住所ブロックを共有</b>（切り替わらない）。研究者→CB発注書なのに Ship to=サプライヤー、Bill to=スナップショットのまま。研究者宛への描き分けが必要</div><div class="f-badge"><span class="badge b-warn">⚠</span></div></div>
+        <div class="f"><div class="f-lab">宛先の中身</div><div class="f-val">研究者→CB発注書の Bill to / Ship to に<b>何を入れるべきか</b>はコードから読めない</div><div class="f-badge"><span class="badge b-qm">❓</span></div></div>
+        <div class="f"><div class="f-lab">タイトル</div><div class="f-val">無し（hcbと同じ）</div><div class="f-badge"><span class="badge b-warn">⚠</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 請求書 -->
+  <div class="group">
+    <h2>請求書（研究者宛）</h2>
+
+    <div class="doc res">
+      <div class="dh"><span class="dname">請求書（研究者宛）</span><span class="dfile">pdf_s.html</span><span class="dlang">日本語</span></div>
+      <div class="fields">
+        <div class="f"><div class="f-lab">金額部分</div><div class="f-val"><b>組版されない</b>。pdf_s に金額欄が無く、総額はアップロードPDF（<code>S2_FILE</code>）の中のみ（<code>pdf_s.html:1-67</code>）。載せる金額の定義から要確定</div><div class="f-badge"><span class="badge b-warn">⚠</span></div></div>
+        <div class="f"><div class="f-lab">Ship to / Bill to</div><div class="f-val"><b>宛先ブロックが存在しない</b>。案件名／サプライヤー会社名／研究者会社名／日付／支払期限を並べる表のみ（<code>pdf_s.html:9-28</code>）。正式な宛先が必要かは❓</div><div class="f-badge"><span class="badge b-qm">❓</span></div></div>
+        <div class="f"><div class="f-lab">支払期限</div><div class="f-val"><code>[PDF_M3-M2_ETC03]</code>＝<b>決裁者マスタ DAT_M3 の静的値</b>（<code>index.php:549-563</code>）。取引ごとの値にすべきか要確定</div><div class="f-badge"><span class="badge b-warn">⚠</span></div></div>
+        <div class="f"><div class="f-lab">発行者</div><div class="f-val">ロゴのみ（コスモバイオ）。発行者住所ブロックは無し</div><div class="f-badge"><span class="badge b-qm">❓</span></div></div>
+      </div>
+    </div>
+
+    <div class="doc res">
+      <div class="dh"><span class="dname">追加請求書</span><span class="dfile">pdf_s_add.html</span><span class="dlang">日本語</span></div>
+      <div class="fields">
+        <div class="f"><div class="f-lab">金額部分</div><div class="f-val">追加請求金額 <code>[PDF_S_ADD_CHARGE2]</code> を組版（表示のみ）。Invoice参照は元請求の <code>S2_FILE</code> を流用（<code>pdf_s_add.html:34-35</code>）</div><div class="f-badge"><span class="badge b-ok">✅</span></div></div>
+        <div class="f"><div class="f-lab">Ship to / Bill to</div><div class="f-val">pdf_s 同様に<b>宛先ブロックなし</b>（当事者名の列挙のみ）</div><div class="f-badge"><span class="badge b-qm">❓</span></div></div>
+        <div class="f"><div class="f-lab">支払期限</div><div class="f-val">同じく <code>DAT_M3.M2_ETC03</code></div><div class="f-badge"><span class="badge b-warn">⚠</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- unknowns -->
+  <div class="unknowns">
+    <h2>❓ 判断がつかない（業務仕様の確認が必要）</h2>
+    <ol>
+      <li>発注書（CB→サプライヤー）の <b>Bill to は誰か</b>（現状はサプライヤー由来スナップショット、命名誤りあり）</li>
+      <li>発注書（CB→サプライヤー）の <b>Ship to＝サプライヤー</b> で正しいか</li>
+      <li>発注書（研究者→CB）の <b>Bill to / Ship to に何を入れるか</b></li>
+      <li>見積書（CB宛）の Ship to 分岐（日本/海外で CB物流センター ↔ 研究者住所）の妥当性</li>
+      <li>請求書（研究者宛）に <b>組版すべき金額の定義</b>、および <b>正式な宛先表記の要否</b></li>
+      <li>支払期限を決裁者マスタ値のままにするか、<b>取引ごとの値</b>にするか</li>
+      <li>CB自社住所・宛先の <b>ハードコードを DB 化</b>するか</li>
+      <li>発注書の番号を Quote No. 流用のままにするか、<b>PO番号</b>を採るか</li>
+    </ol>
+  </div>
+
+  <footer>
+    Scientist3 帳票メモ · 金額と宛先の実装状況 ／ すべてコード実測（a_filestatus/index.php・pdf_cb/r/h/s/s_add.html）／ 憶測を含まず、不明箇所は❓で明示
+  </footer>
+
+</div>
+</body>
+</html>
