@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_レイヤー_1" data-name="レイヤー 1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 50 50">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: .8px;
+      }
+
+      .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-2, .cls-3 {
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        fill: #d66b01;
+      }
+    </style>
+  </defs>
+  <circle class="cls-3" cx="25" cy="25" r="25"/>
+  <g>
+    <line class="cls-1" x1="11.6" y1="25" x2="39.3" y2="25"/>
+    <polygon class="cls-2" points="14.2 28.3 14.8 27.7 11.9 25 14.8 22.3 14.2 21.7 10.7 25 14.2 28.3"/>
+  </g>
+</svg>

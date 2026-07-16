@@ -98,6 +98,15 @@
   $FieldName[91]="H_SHIP_TO_SPT_1";
   $FieldName[92]="H_SHIP_TO_SPT_2";
   $FieldName[93]="H_SHIP_TO_SPT_3";
+  $FieldName[94]="M2_BIKO";
+  $FieldName[95]="M2_FILE1";
+  $FieldName[96]="SAMPLE_HOKAN_TMPER";
+  $FieldName[97]="SAMPLE_HAISO_CO";
+  $FieldName[98]="SAMPLE_NUMBER";
+  $FieldName[99]="SAMPLE_DATE";
+  $FieldName[100]="SAMPLE_TIME";
+  $FieldName[101]="SAMPLE_MSG";
+  $FieldName[102]="SAMPLE_FIlE";
 
 
   $FieldValue[0]="";
@@ -194,6 +203,15 @@
   $FieldValue[91]="";
   $FieldValue[92]="";
   $FieldValue[93]="";
+  $FieldValue[94]="";
+  $FieldValue[95]="";
+  $FieldValue[96]="";
+  $FieldValue[97]="";
+  $FieldValue[98]="";
+  $FieldValue[99]="";
+  $FieldValue[100]="";
+  $FieldValue[101]="";
+  $FieldValue[102]="";
 
 //入力フィールドの書式　0-TEXT, 1-SELECT, 2-RADIO, 3-CHECKBOX, 4-FILE
   $FieldAtt[0]="0";
@@ -291,6 +309,15 @@
   $FieldAtt[91]="0";
   $FieldAtt[92]="0";
   $FieldAtt[93]="0";
+  $FieldAtt[94]="0";
+  $FieldAtt[95]="4";
+  $FieldAtt[96]="0";
+  $FieldAtt[97]="0";
+  $FieldAtt[98]="0";
+  $FieldAtt[99]="0";
+  $FieldAtt[100]="0";
+  $FieldAtt[101]="0";
+  $FieldAtt[102]="4";
 
 //SELECT, RADIO, CHECKBOX時の値群
   $FieldParam[0]="";
@@ -387,10 +414,19 @@
   $FieldParam[91]="";
   $FieldParam[92]="";
   $FieldParam[93]="";
+  $FieldParam[94]="";
+  $FieldParam[95]="";
+  $FieldParam[96]="";
+  $FieldParam[97]="";
+  $FieldParam[98]="";
+  $FieldParam[99]="";
+  $FieldParam[100]="";
+  $FieldParam[101]="";
+  $FieldParam[102]="";
 
 
 //全フィールド数
-	$FieldMax=93;
+	$FieldMax=102;
 
 //キーフィールドの設定
 	$FieldKey=0;

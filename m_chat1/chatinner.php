@@ -270,7 +270,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 						//$sys_comment.= '受注が承認されました。請求書の送付をお願いします。';
 						$sys_comment.= 'The order has been approved. Please send the invoice.';
 						$sys_comment.= '
-						<a href="/m_contact1/?type=請求&sub_type=請求書送付(前払い)&mode=new&shodan_id='.$_GET['etc02'].'&param_div_id='.$item_div["DIV_ID"].'" target="_blank">Send invoice	</a>';
+						<a href="/m_contact1/?type=請求&sub_type=請求書送付(前払い)&mode=new&shodan_id='.$_GET['etc02'].'&param_div_id='.$item_div["DIV_ID"].'" target="_blank">Send invoice	</a>
+						<a href="javascript:window.parent.open_mcontact2(\'/m_contact1/?type=発注依頼&mode=disp_frame&key='.$h_item['ID'].'\');">Check purchase order</a>';
 				break;
 				case 'データ納品':
 				case '物品納品':
@@ -351,7 +352,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				//$sys_comment = '受注が承認されました。';
 				$sys_comment = 'Your order has been approved.';
 				$sys_comment.= '
-						<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Send invoice	</a>';
+						<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Send invoice	</a>
+						<a href="javascript:window.parent.open_mcontact2(\'/m_contact1/?type=発注依頼&mode=disp_frame&key='.$h_item['ID'].'\');">Check purchase order</a>';
 				break;
 			case 'データ納品':
 			case '物品納品':

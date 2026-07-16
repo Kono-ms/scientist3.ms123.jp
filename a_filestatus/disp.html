@@ -539,3 +539,40 @@
         </div><!-- /.col -->
     </div><!-- /.row -->
 </section><!-- /.content -->
+<script>
+$(function() {
+
+  var targetName = 'M2_QUOTE_VALID_UNTIL'; // 対象
+  var $originalInput = $('input[type="text"][name="' + targetName + '"]');
+
+  $originalInput.each(function() {
+    var $txtInput = $(this);
+    var initialValue = $txtInput.val(); // 元のハイフン値（YYYY-MM-DD）
+
+    // 1. 送信用のhiddenフィールドを生成し、元のnameを引き継ぐ
+    var $hiddenInput = $('<input>').attr({
+      type: 'hidden',
+      name: targetName,
+      value: initialValue
+    });
+
+    // 2. 見た目用のテキスト欄のname属性を変更（重複送信を防ぐため）
+    $txtInput.attr('name', targetName + '_display');
+
+    // 3. 初期値をスラッシュ区切りに変換して見た目用にセット
+    if (initialValue) {
+      $txtInput.val(initialValue.replace(/-/g, '/'));
+    }
+
+    // 4. hiddenフィールドをテキスト欄の直後に挿入
+    $txtInput.after($hiddenInput);
+
+    // 5. ユーザーがテキスト欄を入力・変更したときの同期処理
+    $txtInput.on('input change', function() {
+      var currentVal = $(this).val();
+      var hyphenVal = currentVal.replace(/\//g, '-');
+      $hiddenInput.val(hyphenVal);
+    });
+  });
+});
+</script>

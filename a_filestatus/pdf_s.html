@@ -1,67 +1,158 @@
-<div class="recipe-header">
+<!-- 請求書（研究者宛） -->
+<div class="pdf-tbd-banner">【レイアウト確認用・仮表示】この帳票の金額・明細・請求番号・支払期限などはシステム未接続のダミーです。内容が誤っていてもバグではありません。</div>
+<div class="recipe-header recipe-header--R">
   <h1 class="recipe-title">請求書</h1>
   <figure class="recipe-logo"><img src="/common/images/logo.png" width="200"></figure>
-  <!--会社ロゴ--> 
+  <!--会社ロゴ-->
+</div>
+
+<div class="recipe-desc">
+  <div class="recipe-no">
+    <p class="recipe-no__project-name">案件名<!--Project Name-->：[PDF_SHODAN_TITLE]</p>
+    <p class="recipe-no__study-code">試験番号<!--Study Code-->: [M2_STUDY_CODE]</p>
+  </div>
+  <div class="recipe-date">
+    <table class="recipe-date__table">
+      <tbody>
+        <tr>
+          <th>請求番号: </th>
+          <td>[SEIKYU_NO]</td>
+        </tr>
+        <tr>
+          <th>登録番号: </th>
+          <td>T6-0106-0102-3038<!--CB 適格請求書発行事業者 登録番号--></td>
+        </tr>
+        <tr>
+          <th>請求日: </th>
+          <td>[PDF_S2_NEWDATE]</td>
+        </tr>
+        <tr>
+          <th>ご注文番号: </th>
+          <td>[PDF_ORDER_NO]</td>
+        </tr>
+        <tr>
+          <th>Scientist3管理番号: </th>
+          <td>[SCNO]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="recipe-address">
+  <table class="recipe-address__table">
+    <tbody>
+      <tr class="recipe-address__item-info">
+        <td>[PDF_M2-M2_DVAL03]<!--研究者会社名--></td>
+        <td>[PDF_M1-M1_DVAL01]<!--サプライヤー--></td>
+        <td>コスモ・バイオ株式会社</td>
+      </tr>
+      <tr class="recipe-address__item-name">
+        <td>[PDF_M2-M2_DVAL16] [PDF_M2-M2_DVAL17] 様</td>
+        <td>[PDF_ADDRESS3]</td>
+        <td>〒135-0016 東京都江東区東陽2-2-20<br>TEL:03-5632-9615 / MAIL:info@scientist-cube.com</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="recipe-items">
+  <p class="recipe-items__text">下記の通り、ご請求申し上げます。</p>
+  <table class="recipe-items-table">
+    <tbody>
+      [AREA-FDETAIL-ITEMS]
+    </tbody>
+  </table>
+
+  <table class="recipe-items-table">
+    <tbody>
+      <tr class="recipe-items-table__item-footer">
+        <td colspan="5">特記事項:<br>[D-M2_SPECIAL_NOTE]</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <div class="recipe-details">
+  <p style="font-size:0.875em;font-weight:700;margin:1em 0 0.4em;">サービス費用</p>
   <table class="recipe-details__table">
-    <tr>
-      <th>案件名</th>
-      <td>[PDF_SHODAN_TITLE]</td>
-    </tr>
-    <tr>
-      <th>サプライヤー会社名</th>
-      <td>[PDF_M1-M1_ETC128]</td>
-    </tr>
-    <tr>
-      <th>研究者会社名</th>
-      <td>[PDF_M2-M2_ETC20]</td>
-    </tr>
-    <tr>
-      <th>日付け</th>
-      <td>[PDF_S2_NEWDATE]</td>
-    </tr>
-    <tr>
-      <th>支払い期限</th>
-      <td>[PDF_M3-M2_ETC03]</td>
-    </tr>
-    [S-SEIKYU_PREVIEW1] 
-    <!--送信した先の「請求書（研究者）」のデータの情報。（該当のデータを編集することでここに表示される内容が変わります）-->
-    <tr>
-      <th colspan="2" style="background: #EEEEEE;">以下、送信した先の「請求書（研究者）」のデータの情報（該当のデータを編集することでここに表示される内容が変わります）</th>
-    </tr>
-    <tr>
-      <th> </th>
-    </tr>
-    <tr>
-      <th> Invoiceファイル </th>
-      <td><a href="[PDF_INVOICE_URL1]" target="_blank">[PDF_S2_FILE1]</a></td>
-    </tr>
-    <tr>
-      <th>メッセージ</th>
-      <td>[PDF_S2_MESSAGE1]</td>
-    </tr>
-    [E-SEIKYU_PREVIEW1]
-    [S-SEIKYU_PREVIEW2] 
-    <!--「納品確認」データ自身に保存した「請求書（研究者）」のデータの情報-->
-    <tr>
-      <th> </th>
-    </tr>
-    <tr>
-      <th colspan="2" style="background: #EEEEEE;">以下、「納品確認」データ自身に保存した「請求書（研究者）」のデータの情報</th>
-    </tr>
-    <tr>
-      <th> </th>
-    </tr>
-    <tr>
-      <th> Invoiceファイル </th>
-      <td><a href="[PDF_INVOICE_URL2]" target="_blank">[PDF_S2_FILE2]</a></td>
-    </tr>
-    <tr>
-      <th>メッセージ</th>
-      <td>[PDF_S2_MESSAGE2]</td>
-    </tr>
-    [E-SEIKYU_PREVIEW2]
+    <tbody>
+      <tr>
+        <th>小計</th>
+        <td>[MITSUMORISYO_SUBTOTAL1][D-M2_CURRENCY]</td>
+      </tr>
+      <tr>
+        <th>税率</th>
+        <td>[MITSUMORISYO_TAX_RATE1]%</td>
+      </tr>
+      <tr>
+        <th>消費税</th>
+        <td>[MITSUMORISYO_TAX_BILL1][D-M2_CURRENCY]</td>
+      </tr>
+    </tbody>
   </table>
+
+  <p style="font-size:0.875em;font-weight:700;margin:1em 0 0.4em;">手数料</p>
+  <table class="recipe-details__table">
+    <tbody>
+      <tr>
+        <th>PF手数料</th>
+        <td>[MITSUMORISYO_PF_FEE][D-M2_CURRENCY]</td>
+      </tr>
+      <tr>
+        <th>輸入代行費用</th>
+        <td>[INPUT-M2_IMPORT_FEE][D-M2_CURRENCY]</td>
+      </tr>
+      <tr>
+        <th>輸出代行費用</th>
+        <td>[INPUT-MITSUMORISYO_EXPORT_FEE][D-M2_CURRENCY]</td>
+      </tr>
+      <tr>
+        <th>特別値引き（運営）</th>
+        <td>[INPUT-M2_MANAGE_DISCOUNT][D-M2_CURRENCY]</td>
+      </tr>
+      <tr>
+        <th>追加費用</th>
+        <td>[PDF_S_ADD_CHARGE2][D-M2_CURRENCY]</td>
+      </tr>
+      <tr>
+        <th>小計2</th>
+        <td>[MITSUMORISYO_SUBTOTAL2][D-M2_CURRENCY]</td>
+      </tr>
+      <tr>
+        <th>税率2</th>
+        <td>[MITSUMORISYO_TAX_RATE2]%</td>
+      </tr>
+      <tr>
+        <th>消費税2</th>
+        <td>[MITSUMORISYO_TAX_BILL2][D-M2_CURRENCY]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="recipe-details__table">
+    <tbody>
+      <tr>
+        <th>合計金額</th>
+        <td>[MITSUMORISYO_ALL_CHARGE][D-M2_CURRENCY]</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="recipe-details__table">
+    <tbody>
+      <tr>
+        <td>備考：<br>
+          お支払い回数：[NUMBER_OF_PAYMENTS]<br>
+          お支払い期限：[PDF_PAY_LIMIT]<br>
+          振込手数料は貴社にてご負担をお願いいたします。</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="recipe-footer">
+  <div class="recipe-watermark-area">
+    <img class="recipe-watermark" src="/common/images/logo-watermark.png" alt="" onerror="this.style.display='none'">
+  </div>
 </div>

@@ -331,6 +331,8 @@ function SendMail($type,$m1_list,$m2)
 		$MailBody=str_replace("[D-S_FILE]",(isset($_POST['S_FILE']) ? $_POST['S_FILE'] : $_FILES['S_FILE']['name']),$MailBody);
 		$MailBody=str_replace("[D-S_MESSAGE]",str_replace("\n", '<br>', $_POST['S_MESSAGE']),$MailBody); // Dはbr変換
 
+		$MailBody=str_replace("[D-M2_FILE1]",(isset($_POST['M2_FILE1']) ? $_POST['M2_FILE1'] : $_FILES['M2_FILE1']['name']),$MailBody);
+
 
 		$MailBody=str_replace("[TITLE]",$_POST['TITLE'],$MailBody);
 		$MailBody=str_replace("[COMMENT]",$_POST['COMMENT'],$MailBody);
@@ -445,6 +447,7 @@ function SendMail($type,$m1_list,$m2)
 		$MailBody=str_replace("[S_FILE]",(isset($_POST['S_FILE']) ? $_POST['S_FILE'] : $_FILES['S_FILE']['name']),$MailBody);
 		$MailBody=str_replace("[S_MESSAGE]",$_POST['S_MESSAGE'],$MailBody);
 
+		$MailBody=str_replace("[M2_FILE1]",(isset($_POST['M2_FILE1']) ? $_POST['M2_FILE1'] : $_FILES['M2_FILE1']['name']),$MailBody);
 
 		mb_language("Japanese");
 		mb_internal_encoding("UTF-8");
@@ -1481,6 +1484,7 @@ echo "<!--1a-->";
 		//$str=str_replace("[D-S_FILE]",(isset($_POST['S_FILE']) ? $_POST['S_FILE'] : $_FILES['S_FILE']['name']),$str);
 		$str=str_replace("[D-S_MESSAGE]",str_replace("\n", '<br>', $_POST['S_MESSAGE']),$str); // Dはbr変換
 
+		$str=str_replace("[D-M2_FILE1]",((isset($_FILES['EP_M2_FILE1']['name']) && $_FILES['EP_M2_FILE1']['name']!="") ? $_FILES['EP_M2_FILE1']['name'] : $_POST['M2_FILE1']),$str);
 
 		$str=str_replace("[TITLE]",$_POST['TITLE'],$str);
 		$str=str_replace("[COMMENT]",$_POST['COMMENT'],$str);
@@ -1705,6 +1709,8 @@ echo "<!--1a-->";
 		$str=str_replace("[S_FILE]",((isset($_FILES['EP_S_FILE']['name']) && $_FILES['EP_S_FILE']['name']!="") ? $_FILES['EP_S_FILE']['name'] : $_POST['S_FILE']),$str);
 		//$str=str_replace("[S_FILE]",(isset($_POST['S_FILE']) ? $_POST['S_FILE'] : $_FILES['S_FILE']['name']),$str);
 		$str=str_replace("[S_MESSAGE]",$_POST['S_MESSAGE'],$str);
+
+		$str=str_replace("[M2_FILE1]",((isset($_FILES['EP_M2_FILE1']['name']) && $_FILES['EP_M2_FILE1']['name']!="") ? $_FILES['EP_M2_FILE1']['name'] : $_POST['M2_FILE1']),$str);
 
 		//SHIP TO
 		$str=str_replace("[M2_SHIP_TO_SPT_1]",$_POST['M2_SHIP_TO_SPT_1'],$str);
@@ -1995,6 +2001,7 @@ echo "<!--2a-->";
 		//$str=str_replace("[D-M2_CURRENCY]",$item_filestatus['M2_CURRENCY'],$str);
 		$str=str_replace("[D-M2_SPECIAL_DISCOUNT]",$item_filestatus['M2_SPECIAL_DISCOUNT'],$str);
 		$str=str_replace("[D-M2_SPECIAL_NOTE]",$item_filestatus['M2_SPECIAL_NOTE'],$str);
+		$str=str_replace("[D-M2_BIKO]",$item_filestatus['M2_BIKO'],$str);
 
 		// 水際英訳
 		//$str=str_replace("[M2_NOHIN_TYPE]",$item_filestatus['M2_NOHIN_TYPE'],$str);
@@ -2010,6 +2017,7 @@ echo "<!--2a-->";
 		$str=str_replace("[M2_CURRENCY]",$item_filestatus['M2_CURRENCY'],$str);
 		$str=str_replace("[M2_SPECIAL_DISCOUNT]",$item_filestatus['M2_SPECIAL_DISCOUNT'],$str);
 		$str=str_replace("[M2_SPECIAL_NOTE]",$item_filestatus['M2_SPECIAL_NOTE'],$str);
+		$str=str_replace("[M2_BIKO]",$item_filestatus['M2_BIKO'],$str);
 
 		$detail_template = '
             <div class="formset__item formset__item-head">
@@ -2442,6 +2450,8 @@ echo "<!--2a-->";
 		$str=str_replace("[D-S_FILE]",(isset($item_filestatus['S_FILE']) ? $item_filestatus['S_FILE'] : $_FILES['S_FILE']['name']),$str);
 		$str=str_replace("[D-S_MESSAGE]",str_replace("\n", '<br>', $item_filestatus['S_MESSAGE']),$str); // Dはbr変換
 
+		$str=str_replace("[D-M2_FILE1]",(isset($item_filestatus['M2_FILE1']) ? $item_filestatus['M2_FILE1'] : $_FILES['M2_FILE1']['name']),$str);
+
 		$str=str_replace("[D-S2_FILE]",(isset($item_filestatus['S2_FILE']) ? $item_filestatus['S2_FILE'] : $_FILES['S2_FILE']['name']),$str);
 		$str=str_replace("[D-S2_MESSAGE]",str_replace("\n", '<br>', $item_filestatus['S2_MESSAGE']),$str); // Dはbr変換
 		$str=str_replace("[D-S2_NEWDATE]",$item_filestatus["NEWDATE"],$str);
@@ -2494,10 +2504,59 @@ echo "<!--2a-->";
 		$str=str_replace("[S_FILE]",(isset($item_filestatus['S_FILE']) ? $item_filestatus['S_FILE'] : $_FILES['S_FILE']['name']),$str);
 		$str=str_replace("[S_MESSAGE]",$item_filestatus['S_MESSAGE'],$str);
 
+		$str=str_replace("[M2_FILE1]",(isset($item_filestatus['M2_FILE1']) ? $item_filestatus['M2_FILE1'] : $_FILES['M2_FILE1']['name']),$str);
+
 		$str=str_replace("[S2_FILE]",(isset($item_filestatus['S2_FILE']) ? $item_filestatus['S2_FILE'] : $_FILES['S2_FILE']['name']),$str);
 		$str=str_replace("[S2_MESSAGE]",$item_filestatus['S2_MESSAGE'],$str);
 
 		$str=str_replace("[S2_NEWDATE]",$item_filestatus["NEWDATE"],$str);
+
+
+		
+		//現在、こちらがつかわれている。プレビュー表示にになる場合にブロックのさらに下のブロックに変更。
+		//プレビューの表示用
+		//サービス費用などのエリア表示
+		if($type == '発注依頼' && ($mode=="disp_frame" || $mode=="disp") ) {
+			//サービスエリア表示
+			$div_id=$item_filestatus["DIV_ID"];
+			$tmp="";
+			$tmp=explode("-", $div_id);
+			//echo "<!--";
+			//var_dump($tmp);
+			//echo "-->";
+			$pre_part="";
+			$part="";
+			if(count($tmp)>=2){
+				$pre_part=$tmp[0]."-".$tmp[1];
+				$part=$tmp[2];
+			}
+
+			//2回払いの発注依頼はPart0を表示。
+			$m2_pay_type=check_M2_PAY_TYPE($item_filestatus["SHODAN_ID"], $item_filestatus["MID1"]);
+			echo "<!--m2_pay_type:$m2_pay_type-->";
+			if($m2_pay_type=="Split"){
+				$StrSQL="SELECT ID, NEWDATE, SHODAN_ID, STATUS, DIV_ID";
+				$StrSQL.=" FROM DAT_FILESTATUS ";
+				$StrSQL.=" WHERE SHODAN_ID='".$item_filestatus["SHODAN_ID"]."' ";
+				$StrSQL.=" and DIV_ID='".$pre_part."-Part0"."'";
+				$StrSQL.=" and STATUS='見積り送付' ";
+			}else{
+				$StrSQL="SELECT ID, NEWDATE, SHODAN_ID, STATUS, DIV_ID";
+				$StrSQL.=" FROM DAT_FILESTATUS ";
+				$StrSQL.=" WHERE SHODAN_ID='".$item_filestatus["SHODAN_ID"]."' ";
+				$StrSQL.=" and DIV_ID='".$div_id."'";
+				$StrSQL.=" and STATUS='見積り送付' ";
+			}
+			$hatyu_part0_rs=mysqli_query(ConnDB(),$StrSQL);
+			$hatyu_part0_item =  mysqli_fetch_assoc($hatyu_part0_rs);
+			echo "<!--サービズエリア暫定：$StrSQL-->";
+			echo "<!--";
+			var_dump($hatyu_part0_item);
+			echo "-->";
+			$sf_tpl=file_get_contents("../common/template/service_fee_typeB.html");
+			$sf_tpl=makeServiceArea($hatyu_part0_item["ID"],$sf_tpl);
+			$str=str_replace("[SERVICE_FEE_AREA]",$sf_tpl,$str);
+		}
 
 
 		//サービス費用などのエリア表示
@@ -2513,7 +2572,9 @@ echo "<!--2a-->";
 
 		}
 		if($type == '発注依頼'){
-			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID=".$item_filestatus['H_M2_ID']." and STATUS='見積り送付' or STATUS='追加見積り' order by ID desc;";
+			$StrSQL="SELECT * FROM DAT_FILESTATUS ";
+			$StrSQL.=" WHERE ID=".$item_filestatus['H_M2_ID']." ";
+			$StrSQL.=" and (STATUS='見積り送付' or STATUS='追加見積り') order by ID desc;";
 			$h_rs1=mysqli_query(ConnDB(),$StrSQL);
 			$h_item1 = mysqli_fetch_assoc($h_rs1);
 			$sf_tpl=file_get_contents("../common/template/service_fee_typeB.html");
@@ -2631,7 +2692,7 @@ echo "<!--2a-->";
 			$m2_pay_type=check_M2_PAY_TYPE($item_filestatus["SHODAN_ID"], $item_filestatus["MID1"]);
 			echo "<!--m2_pay_type:$m2_pay_type-->";
 			//念のためモードも指定
-			if($type == '発注依頼' && $m2_pay_type=="Split" && $mode=="disp_frame"){
+			if($type == '発注依頼' && $m2_pay_type=="Split" && ($mode=="disp_frame" || $mode=="disp") ){
 				$div_id=$item_filestatus["DIV_ID"];
 				$tmp="";
 				$tmp=explode("-", $div_id);
@@ -2895,6 +2956,7 @@ echo "<!--3a-->";
 
 		$str=str_replace("[D-M2_SPECIAL_DISCOUNT]",'',$str);
 		$str=str_replace("[D-M2_SPECIAL_NOTE]",'',$str);
+		$str=str_replace("[D-M2_BIKO]",'',$str);
 		// -------------------------------------------------------------------------------
 
 		$str=str_replace("[D-H_M2_ID]",'',$str);
@@ -2917,6 +2979,8 @@ echo "<!--3a-->";
 
 		$str=str_replace("[D-S_FILE]",'',$str);
 		$str=str_replace("[D-S_MESSAGE]",'',$str);
+
+		$str=str_replace("[D-M2_FILE1]",'',$str);
 
 		$str=str_replace("[D-S2_FILE]",'',$str);
 		$str=str_replace("[D-S2_MESSAGE]",'',$str);
@@ -2967,6 +3031,7 @@ echo "<!--3a-->";
 
 		$str=str_replace("[M2_SPECIAL_DISCOUNT]",'',$str);
 		$str=str_replace("[M2_SPECIAL_NOTE]",'',$str);
+		$str=str_replace("[M2_BIKO]",'',$str);
 		// -------------------------------------------------------------------------------
 
 		$str=str_replace("[H_M2_ID]",'',$str);
@@ -2989,6 +3054,8 @@ echo "<!--3a-->";
 
 		$str=str_replace("[S_FILE]",'',$str);
 		$str=str_replace("[S_MESSAGE]",'',$str);
+
+		$str=str_replace("[M2_FILE1]",'',$str);
 
 		$str=str_replace("[S2_FILE]",'',$str);
 		$str=str_replace("[S2_MESSAGE]",'',$str);
@@ -4064,6 +4131,8 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 					M2_BILL_TO_SPT_5,
 					M2_BILL_TO_SPT_6,
 
+					M2_FILE1,
+
 					SCNo_yy,
 					SCNo_mm,
 					SCNo_dd,
@@ -4150,6 +4219,8 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 					'".$_POST['M2_BILL_TO_SPT_4']."',
 					'".$_POST['M2_BILL_TO_SPT_5']."',
 					'".$_POST['M2_BILL_TO_SPT_6']."',
+
+					'".$_POST['M2_FILE1']."',
 
 					'".$SCNo["SCNo_yy"]."',
 					'".$SCNo["SCNo_mm"]."',
@@ -4254,6 +4325,8 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 				M2_BILL_TO_SPT_5,
 				M2_BILL_TO_SPT_6,
 
+				M2_FILE1,
+
 				SCNo_yy,
 				SCNo_mm,
 				SCNo_dd,
@@ -4340,6 +4413,8 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 				'".$_POST['M2_BILL_TO_SPT_4']."',
 				'".$_POST['M2_BILL_TO_SPT_5']."',
 				'".$_POST['M2_BILL_TO_SPT_6']."',
+
+				'".$_POST['M2_FILE1']."',
 
 				'".$SCNo["SCNo_yy"]."',
 				'".$SCNo["SCNo_mm"]."',
@@ -4452,6 +4527,10 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
 
+	if($_POST['M2_FILE1'] != '') {
+		$save_filename=basename($_POST['M2_FILE1']);
+		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
+	}
 
 
 	//if($_POST['FILE'] != '') {

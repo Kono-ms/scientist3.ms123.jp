@@ -176,6 +176,14 @@ function ListSql($sort,$word)
 			//商談ID（降順）
 			$str=$str."ORDER BY DAT_SHODAN.ID desc";
 			break;
+		case "202":
+			//商談ID（降順）
+			$str=$str."ORDER BY DAT_SHODAN.EDITDATE desc";
+			break;
+		case "202":
+			//商談ID（降順）
+			$str=$str."ORDER BY DAT_SHODAN.EDITDATE desc";
+			break;
 		case "21":
 			//問合せID（昇順）
 			$str=$str."ORDER BY concat(DAT_M2.MID, DAT_SHODAN.NEWDATE) asc";

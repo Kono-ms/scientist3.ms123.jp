@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>納品書</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Noto+Sans+JP:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/common/css/import.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+    <script>
+        const timestamp = new Date().getTime();
+        import(`/common/js/sc3-format-price.js?v=${timestamp}`);// インポート
+    </script>
+    <link rel="stylesheet" href="/common/css/style-estimate.css" />
+    <script>
+      $(document).ready(function () {
+          $('#close-btn').on('click', function (e) {
+              e.preventDefault();
+              window.close();
+              close_popup();
+          });
+      });
+      function close_popup() {
+          $('#mask_mcontact2', parent.document).hide();
+          $('#popup_mcontact2', parent.document).fadeOut();
+      }
+    </script>
+</head>
+<body class="estimate">
+    <div class="recipe">
+
+        <!-- ボタン -->
+        [S-PDF_BTN_AREA]
+        <div class="recipe-close">
+            <label class="recipe-close__btn" id="close-btn">Close</label>
+        </div>
+        [S-BTN_SEND]
+        <div class="recipe-send">
+            <a href="/a_filestatus/?mode=disp_frame5&preview_type=n&pdf_action=send5&key=[KEY]"
+                onclick="var ok=confirm('この内容で送信しますか？');if (ok) this.form.submit(); return false;"
+                class="recipe-send__btn">Send</a>
+        </div>
+        [E-BTN_SEND]
+        <div class="recipe-dl">
+            <label class="recipe-dl__btn"
+                onclick="javascript:print();window.opener.location.reload();window.close();">Download</label>
+            <!-- <a href="/a_filestatus/?mode=disp_frame5&preview_type=n&pdf_action=download&key=[KEY]">Download</a> -->
+            <p class="recipe-dl__notes">
+                Please make sure to close this page after downloading. (Returning to the previous page will prevent automatic
+                issuance of the estimate.)
+            </p>
+        </div>
+        [E-PDF_BTN_AREA]
+
+        <!-- 本文 -->
+        [PDF_VIEW]
+
+    </div>
+</body>
+</html>

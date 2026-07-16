@@ -129,7 +129,7 @@ function Main()
 				$page=1;
 			} 
 			if ($sort==""){
-				$sort=1;
+				$sort=202;
 			} 
 			break;
 		case "export":
@@ -1170,6 +1170,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		//$str=str_replace("[OPT_TEST]",$opt_test,$str);
 
 
+
 		//プレビュー関連:発注書CB宛て
 		$StrSQL="SELECT ID,SHODAN_ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND STATUS='発注依頼' ";
 		//echo('<!--previewSQL:'.$StrSQL.'-->');
@@ -1177,36 +1178,65 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		$opt_preview_list_s="";
 		$opt_preview_list_cb="";
 		$opt_preview_list_h="";
+		$preview_item_id="";
+		$prev_preview_item_id="";
 		while($preview_jyutyu_item = mysqli_fetch_assoc($preview_jyutyu_rs)){
 			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$preview_jyutyu_item["DIV_ID"]."' ";
 			$StrSQL.=" AND STATUS='見積り送付'";
 			//echo('<!--previewSQL:'.$StrSQL.'-->');
 			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
-			while($preview_item = mysqli_fetch_assoc($preview_rs)){
+			$preview_item = mysqli_fetch_assoc($preview_rs);
 
-				$SCNo_ary=array(
-					"SCNo_yy" => "", 
-					"SCNo_mm" => "", 
-					"SCNo_dd" => "", 
-					"SCNo_cnt" => "", 
-					"SCNo_else1" => "", 
-					"SCNo_else2" => "", 
-				);
-				$SCNo_str="";
-				$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
-				$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
-				$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
-				$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
-				$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
-				$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
-				$SCNo_str=formatAlphabetId($SCNo_ary);
-				$preview_m2_version="";
-				$preview_m2_version=$preview_item["M2_VERSION"];
+			//2回払いのときに、見かけをPart0の発注書プレビューにすることに関する処置
+			if($preview_item["M2_PAY_TYPE"]=="Split"){
+				$tmp="";
+				$tmp=explode("-", $preview_item["DIV_ID"]);
+				$part="";
+				$pre_part="";
+				if(count($tmp)==3){
+					$part=$tmp[2];
+					$pre_part=$tmp[0]."-".$tmp[1];
+				}
+				$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$pre_part."-Part0' ";
+				$StrSQL.=" AND STATUS='見積り送付'";
+				//echo('<!--previewSQL:'.$StrSQL.'-->');
+				$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+				$preview_item = mysqli_fetch_assoc($preview_rs);
+			}
+			//同じものを多重に表示しない処置
+			$prev_preview_item_id=$preview_item_id;
+			$preview_item_id=$preview_item["ID"];
+			//echo "<!--prev_preview_item_id:$prev_preview_item_id-->";
+			//echo "<!--preview_item_id:$preview_item_id-->";
+			//echo "<!---->";
+			if($prev_preview_item_id==$preview_item_id){
+				continue;
+			}
+
+			
+			$SCNo_ary=array(
+				"SCNo_yy" => "", 
+				"SCNo_mm" => "", 
+				"SCNo_dd" => "", 
+				"SCNo_cnt" => "", 
+				"SCNo_else1" => "", 
+				"SCNo_else2" => "", 
+			);
+			$SCNo_str="";
+			$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
+			$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
+			$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
+			$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
+			$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
+			$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
+			$SCNo_str=formatAlphabetId($SCNo_ary);
+			$preview_m2_version="";
+			$preview_m2_version=$preview_item["M2_VERSION"];
 
 				//送信ボタンない状態で表示
-				$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hcb&btn_version=1&key=".$preview_item["ID"]."'>";
-				$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
-			}
+			$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hcb&btn_version=1&key=".$preview_item["ID"]."'>";
+			$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
+			
 
 		}
 		$str=str_replace("[OPT_PREVIEW_LIST_HK_CB]",$opt_preview_list_h,$str);
@@ -1221,39 +1251,154 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 		$opt_preview_list_s="";
 		$opt_preview_list_cb="";
 		$opt_preview_list_h="";
+		$preview_item_id="";
+		$prev_preview_item_id="";
 		while($preview_jyutyu_item = mysqli_fetch_assoc($preview_jyutyu_rs)){
 			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$preview_jyutyu_item["DIV_ID"]."' ";
 			$StrSQL.=" AND STATUS='見積り送付'";
 			//echo('<!--previewSQL:'.$StrSQL.'-->');
 			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
-			while($preview_item = mysqli_fetch_assoc($preview_rs)){
+			$preview_item = mysqli_fetch_assoc($preview_rs);
 
-				$SCNo_ary=array(
-					"SCNo_yy" => "", 
-					"SCNo_mm" => "", 
-					"SCNo_dd" => "", 
-					"SCNo_cnt" => "", 
-					"SCNo_else1" => "", 
-					"SCNo_else2" => "", 
-				);
-				$SCNo_str="";
-				$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
-				$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
-				$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
-				$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
-				$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
-				$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
-				$SCNo_str=formatAlphabetId($SCNo_ary);
-				$preview_m2_version="";
-				$preview_m2_version=$preview_item["M2_VERSION"];
+			//2回払いのときに、見かけをPart0の発注書プレビューにすることに関する処置
+			if($preview_item["M2_PAY_TYPE"]=="Split"){
+				$tmp="";
+				$tmp=explode("-", $preview_item["DIV_ID"]);
+				$part="";
+				$pre_part="";
+				if(count($tmp)==3){
+					$part=$tmp[2];
+					$pre_part=$tmp[0]."-".$tmp[1];
+				}
+				$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$pre_part."-Part0' ";
+				$StrSQL.=" AND STATUS='見積り送付'";
+				//echo('<!--previewSQL:'.$StrSQL.'-->');
+				$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+				$preview_item = mysqli_fetch_assoc($preview_rs);
+			}
+			//同じものを多重に表示しない処置
+			$prev_preview_item_id=$preview_item_id;
+			$preview_item_id=$preview_item["ID"];
+			//echo "<!--prev_preview_item_id:$prev_preview_item_id-->";
+			//echo "<!--preview_item_id:$preview_item_id-->";
+			//echo "<!---->";
+			if($prev_preview_item_id==$preview_item_id){
+				continue;
+			}
+
+			$SCNo_ary=array(
+				"SCNo_yy" => "", 
+				"SCNo_mm" => "", 
+				"SCNo_dd" => "", 
+				"SCNo_cnt" => "", 
+				"SCNo_else1" => "", 
+				"SCNo_else2" => "", 
+			);
+			$SCNo_str="";
+			$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
+			$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
+			$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
+			$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
+			$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
+			$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
+			$SCNo_str=formatAlphabetId($SCNo_ary);
+			$preview_m2_version="";
+			$preview_m2_version=$preview_item["M2_VERSION"];
 
 				//送信ボタンない状態で表示
-				$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hs&btn_version=1&key=".$preview_item["ID"]."'>";
-				$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
-			}
+			$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hs&btn_version=1&key=".$preview_item["ID"]."'>";
+			$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
+			
 
 		}
 		$str=str_replace("[OPT_PREVIEW_LIST_HK_S]",$opt_preview_list_h,$str);
+
+
+
+//		//プレビュー関連:発注書CB宛て
+//		$StrSQL="SELECT ID,SHODAN_ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND STATUS='発注依頼' ";
+//		//echo('<!--previewSQL:'.$StrSQL.'-->');
+//		$preview_jyutyu_rs=mysqli_query(ConnDB(),$StrSQL);
+//		$opt_preview_list_s="";
+//		$opt_preview_list_cb="";
+//		$opt_preview_list_h="";
+//		while($preview_jyutyu_item = mysqli_fetch_assoc($preview_jyutyu_rs)){
+//			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$preview_jyutyu_item["DIV_ID"]."' ";
+//			$StrSQL.=" AND STATUS='見積り送付'";
+//			//echo('<!--previewSQL:'.$StrSQL.'-->');
+//			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+//			while($preview_item = mysqli_fetch_assoc($preview_rs)){
+//
+//				$SCNo_ary=array(
+//					"SCNo_yy" => "", 
+//					"SCNo_mm" => "", 
+//					"SCNo_dd" => "", 
+//					"SCNo_cnt" => "", 
+//					"SCNo_else1" => "", 
+//					"SCNo_else2" => "", 
+//				);
+//				$SCNo_str="";
+//				$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
+//				$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
+//				$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
+//				$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
+//				$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
+//				$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
+//				$SCNo_str=formatAlphabetId($SCNo_ary);
+//				$preview_m2_version="";
+//				$preview_m2_version=$preview_item["M2_VERSION"];
+//
+//				//送信ボタンない状態で表示
+//				$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hcb&btn_version=1&key=".$preview_item["ID"]."'>";
+//				$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
+//			}
+//
+//		}
+//		$str=str_replace("[OPT_PREVIEW_LIST_HK_CB]",$opt_preview_list_h,$str);
+//		
+//
+//
+//		//プレビュー関連:発注書サプライヤー宛て
+//		$StrSQL="SELECT ID,SHODAN_ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND ( STATUS='受注承認' OR STATUS='受注承認(前払い)' ) ";
+//		//$StrSQL="SELECT ID,SHODAN_ID,STATUS,DIV_ID FROM DAT_FILESTATUS WHERE SHODAN_ID=".$key." AND STATUS='受注承認' ";
+//		//echo('<!--previewSQL:'.$StrSQL.'-->');
+//		$preview_jyutyu_rs=mysqli_query(ConnDB(),$StrSQL);
+//		$opt_preview_list_s="";
+//		$opt_preview_list_cb="";
+//		$opt_preview_list_h="";
+//		while($preview_jyutyu_item = mysqli_fetch_assoc($preview_jyutyu_rs)){
+//			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE DIV_ID='".$preview_jyutyu_item["DIV_ID"]."' ";
+//			$StrSQL.=" AND STATUS='見積り送付'";
+//			//echo('<!--previewSQL:'.$StrSQL.'-->');
+//			$preview_rs=mysqli_query(ConnDB(),$StrSQL);
+//			while($preview_item = mysqli_fetch_assoc($preview_rs)){
+//
+//				$SCNo_ary=array(
+//					"SCNo_yy" => "", 
+//					"SCNo_mm" => "", 
+//					"SCNo_dd" => "", 
+//					"SCNo_cnt" => "", 
+//					"SCNo_else1" => "", 
+//					"SCNo_else2" => "", 
+//				);
+//				$SCNo_str="";
+//				$SCNo_ary["SCNo_yy"]=$preview_item["SCNo_yy"];
+//				$SCNo_ary["SCNo_mm"]=$preview_item["SCNo_mm"];
+//				$SCNo_ary["SCNo_dd"]=$preview_item["SCNo_dd"];
+//				$SCNo_ary["SCNo_cnt"]=$preview_item["SCNo_cnt"];
+//				$SCNo_ary["SCNo_else1"]=$preview_item["SCNo_else1"];
+//				$SCNo_ary["SCNo_else2"]=$preview_item["SCNo_else2"];
+//				$SCNo_str=formatAlphabetId($SCNo_ary);
+//				$preview_m2_version="";
+//				$preview_m2_version=$preview_item["M2_VERSION"];
+//
+//				//送信ボタンない状態で表示
+//				$opt_preview_list_h.="<option value='/a_filestatus/?mode=disp_frame2&preview_type=hs&btn_version=1&key=".$preview_item["ID"]."'>";
+//				$opt_preview_list_h.=$SCNo_str."-Version".$preview_m2_version."</option>";
+//			}
+//
+//		}
+//		$str=str_replace("[OPT_PREVIEW_LIST_HK_S]",$opt_preview_list_h,$str);
 		
 
 

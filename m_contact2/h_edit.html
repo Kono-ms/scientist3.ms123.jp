@@ -17,12 +17,21 @@
     }
 
     var h_m2_detail = ([H_M2_DETAIL]);
+    var service_fee_info = ([SERVICE_FEE_INFO]);
     const h_ship_to = ([H_SHIP_TO]);
     $(document).ready(function () {
       $('select[name=H_M2_ID]').on('change', function () {
         $('#add_detail_area').html('');
         detail_cnt = 1;
         var val = h_m2_detail[$(this).val()];
+        var sval = service_fee_info[$(this).val()];
+
+        console.log(sval);
+        console.log(val);
+        if(sval){
+          $('#MITSUMORISYO_ALL_CHARGE').html(sval['MITSUMORISYO_ALL_CHARGE']);
+        }
+
         if (val) {
           $('#M2_NOHIN_TYPE').html(val['M2_NOHIN_TYPE']);
           $('#M2_PAY_TYPE').html(val['M2_PAY_TYPE']);
@@ -367,6 +376,10 @@
                 <div class="formset__ttl">Special discount</div>
                 <div id="M2_SPECIAL_DISCOUNT" class="formset__input">[D-M2_SPECIAL_DISCOUNT]</div>
               </div>-->
+              <div class="formset__item">
+                <div class="formset__ttl">合計金額（サービス費用込み）</div>
+                <div id="MITSUMORISYO_ALL_CHARGE" class="formset__input">[D-MITSUMORISYO_ALL_CHARGE]</div>
+              </div>
               <div class="formset__item">
                 <div class="formset__ttl">Special Note</div>
                 <div id="M2_SPECIAL_NOTE" class="formset__input">[D-M2_SPECIAL_NOTE]</div>

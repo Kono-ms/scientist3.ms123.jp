@@ -1,17 +1,61 @@
 <!-- 発注書 -->
-[S-PDF_H_TO_CB]<!--CB宛て表示-->
-<h1>CB宛て（※こちら出分けテスト用の記述部分です）</h1>
-<table>
-    <tr><th>CB宛ての内容が入ります</th><td>CB宛ての内容が入ります</td></tr>
-</table>
+[S-PDF_H_TO_CB]<!-- 発注書（研究者→CB）日本語・手数料あり／ヘッダ・宛先 -->
+<div class="recipe-header recipe-header--R">
+  <h1 class="recipe-title">発注書</h1>
+  <figure class="recipe-logo"><img src="/common/images/logo.png" width="200"></figure>
+  <!--会社ロゴ-->
+</div>
+<div class="recipe-desc">
+  <div class="recipe-no">
+    <p class="recipe-no__project-name">案件名<!--Project Name-->：[PDF_SHODAN_TITLE]</p>
+    <p class="recipe-no__study-code">試験番号<!--Study Code-->: [M2_STUDY_CODE]</p>
+  </div>
+  <div class="recipe-date">
+    <table class="recipe-date__table">
+      <tbody>
+        <tr>
+          <th>発注番号<!--Order No.-->: </th>
+          <td>[H_ORDER_NO]<span class="pdf-tbd">仮</span></td>
+        </tr>
+        <tr>
+          <th>見積番号<!--Quote No.-->: </th>
+          <td>[M2_QUOTE_NO]</td>
+        </tr>
+        <tr>
+          <th>発注日<!--Date-->: </th>
+          <td>[HATYU_NEWDATE]</td>
+        </tr>
+        <tr>
+          <th>Scientist3管理番号<!--Control No.-->:</th>
+          <td>[SCNO]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="recipe-address">
+  <table class="recipe-address__table">
+    <tbody>
+      <tr class="recipe-address__item-info">
+        <td>[PDF_M2-M2_DVAL03]<!--研究者会社名--></td>
+        <td>[PDF_M1-M1_DVAL01]<!--サプライヤー--></td>
+        <td>コスモ・バイオ株式会社</td>
+      </tr>
+      <tr class="recipe-address__item-name">
+        <td>[PDF_M2-M2_DVAL16] [PDF_M2-M2_DVAL17] 様</td>
+        <td>[PDF_ADDRESS3]</td>
+        <td>〒135-0016 東京都江東区東陽2-2-20<br>TEL:03-5632-9615 / MAIL:info@scientist-cube.com</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 [E-PDF_H_TO_CB]
-[S-PDF_H_TO_S]<!--サプライヤー宛て表示-->
-<h1>サプライヤー宛て（※こちら出分けテスト用の記述部分です）</h1>
-<table>
-    <tr><th>サプライヤー宛ての内容が入ります</th><td>サプライヤー宛ての内容が入ります</td></tr>
-</table>
-[E-PDF_H_TO_S]
-
+[S-PDF_H_TO_S]<!-- Purchase Order（CB→サプライヤー）英語・手数料なし／ヘッダ・宛先 -->
+<div class="recipe-header recipe-header--CB">
+  <h1 class="recipe-title">Purchase Order</h1>
+  <figure class="recipe-logo"><img src="/common/images/logo.png" width="200"></figure>
+  <!--会社ロゴ-->
+</div>
 <div class="recipe-desc">
   <div class="recipe-no">
     <p class="recipe-no__project-name">Project Name：[PDF_SHODAN_TITLE]</p>
@@ -21,17 +65,16 @@
     <table class="recipe-date__table">
       <tbody>
         <tr>
+          <th>Order No.: </th>
+          <td>[H_ORDER_NO_CB]<span class="pdf-tbd">仮</span></td>
+        </tr>
+        <tr>
           <th>Quote No.: </th>
           <td>[M2_QUOTE_NO]</td>
         </tr>
         <tr>
           <th>Date: </th>
           <td>[HATYU_NEWDATE]</td>
-          <!--<td>[M2_DATE]</td>--> 
-        </tr>
-        <tr>
-          <th>Valid until:</th>
-          <td>[M2_QUOTE_VALID_UNTIL]</td>
         </tr>
         <tr>
           <th>Scientist3 Control No.:</th>
@@ -49,24 +92,29 @@
         <td>Ship to:</td>
       </tr>
       <tr class="recipe-address__item-info">
-        <td></td>
-        <td></td>
+        <td>Cosmo Bio Co Ltd<br>
+          Toyo Ekimae Bldg. 2-20, Toyo 2-chome,<br>
+          Koto-ku, Tokyo 135-0016, Japan<br>
+          Tel: (81)3-5632-9615</td>
+        <td>[PDF_ADDRESS4]</td>
       </tr>
       <tr class="recipe-address__item-ttl">
-        <td></td>
+        <td>Researcher information:</td>
         <td></td>
       </tr>
       <tr class="recipe-address__item-name">
-        <td>
-          [M2_SHIP_TO_SPT_2]<br><!-- Bill to会社名（変数名の命名に誤り） -->
-          [PDF_ADDRESS2]<!-- Bill to住所 -->
-        </td>
-        <td>[PDF_M1-M1_ETC128]<br>[PDF_ADDRESS1]<br>[PDF_M1-M1_ETC32]</td>
+        <td>[PDF_M2-M2_ETC20]<br>
+          [PDF_M2-M2_DVAL18] [PDF_M2-M2_DVAL19]</td>
+        <td>[PDF_M1-M1_DVAL01]<br>
+          [PDF_ADDRESS3]<br>
+          [PDF_M1-M1_DVAL22] [PDF_M1-M1_DVAL23]</td>
       </tr>
     </tbody>
   </table>
 </div>
+[E-PDF_H_TO_S]
 
+<!-- 明細（CB宛・サプライヤー宛 共通） -->
 <div class="recipe-items">
   <table class="recipe-items-table">
     <tbody>
@@ -88,10 +136,6 @@
     <tbody>
       <!-- Number of Payments -->
       <!-- [M2_PAY_TYPE]:[NUMBER_OF_PAYMENTS] -->
-      <tr class="recipe-items-table__item-header">
-        <td colspan="4">Special discount included above.</td>
-        <td style="text-align:right" id="discount">[SUM_M2_DETAIL_SP_DISCOUNT]<!-- 変数が無い --></td>
-      </tr>
       <tr class="recipe-items-table__item-footer">
         <td colspan="5">[M2_SPECIAL_NOTE]</td>
       </tr>
@@ -99,9 +143,9 @@
   </table>
 </div>
 
-<!--このエリアは一括払い、もしくは、分割払い時の1つにまとめたPart0の見積り書のにのみ表示--> 
-[S-PDF_D_ITEMS] 
-[S-PDF_H_TO_CB]<!--CB宛て表示-->
+<!--このエリアは一括払い、もしくは、分割払い時の1つにまとめたPart0の見積り書のにのみ表示-->
+[S-PDF_D_ITEMS]
+[S-PDF_H_TO_CB]<!-- 発注書（研究者→CB）金額：手数料あり -->
 <div class="recipe-details">
   <table class="recipe-details__table">
     <tbody>
@@ -109,21 +153,20 @@
         <th colspan="3">サービス費用</th>
       </tr>
       <tr>
-        <th>Subtotal</th>
+        <th>小計</th>
         <td>[MITSUMORISYO_SUBTOTAL1]</td>
         <td>[D-M2_CURRENCY]</td>
       </tr>
       <tr>
-        <th>Tax Rate</th>
+        <th>税率</th>
         <td>[MITSUMORISYO_TAX_RATE1]</td>
         <td>%</td>
       </tr>
       <tr>
-        <th>Sales Tax</th>
+        <th>消費税</th>
         <td>[MITSUMORISYO_TAX_BILL1]</td>
         <td>[D-M2_CURRENCY]</td>
       </tr>
-      <!--<tr><th>Total</th><td>[PDF_TOTAL1]</td></tr>-->
     </tbody>
   </table>
   <table class="recipe-details__table">
@@ -177,15 +220,38 @@
       </tr>
     </tbody>
   </table>
-  <!-- <table class="recipe-details__table">
-    <tbody>
-      <tr>
-        <td> 備考： </td>
-      </tr>
-    </tbody>
-  </table> -->
 </div>
 [E-PDF_H_TO_CB]
+[S-PDF_H_TO_S]<!-- Purchase Order（CB→サプライヤー）金額：手数料なし -->
+<div class="recipe-details">
+  <table class="recipe-details__table">
+    <tbody>
+      <tr>
+        <th>Subtotal</th>
+        <td>[MITSUMORISYO_SUBTOTAL1]</td>
+        <td>[D-M2_CURRENCY]</td>
+      </tr>
+      <tr>
+        <th>Tax Rate</th>
+        <td>[MITSUMORISYO_TAX_RATE1]</td>
+        <td>%</td>
+      </tr>
+      <tr>
+        <th>Sales Tax</th>
+        <td>[MITSUMORISYO_TAX_BILL1]</td>
+        <td>[D-M2_CURRENCY]</td>
+      </tr>
+    </tbody>
+  </table>
+  <table class="recipe-details__table">
+    <tbody>
+      <tr>
+        <th>Total</th>
+        <td>[PDF_TOTAL1]</td>
+        <td>[D-M2_CURRENCY]</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+[E-PDF_H_TO_S]
 [E-PDF_D_ITEMS]
-<div class="recipe-footer"></div>
-

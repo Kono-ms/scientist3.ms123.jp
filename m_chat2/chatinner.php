@@ -277,7 +277,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 					break;
 				case '発注否認':
 					$sys_comment='('.$item_div["DIV_ID"].') ';
-					$sys_comment.='決裁者により発注依頼が承認されました。';
+					$sys_comment.='決裁者により発注依頼が否認されました。';
 					//// 決済者機能から承認否認するとメッセージが重複する
 					//if(strpos($comment_back, '決裁者により発注依頼が否認されました') === false) {
 					//	$sys_comment='('.$item_div["DIV_ID"].') ';

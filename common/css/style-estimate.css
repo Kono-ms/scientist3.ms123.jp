@@ -379,6 +379,7 @@ body {
   border-spacing: 0;
   width: 100%;
   table-layout: fixed;
+  table-layout: auto;
 }
 *+.recipe-items-table {
   margin-top: 1em;
@@ -501,5 +502,60 @@ p.recipe-details--title {
   .recipe-watermark {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+}
+
+/* レイアウト確認用の仮表示（ハリボテ）マーカー ※システム接続後に削除する */
+.pdf-tbd-banner {
+  background: #ffe08a;
+  color: #7a4a00;
+  border: 2px dashed #d08700;
+  border-radius: 6px;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  padding: 10px 14px;
+  margin: 0 0 1.2em;
+}
+.pdf-tbd {
+  background: #fff3b0;
+  color: #a15c00;
+  font-family: sans-serif;
+  font-size: 0.7em;
+  font-weight: 700;
+  padding: 0 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+@media print {
+  .pdf-tbd-banner,
+  .pdf-tbd {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* 印刷（PDF出力）用のページ設定と改ページ制御 */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+@media print {
+  /* 見出し・表の途中で改ページさせない */
+  .recipe-header {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  .recipe-desc,
+  .recipe-address {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .recipe-items-table tr,
+  .recipe-details__table {
+    page-break-inside: avoid;
+    break-inside: avoid;
   }
 }

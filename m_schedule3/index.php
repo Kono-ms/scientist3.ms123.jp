@@ -975,7 +975,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sel1,$sel2,$word2,$m
 					$StrSQL.=" and H_M2_ID='".$item["FILESTATUS_ID"]."'";
 					$hatyu_rs=mysqli_query(ConnDB(),$StrSQL);
 					//echo "<!--発注SQL:$StrSQL-->";
-	
+					
 					$status_h="";
 					while ($hatyu_item = mysqli_fetch_assoc($hatyu_rs)){
 						//echo "<!--";

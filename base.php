@@ -1428,11 +1428,8 @@ function makeServiceArea($id,$str){
 
 	//PF手数料
 	//研究者管理で入力したPF手数料率/100を使用
-	$StrSQL="SELECT * FROM DAT_M2 WHERE MID='".$target_item["MID2"]."';";
-	$rsM2=mysqli_query(ConnDB(),$StrSQL);
-	$itemM2 = mysqli_fetch_assoc($rsM2);
-	if(is_numeric($itemM2["M2_ETC02"])){
-		$pf_fee=$syoke1*$itemM2["M2_ETC02"]/100;
+	if(is_numeric($target_item["PF_RATE"])){
+		$pf_fee=$syoke1*$target_item["PF_RATE"]/100;
 	}else{
 		$pf_fee=0;
 	}
@@ -1443,7 +1440,24 @@ function makeServiceArea($id,$str){
 
 	$str=str_replace("[MITSUMORISYO_PF_FEE]",$pf_fee,$str);
 
-	echo "<!--M2_ETC02:".$itemM2["M2_ETC02"]."-->";
+	echo "<!--M2_ETC02:".$target_item["PF_RATE"]."-->";
+
+	//$StrSQL="SELECT * FROM DAT_M2 WHERE MID='".$target_item["MID2"]."';";
+	//$rsM2=mysqli_query(ConnDB(),$StrSQL);
+	//$itemM2 = mysqli_fetch_assoc($rsM2);
+	//if(is_numeric($itemM2["M2_ETC02"])){
+	//	$pf_fee=$syoke1*$itemM2["M2_ETC02"]/100;
+	//}else{
+	//	$pf_fee=0;
+	//}
+	//
+	//echo "<!--pf_fee:$pf_fee-->";
+	//$pf_fee=round($pf_fee,$decimal_point);
+	//echo "<!--pf_fee:round():$pf_fee-->";
+	//
+	//$str=str_replace("[MITSUMORISYO_PF_FEE]",$pf_fee,$str);
+	//
+	//echo "<!--M2_ETC02:".$itemM2["M2_ETC02"]."-->";
 
 
 

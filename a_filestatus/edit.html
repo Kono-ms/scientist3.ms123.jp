@@ -288,6 +288,7 @@
                         <input type="hidden" name="H_SHIP_TO_SPT_1" value="[H_SHIP_TO_SPT_1]">
                         <input type="hidden" name="H_SHIP_TO_SPT_2" value="[H_SHIP_TO_SPT_2]">
                         <input type="hidden" name="H_SHIP_TO_SPT_3" value="[H_SHIP_TO_SPT_3]">
+                        <input type="hidden" name="M2_BIKO" value="[M2_BIKO]">
                         <!--【hiddenもれ防止のための念のための処置 END】-->
 
                         <input type="hidden" name="mode" value="save" id="mode">
@@ -828,7 +829,7 @@
                                     <td>[MITSUMORISYO_PF_FEE]</td>
                                 </tr>
                                 <tr>
-                                    <th>輸入代行費用</th>
+                                    <th>輸入代行費用等</th>
                                     <td>[INPUT-M2_IMPORT_FEE]</td>
                                 </tr>
                                 <tr>
@@ -889,6 +890,11 @@
                                 <tr>
                                     <th>BILL TO</th>
                                     <td>[VIEW-BILL_TO]</td>
+                                </tr>
+                                <tr>
+                                    <th>備考</th>
+                                    <td><textarea name="M2_BIKO" class="textarea_w10 form-control" cols="70"
+                                        rows="5">[M2_BIKO]</textarea></td>
                                 </tr>
                                 <tr>
                                     <th>見積り書（CB宛)</th>
@@ -1353,3 +1359,40 @@
 </div>
 <div id="mask_mcontact" class="mask_mcontact"></div>
 <div id="mask_mcontact2" class="mask_mcontact"></div>
+<script>
+$(function() {
+
+  var targetName = 'M2_QUOTE_VALID_UNTIL'; // 対象
+  var $originalInput = $('input[type="text"][name="' + targetName + '"]');
+
+  $originalInput.each(function() {
+    var $txtInput = $(this);
+    var initialValue = $txtInput.val(); // 元のハイフン値（YYYY-MM-DD）
+
+    // 1. 送信用のhiddenフィールドを生成し、元のnameを引き継ぐ
+    var $hiddenInput = $('<input>').attr({
+      type: 'hidden',
+      name: targetName,
+      value: initialValue
+    });
+
+    // 2. 見た目用のテキスト欄のname属性を変更（重複送信を防ぐため）
+    $txtInput.attr('name', targetName + '_display');
+
+    // 3. 初期値をスラッシュ区切りに変換して見た目用にセット
+    if (initialValue) {
+      $txtInput.val(initialValue.replace(/-/g, '/'));
+    }
+
+    // 4. hiddenフィールドをテキスト欄の直後に挿入
+    $txtInput.after($hiddenInput);
+
+    // 5. ユーザーがテキスト欄を入力・変更したときの同期処理
+    $txtInput.on('input change', function() {
+      var currentVal = $(this).val();
+      var hyphenVal = currentVal.replace(/\//g, '-');
+      $hiddenInput.val(hyphenVal);
+    });
+  });
+});
+</script>

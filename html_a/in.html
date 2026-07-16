@@ -432,6 +432,10 @@ immediately after the control sidebar -->
     <script src="/html_a/AdminLTE/js/app.min.js"></script>
     <script src="/html_a/AdminLTE/js/demo.js"></script>
     <script src="/html_a/js/common.js"></script>
+    <script>
+        const timestamp = new Date().getTime();
+        import(`/common/js/sc3-format-price.js?v=${timestamp}`);// インポート
+    </script>
 
 </body>
 
