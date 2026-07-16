@@ -9,6 +9,7 @@
   <meta name="description"
     content="[PAGE_TITLE]（Confirmation）のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
   <!--template=/common/template/head.html-->
+  <link rel="stylesheet" href="/common/css/style-estimate.css" />
   <script>
     $(document).ready(function () {
 
@@ -79,20 +80,44 @@
         </div>
         [ERR-E]
         <div class="form-box">
-          <div class="formset">
-            <div class="formset__item">
-              <div class="formset__ttl"><span>案件名</span></div>
-              <div class="formset__input">[D-TITLE]</div>
+                    <!-- 帳票プレビュー（見た目のみ／データはエンジニアが差し込み） -->
+          <div class="pdf-tbd-banner">【レイアウト確認用・仮表示】帳票の金額・明細・宛先はシステム未接続のダミーです。内容が誤っていてもバグではありません。送信ボタンは通常どおり動作します。</div>
+          <div class="recipe">
+            <div class="recipe-header">
+              [S-PAGE_TITLE_CB]<h1 class="recipe-title">Purchase Order</h1>[E-PAGE_TITLE_CB]
+              [S-PAGE_TITLE_R]<h1 class="recipe-title">発注書</h1>[E-PAGE_TITLE_R]
+              <figure class="recipe-logo"><img src="/common/images/logo.png" width="200"></figure>
             </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>サプライヤー</span></div>
-              <div class="formset__input">[M1_VIEW]</div>
+
+            [S-PREVIEW_INFO_CB_AREA]
+            [PREVIEW_INFO_CB]
+            [E-PREVIEW_INFO_CB_AREA]
+
+            [S-PREVIEW_INFO_R_AREA]
+            [PREVIEW_INFO_R]
+            [E-PREVIEW_INFO_R_AREA]
+
+            <div class="recipe-items">
+              <p class="recipe-items__text">下記の通り、御発注申し上げます。</p>
+              <table class="recipe-items-table">
+                <tbody>
+                  [ADD_DETAIL_AREA2]
+                </tbody>
+              </table>
+              <table class="recipe-items-table">
+                <tbody>
+                  <tr class="recipe-items-table__item-footer">
+                    <td colspan="5">特記事項:<br>[D-M2_SPECIAL_NOTE]</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>メッセージ</span><span class="formset__must">Mandatory</span></div>
-              <div class="formset__input">[D-H3A_MESSAGE]</div>
+
+            <div class="recipe-details">
+              [SERVICE_FEE_AREA]
             </div>
           </div>
+
           <form method="post" action="./" enctype="multipart/form-data">
             <input type="hidden" name="type" value="[TYPE]">
             <input type="hidden" name="mode" value="[NEXTMODE]">

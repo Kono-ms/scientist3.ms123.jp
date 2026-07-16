@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 
 <head>
@@ -9,25 +9,40 @@
   <meta name="description"
     content="[PAGE_TITLE]のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
   <!--template=/common/template/head.html-->
+  <link rel="stylesheet" href="/common/css/style-estimate.css" />
+  <style>
+    /**
+     * このテンプレートはTCPDFに流用できません
+    **/
+  </style>
+
   <script>
     $(document).ready(function () {
-
-      $('header').hide();
-      $('.breadcrumb').hide();
-      $('footer').hide();
-
-      if (location.search.indexOf('frame=on') != -1) {
-        $('header').hide();
-        $('.breadcrumb').hide();
-        $('.c-head').hide();
-        $('footer').hide();
-        $('.wrap').css('padding', '0px');
-        $('.edit').css('padding', '0px');
-        $('.container').css('padding', '0px');
-        $('.form-box').css('padding', '3rem');
+      var subtotal = 0;
+      $('.detail_price').each(function(key, val) {
+        var val = 0;
+        if(!isNaN($(this).html()) && $(this).html()!="") {
+          val = parseFloat($(this).html());
+        }
+        subtotal += val;
+      });
+      var discount = 0;
+      if(!isNaN($('#discount').html()) && $('#discount').html()!="") {
+        discount = parseFloat($('#discount').html());
       }
+      var tax = parseFloat(subtotal * 0.1);
+      var total = subtotal + tax;
+      $('#syokei_all').html(subtotal);
+      $('#syohizei').html(tax);
+      $('#sum_all').html(total);
+    });
+  </script>
 
-      $('#close_btn').on('click', function () {
+  <script>
+    $(document).ready(function () {
+      $('#close-btn').on('click', function (e) {
+        e.preventDefault();
+        window.close();
         close_popup();
       });
     });
@@ -39,100 +54,117 @@
 </head>
 
 <body>
-  <div class="sub" style="background-color:white;">
-    <!--template=/common/template/header.html-->
 
-    <!-- 以上共通 -->
-    <div class="breadcrumb">
-      <div class="l-container">
-        <ol class="breadcrumb__list">
-          <li class="breadcrumb__item"><a href="/">トップ</a></li>
-          <li class="breadcrumb__item">[PAGE_TITLE]</li>
-        </ol>
-      </div>
+  [S-PREVIEW_INFO_CB_AREA]
+  <div class="recipe-preview-type-CB"></div>
+  [E-PREVIEW_INFO_CB_AREA]
+
+  [S-PREVIEW_INFO_R_AREA]
+  <div class="recipe-preview-type-R"></div>
+  [E-PREVIEW_INFO_R_AREA]
+
+  <div class="recipe">
+
+    <div class="recipe-dl">
+      <label class="recipe-dl__btn"
+        onclick="javascript:print();window.opener.location.reload();window.close();">Download</label>
+      <p class="recipe-dl__notes">
+        Please make sure to close this page after downloading. (Returning to the previous page will prevent automatic
+        issuance of the invoice.)
+      </p>
     </div>
-    <section class="contract">
-      <div class="l-container">
-        <div class="c-head">
-          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
-          <div>
-            <a href="javascript:close_popup();">
-              閉じる
-            </a>
-          </div>
-        </div>
-        [ERR-S]
-        <div class="error_01">
-          <div class="head_01">
-            <div class="right">
-              <div class="box">&nbsp;</div>
-            </div>
-            <div class="left">&nbsp;</div>
-          </div>
-          <div class="body">
-            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
-            </p>
-            <p class="mLft10">[ERRMSG]</p>
-          </div>
-          <div class="foot_01">
-            <div class="right">
-              <div class="box">&nbsp;</div>
-            </div>
-            <div class="left">&nbsp;</div>
-          </div>
-        </div>
-        [ERR-E]
-        <div class="form-box">
-          <div class="formset">
-            <div class="formset__item">
-              <div class="formset__ttl"><span>案件名</span></div>
-              <div class="formset__input">[D-TITLE]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>サプライヤー</span></div>
-              <div class="formset__input">[M1_VIEW]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>DATE</span></div>
-              <div class="formset__input">[D-S2_NEWDATE]</div>
-            </div>
-            [S-SEIKYU_S]
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Invoice</span></div>
-              <div class="formset__input"><a href="/a_filestatus/data/[KEY]/[D-S_FILE]" download>[D-S_FILE]</a></div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Message</span></div>
-              <div class="formset__input">[D-S_MESSAGE]</div>
-            </div>
-            [E-SEIKYU_S]
-            [S-SEIKYU_R]
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Invoice</span></div>
-              <div class="formset__input"><a href="/a_filestatus/data/[KEY]/[D-S2_FILE]" download>[D-S2_FILE]</a></div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Message</span></div>
-              <div class="formset__input">[D-S2_MESSAGE]</div>
-            </div>
-            [E-SEIKYU_R]
-            <!--
-            <div class="formset__item">
-              <div class="formset__ttl"><span>請求書</span></div>
-              <div class="formset__input"><a href="/a_filestatus/data/[KEY]/[D-S_FILE]" download>[D-S_FILE]</a></div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>メッセージ</span></div>
-              <div class="formset__input">[D-S_MESSAGE]</div>
-            </div>-->
-          </div>
-        </div>
+    <div class="recipe-close">
+      <a href="javascript:void()" class="recipe-close__btn" id="close-btn">
+        Close
+      </a>
+    </div>
+
+    <div class="recipe-header">
+      <!--[PAGE_TITLE]-->
+      [S-PAGE_TITLE_CB]<h1 class="recipe-title">Invoice</h1>[E-PAGE_TITLE_CB]
+      [S-PAGE_TITLE_R]<h1 class="recipe-title">請求書</h1>[E-PAGE_TITLE_R]
+      <figure class="recipe-logo"><img src="/common/images/logo.png" width="200"></figure><!--会社ロゴ-->
+    </div>
+
+    [S-PREVIEW_INFO_CB_AREA]
+    [PREVIEW_INFO_CB]
+    [E-PREVIEW_INFO_CB_AREA]
+
+    [S-PREVIEW_INFO_R_AREA]
+    [PREVIEW_INFO_R]
+    [E-PREVIEW_INFO_R_AREA]
+
+    [S-PREVIEW_ITEM_CB_AREA]
+    <div class="recipe-items">
+      <table class="recipe-items-table">
+        <tbody>
+          [ADD_DETAIL_AREA2]
+        </tbody>
+      </table>
+      <table class="recipe-items-table">
+        <tbody>
+          <tr class="recipe-items-table__item-footer">
+            <td colspan="5">Special Note:<br>[D-M2_SPECIAL_NOTE]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    [E-PREVIEW_ITEM_CB_AREA]
+
+    [S-PREVIEW_ITEM_R_AREA]
+    <div class="recipe-items">
+      <p class="recipe-items__text">下記の通り、御請求申し上げます。</p>
+      <table class="recipe-items-table">
+        <tbody>
+          [ADD_DETAIL_AREA2]
+        </tbody>
+      </table>
+      <table class="recipe-items-table">
+        <tbody>
+          <tr class="recipe-items-table__item-footer">
+            <td colspan="5">特記事項:<br>[D-M2_SPECIAL_NOTE]</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    [E-PREVIEW_ITEM_R_AREA]
+
+    <div class="recipe-details">
+      <input type="hidden" name="ETC23" value="[ETC23]" />
+      <input type="hidden" name="ETC27" value="[ETC27]" />
+      <input type="hidden" name="ETC31" value="[ETC31]" />
+      <input type="hidden" name="ETC35" value="[ETC35]" />
+      <input type="hidden" name="ETC39" value="[ETC39]" />
+      <input type="hidden" name="ETC43" value="[ETC43]" />
+      <input type="hidden" name="ETC47" value="[ETC47]" />
+      <input type="hidden" name="ETC51" value="[ETC51]" />
+      <input type="hidden" name="ETC55" value="[ETC55]" />
+      <input type="hidden" name="ETC59" value="[ETC59]" />
+
+      <!--小計やサービス料金表示-->
+      [SERVICE_FEE_AREA]
+
+      [S-PREVIEW_BIKO_CB_AREA]
+      <table class="recipe-details__table">
+        <tbody>
+          <tr>
+            <td>
+              備考： [M2_BIKO]
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      [E-PREVIEW_BIKO_CB_AREA]
+
+    </div>
+
+    <div class="recipe-footer">
+      [S-PREVIEW_INFO_CB_AREA]
+      <div class="recipe-watermark-area">
+        <img class="recipe-watermark" src="/common/images/logo-watermark.png" alt="" onerror="this.style.display='none'">
       </div>
-    </section>
-
-    <!-- 以下共通 -->
-
-    <!--template=/common/template/footer.html-->
+      [E-PREVIEW_INFO_CB_AREA]
+    </div>
   </div>
 </body>
 
