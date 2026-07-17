@@ -58,9 +58,6 @@
         <div class="c-head">
           <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
         </div>
-        <div class="pdf-tbd-banner">※帳票レイアウトを整備中です。金額など一部の項目は、システム接続前は仮の値で表示される場合があります。</div>
-        <h1 class="recipe-title" style="border-bottom:solid 2px #e69138;padding-bottom:0.3em;margin:0 0 1em;">発注書</h1>
-
         [ERR-S]
         <div class="error_01">
           <div class="head_01">
@@ -83,20 +80,40 @@
         </div>
         [ERR-E]
         <div class="form-box">
-          <div class="formset">
-            <div class="formset__item">
-              <div class="formset__ttl"><span>案件名</span></div>
-              <div class="formset__input">[D-TITLE]</div>
+          <!-- ▼ 帳票プレビュー：既存項目・フォームを保持し、レイアウトのみ帳票化 -->
+          <div class="recipe">
+            <div class="recipe-header recipe-header--R">
+              <h1 class="recipe-title">発注書</h1>
+              <figure class="recipe-logo"><img src="/common/images/logo.png" width="200" alt="Cosmo Bio" onerror="this.style.display='none'"></figure>
             </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>サプライヤー</span></div>
-              <div class="formset__input">[M1_VIEW]</div>
+            <div class="recipe-desc">
+              <div class="recipe-no">
+                <p class="recipe-no__project-name">案件名：[D-TITLE]</p>
+              </div>
+              <div class="recipe-date">
+                <table class="recipe-date__table"><tbody>
+                  <tr><th>サプライヤー</th><td>[M1_VIEW]</td></tr>
+                </tbody></table>
+              </div>
             </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>メッセージ</span><span class="formset__must">Mandatory</span></div>
-              <div class="formset__input">[D-H3B_MESSAGE]</div>
+            <div class="recipe-address">
+              <table class="recipe-address__table"><tbody>
+                <tr class="recipe-address__item-ttl"><td>発行元</td><td>宛先</td></tr>
+                <tr class="recipe-address__item-name">
+                  <td>コスモ・バイオ株式会社<br>〒135-0016 東京都江東区東陽2-2-20<br>TEL:03-5632-9615<br>Mail:info@scientist-cube.com</td>
+                  <td><span class="pdf-tbd">現在ハリボテ</span></td>
+                </tr>
+              </tbody></table>
+            </div>
+            <div class="recipe-items">
+              <table class="recipe-items-table"><tbody>
+                <tr class="recipe-items-table__item-header recipe-items-table__item-name"><td colspan="5">明細</td></tr>
+                <tr class="recipe-items-table__item-body"><td colspan="5"><span class="pdf-tbd">現在ハリボテ（明細・金額は発注書本体を参照）</span></td></tr>
+                <tr class="recipe-items-table__item-footer"><td colspan="5">メッセージ：<br>[D-H3B_MESSAGE]</td></tr>
+              </tbody></table>
             </div>
           </div>
+          <!-- ▲ 帳票プレビューここまで -->
           <form method="post" action="./" enctype="multipart/form-data">
             <input type="hidden" name="type" value="[TYPE]">
             <input type="hidden" name="mode" value="[NEXTMODE]">
