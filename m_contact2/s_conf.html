@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 
 <head>
@@ -31,6 +31,9 @@
         <div class="c-head">
           <h1 class="c-head__ttl">[PAGE_TITLE]（Confirmation）</h1>
         </div>
+        <div class="pdf-tbd-banner">※帳票レイアウトを整備中です。金額など一部の項目は、システム接続前は仮の値で表示される場合があります。</div>
+        <h1 class="recipe-title" style="border-bottom:solid 2px #e69138;padding-bottom:0.3em;margin:0 0 1em;">請求書</h1>
+
         [ERR-S]
         <div class="error_01">
           <div class="head_01">
@@ -53,44 +56,24 @@
         </div>
         [ERR-E]
         <div class="form-box">
-                    <!-- 帳票プレビュー（見た目のみ／データはエンジニアが差し込み） -->
-          <div class="pdf-tbd-banner">【レイアウト確認用・仮表示】帳票の金額・明細・宛先はシステム未接続のダミーです。内容が誤っていてもバグではありません。送信ボタンは通常どおり動作します。</div>
-          <div class="recipe">
-            <div class="recipe-header">
-              [S-PAGE_TITLE_CB]<h1 class="recipe-title">Invoice</h1>[E-PAGE_TITLE_CB]
-              [S-PAGE_TITLE_R]<h1 class="recipe-title">請求書</h1>[E-PAGE_TITLE_R]
-              <figure class="recipe-logo"><img src="/common/images/logo.png" width="200"></figure>
+          <div class="formset">
+            <div class="formset__item">
+              <div class="formset__ttl"><span>案件名</span></div>
+              <div class="formset__input">[D-TITLE]</div>
             </div>
-
-            [S-PREVIEW_INFO_CB_AREA]
-            [PREVIEW_INFO_CB]
-            [E-PREVIEW_INFO_CB_AREA]
-
-            [S-PREVIEW_INFO_R_AREA]
-            [PREVIEW_INFO_R]
-            [E-PREVIEW_INFO_R_AREA]
-
-            <div class="recipe-items">
-              <p class="recipe-items__text">下記の通り、御請求申し上げます。</p>
-              <table class="recipe-items-table">
-                <tbody>
-                  [ADD_DETAIL_AREA2]
-                </tbody>
-              </table>
-              <table class="recipe-items-table">
-                <tbody>
-                  <tr class="recipe-items-table__item-footer">
-                    <td colspan="5">特記事項:<br>[D-M2_SPECIAL_NOTE]</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>サプライヤー</span></div>
+              <div class="formset__input">[M1_VIEW]</div>
             </div>
-
-            <div class="recipe-details">
-              [SERVICE_FEE_AREA]
+            <div class="formset__item">
+              <div class="formset__ttl"><span>請求書</span></div>
+              <div class="formset__input"><a href="/a_filestatus/data/[D-S_FILE]" download>[D-S_FILE]</a></div>
+            </div>
+            <div class="formset__item">
+              <div class="formset__ttl"><span>メッセージ</span><span class="formset__must">Mandatory</span></div>
+              <div class="formset__input">[D-S_MESSAGE]</div>
             </div>
           </div>
-
           <form method="post" action="./" enctype="multipart/form-data">
             <input type="hidden" name="type" value="[TYPE]">
             <input type="hidden" name="mode" value="[NEXTMODE]">
