@@ -559,3 +559,23 @@ p.recipe-details--title {
     break-inside: avoid;
   }
 }
+
+/* 既存(formset形式)の明細を帳票プレビュー内で見やすく整える（データは既存のまま活かす） */
+.recipe .recipe-detail-list { margin: 0.5em 0 0; }
+.recipe .recipe-detail-list .formset__item {
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+  border-bottom: 1px solid #ddd;
+  padding: 0.35em 0;
+  font-size: 0.7em;
+}
+.recipe .recipe-detail-list .formset__item--head,
+.recipe .recipe-detail-list .formset__item-head {
+  border-bottom: 2px solid #000;
+  font-weight: 700;
+}
+.recipe .recipe-detail-list .formset__ttl,
+.recipe .recipe-detail-list .formset__ttl2 { min-width: 9em; font-weight: 600; color: #555; }
+.recipe .recipe-detail-list .formset__input { flex: 1 1 auto; }
+@media print { .recipe .recipe-detail-list .formset__item { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
