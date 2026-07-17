@@ -33,9 +33,9 @@
         close_popup();
       });
 
-      
+
       var val = h_m2_detail[[H_M2_ID]];
-      
+
       if (val) {
         $('#M2_NOHIN_TYPE').html(val['M2_NOHIN_TYPE']);
         $('#M2_PAY_TYPE').html(val['M2_PAY_TYPE']);
@@ -59,6 +59,11 @@
             $('#M2_DETAIL_DESCRIPTION_' + detail_no).html(detail['M2_DETAIL_DESCRIPTION']);
             $('#M2_DETAIL_PRICE_' + detail_no).html(detail['M2_DETAIL_PRICE']);
             $('#M2_DETAIL_NOTE_' + detail_no).html(detail['M2_DETAIL_NOTE']);
+            // 以下は既に h_m2_detail に届いている実データ（表示専用に追加）
+            $('#M2_DETAIL_QUANTITY_' + detail_no).html(detail['M2_DETAIL_QUANTITY']);
+            $('#M2_DETAIL_UNIT_PRICE_' + detail_no).html(detail['M2_DETAIL_UNIT_PRICE']);
+            $('#M2_DETAIL_SP_DISCOUNT_' + detail_no).html(detail['M2_DETAIL_SP_DISCOUNT']);
+            $('#M2_PAYMENT_NOTE_' + detail_no).html(detail['M2_PAYMENT_NOTE_ENG'] ? detail['M2_PAYMENT_NOTE_ENG'] : '<span class="pdf-tbd">現在ハリボテ</span>');
           }
 
         }
@@ -106,9 +111,6 @@
               Close
             </a>
           </div>
-        <div class="pdf-tbd-banner">※帳票レイアウトを整備中です。金額など一部の項目は、システム接続前は仮の値で表示される場合があります。</div>
-        <h1 class="recipe-title" style="border-bottom:solid 2px #e69138;padding-bottom:0.3em;margin:0 0 1em;">Purchase Order</h1>
-
         </div>
         [ERR-S]
         <div class="error_01">
@@ -132,145 +134,145 @@
         </div>
         [ERR-E]
         <div class="form-box">
-          <div class="formset">
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Project name</span></div>
-              <div class="formset__input">[D-TITLE]</div>
+          <!-- ▼ 帳票プレビュー：既存のID/JSはすべて保持し、レイアウトのみ帳票化（HTML/CSS） -->
+          <div class="recipe">
+            <div class="recipe-close">
+              <a id="close_btn" class="recipe-close__btn" href="javascript:close_popup();">Close</a>
             </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Supplier</span></div>
-              <div class="formset__input">[M1_VIEW]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Revise Quotation for Control Number</span></div>
-              <div class="formset__input">[M2_ID]（Version[M2_VERSION]）</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>コメント</span></div>
-              <div class="formset__input">[D-H_COMMENT]</div>
+            <div class="recipe-dl">
+              <a class="recipe-dl__btn" href="javascript:window.print();">Download</a>
+              <p class="recipe-dl__notes">To save as PDF, choose "Save as PDF" in the print dialog.</p>
             </div>
 
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl"><strong>Quotation</strong></div>
+            <!-- Header: title + logo -->
+            <div class="recipe-header recipe-header--CB">
+              <h1 class="recipe-title">Purchase Order</h1>
+              <figure class="recipe-logo"><img src="/common/images/logo.png" width="200" alt="Cosmo Bio" onerror="this.style.display='none'"></figure>
             </div>
 
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl"><strong>Matters to be confirmed</strong></div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Form of Delivery</div>
-              <div id="M2_NOHIN_TYPE" class="formset__input">[D-M2_NOHIN_TYPE]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Payment Terms</div>
-              <div id="M2_PAY_TYPE" class="formset__input">[D-M2_PAY_TYPE]</div>
-            </div>
-
-
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl">
-                <strong>Basic items</strong>
+            <!-- Project info (IDs kept, JS fills them) -->
+            <div class="recipe-desc">
+              <div class="recipe-no">
+                <p class="recipe-no__project-name">Project Name：[D-TITLE]</p>
+                <p class="recipe-no__study-code">Study Code: <span id="M2_STUDY_CODE">[D-M2_STUDY_CODE]</span></p>
               </div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Study code</div>
-              <div id="M2_STUDY_CODE" class="formset__input">[D-M2_STUDY_CODE]</div>
-            </div>
-            
-            <!--この項目は直接バック出力-->
-            <div class="formset__item">
-              <div class="formset__ttl">Date</div>
-              <div id="HATYU_NEWDATE" class="formset__input">[HATYU_NEWDATE]</div>
-            </div>
-            <!--使わないので非表示-->
-            <div class="formset__item" style="display:none;">
-              <div class="formset__ttl">Date</div>
-              <div id="M2_DATE" class="formset__input">[D-M2_DATE]</div>
-            </div>
-
-            <div class="formset__item">
-              <div class="formset__ttl">Quote Valid Until</div>
-              <div id="M2_QUOTE_VALID_UNTIL" class="formset__input">[D-M2_QUOTE_VALID_UNTIL]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Description</div>
-              <div id="M2_DESCRIPTION" class="formset__input">[D-M2_DESCRIPTION]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Currency</div>
-              <div id="M2_CURRENCY" class="formset__input">[D-M2_CURRENCY]</div>
-            </div>
-
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl"><strong>Description</strong></div>
-            </div>
-
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl2"><strong>Details 1</strong></div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Item #</div>
-              <div id="M2_DETAIL_ITEM_1" class="formset__input">[D-M2_DETAIL_ITEM_1]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Description</div>
-              <div id="M2_DETAIL_DESCRIPTION_1" class="formset__input">[D-M2_DETAIL_DESCRIPTION_1]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Price</div>
-              <div id="M2_DETAIL_PRICE_1" class="formset__input">[D-M2_DETAIL_PRICE_1]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Note</div>
-              <div id="M2_DETAIL_NOTE_1" class="formset__input">[D-M2_DETAIL_NOTE_1]</div>
-            </div>
-
-            <div id="add_detail_area"></div>
-
-            <div id="detail_template" style="display:none;">
-              <div id="detail_XXX">
-                <div class="formset__item formset__item--head">
-                  <div class="formset__ttl2"><br><strong>Details XXX</strong></div>
-                </div>
-                <div class="formset__item">
-                  <div class="formset__ttl">Item #</div>
-                  <div id="M2_DETAIL_ITEM_XXX" class="formset__input">[D-M2_DETAIL_ITEM_XXX]</div>
-                </div>
-                <div class="formset__item">
-                  <div class="formset__ttl">Description</div>
-                  <div id="M2_DETAIL_DESCRIPTION_XXX" class="formset__input">[D-M2_DETAIL_DESCRIPTION_XXX]</div>
-                </div>
-                <div class="formset__item">
-                  <div class="formset__ttl">Price</div>
-                  <div id="M2_DETAIL_PRICE_XXX" class="formset__input">[D-M2_DETAIL_PRICE_XXX]</div>
-                </div>
-                <div class="formset__item">
-                  <div class="formset__ttl">Note</div>
-                  <div id="M2_DETAIL_NOTE_XXX" class="formset__input">[D-M2_DETAIL_NOTE_XXX]</div>
-                </div>
+              <div class="recipe-date">
+                <table class="recipe-date__table">
+                  <tbody>
+                    <tr><th>Order No.</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                    <tr><th>Quote No.:</th><td>[M2_ID]</td></tr>
+                    <tr><th>Date:</th><td id="HATYU_NEWDATE">[HATYU_NEWDATE]</td></tr>
+                    <tr><th>Scientist3 Control No.:</th><td>[M2_ID]（V[M2_VERSION] ※6）</td></tr>
+                  </tbody>
+                </table>
               </div>
             </div>
 
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl"><strong></strong></div>
-            </div>
-            <!--
-            <div class="formset__item">
-              <div class="formset__ttl">Special discount</div>
-              <div id="M2_SPECIAL_DISCOUNT" class="formset__input">[D-M2_SPECIAL_DISCOUNT]</div>
-            </div>-->
-            <div class="formset__item">
-              <div class="formset__ttl">Special Note</div>
-              <div id="M2_SPECIAL_NOTE" class="formset__input">[D-M2_SPECIAL_NOTE]</div>
+            <!-- Address block: Supplier / Researcher / Bill to (CB) / Ship to -->
+            <div class="recipe-address">
+              <table class="recipe-address__table">
+                <tbody>
+                  <tr class="recipe-address__item-ttl">
+                    <td>Supplier</td>
+                    <td>Researcher information:</td>
+                  </tr>
+                  <tr class="recipe-address__item-name">
+                    <td>[M1_VIEW]<br><span class="pdf-tbd">現在ハリボテ（Address）</span></td>
+                    <td><span class="pdf-tbd">現在ハリボテ（Researcher Company Name / 担当者 ※8）</span></td>
+                  </tr>
+                  <tr class="recipe-address__item-ttl">
+                    <td>Bill to:</td>
+                    <td>Ship to: ※7</td>
+                  </tr>
+                  <tr class="recipe-address__item-info">
+                    <td>Cosmo Bio Co Ltd<br>Toyo Ekimae Bldg. 2-20, Toyo 2-chome,<br>Koto-ku, Tokyo 135-0016, Japan<br>Tel: (81)3-5632-9615</td>
+                    <td><span class="pdf-tbd">現在ハリボテ（海外＝CB物流センター／国内＝決裁者登録情報 ※7）</span></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            [S-PREVIEW_INFO_R_AREA]
-            <div class="formset__item">
+            <!-- JS-referenced but not shown here (existing behavior preserved / avoids null) -->
+            <div style="display:none;">
+              <span id="M2_NOHIN_TYPE">[D-M2_NOHIN_TYPE]</span>
+              <span id="M2_PAY_TYPE">[D-M2_PAY_TYPE]</span>
+              <span id="M2_DESCRIPTION">[D-M2_DESCRIPTION]</span>
+              <span id="M2_CURRENCY">[D-M2_CURRENCY]</span>
+              <span id="M2_DATE">[D-M2_DATE]</span>
+              <span id="M2_QUOTE_VALID_UNTIL">[D-M2_QUOTE_VALID_UNTIL]</span>
+            </div>
+
+            <!-- Items: same multi-row block as the quotation. IDs on <span>, JS fills them -->
+            <div class="recipe-items">
+              <p class="recipe-items__text">We hereby place an order as follows.</p>
+              <table class="recipe-items-table">
+                <tbody>
+                  <tr class="recipe-items-table__item-header recipe-items-table__item-name">
+                    <td colspan="5"><span id="M2_DETAIL_ITEM_1">[D-M2_DETAIL_ITEM_1]</span></td>
+                  </tr>
+                  <tr class="recipe-items-table__item-header">
+                    <td colspan="2" style="text-align:right;">Qty: <span id="M2_DETAIL_QUANTITY_1"></span></td>
+                    <td style="text-align:right;">Unit Price: <span id="M2_DETAIL_UNIT_PRICE_1"></span></td>
+                    <td style="text-align:right;">Special Discount: <span id="M2_DETAIL_SP_DISCOUNT_1"></span></td>
+                    <td style="text-align:right;">Total: <span id="M2_DETAIL_PRICE_1">[D-M2_DETAIL_PRICE_1]</span></td>
+                  </tr>
+                  <tr class="recipe-items-table__item-body">
+                    <td colspan="5">Description:<br><span id="M2_DETAIL_DESCRIPTION_1">[D-M2_DETAIL_DESCRIPTION_1]</span></td>
+                  </tr>
+                  <tr class="recipe-items-table__item-body">
+                    <td colspan="5">Deliverable:<br><span id="M2_DETAIL_NOTE_1">[D-M2_DETAIL_NOTE_1]</span></td>
+                  </tr>
+                  <tr class="recipe-items-table__item-footer">
+                    <td colspan="5">Payment Terms:<br><span id="M2_PAYMENT_NOTE_1"></span></td>
+                  </tr>
+                </tbody>
+                <tbody id="add_detail_area"></tbody>
+              </table>
+
+              <table class="recipe-items-table">
+                <tbody>
+                  <tr class="recipe-items-table__item-footer">
+                    <td colspan="5">Special Note:<br><span id="M2_SPECIAL_NOTE">[D-M2_SPECIAL_NOTE]</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Items template for 2nd+ (JS reads .html(), replaces XXX and clones) -->
+            <script type="text/html" id="detail_template">
+              <tr class="recipe-items-table__item-header recipe-items-table__item-name">
+                <td colspan="5"><span id="M2_DETAIL_ITEM_XXX">[D-M2_DETAIL_ITEM_XXX]</span></td>
+              </tr>
+              <tr class="recipe-items-table__item-header">
+                <td colspan="2" style="text-align:right;">Qty: <span id="M2_DETAIL_QUANTITY_XXX"></span></td>
+                <td style="text-align:right;">Unit Price: <span id="M2_DETAIL_UNIT_PRICE_XXX"></span></td>
+                <td style="text-align:right;">Special Discount: <span id="M2_DETAIL_SP_DISCOUNT_XXX"></span></td>
+                <td style="text-align:right;">Total: <span id="M2_DETAIL_PRICE_XXX">[D-M2_DETAIL_PRICE_XXX]</span></td>
+              </tr>
+              <tr class="recipe-items-table__item-body">
+                <td colspan="5">Description:<br><span id="M2_DETAIL_DESCRIPTION_XXX">[D-M2_DETAIL_DESCRIPTION_XXX]</span></td>
+              </tr>
+              <tr class="recipe-items-table__item-body">
+                <td colspan="5">Deliverable:<br><span id="M2_DETAIL_NOTE_XXX">[D-M2_DETAIL_NOTE_XXX]</span></td>
+              </tr>
+              <tr class="recipe-items-table__item-footer">
+                <td colspan="5">Payment Terms:<br><span id="M2_PAYMENT_NOTE_XXX"></span></td>
+              </tr>
+            </script>
+
+            <!-- Amounts (supplier cost base, no management fee: Subtotal/Tax/Total) -->
+            <div class="recipe-details">
+              [S-PREVIEW_INFO_R_AREA]
               [SERVICE_FEE_AREA]
+              [E-PREVIEW_INFO_R_AREA]
+              <table class="recipe-details__table">
+                <tbody>
+                  <tr><td>Special Note: <span class="pdf-tbd">現在ハリボテ（Number of Payments ※2）</span></td></tr>
+                </tbody>
+              </table>
             </div>
-            [E-PREVIEW_INFO_R_AREA]
-
           </div>
+          <!-- ▲ 帳票プレビューここまで -->
         </div>
       </div>
     </section>

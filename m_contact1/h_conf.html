@@ -43,8 +43,6 @@
         <div class="c-head">
           <h1 class="c-head__ttl">[PAGE_TITLE]（Confirmation）</h1>
         </div>
-        <div class="pdf-tbd-banner">※帳票レイアウトを整備中です。金額など一部の項目は、システム接続前は仮の値で表示される場合があります。</div>
-        <h1 class="recipe-title" style="border-bottom:solid 2px #e69138;padding-bottom:0.3em;margin:0 0 1em;">Purchase Order</h1>
 
         [ERR-S]
         <div class="error_01">
@@ -68,41 +66,69 @@
         </div>
         [ERR-E]
         <div class="form-box">
-          <div class="formset">
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Project name</span></div>
-              <div class="formset__input">[D-TITLE]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Supplier</span></div>
-              <div class="formset__input">[M1_VIEW]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>Revise Quotation for Control Number</span><span class="formset__must">Mandatory</span></div>
-              <div class="formset__input">[D-H_M2_ID]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl"><span>コメント</span></div>
-              <div class="formset__input">[D-H_COMMENT]</div>
+          <!-- ▼ 帳票プレビュー：既存の項目・ID・フォームはすべて保持し、レイアウトのみ帳票化 -->
+          <div class="recipe">
+
+            <div class="recipe-header recipe-header--CB">
+              <h1 class="recipe-title">Purchase Order</h1>
+              <figure class="recipe-logo"><img src="/common/images/logo.png" width="200" alt="Cosmo Bio" onerror="this.style.display='none'"></figure>
             </div>
 
-            <div class="formset__item formset__item--head">
-              <div class="formset__ttl"><strong>Quotation</strong></div>
+            <div class="recipe-desc">
+              <div class="recipe-no">
+                <p class="recipe-no__project-name">Project Name：[D-TITLE]</p>
+              </div>
+              <div class="recipe-date">
+                <table class="recipe-date__table">
+                  <tbody>
+                    <tr><th>Supplier</th><td>[M1_VIEW]</td></tr>
+                    <tr><th>Revise Quotation for Control Number<span class="formset__must">Mandatory</span></th><td>[D-H_M2_ID]</td></tr>
+                    <tr><th>Comment</th><td>[D-H_COMMENT]</td></tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <div class="formset__item">
-              <div class="formset__ttl">詳細項目</div>
-              <div id="m2_title" class="formset__input"></div>
+
+            <!-- 発行元・宛先（Excel期待値どおり） -->
+            <div class="recipe-address">
+              <table class="recipe-address__table">
+                <tbody>
+                  <tr class="recipe-address__item-ttl">
+                    <td>Bill to:</td>
+                    <td>Supplier</td>
+                  </tr>
+                  <tr class="recipe-address__item-name">
+                    <td>Cosmo Bio Co Ltd<br>Toyo Ekimae Bldg. 2-20, Toyo 2-chome,<br>Koto-ku, Tokyo 135-0016, Japan<br>Tel: (81)3-5632-9615</td>
+                    <td>[M1_VIEW]</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="formset__item">
-              <div class="formset__ttl">金額</div>
-              <div id="m2_price" class="formset__input"></div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">備考</div>
-              <div id="m2_comment" class="formset__input"></div>
+
+            <!-- Quotation summary（既存の #m2_title/#m2_price/#m2_comment をJSが流し込む） -->
+            <div class="recipe-items">
+              <p class="recipe-items__text">We hereby place an order as follows.</p>
+              <table class="recipe-items-table">
+                <tbody>
+                  <tr class="recipe-items-table__item-header recipe-items-table__item-name">
+                    <td colspan="5">Quotation</td>
+                  </tr>
+                  <tr class="recipe-items-table__item-body">
+                    <td colspan="5">Details:<br><span id="m2_title"></span></td>
+                  </tr>
+                  <tr class="recipe-items-table__item-header">
+                    <td colspan="5" style="text-align:right;">Total: <span id="m2_price"></span></td>
+                  </tr>
+                  <tr class="recipe-items-table__item-footer">
+                    <td colspan="5">Note:<br><span id="m2_comment"></span></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
           </div>
+          <!-- ▲ 帳票プレビューここまで -->
+
           <form method="post" action="./" enctype="multipart/form-data">
             <input type="hidden" name="type" value="[TYPE]">
             <input type="hidden" name="mode" value="[NEXTMODE]">
