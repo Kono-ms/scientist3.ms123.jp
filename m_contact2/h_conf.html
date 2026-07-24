@@ -145,16 +145,13 @@
               </table>
             </div>
 
-            <!-- 確認事項（Confirmation画面の必須確認項目。既存IDを保持） -->
-            <table class="recipe-date__table" style="margin:0 0 1em;">
-              <tbody>
-                <tr><th>納品形態<span class="formset__must">Mandatory</span></th><td id="M2_NOHIN_TYPE">[D-M2_NOHIN_TYPE]</td></tr>
-                <tr><th>支払い条件<span class="formset__must">Mandatory</span></th><td id="M2_PAY_TYPE">[D-M2_PAY_TYPE]</td></tr>
-                <tr><th>Currency<span class="formset__must">Mandatory</span></th><td id="M2_CURRENCY">[D-M2_CURRENCY]</td></tr>
-                <tr><th>Quote Valid Until<span class="formset__must">Mandatory</span></th><td id="M2_QUOTE_VALID_UNTIL">[D-M2_QUOTE_VALID_UNTIL]</td></tr>
-                <tr><th>コメント</th><td>[D-H_COMMENT]</td></tr>
-              </tbody>
-            </table>
+            <!-- 確認事項（納品形態/支払条件/Currency/Quote Valid Until/コメント）はExcel帳票に表示場所が無いため非表示。データ（サーバ流し込み先）は保持 -->
+            <div style="display:none;">
+              <span id="M2_NOHIN_TYPE">[D-M2_NOHIN_TYPE]</span>
+              <span id="M2_PAY_TYPE">[D-M2_PAY_TYPE]</span>
+              <span id="M2_CURRENCY">[D-M2_CURRENCY]</span>
+              <span id="M2_QUOTE_VALID_UNTIL">[D-M2_QUOTE_VALID_UNTIL]</span>
+            </div>
 
             <!-- 明細：既存のサーバ側 [ADD_DETAIL_AREA]（formset出力）をそのまま保持し、CSSで帳票内に整形 -->
             <div class="recipe-items">
