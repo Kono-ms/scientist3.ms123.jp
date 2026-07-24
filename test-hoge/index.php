@@ -28,50 +28,15 @@ $num1=round($num0,$decimal_point);
 
 echo "$num0, $num1<br>";
 
-//$key="4442";
-//
-//$StrSQL="SELECT DIV_ID FROM DAT_FILESTATUS where MID2='".$_SESSION['MID']."' and ID='".$key."' order by ID desc;";
-//	echo('<!--'.$StrSQL.'-->');
-//	$tmp_rs=mysqli_query(ConnDB(),$StrSQL);
-//	$tmp_item = mysqli_fetch_assoc($tmp_rs);
-//
-//	$StrSQL="SELECT * FROM DAT_FILESTATUS where MID2='".$_SESSION['MID']."' ";
-//	$StrSQL.=" and DIV_ID='".$tmp_item["DIV_ID"]."' and STATUS='見積り送付' order by ID desc ";
-//	echo('<!--'.$StrSQL.'-->');
-//	$scn_rs=mysqli_query(ConnDB(),$StrSQL);
-//	$scn_item = mysqli_fetch_assoc($scn_rs);
-//
-//	echo "<pre>";
-//	var_dump($scn_item);
-//	echo "</pre>";
-//
-//	//Scientist Control No.
-//	$SCNo_str="";
-//	$SCNo_ary=array(
-//		"SCNo_yy" => "", 
-//		"SCNo_mm" => "", 
-//		"SCNo_dd" => "", 
-//		"SCNo_cnt" => "", 
-//		"SCNo_else1" => "", 
-//		"SCNo_else2" => "", 
-//	);
-//	$SCNo_ary=array(
-//		"SCNo_yy" => $scn_item['SCNo_yy'], 
-//		"SCNo_mm" => $scn_item['SCNo_mm'], 
-//		"SCNo_dd" => $scn_item['SCNo_dd'], 
-//		"SCNo_cnt" => $scn_item['SCNo_cnt'], 
-//		"SCNo_else1" => $scn_item['SCNo_else1'], 
-//		"SCNo_else2" => $scn_item['SCNo_else2'], 
-//	);
-//	$SCNo_str=formatAlphabetId($SCNo_ary);
-//	$SCNo_str.="-Version".$scn_item["M2_VERSION"];
-//
-//echo "scno:$SCNo_str";
 
+$maildata = GetMailTemplate('メールテンプレート11');
+	
+$MailBody = $maildata['BODY'];
+$subject = $maildata['TITLE'];
 
-
-
-
+echo "<pre>";
+var_dump($maildata);
+echo "</pre>";
 
 
 

@@ -289,6 +289,14 @@
                         <input type="hidden" name="H_SHIP_TO_SPT_2" value="[H_SHIP_TO_SPT_2]">
                         <input type="hidden" name="H_SHIP_TO_SPT_3" value="[H_SHIP_TO_SPT_3]">
                         <input type="hidden" name="M2_BIKO" value="[M2_BIKO]">
+                        <input type="hidden" name="M2_FILE1" value="[M2_FILE1]">
+                        <input type="hidden" name="SAMPLE_HOKAN_TMPER" value="[SAMPLE_HOKAN_TMPER]">
+                        <input type="hidden" name="SAMPLE_HAISO_CO" value="[SAMPLE_HAISO_CO]">
+                        <input type="hidden" name="SAMPLE_NUMBER" value="[SAMPLE_NUMBER]">
+                        <input type="hidden" name="SAMPLE_DATE" value="[SAMPLE_DATE]">
+                        <input type="hidden" name="SAMPLE_TIME" value="[SAMPLE_TIME]">
+                        <input type="hidden" name="SAMPLE_MSG" value="[SAMPLE_MSG]">
+                        <input type="hidden" name="SAMPLE_FILE" value="[SAMPLE_FILE]">
                         <!--【hiddenもれ防止のための念のための処置 END】-->
 
                         <input type="hidden" name="mode" value="save" id="mode">
@@ -897,6 +905,21 @@
                                         rows="5">[M2_BIKO]</textarea></td>
                                 </tr>
                                 <tr>
+                                    [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_M2_FILE1" value="[M2_FILE1]" size="90"><input
+                                            type="hidden" name="M2_FILE1" value="[M2_FILE1]"></td>
+                                     </tr>[E-NEWDATA]
+                                     [S-EDITDATA]<tr>
+                                         <th>添付ファイル</th>
+                                         <td>[S-M2_FILE1]<a href="/a_filestatus/data/[ID]/[M2_FILE1]" download>[M2_FILE1]</a>　削除
+                                             <input type="checkbox" name="DEL_IMAGE_M2_FILE1"><br><br>[E-M2_FILE1]<input
+                                                 type="file" name="EP_M2_FILE1" value="[M2_FILE1]" size="90"><input
+                                                 type="hidden" name="M2_FILE1" value="[M2_FILE1]">
+                                         </td>
+                                     </tr>[E-EDITDATA]
+                                </tr>
+                                <tr>
                                     <th>見積り書（CB宛)</th>
                                     <td>
                                         [S-PREVIEW_LIST_CB]
@@ -1297,6 +1320,79 @@
                             </tbody>
                         </table>
                         [E-FORM_DONE2]
+
+                        [S-FORM_SMPL]
+                        ＜サンプル送付依頼＞
+                        <table class="table table-bordered table_edit">
+                            <tbody>
+                                <tr>
+                                    <th>輸送温度</th>
+                                    <td>
+                                        <select name="TEMPR">
+                                            [OPT-TEMPR]
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>サンプルの種類</th>
+                                    <td><input class="input_w10 form-control" type="text" name="SAMPLE" value="[SAMPLE]" size="90" /></td>
+                                </tr>
+                                <tr>
+                                    <th>由来</th>
+                                    <td><input class="input_w10 form-control" type="text" name="ORIGIN" value="[ORIGIN]" size="90" /></td>
+                                </tr>
+                                <tr>
+                                    <th>法規制</th>
+                                    <td><input class="input_w10 form-control" type="text" name="LEGAL" value="[LEGAL]" size="90" /></td>
+                                </tr>
+
+
+                                <tr>
+                                    <th>保管温度</th>
+                                    <td><input class="input_w10 form-control" type="text" name="SAMPLE_HOKAN_TMPER" value="[SAMPLE_HOKAN_TMPER]" size="90" /></td>
+                                </tr>
+                                <tr>
+                                    <th>配送会社</th>
+                                    <td><input class="input_w10 form-control" type="text" name="SAMPLE_HAISO_CO" value="[SAMPLE_HAISO_CO]" size="90" /></td>
+                                </tr>
+                                <tr>
+                                    <th>お問い合わせ番号</th>
+                                    <td><input class="input_w10 form-control" type="text" name="SAMPLE_NUMBER" value="[SAMPLE_NUMBER]" size="90" /></td>
+                                </tr>
+                                <tr>
+                                    <th>配送日時</th>
+                                    <td><input class="input_w10 form-control" type="text" name="SAMPLE_DATE" value="[SAMPLE_DATE]" size="90" /></td>
+                                </tr>
+                                <tr>
+                                    <th>配送時間</th>
+                                    <td><input class="input_w10 form-control" type="text" name="SAMPLE_TIME" value="[SAMPLE_TIME]" size="90" /></td>
+                                </tr>
+                                <tr>
+                                    <th>メッセージ</th>
+                                    <td><input class="input_w10 form-control" type="text" name="SAMPLE_MSG" value="[SAMPLE_MSG]" size="90" /></td>
+                                </tr>
+                                <tr>
+                                    [S-NEWDATA]<tr>
+                                    <th>添付ファイル</th>
+                                    <td><input type="file" name="EP_SAMPLE_FILE" value="[SAMPLE_FILE]" size="90"><input
+                                            type="hidden" name="SAMPLE_FILE" value="[SAMPLE_FILE]"></td>
+                                     </tr>[E-NEWDATA]
+                                     [S-EDITDATA]<tr>
+                                         <th>添付ファイル</th>
+                                         <td>[S-SAMPLE_FILE]<a href="/a_filestatus/data/[ID]/[SAMPLE_FILE]" download>[SAMPLE_FILE]</a>　削除
+                                             <input type="checkbox" name="DEL_IMAGE_SAMPLE_FILE"><br><br>[E-SAMPLE_FILE]<input
+                                                 type="file" name="EP_SAMPLE_FILE" value="[SAMPLE_FILE]" size="90"><input
+                                                 type="hidden" name="SAMPLE_FILE" value="[SAMPLE_FILE]">
+                                         </td>
+                                     </tr>[E-EDITDATA]
+                                </tr>
+
+                                
+                            </tbody>
+                        </table>
+                        [E-FORM_SMPL]
+
+
 
                         
                         ＜見積もり詳細＞

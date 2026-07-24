@@ -1228,6 +1228,160 @@ echo "<!--SendMail_v:".$mailto."-->";
 }
 
 
+//=========================================================================================================
+//名前 
+//機能\ 
+//引数  $keyはDAT_FILESTATUSのID
+//戻値 
+//=========================================================================================================
+function SendMail_v2($key)
+{
+
+	eval(globals());
+
+	$maildata = GetMailTemplate('メールテンプレート11');
+	
+	$MailBody = $maildata['BODY'];
+	$subject = $maildata['TITLE'];
+
+	//echo "<pre>";
+	//var_dump($maildata);
+	//echo "</pre>";
+
+	$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID='".$key."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$itemF = mysqli_fetch_assoc($rs);
+	//foreach ($itemF as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+	
+	$StrSQL="SELECT * FROM DAT_M1 WHERE MID='".$itemF["MID1"]."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$item_MID1 = mysqli_fetch_assoc($rs);
+	//foreach ($item_MID1 as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+
+	$StrSQL="SELECT * FROM DAT_M2 WHERE MID='".$itemF["MID2"]."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$item_MID2 = mysqli_fetch_assoc($rs);
+	//foreach ($item_MID2 as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+
+	$mailto = $item_MID1["EMAIL"];
+
+	mb_language("Japanese");
+	mb_internal_encoding("UTF-8");
+echo "<!--SendMail_v:".$mailto."-->";
+	mb_send_mail($mailto, $subject, $MailBody, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
+
+}
+
+//=========================================================================================================
+//名前 
+//機能\ 
+//引数  $keyはDAT_FILESTATUSのID
+//戻値 
+//=========================================================================================================
+function SendMail_v2_2($key)
+{
+
+	eval(globals());
+
+	$maildata = GetMailTemplate('メールテンプレート12');
+	
+	$MailBody = $maildata['BODY'];
+	$subject = $maildata['TITLE'];
+
+	//echo "<pre>";
+	//var_dump($maildata);
+	//echo "</pre>";
+
+	$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID='".$key."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$itemF = mysqli_fetch_assoc($rs);
+	//foreach ($itemF as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+	
+	$StrSQL="SELECT * FROM DAT_M1 WHERE MID='".$itemF["MID1"]."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$item_MID1 = mysqli_fetch_assoc($rs);
+	//foreach ($item_MID1 as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+
+	$StrSQL="SELECT * FROM DAT_M2 WHERE MID='".$itemF["MID2"]."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$item_MID2 = mysqli_fetch_assoc($rs);
+	//foreach ($item_MID2 as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+
+	$mailto = $item_MID2["EMAIL"];
+
+	mb_language("Japanese");
+	mb_internal_encoding("UTF-8");
+echo "<!--SendMail_v:".$mailto."-->";
+	mb_send_mail($mailto, $subject, $MailBody, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
+
+}
+
+
+//=========================================================================================================
+//名前 
+//機能\ 
+//引数  $keyはDAT_FILESTATUSのID
+//戻値 
+//=========================================================================================================
+function SendMail_v2_3($key)
+{
+
+	eval(globals());
+
+	$maildata = GetMailTemplate('メールテンプレート12');
+	
+	$MailBody = $maildata['BODY'];
+	$subject = $maildata['TITLE'];
+
+	//echo "<pre>";
+	//var_dump($maildata);
+	//echo "</pre>";
+
+	$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID='".$key."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$itemF = mysqli_fetch_assoc($rs);
+	//foreach ($itemF as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+	
+	$StrSQL="SELECT * FROM DAT_M1 WHERE MID='".$itemF["MID1"]."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$item_MID1 = mysqli_fetch_assoc($rs);
+	//foreach ($item_MID1 as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+
+	$StrSQL="SELECT * FROM DAT_M2 WHERE MID='".$itemF["MID2"]."';";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$item_MID2 = mysqli_fetch_assoc($rs);
+	//foreach ($item_MID2 as $idx => $val) {
+	//	$MailBody=str_replace("[".$idx."]",$val,$MailBody);
+	//}
+
+	$mailto = SENDER_EMAIL;
+
+	mb_language("Japanese");
+	mb_internal_encoding("UTF-8");
+echo "<!--SendMail_v:".$mailto."-->";
+	mb_send_mail($mailto, $subject, $MailBody, "From:".mb_encode_mimeheader(mb_convert_encoding(SENDER_NAME,"ISO-2022-JP","AUTO"))."<".SENDER_EMAIL.">"); 
+
+}
+
+
+
+
 
 //=========================================================================================================
 //名前 
@@ -1654,9 +1808,9 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 
 	if($mode == 'saveconf' || $mode == 'preview' || $mode == 'saveconf2' || $mode == 'back') {
 	echo "<!--1a-->";
-	echo "<!--POST:";
-	var_dump($_POST);
-	echo "-->";
+	//echo "<!--POST:";
+	//var_dump($_POST);
+	//echo "-->";
 	  // フォームからデータ取得
 		if($_POST['TITLE'] != '') {
 			$str=str_replace("[D-TITLE]",$_POST['TITLE'],$str);
@@ -1754,6 +1908,24 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 		$str=str_replace("[D-CHKNOHIN_ID_SCNO]",$SCNo_str." Version".$chknohin_item["M2_VERSION"],$str);
 
 
+		//「サンプル送付依頼」フォーム
+		$str=str_replace("[D-SAMPLE_HOKAN_TMPER]",$_POST['SAMPLE_HOKAN_TMPER'],$str);
+		$str=str_replace("[D-SAMPLE_HAISO_CO]",$_POST['SAMPLE_HAISO_CO'],$str);
+		$str=str_replace("[D-SAMPLE_NUMBER]",$_POST['SAMPLE_NUMBER'],$str);
+		$str=str_replace("[D-SAMPLE_DATE]",$_POST['SAMPLE_DATE'],$str);
+		$str=str_replace("[D-SAMPLE_TIME]",$_POST['SAMPLE_TIME'],$str);
+		$str=str_replace("[D-SAMPLE_MSG]",str_replace("\n", '<br>', $_POST['SAMPLE_MSG']),$str); // Dはbr変換
+		$str=str_replace("[D-SAMPLE_FILE]",((isset($_FILES['EP_SAMPLE_FILE']['name']) && $_FILES['EP_SAMPLE_FILE']['name']!="") ? $_FILES['EP_SAMPLE_FILE']['name'] : $_POST['SAMPLE_FILE']),$str);
+
+		$str=str_replace("[SAMPLE_HOKAN_TMPER]",$_POST['SAMPLE_HOKAN_TMPER'],$str);
+		$str=str_replace("[SAMPLE_HAISO_CO]",$_POST['SAMPLE_HAISO_CO'],$str);
+		$str=str_replace("[SAMPLE_NUMBER]",$_POST['SAMPLE_NUMBER'],$str);
+		$str=str_replace("[SAMPLE_DATE]",$_POST['SAMPLE_DATE'],$str);
+		$str=str_replace("[SAMPLE_TIME]",$_POST['SAMPLE_TIME'],$str);
+		$str=str_replace("[SAMPLE_MSG]",$_POST['SAMPLE_MSG'],$str);
+		$str=str_replace("[SAMPLE_FILE]",((isset($_FILES['EP_SAMPLE_FILE']['name']) && $_FILES['EP_SAMPLE_FILE']['name']!="") ? $_FILES['EP_SAMPLE_FILE']['name'] : $_POST['SAMPLE_FILE']),$str);
+
+
 		//新規追加項目
 		$str=str_replace("[D-TEMPR]",str_replace("TEMPR:","",$_POST['TEMPR']),$str);
 		$str=str_replace("[D-SAMPLE]",$_POST['SAMPLE'],$str);
@@ -1791,17 +1963,6 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 		if(isset($_POST[$fname]) && $_POST[$fname]!=""){
 			$str=str_replace("'".$_POST[$fname]."'","'".$_POST[$fname]."' selected",$str);
 		}
-
-
-		//「サンプル送付依頼」フォーム
-		echo "<!--sample_hokan_tmper:".$_POST['SAMPLE_HOKAN_TMPER']."-->";
-		$str=str_replace("[D-SAMPLE_HOKAN_TMPER]",$_POST['SAMPLE_HOKAN_TMPER'],$str);
-		$str=str_replace("[D-SAMPLE_HAISO_CO]",$_POST['SAMPLE_HAISO_CO'],$str);
-		$str=str_replace("[D-SAMPLE_NUMBER]",$_POST['SAMPLE_NUMBER'],$str);
-		$str=str_replace("[D-SAMPLE_DATE]",$_POST['SAMPLE_DATE'],$str);
-		$str=str_replace("[D-SAMPLE_TIME]",$_POST['SAMPLE_TIME'],$str);
-		$str=str_replace("[D-SAMPLE_MSG]",str_replace("\n", '<br>', $_POST['SAMPLE_MSG']),$str); // Dはbr変換
-		$str=str_replace("[D-SAMPLE_FIlE]",((isset($_FILES['EP_SAMPLE_FIlE']['name']) && $_FILES['EP_SAMPLE_FIlE']['name']!="") ? $_FILES['EP_SAMPLE_FIlE']['name'] : $_POST['SAMPLE_FIlE']),$str);
 
 
 
@@ -2035,16 +2196,6 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 		$str=str_replace("[CHKNOHIN_MESSAGE]",$_POST['CHKNOHIN_MESSAGE'],$str);
 		$str=str_replace("[CHKNOHIN_ID]",$_POST['CHKNOHIN_ID'],$str);
 
-
-		//「サンプル送付依頼」フォーム
-		$str=str_replace("[SAMPLE_HOKAN_TMPER]",$_POST['SAMPLE_HOKAN_TMPER'],$str);
-		$str=str_replace("[SAMPLE_HAISO_CO]",$_POST['SAMPLE_HAISO_CO'],$str);
-		$str=str_replace("[SAMPLE_NUMBER]",$_POST['SAMPLE_NUMBER'],$str);
-		$str=str_replace("[SAMPLE_DATE]",$_POST['SAMPLE_DATE'],$str);
-		$str=str_replace("[SAMPLE_TIME]",$_POST['SAMPLE_TIME'],$str);
-		$str=str_replace("[SAMPLE_MSG]",$_POST['SAMPLE_MSG'],$str);
-		$str=str_replace("[SAMPLE_FIlE]",((isset($_FILES['EP_SAMPLE_FIlE']['name']) && $_FILES['EP_SAMPLE_FIlE']['name']!="") ? $_FILES['EP_SAMPLE_FIlE']['name'] : $_POST['SAMPLE_FIlE']),$str);
-		
 
 		// 新見積り書
 		// -------------------------------------------------------------------------------
@@ -2500,6 +2651,25 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 		$str=str_replace("[M2_CURRENCY]",$item_filestatus['M2_CURRENCY'],$str);
 		$str=str_replace("[M2_SPECIAL_DISCOUNT]",$item_filestatus['M2_SPECIAL_DISCOUNT'],$str);
 		$str=str_replace("[M2_SPECIAL_NOTE]",$item_filestatus['M2_SPECIAL_NOTE'],$str);
+
+
+		//「サンプル送付依頼」フォーム
+		$str=str_replace("[D-SAMPLE_HOKAN_TMPER]",$item_filestatus['SAMPLE_HOKAN_TMPER'],$str);
+		$str=str_replace("[D-SAMPLE_HAISO_CO]",$item_filestatus['SAMPLE_HAISO_CO'],$str);
+		$str=str_replace("[D-SAMPLE_NUMBER]",$item_filestatus['SAMPLE_NUMBER'],$str);
+		$str=str_replace("[D-SAMPLE_DATE]",$item_filestatus['SAMPLE_DATE'],$str);
+		$str=str_replace("[D-SAMPLE_TIME]",$item_filestatus['SAMPLE_TIME'],$str);
+		$str=str_replace("[D-SAMPLE_MSG]",str_replace("\n", '<br>', $item_filestatus['SAMPLE_MSG']),$str); // Dはbr変換
+		$str=str_replace("[D-SAMPLE_FILE]",$item_filestatus['SAMPLE_FILE'],$str);
+
+		$str=str_replace("[SAMPLE_HOKAN_TMPER]",$item_filestatus['SAMPLE_HOKAN_TMPER'],$str);
+		$str=str_replace("[SAMPLE_HAISO_CO]",$item_filestatus['SAMPLE_HAISO_CO'],$str);
+		$str=str_replace("[SAMPLE_NUMBER]",$item_filestatus['SAMPLE_NUMBER'],$str);
+		$str=str_replace("[SAMPLE_DATE]",$item_filestatus['SAMPLE_DATE'],$str);
+		$str=str_replace("[SAMPLE_TIME]",$item_filestatus['SAMPLE_TIME'],$str);
+		$str=str_replace("[SAMPLE_MSG]",$item_filestatus['SAMPLE_MSG'],$str);
+		$str=str_replace("[SAMPLE_FILE]",$item_filestatus['SAMPLE_FILE'],$str);
+
 
 		//新規追加項目
 		$str=str_replace("[D-TEMPR]",str_replace("TEMPR:","",$item_filestatus['TEMPR']),$str);
@@ -3318,7 +3488,31 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			$str=str_replace("[H_M2_DETAIL]",json_encode($h_m2_detail),$str);
 		}
 
+
+		//「サンプル送付依頼」フォーム
+		if($type=="サンプル送付依頼"){
+			$StrSQL="SELECT ID,SHODAN_ID,STATUS,TEMPR,SAMPLE,ORIGIN,LEGAL FROM DAT_FILESTATUS WHERE STATUS='見積り依頼' ";
+			$StrSQL.=" AND SHODAN_ID='".$shodan_id."'";
+			$StrSQL.=" AND MID1='".$m1_mid."'";
+			$StrSQL.=" order by ID desc";
+			$smpl_rs=mysqli_query(ConnDB(),$StrSQL);
+			$smpl_item = mysqli_fetch_assoc($smpl_rs);
+			echo "<!--smpl_item:";
+			var_dump($smpl_item);
+			echo "-->";
+
+			$str=str_replace("[D-TEMPR]",str_replace("TEMPR:","",$smpl_item['TEMPR']),$str);
+			$str=str_replace("[D-SAMPLE]",$smpl_item['SAMPLE'],$str);
+			$str=str_replace("[D-ORIGIN]",$smpl_item['ORIGIN'],$str);
+			$str=str_replace("[D-LEGAL]",$smpl_item['LEGAL'],$str);
+			$str=str_replace("[TEMPR]",$smpl_item['TEMPR'],$str);
+			$str=str_replace("[SAMPLE]",$smpl_item['SAMPLE'],$str);
+			$str=str_replace("[ORIGIN]",$smpl_item['ORIGIN'],$str);
+			$str=str_replace("[LEGAL]",$smpl_item['LEGAL'],$str);
+		}
+
 	}
+
 
 	$str=str_replace("[D-TITLE]",'',$str);
 	$str=str_replace("[D-COMMENT]",'',$str);
@@ -3397,7 +3591,7 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 	$str=str_replace("[D-SAMPLE_DATE]",'',$str);
 	$str=str_replace("[D-SAMPLE_TIME]",'',$str);
 	$str=str_replace("[D-SAMPLE_MSG]",'',$str);
-	$str=str_replace("[D-SAMPLE_FIlE]",'',$str);
+	$str=str_replace("[D-SAMPLE_FILE]",'',$str);
 
 
 	$str=str_replace("[TITLE]",'',$str);
@@ -3484,7 +3678,7 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 	$str=str_replace("[SAMPLE_DATE]",'',$str);
 	$str=str_replace("[SAMPLE_TIME]",'',$str);
 	$str=str_replace("[SAMPLE_MSG]",'',$str);
-	$str=str_replace("[SAMPLE_FIlE]",'',$str);
+	$str=str_replace("[SAMPLE_FILE]",'',$str);
 
 
 	//「発注依頼」のSHIP TO
@@ -3898,7 +4092,6 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 	$post_sample_date = str_replace("'", "''", htmlspecialchars($_POST['SAMPLE_DATE']));
 	$post_sample_time = str_replace("'", "''", htmlspecialchars($_POST['SAMPLE_TIME']));
 	$post_sample_msg = str_replace("'", "''", htmlspecialchars($_POST['SAMPLE_MSG']));
-	$post_sample_file = str_replace("'", "''", htmlspecialchars($_POST['SAMPLE_FILE']));
 
 	//2回払いの発注依頼はPart0のデータが送られてくるが、Part1に発注をかけるため変数おきかえる。
 	//ここでは準備
@@ -4104,13 +4297,78 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 	echo "<!--h_div_id: $h_div_id-->";
 
 	// 商談
-	if($shodan_id != '' || $type=="サンプル送付依頼") {
-		// 他のステータスに変更するだけ
-
-		if($type=="発注依頼" && $h_m2_id!=""){
-			//「発注依頼」時に分割払いかどうかチェック
-			//一括払いだったら更新するが、分割払いだったら更新しない
-			if($m2_pay_type=="Once"){
+	if($type!="サンプル送付依頼"){
+		if($shodan_id != '') {
+			// 他のステータスに変更するだけ
+	
+			if($type=="発注依頼" && $h_m2_id!=""){
+				//「発注依頼」時に分割払いかどうかチェック
+				//一括払いだったら更新するが、分割払いだったら更新しない
+				if($m2_pay_type=="Once"){
+					$StrSQL = "
+					UPDATE DAT_SHODAN SET
+					EDITDATE = '".$date_stmp."',
+					STATUS_SORT = '".$status_sort."',
+					C_STATUS = '".$c_status."',
+					STATUS = '".$status."'
+					WHERE
+					ID = ".$shodan_id."
+					";
+					if (!(mysqli_query(ConnDB(),$StrSQL))) {
+						die;
+					}
+	
+				}else{
+					$StrSQL = "
+					UPDATE DAT_SHODAN_DIV SET
+					EDITDATE = '".$date_stmp."',
+					C_STATUS = '".$c_status."',
+					STATUS = '".$status."'
+					WHERE
+					DIV_ID = '".$h_div_id."'
+					";
+					//echo "<!--sql: $StrSQL-->";
+					if (!(mysqli_query(ConnDB(),$StrSQL))) {
+						die;
+					}
+				}
+	
+			}else if($type=="納品確認"){
+				//$param_div_idがDAT_SHODAN_DIVテーブル（分割支払い用のテーブル）にない場合、一括払いとして処理
+				//$param_div_id自体は、見積り送信以降のフェーズの管理のため、一括でも受け渡されるように変更
+				echo "<!--param_div_id at savedata:".$param_div_id."-->";
+				echo "<!--checkDIV_ID(param_div_id) at savedata:".checkDIV_ID($param_div_id)."-->";
+				if(checkDIV_ID($param_div_id)==""){
+				//if($param_div_id==""){
+					$StrSQL = "
+					UPDATE DAT_SHODAN SET
+					EDITDATE = '".$date_stmp."',
+					STATUS_SORT = '".$status_sort."',
+					C_STATUS = '".$c_status."',
+					STATUS = '".$status."'
+					WHERE
+					ID = ".$shodan_id."
+					";
+					if (!(mysqli_query(ConnDB(),$StrSQL))) {
+						die;
+					}
+	
+				}else{
+					$StrSQL = "
+					UPDATE DAT_SHODAN_DIV SET
+					EDITDATE = '".$date_stmp."',
+					C_STATUS = '".$c_status."',
+					STATUS = '".$status."'
+					WHERE
+					DIV_ID = '".$param_div_id."'
+					";
+					//echo "<!--sql: $StrSQL-->";
+					if (!(mysqli_query(ConnDB(),$StrSQL))) {
+						die;
+					}
+				}
+	
+			}else{
 				$StrSQL = "
 				UPDATE DAT_SHODAN SET
 				EDITDATE = '".$date_stmp."',
@@ -4123,174 +4381,111 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 				if (!(mysqli_query(ConnDB(),$StrSQL))) {
 					die;
 				}
-
-			}else{
-				$StrSQL = "
-				UPDATE DAT_SHODAN_DIV SET
-				EDITDATE = '".$date_stmp."',
-				C_STATUS = '".$c_status."',
-				STATUS = '".$status."'
-				WHERE
-				DIV_ID = '".$h_div_id."'
-				";
-				//echo "<!--sql: $StrSQL-->";
-				if (!(mysqli_query(ConnDB(),$StrSQL))) {
-					die;
-				}
 			}
-
-		}else if($type=="納品確認"){
-			//$param_div_idがDAT_SHODAN_DIVテーブル（分割支払い用のテーブル）にない場合、一括払いとして処理
-			//$param_div_id自体は、見積り送信以降のフェーズの管理のため、一括でも受け渡されるように変更
-			echo "<!--param_div_id at savedata:".$param_div_id."-->";
-			echo "<!--checkDIV_ID(param_div_id) at savedata:".checkDIV_ID($param_div_id)."-->";
-			if(checkDIV_ID($param_div_id)==""){
-			//if($param_div_id==""){
-				$StrSQL = "
-				UPDATE DAT_SHODAN SET
-				EDITDATE = '".$date_stmp."',
-				STATUS_SORT = '".$status_sort."',
-				C_STATUS = '".$c_status."',
-				STATUS = '".$status."'
-				WHERE
-				ID = ".$shodan_id."
-				";
-				if (!(mysqli_query(ConnDB(),$StrSQL))) {
-					die;
-				}
-
-			}else{
-				$StrSQL = "
-				UPDATE DAT_SHODAN_DIV SET
-				EDITDATE = '".$date_stmp."',
-				C_STATUS = '".$c_status."',
-				STATUS = '".$status."'
-				WHERE
-				DIV_ID = '".$param_div_id."'
-				";
-				//echo "<!--sql: $StrSQL-->";
-				if (!(mysqli_query(ConnDB(),$StrSQL))) {
-					die;
-				}
-			}
-
-		}else{
+		}
+		else if($key != '') {
+			// 商談IDを取得してステータス更新
+			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID=".$key.";";
+			//echo('<!--'.$StrSQL.'-->');
+			$rs=mysqli_query(ConnDB(),$StrSQL);
+			$item_filestatus = mysqli_fetch_assoc($rs);
+			$shodan_id = $item_filestatus['SHODAN_ID'];
+	
+			
+			// 基本情報を更新
 			$StrSQL = "
 			UPDATE DAT_SHODAN SET
-			EDITDATE = '".$date_stmp."',
-			STATUS_SORT = '".$status_sort."',
-			C_STATUS = '".$c_status."',
-			STATUS = '".$status."'
+				EDITDATE = '".$date_stmp."',
+				STATUS_SORT = '".$status_sort."',
+				C_STATUS = '".$c_status."',
+				STATUS = '".$status."'
 			WHERE
-			ID = ".$shodan_id."
+			  ID = ".$shodan_id."
 			";
+		
+			//以下の再見積り依頼のタイトルの更新は先方の要望により廃止
+			//
+			//if($type=="再見積り依頼"){
+			//	// 基本情報とタイトルを更新
+			//	$StrSQL = "
+			//	UPDATE DAT_SHODAN SET
+			//		EDITDATE = '".$date_stmp."',
+			//		STATUS_SORT = '".$status_sort."',
+			//		C_STATUS = '".$c_status."',
+			//		STATUS = '".$status."',
+			//		TITLE = '".$_POST['TITLE']."'
+			//	WHERE
+			//	  ID = ".$shodan_id."
+			//	";
+			//}else{
+			//	// 基本情報を更新
+			//	$StrSQL = "
+			//	UPDATE DAT_SHODAN SET
+			//		EDITDATE = '".$date_stmp."',
+			//		STATUS_SORT = '".$status_sort."',
+			//		C_STATUS = '".$c_status."',
+			//		STATUS = '".$status."'
+			//	WHERE
+			//	  ID = ".$shodan_id."
+			//	";
+			//}
+	
 			if (!(mysqli_query(ConnDB(),$StrSQL))) {
 				die;
 			}
 		}
-	}
-	else if($key != '') {
-		// 商談IDを取得してステータス更新
-		$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID=".$key.";";
-		//echo('<!--'.$StrSQL.'-->');
-		$rs=mysqli_query(ConnDB(),$StrSQL);
-		$item_filestatus = mysqli_fetch_assoc($rs);
-		$shodan_id = $item_filestatus['SHODAN_ID'];
-
-		
-		// 基本情報を更新
-		$StrSQL = "
-		UPDATE DAT_SHODAN SET
-			EDITDATE = '".$date_stmp."',
-			STATUS_SORT = '".$status_sort."',
-			C_STATUS = '".$c_status."',
-			STATUS = '".$status."'
-		WHERE
-		  ID = ".$shodan_id."
-		";
+		else {
+			// 新規
 	
-		//以下の再見積り依頼のタイトルの更新は先方の要望により廃止
-		//
-		//if($type=="再見積り依頼"){
-		//	// 基本情報とタイトルを更新
-		//	$StrSQL = "
-		//	UPDATE DAT_SHODAN SET
-		//		EDITDATE = '".$date_stmp."',
-		//		STATUS_SORT = '".$status_sort."',
-		//		C_STATUS = '".$c_status."',
-		//		STATUS = '".$status."',
-		//		TITLE = '".$_POST['TITLE']."'
-		//	WHERE
-		//	  ID = ".$shodan_id."
-		//	";
-		//}else{
-		//	// 基本情報を更新
-		//	$StrSQL = "
-		//	UPDATE DAT_SHODAN SET
-		//		EDITDATE = '".$date_stmp."',
-		//		STATUS_SORT = '".$status_sort."',
-		//		C_STATUS = '".$c_status."',
-		//		STATUS = '".$status."'
-		//	WHERE
-		//	  ID = ".$shodan_id."
-		//	";
-		//}
-
-		if (!(mysqli_query(ConnDB(),$StrSQL))) {
-			die;
+			$StrSQL = "
+				INSERT INTO DAT_SHODAN (
+					MID2,
+					TITLE,
+					MID1_LIST,
+					CATEGORY,
+					KEYWORD,
+					COMMENT,
+					FILE,
+					ANSWERDATE,
+					
+					NEWDATE,
+					EDITDATE,
+					
+					STATUS_SORT,
+					C_STATUS,
+					STATUS
+		
+				) VALUE (
+					'".$_SESSION['MID']."',
+					'".$post_title."',
+					'".$mid1_list."',
+					'".$word."',
+					'".$word2."',
+					'".$post_comment."',
+					'".$_POST['FILE']."',
+					'".$_POST['KIGEN']."',
+		
+					'".$date_stmp."',
+					'".$date_stmp."',
+					
+					'".$status_sort."',
+					'".$c_status."',
+					'".$status."'
+				)";
+		
+		
+				//echo "<!--StrSQL:".$StrSQL."-->";
+				if (!(mysqli_query(ConnDB(),$StrSQL))) {
+					var_dump("err:".$StrSQL);
+					die;
+				}
+				// 商談ID取得
+				//$StrSQL="SELECT ID FROM DAT_SHODAN order by ID desc;";
+				$StrSQL="SELECT ID FROM DAT_SHODAN where MID2='".$_SESSION['MID']."' and EDITDATE='".$date_stmp."' order by ID desc;";
+				$rs=mysqli_query(ConnDB(),$StrSQL);
+				$item = mysqli_fetch_assoc($rs);
+				$shodan_id = $item['ID'];
 		}
-	}
-	else {
-		// 新規
-
-	$StrSQL = "
-		INSERT INTO DAT_SHODAN (
-			MID2,
-			TITLE,
-			MID1_LIST,
-			CATEGORY,
-			KEYWORD,
-			COMMENT,
-			FILE,
-			ANSWERDATE,
-			
-			NEWDATE,
-			EDITDATE,
-			
-			STATUS_SORT,
-			C_STATUS,
-			STATUS
-
-		) VALUE (
-			'".$_SESSION['MID']."',
-			'".$post_title."',
-			'".$mid1_list."',
-			'".$word."',
-			'".$word2."',
-			'".$post_comment."',
-			'".$_POST['FILE']."',
-			'".$_POST['KIGEN']."',
-
-			'".$date_stmp."',
-			'".$date_stmp."',
-			
-			'".$status_sort."',
-			'".$c_status."',
-			'".$status."'
-		)";
-
-
-//echo "<!--StrSQL:".$StrSQL."-->";
-		if (!(mysqli_query(ConnDB(),$StrSQL))) {
-			var_dump("err:".$StrSQL);
-			die;
-		}
-		// 商談ID取得
-		//$StrSQL="SELECT ID FROM DAT_SHODAN order by ID desc;";
-		$StrSQL="SELECT ID FROM DAT_SHODAN where MID2='".$_SESSION['MID']."' and EDITDATE='".$date_stmp."' order by ID desc;";
-		$rs=mysqli_query(ConnDB(),$StrSQL);
-		$item = mysqli_fetch_assoc($rs);
-		$shodan_id = $item['ID'];
 	}
 
 	$StrSQL="SELECT * FROM DAT_SHODAN WHERE ID=".$shodan_id.";";
@@ -4365,7 +4560,7 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 				SAMPLE_DATE,
 				SAMPLE_TIME,
 				SAMPLE_MSG,
-				SAMPLE_FIlE,
+				SAMPLE_FILE,
 	
 				NEWDATE,
 				EDITDATE
@@ -4424,7 +4619,7 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 				'".$post_sample_date."',
 				'".$post_sample_time."',
 				'".$post_sample_msg."',
-				'".$post_sample_file."',
+				'".$_POST['SAMPLE_FILE']."',
 	
 				'".$date_stmp."',
 				'".$date_stmp."'
@@ -4491,7 +4686,7 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 				SAMPLE_DATE,
 				SAMPLE_TIME,
 				SAMPLE_MSG,
-				SAMPLE_FIlE,
+				SAMPLE_FILE,
 
 				NEWDATE,
 				EDITDATE
@@ -4550,7 +4745,7 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 				'".$post_sample_date."',
 				'".$post_sample_time."',
 				'".$post_sample_msg."',
-				'".$post_sample_file."',
+				'".$_POST['SAMPLE_FILE']."',
 	
 				'".$date_stmp."',
 				'".$date_stmp."'
@@ -4621,8 +4816,8 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
 
-	if($_POST['SAMPLE_FIlE'] != '') {
-		$save_filename=basename($_POST['SAMPLE_FIlE']);
+	if($_POST['SAMPLE_FILE'] != '') {
+		$save_filename=basename($_POST['SAMPLE_FILE']);
 		rename($file_dir . $save_filename, $file_dir . $key . '/' . $save_filename);
 	}
 
@@ -5095,6 +5290,16 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 		die;
 	}
 	*/
+
+
+
+	if($type=="納品確認"){
+		SendMail_v2($key);
+		SendMail_v2_2($key);
+		SendMail_v2_3($key);
+	} 
+
+
 
 	return $function_ret;
 } 

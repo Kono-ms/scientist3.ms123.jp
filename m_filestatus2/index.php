@@ -640,7 +640,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
   		      <div>' . $item['S2_MESSAGE'] . "
 	  		      <br><br>
     		      <div>
-	    		      <a href='javascript:window.parent.open_mcontact2(\"/m_contact2/?type=請求&mode=disp_frame&key=".$item['ID']."\");'>Confirm 請求書</a>
+	    		      <a href='javascript:window.parent.open_mcontact2(\"/m_contact2/?type=請求&mode=disp_frame&key=".$item['ID']."\");'>管理者から請求書が届きました。 請求書</a>
 	     	    	</div>
  	     	  	</div>
 	  	    </div>
@@ -648,14 +648,22 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 			case '完了':
 				$tmp .= '
- 		    	<div class="filestatus_content">
-						<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
-  		      <div>お振込みが確認できました
-          	<br>
-						この度はScientist3をご利用いただき誠にありがとうございました
- 	     	  	</div>
-	  	    </div>
+				<div class="filestatus_content">
+				<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				<div>
+				Scientist3のご利用をありがとうございました。
+				</div>
+				</div>
 				';
+				//$tmp .= '
+				//<div class="filestatus_content">
+				//<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				//<div>お振込みが確認できました
+				//<br>
+				//この度はScientist3をご利用いただき誠にありがとうございました
+				//</div>
+				//</div>
+				//';
 				break;
 			case 'キャンセル依頼':
 				$c_hatyu_str="";
@@ -904,13 +912,13 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			';
 			break;
 		case '完了':
-			$strMain .= '
-        <div class="filestatus_content">
-          <div>
-            <a href="/m_contact2/?mode=new&m1_id=' . $m1_item['ID'] . '" target="_top">' . $m1_item['M1_DVAL01'] . 'への新規のご相談はこちらから</a>
-          </div>
-        </div>
-			';
+			//$strMain .= '
+			//<div class="filestatus_content">
+			//<div>
+			//<a href="/m_contact2/?mode=new&m1_id=' . $m1_item['ID'] . '" target="_top">' . $m1_item['M1_DVAL01'] . 'への新規のご相談はこちらから</a>
+			//</div>
+			//</div>
+			//';
 			break;
 	}
 

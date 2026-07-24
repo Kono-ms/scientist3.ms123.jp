@@ -182,7 +182,22 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 	//echo('<!--'.$StrSQL.'-->');
 	$h_rs=mysqli_query(ConnDB(),$StrSQL);
 	$h_item = mysqli_fetch_assoc($h_rs);
-	
+
+
+	//請求書があるかどうか
+	$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE SHODAN_ID=".$_GET['etc02']." and STATUS = '請求' ";
+	$StrSQL.=" AND DIV_ID='".$h_item["DIV_ID"]."' ";
+	$StrSQL.=" AND S_STATUS='請求（サプライヤー）' ";
+	$StrSQL.=" order by ID desc;";
+	$s_rs=mysqli_query(ConnDB(),$StrSQL);
+	$s_item = mysqli_fetch_assoc($s_rs);
+	$s_item_num=mysqli_num_rows($s_rs);
+	//echo "<!--請求：'.$StrSQL.'-->";
+	//echo "<!--";
+	//var_dump($s_item);
+	//echo "-->";
+
+
 	//決済者承認フラグの確認
 	//決済者発注承認モードが必要かどうかの判断
 	//「決済者が登録してある」＆「KESSAI_SYONIN==KESSAI_SYONIN:あり」の場合に、
@@ -219,6 +234,19 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			//echo('<!--'.$StrSQL.'-->');
 			$h_rs=mysqli_query(ConnDB(),$StrSQL);
 			$h_item = mysqli_fetch_assoc($h_rs);
+
+			//請求書があるかどうか
+			$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE SHODAN_ID=".$_GET['etc02']." and STATUS = '請求' ";
+			$StrSQL.=" AND DIV_ID='".$h_item["DIV_ID"]."' ";
+			$StrSQL.=" AND S_STATUS='請求（サプライヤー）' ";
+			$StrSQL.=" order by ID desc;";
+			$s_rs=mysqli_query(ConnDB(),$StrSQL);
+			$s_item = mysqli_fetch_assoc($s_rs);
+			$s_item_num=mysqli_num_rows($s_rs);
+			//echo "<!--請求：'.$StrSQL.'-->";
+			//echo "<!--";
+			//var_dump($s_item);
+			//echo "-->";
 
 			$div_id=$item_div["DIV_ID"];
 			$tmp="";
@@ -280,11 +308,13 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 
 				case '納品確認':
+					if($s_item_num==0){
 						$sys_comment='('.$item_div["DIV_ID"].') ';
 						//$sys_comment.= '研究者が納品を承認しました。請求書の送付をお願いします。';
 						$sys_comment.= 'The researcher has approved the delivery. Please send the invoice.';
 						$sys_comment.= '
 						<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'&param_div_id='.$item_div["DIV_ID"].'" target="_blank">Send invoice	</a>';
+					}
 				break;
 				case '完了':
 					$sys_comment='('.$item_div["DIV_ID"].') ';
@@ -366,15 +396,27 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 			case '納品確認':
 				//$sys_comment = '研究者が納品を承認しました。請求書の送付をお願いします。';
-				$sys_comment = 'The researcher has approved the delivery. Please send the invoice.';
-				$sys_comment.= '
-						<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Send invoice	</a>';
+				if($s_item_num==0){
+					$sys_comment = 'The researcher has approved the delivery. Please send the invoice.';
+					$sys_comment.= '
+					<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Send invoice	</a>';
+				}
 				break;
 			/*
 			case '納品確認':
 				$sys_comment = $item_m2['M2_DVAL03'] . 'が納品を確認しました。';
 				break;
 			*/
+			case '請求':
+				if($s_item_num==0){
+					$sys_comment = '
+					<a href="/m_contact1/?type=請求&mode=new&shodan_id='.$_GET['etc02'].'" target="_blank">Send invoice	</a>';
+					$sys_comment .= '<br>The case has been closed. Thank you for using Scitentist3.';
+				}else{
+					$sys_comment = 'The case has been closed. Thank you for using Scitentist3.';
+				}
+				
+			break;
 			case '完了':
 				if($mitsu_origin_item["M2_PAY_TYPE"]=="Split"){
 					if(count($tmp)==3 && $tmp[0]!="" && $tmp[1]!="" && $tmp[2]!="" && $tmp[2]=="Part1"){

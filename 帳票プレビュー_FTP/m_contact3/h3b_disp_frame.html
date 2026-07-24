@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はサプライヤーと研究者を結ぶ新たなマッチングサービスです。サプライヤーが求める研究者と、研究者が求めるサプライヤー、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+  <link rel="stylesheet" href="/common/css/style-estimate.css" />
+  <script>
+    $(document).ready(function () {
+
+      $('header').hide();
+      $('.breadcrumb').hide();
+      $('footer').hide();
+
+      if (location.search.indexOf('frame=on') != -1) {
+        $('header').hide();
+        $('.breadcrumb').hide();
+        $('.c-head').hide();
+        $('footer').hide();
+        $('.wrap').css('padding', '0px');
+        $('.edit').css('padding', '0px');
+        $('.container').css('padding', '0px');
+        $('.form-box').css('padding', '3rem');
+      }
+
+      $('#close_btn').on('click', function () {
+        close_popup();
+      });
+    });
+    function close_popup() {
+      $('#mask_mcontact2', parent.document).hide();
+      $('#popup_mcontact2', parent.document).fadeOut();
+    }
+  </script>
+</head>
+
+<body>
+  <div class="sub" style="background-color:white;">
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">トップ</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
+          <div>
+            <a href="javascript:close_popup();">
+              閉じる
+            </a>
+          </div>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <!-- ▼ 帳票プレビュー：既存項目をすべて保持し、レイアウトのみ帳票化 -->
+          <div class="recipe">
+            <div class="recipe-close">
+              <a id="close_btn" class="recipe-close__btn" href="javascript:close_popup();">閉じる</a>
+            </div>
+            <div class="recipe-dl">
+              <a class="recipe-dl__btn" href="javascript:window.print();">ダウンロード</a>
+              <p class="recipe-dl__notes">※PDFで保存する場合は、印刷ダイアログで「PDFに保存」を選択してください。</p>
+            </div>
+
+            <div class="recipe-header recipe-header--R">
+              <h1 class="recipe-title">発注書</h1>
+              <figure class="recipe-logo"><img src="/common/images/logo.png" width="200" alt="Cosmo Bio" onerror="this.style.display='none'"></figure>
+            </div>
+
+            <div class="recipe-desc">
+              <div class="recipe-no">
+                <p class="recipe-no__project-name">案件名：[D-TITLE]</p>
+              </div>
+              <div class="recipe-date">
+                <table class="recipe-date__table">
+                  <tbody>
+                    <tr><th>サプライヤー</th><td>[M1_VIEW]</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 発行元／宛先（Excel期待値どおり） -->
+            <div class="recipe-address">
+              <table class="recipe-address__table">
+                <tbody>
+                  <tr class="recipe-address__item-ttl">
+                    <td>発行元</td>
+                    <td>宛先</td>
+                  </tr>
+                  <tr class="recipe-address__item-name">
+                    <td>コスモ・バイオ株式会社<br>〒135-0016 東京都江東区東陽2-2-20<br>TEL:03-5632-9615<br>Mail:info@scientist-cube.com</td>
+                    <td><span class="pdf-tbd">現在ハリボテ</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="recipe-items">
+              <table class="recipe-items-table">
+                <tbody>
+                  <tr class="recipe-items-table__item-header recipe-items-table__item-name">
+                    <td colspan="5">明細</td>
+                  </tr>
+                  <tr class="recipe-items-table__item-body">
+                    <td colspan="5"><span class="pdf-tbd">現在ハリボテ（明細・金額は発注書本体を参照）</span></td>
+                  </tr>
+                  <tr class="recipe-items-table__item-footer">
+                    <td colspan="5">メッセージ：<br>[D-H3B_MESSAGE]</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- ▲ 帳票プレビューここまで -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer.html-->
+  </div>
+</body>
+
+</html>

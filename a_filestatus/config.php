@@ -106,7 +106,7 @@
   $FieldName[99]="SAMPLE_DATE";
   $FieldName[100]="SAMPLE_TIME";
   $FieldName[101]="SAMPLE_MSG";
-  $FieldName[102]="SAMPLE_FIlE";
+  $FieldName[102]="SAMPLE_FILE";
 
 
   $FieldValue[0]="";

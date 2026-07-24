@@ -1080,6 +1080,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_K_OK");
 					$str=DispParamNone($str, "FORM_DONE1");
 					$str=DispParamNone($str, "FORM_DONE2");
+					$str=DispParamNone($str, "FORM_SMPL");
 					break;
 				case '見積り依頼':
 					$str=DispParamNone($str, "FORM_T");
@@ -1097,6 +1098,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_K_OK");
 					$str=DispParamNone($str, "FORM_DONE1");
 					$str=DispParamNone($str, "FORM_DONE2");
+					$str=DispParamNone($str, "FORM_SMPL");
 					break;
 				case '再見積り依頼':
 					$str=DispParamNone($str, "FORM_T");
@@ -1114,6 +1116,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_K_OK");
 					$str=DispParamNone($str, "FORM_DONE1");
 					$str=DispParamNone($str, "FORM_DONE2");
+					$str=DispParamNone($str, "FORM_SMPL");
 					break;
 				case '見積り送付':
 				case '運営手数料追加':
@@ -1132,6 +1135,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_K_OK");
 					$str=DispParamNone($str, "FORM_DONE1");
 					$str=DispParamNone($str, "FORM_DONE2");
+					$str=DispParamNone($str, "FORM_SMPL");
 					break;
 				case '発注依頼':
 					if( $kessai_num<=0 || $m2_item["KESSAI_SYONIN"]=="KESSAI_SYONIN:なし"){
@@ -1152,6 +1156,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParam($str, "FORM_K_OK");
 						$str=DispParamNone($str, "FORM_DONE1");
 						$str=DispParamNone($str, "FORM_DONE2");
+						$str=DispParamNone($str, "FORM_SMPL");
 					}else{
 						$str=DispParamNone($str, "FORM_T");
 						$str=DispParamNone($str, "FORM_M1");
@@ -1168,6 +1173,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_K_OK");
 						$str=DispParamNone($str, "FORM_DONE1");
 						$str=DispParamNone($str, "FORM_DONE2");
+						$str=DispParamNone($str, "FORM_SMPL");
 					}
 					break;
 				case '発注承認':
@@ -1188,6 +1194,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_K_OK");
 					$str=DispParamNone($str, "FORM_DONE1");
 					$str=DispParamNone($str, "FORM_DONE2");
+					$str=DispParamNone($str, "FORM_SMPL");
 					break;
 				case '決済者発注承認':
 					$str=DispParamNone($str, "FORM_T");
@@ -1205,6 +1212,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParam($str, "FORM_K_OK");
 					$str=DispParamNone($str, "FORM_DONE1");
 					$str=DispParamNone($str, "FORM_DONE2");
+					$str=DispParamNone($str, "FORM_SMPL");
 					break;
 
 
@@ -1227,6 +1235,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_K_OK");
 					$str=DispParamNone($str, "FORM_DONE1");
 					$str=DispParamNone($str, "FORM_DONE2");
+					$str=DispParamNone($str, "FORM_SMPL");
 					break;
 				case '納品確認':
 				case '受注承認(一括前払い)':
@@ -1274,6 +1283,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_K_OK");
 						$str=DispParamNone($str, "FORM_DONE1");
 						$str=DispParamNone($str, "FORM_DONE2");
+						$str=DispParamNone($str, "FORM_SMPL");
 					}else{
 						$str=DispParamNone($str, "FORM_T");
 						$str=DispParamNone($str, "FORM_M1");
@@ -1290,6 +1300,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_K_OK");
 						$str=DispParamNone($str, "FORM_DONE1");
 						$str=DispParamNone($str, "FORM_DONE2");
+						$str=DispParamNone($str, "FORM_SMPL");
 					}
 					break;
 				case '請求':
@@ -1325,6 +1336,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_K_OK");
 						$str=DispParamNone($str, "FORM_DONE1");
 						$str=DispParamNone($str, "FORM_DONE2");
+						$str=DispParamNone($str, "FORM_SMPL");
 					
 					}else if($FieldValue[88]=="請求（研究者）"){
 						$str=DispParamNone($str, "FORM_T");
@@ -1342,6 +1354,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_K_OK");
 						$str=DispParamNone($str, "FORM_DONE1");
 						$str=DispParamNone($str, "FORM_DONE2");
+						$str=DispParamNone($str, "FORM_SMPL");
 						//if($kanryo_num>=1){
 						//	$str=DispParam($str, "FORM_DONE2");
 						//}else{
@@ -1364,6 +1377,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 						$str=DispParamNone($str, "FORM_K_OK");
 						$str=DispParamNone($str, "FORM_DONE1");
 						$str=DispParamNone($str, "FORM_DONE2");
+						$str=DispParamNone($str, "FORM_SMPL");
 					}
 					break;
 				case 'サプライヤーキャンセル承認':
@@ -1382,6 +1396,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_K_OK");
 					$str=DispParamNone($str, "FORM_DONE1");
 					$str=DispParamNone($str, "FORM_DONE2");
+					$str=DispParamNone($str, "FORM_SMPL");
 					break;
 				case '完了':
 					$str=DispParamNone($str, "FORM_T");
@@ -1399,6 +1414,25 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_K_OK");
 					$str=DispParamNone($str, "FORM_DONE1");
 					$str=DispParam($str, "FORM_DONE2");
+					$str=DispParamNone($str, "FORM_SMPL");
+					break;
+				case 'サンプル送付依頼':
+					$str=DispParamNone($str, "FORM_T");
+					$str=DispParamNone($str, "FORM_M1");
+					$str=DispParamNone($str, "FORM_M1B");
+					$str=DispParamNone($str, "FORM_M2");
+					$str=DispParamNone($str, "FORM_H");
+					$str=DispParamNone($str, "FORM_H_DISPONLY");
+					$str=DispParamNone($str, "FORM_N");
+					$str=DispParamNone($str, "FORM_S1");
+					$str=DispParamNone($str, "FORM_S2");
+					$str=DispParamNone($str, "FORM_C_OK1");
+					$str=DispParamNone($str, "FORM_S1-SEKYUZUMI");
+					$str=DispParamNone($str, "FORM_S2-SEKYUZUMI");
+					$str=DispParamNone($str, "FORM_K_OK");
+					$str=DispParamNone($str, "FORM_DONE1");
+					$str=DispParamNone($str, "FORM_DONE2");
+					$str=DispParam($str, "FORM_SMPL");
 					break;
 				default:
 					$str=DispParamNone($str, "FORM_T");
@@ -1416,6 +1450,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$previ
 					$str=DispParamNone($str, "FORM_K_OK");
 					$str=DispParamNone($str, "FORM_DONE1");
 					$str=DispParamNone($str, "FORM_DONE2");
+					$str=DispParamNone($str, "FORM_SMPL");
 					break;
 			}
 		}

@@ -288,6 +288,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				case '受注承認':
 					$sys_comment='('.$item_div["DIV_ID"].') ';
 					$sys_comment.='受注が承認されました。サプライヤーからの納品をお待ちください。
+					<a href="/m_contact2/?type=サンプル送付依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_blank">サンプル送信依頼フォーム</>
 					';
 				break;
 				case '受注承認(前払い)':
@@ -435,6 +436,7 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 	
 			case '受注承認':
 				$sys_comment = '受注が承認されました。サプライヤーからの納品をお待ちください。
+				<a href="/m_contact2/?type=サンプル送付依頼&mode=new&shodan_id='.$_GET['etc02'].'&m1_mid='.$mid1.'" target="_blank">サンプル送信依頼フォーム</>
 				';
 				break;
 

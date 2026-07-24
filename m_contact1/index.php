@@ -4812,6 +4812,12 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 					</a>';
 				}
 
+				//見積り送付にファイルを添付するように仕様変更
+				if($_POST['M2_FILE1'] != ''){
+					$comment .= '<br><a href="/a_filestatus/data/'.$key.'/'.$_POST['M2_FILE1'].'" download>'.$_POST['M2_FILE1'].'</a>';
+				}
+
+
 //				if($item_name!="" && $part!="Part0"){
 //					//マイルストーン払いの場合に、Item名も表示。
 //					//Part0以外にはRevise Quotationボタンを非表示
@@ -5210,6 +5216,11 @@ function SaveData($type,$mode,$key,$shodan_id,$m1_list,$mid1_list,$m2,$word,$wor
 						<a href="javascript:window.parent.open_mcontact2(\'\'/m_contact1/?type=見積り送付&mode=disp_frame&key='.$key.'\'\');">
 							'.$m2_quote_no.' ('.$SCNo_str.') Version'.$m2_version.' '.$disp_part.'
 						</a>';
+					}
+
+					//見積り送付にファイルを添付するように仕様変更
+					if($_POST['M2_FILE1'] != ''){
+						$comment .= '<br><a href="/a_filestatus/data/'.$key.'/'.$_POST['M2_FILE1'].'" download>'.$_POST['M2_FILE1'].'</a>';
 					}
 				}
 

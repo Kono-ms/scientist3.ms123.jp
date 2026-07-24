@@ -1,0 +1,581 @@
+
+body {
+  background: white;
+  margin: 0;
+  padding: 0;
+}
+.estimate {
+  background: #fff;
+  font-size: 16px;
+  padding-bottom: 128px;
+}
+@media print {
+  .estimate {
+    padding-bottom: 0;
+  }
+}
+
+/* wrapper */
+.recipe {
+  --recipe-fs: 24px;
+  border: solid 3px #000;
+  font-size: 1em;
+  font-size: var(--recipe-fs);
+  font-family: serif;
+  line-height: 1.75;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 2em;
+}
+@media print {
+  .recipe {
+    --recipe-fs: 20px;
+    border: none;
+    font-size: var(--recipe-fs);
+  }
+}
+
+/* download */
+.recipe-close {
+  width: calc( var(--recipe-fs) * 6.5 );
+  position: absolute;
+  left: calc( var(--recipe-fs) * -7.5 );
+  top: calc( var(--recipe-fs) * 1 );
+  z-index: 1;
+}
+.recipe-send {
+  width: calc( var(--recipe-fs) * 6.5 );
+  position: absolute;
+  left: calc( var(--recipe-fs) * -7.5 );
+  top: calc( var(--recipe-fs) * ( 1 + 2.5 ) );
+  z-index: 1;
+}
+.recipe-dl {
+  width: calc( var(--recipe-fs) * 6.5 );
+  position: absolute;
+  left: calc( var(--recipe-fs) * -7.5 );
+  top: calc( var(--recipe-fs) * ( 1 + 2.5 ) );
+  z-index: 1;
+}
+.recipe-send + .recipe-dl {
+  width: calc( var(--recipe-fs) * 6.5 );
+  position: absolute;
+  left: calc( var(--recipe-fs) * -7.5 );
+  top: calc( var(--recipe-fs) * ( 2.5 + 1 + 2.5 ) );
+  z-index: 1;
+}
+
+.recipe-close__btn {
+  display: block;
+  border-radius: 6px;
+  border: solid 1px #ccc;
+  background: #fff;
+  color: #000;
+  font-family: sans-serif;
+  font-size: 0.75em;
+  font-feature-settings: 'palt';
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  text-align: center;
+  padding: 1em 0;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.recipe-close__btn:hover,
+.recipe-close__btn:focus {
+  border: solid 1px #ccc;
+  background: #fff;
+  color: #000;
+  opacity: 0.5;
+}
+
+.recipe-send__btn {
+  display: block;
+  border-radius: 6px;
+  border: solid 1px #cb000b;
+  background: #fff;
+  color: #cb000b;
+  font-family: sans-serif;
+  font-size: 0.75em;
+  font-feature-settings: 'palt';
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  text-align: center;
+  padding: 1em 0;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.recipe-send__btn:hover,
+.recipe-send__btn:focus {
+  border: solid 1px #cb000b;
+  background: #fff;
+  color: #cb000b;
+  opacity: 0.5;
+}
+
+.recipe-dl__btn {
+  display: block;
+  border-radius: 6px;
+  border: solid 1px #cb000b;
+  background: #cb000b;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 0.75em;
+  font-feature-settings: 'palt';
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  text-align: center;
+  padding: 1em 0;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+.recipe-dl__btn:hover,
+.recipe-dl__btn:focus {
+  border: solid 1px #cb000b;
+  background: #cb000b;
+  color: #fff;
+  opacity: 0.6;
+}
+
+.recipe-dl__notes {
+  color: #cb000b;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: sans-serif;
+  word-break: break-all;
+  line-height: 1.666;
+  max-width: calc( var(--recipe-fs) * 6.5 );
+  margin-top: calc( var(--recipe-fs) * 1 );
+}
+
+
+/* download */
+.estimate .recipe-close,
+.estimate .recipe-send,
+.estimate .recipe-dl {
+  border-radius: 6px;
+  background: #fff;
+  width: calc( var(--recipe-fs) * 6.5 );
+  position: fixed;
+  top: auto;
+  right: auto;
+  bottom: 2em;
+  left: 2em;
+  z-index: 1;
+}
+.estimate .recipe-close {
+  left: 2em;
+}
+.estimate .recipe-send {
+  left: calc( var(--recipe-fs) * (1.5 + 6.5 + 1) );
+}
+.estimate .recipe-dl {
+  left: calc( var(--recipe-fs) * (1.5 + 6.5 + 1) );
+}
+.estimate .recipe-send + .recipe-dl {
+  left: calc( var(--recipe-fs) * (2 + 6.5 + 1 + 6.5) );
+}
+
+.estimate .recipe-close__btn,
+.estimate .recipe-send__btn,
+.estimate .recipe-dl__btn {
+  box-shadow:
+    0 0 12px 0 rgba(255,255,255,1),
+    0 0 12px 0 rgba(255,255,255,1),
+    0 0 12px 0 rgba(255,255,255,1);
+}
+
+.estimate .recipe-dl__btn + .recipe-dl__notes {
+  background: rgba(255,255,255,0.9);
+  line-height: 1.333;
+  max-width: none;
+  width: calc( var(--recipe-fs) * 12 );
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: calc( var(--recipe-fs) * (6.5 + 1) );
+  z-index: 1;
+  transform: translate(0,-50%);
+}
+
+
+@media print {
+  .estimate .recipe-close,
+  .recipe-close {
+    display: none;
+  }
+  .estimate .recipe-send,
+  .recipe-send {
+    display: none;
+  }
+  .estimate .recipe-dl,
+  .recipe-dl {
+    display: none;
+  }
+}
+
+/* header */
+.recipe-header {
+  border-bottom: solid 2px #e69138;
+  margin: 0 0 1em;
+  padding: 0 0 1em;
+  position: relative;
+}
+.recipe-header.recipe-header--CB,
+.recipe-preview-type-CB ~ .recipe .recipe-header {
+  border-bottom: solid 2px #e69138;
+}
+.recipe-header.recipe-header--R,
+.recipe-preview-type-R ~ .recipe .recipe-header {
+  border-bottom: solid 2px #aa2c27;
+}
+
+/* h1 */
+.recipe-title {
+  font-size: 1.5em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+}
+.recipe-logo {
+  width: 176px;
+  position: absolute;
+  left: 0;
+  bottom: 1em;
+}
+.recipe-logo img {
+  width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+
+.recipe-desc {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  line-height: 1.5;
+  margin: 0 0 1em;
+}
+
+.recipe-no {
+  font-size: 0.625em;
+  font-weight: 500;
+}
+.recipe-no__scno {
+  font-size: 1em;
+  font-weight: inherit;
+  white-space: nowrap;
+}
+.recipe-no__quote {
+  font-size: 1em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.recipe-date {
+  font-size: 0.625em;
+  font-weight: inherit;
+}
+.recipe-date__table {
+  font-size: 1em;
+  font-weight: inherit;
+  white-space: nowrap;
+}
+.recipe-date__table th,
+.recipe-date__table td {
+  border: none;
+  font-size: inherit;
+  font-weight: inherit;
+  white-space: nowrap;
+  text-align: left;
+  padding: 0;
+  height: auto;
+}
+.recipe-date__table th {
+  padding-right: 1em;
+}
+
+.recipe-address {
+  line-height: 1.5;
+}
+.recipe-address__table {
+  border-collapse: separate;
+  border-spacing: 2em 0;
+  font-size: 0.625em;
+  font-weight: inherit;
+  table-layout: fixed;
+  width: 100%;
+}
+.recipe-address__table th,
+.recipe-address__table td {
+  border: none;
+  font-size: inherit;
+  font-weight: inherit;
+  text-align: left;
+  vertical-align: top;
+  padding: 0;
+  height: auto;
+}
+.recipe-address__item {
+  font-size: 0.625em;
+  font-weight: inherit;
+  flex: 1 1;
+}
+.recipe-address__item-ttl {}
+
+.recipe-address__item-info th,
+.recipe-address__item-info td {
+  /*border-bottom: solid 2px #000;*/
+}
+.recipe-address__item-info+.recipe-address__item-ttl th,
+.recipe-address__item-info+.recipe-address__item-ttl td,
+.recipe-address__item-name+.recipe-address__item-ttl th,
+.recipe-address__item-name+.recipe-address__item-ttl td {
+  border-top: 2px solid #ccc;
+  padding-top: 1em;
+}
+.recipe-address__item-name th,
+.recipe-address__item-name td {
+  border-bottom: solid 2px #000;
+}
+.recipe-address__item-name th:nth-child(1),
+.recipe-address__item-name td:nth-child(1) {
+  border-bottom: solid 2px #aa2c27;
+}
+.recipe-address__item-name th:nth-child(2),
+.recipe-address__item-name td:nth-child(2) {
+  border-bottom: solid 2px #e69138;
+}
+.recipe-address__item-info+.recipe-address__item-ttl.item--no-border th,
+.recipe-address__item-info+.recipe-address__item-ttl.item--no-border td,
+.recipe-address__item-name+.recipe-address__item-ttl.item--no-border th,
+.recipe-address__item-name+.recipe-address__item-ttl.item--no-border td {
+  border-top: none;
+  padding-top: 0;
+}
+
+
+/* main items table */
+.recipe-items {}
+*+.recipe-items {
+  margin-top: 1em;
+}
+
+.recipe-items__text {
+  font-size: calc( var(--recipe-fs) * 0.75 );
+}
+*+.recipe-items__text {
+  margin-top: calc( var(--recipe-fs) * 1 );
+}
+
+.recipe-items-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  table-layout: fixed;
+  table-layout: auto;
+}
+*+.recipe-items-table {
+  margin-top: 1em;
+}
+.recipe-items__text+.recipe-items-table {
+  margin-top: calc( var(--recipe-fs) * 0.5 );
+}
+
+.recipe-items-table th,
+.recipe-items-table td {
+  border-style: solid;
+  border-width: 1px;
+  font-size: 0.75em;
+  line-height: 1;
+  padding: 0.5em;
+  height: auto;
+}
+
+.recipe-items-table__item-header {}
+.recipe-items-table__item-header>th {border-top-width: 2px;}
+.recipe-items-table__item-header>td {border-top-width: 2px;}
+.recipe-items-table__item-header>th:first-child {border-left-width: 2px;}
+.recipe-items-table__item-header>td:first-child {border-left-width: 2px;}
+.recipe-items-table__item-header>th:last-child {border-right-width: 2px;}
+.recipe-items-table__item-header>td:last-child {border-right-width: 2px;}
+
+.recipe-items-table__item-name {}
+.recipe-items-table__item-name>th {border: none;}
+.recipe-items-table__item-name>td {border: none;}
+.recipe-items-table__item-name>th:first-child {border-width: 0;}
+.recipe-items-table__item-name>td:first-child {border-width: 0;}
+.recipe-items-table__item-name>th:last-child {border-width: 0;}
+.recipe-items-table__item-name>td:last-child {border-width: 0;}
+
+.recipe-items-table__item-body {}
+.recipe-items-table__item-body>th:first-child {border-left-width: 2px;}
+.recipe-items-table__item-body>td:first-child {border-left-width: 2px;}
+.recipe-items-table__item-body>th:last-child {border-right-width: 2px;}
+.recipe-items-table__item-body>td:last-child {border-right-width: 2px;}
+
+.recipe-items-table__item-footer {}
+.recipe-items-table__item-footer>th {border-bottom-width: 2px;}
+.recipe-items-table__item-footer>td {border-bottom-width: 2px;}
+.recipe-items-table__item-footer>th:first-child {border-left-width: 2px;}
+.recipe-items-table__item-footer>td:first-child {border-left-width: 2px;}
+.recipe-items-table__item-footer>th:last-child {border-right-width: 2px;}
+.recipe-items-table__item-footer>td:last-child {border-right-width: 2px;}
+
+
+
+/* details */
+.recipe-details {
+  padding-top: 16px;
+  width: 100%;
+}
+.recipe-details p {
+  width: 100%;
+  border-bottom: 1px #ccc solid;
+}
+p.recipe-details--title {
+  border-bottom: #000 3px double;
+  font-size: 0.875em;
+  font-weight: 500;
+}
+.recipe-details--tax {
+  border-bottom: solid 1px;
+  font-size: 0.875em;
+  font-weight: 500;
+  margin-top: 1em;
+}
+.recipe-details--payment {
+  border-bottom: solid 2px;
+  font-size: 0.875em;
+  font-weight: 500;
+  margin-top: 1em;
+}
+
+.recipe-details__table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+*+.recipe-details__table {
+  margin-top: 1em;
+}
+.recipe-details__table th,
+.recipe-details__table td {
+  border: solid 1px;
+  font-size: 0.75em;
+  line-height: 1;
+  padding: 0.5em;
+  height: auto;
+}
+.recipe-details__table th:first-child {
+  text-align: left;
+  width: 20%;
+}
+.recipe-details__table th:first-child+td:last-child {
+  text-align: right;
+}
+
+/* 見積書 右下の透かしロゴ（透かしを置く帳票のみに限定） */
+.recipe-watermark-area {
+  position: relative;
+  min-height: calc( var(--recipe-fs) * 7 );
+}
+.recipe-watermark {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: calc( var(--recipe-fs) * 9 );
+  max-width: 40%;
+  height: auto;
+  opacity: 0.2;
+  z-index: 0;
+  pointer-events: none;
+}
+@media print {
+  .recipe-watermark {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* レイアウト確認用の仮表示（ハリボテ）マーカー ※システム接続後に削除する */
+.pdf-tbd-banner {
+  background: #ffe08a;
+  color: #7a4a00;
+  border: 2px dashed #d08700;
+  border-radius: 6px;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  padding: 10px 14px;
+  margin: 0 0 1.2em;
+}
+.pdf-tbd {
+  background: #fff3b0;
+  color: #a15c00;
+  font-family: sans-serif;
+  font-size: 0.7em;
+  font-weight: 700;
+  padding: 0 4px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+@media print {
+  .pdf-tbd-banner,
+  .pdf-tbd {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* 印刷（PDF出力）用のページ設定と改ページ制御 */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+@media print {
+  /* 見出し・表の途中で改ページさせない */
+  .recipe-header {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+  .recipe-desc,
+  .recipe-address {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .recipe-items-table tr,
+  .recipe-details__table {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
+/* 既存(formset形式)の明細を帳票プレビュー内で見やすく整える（データは既存のまま活かす） */
+.recipe .recipe-detail-list { margin: 0.5em 0 0; }
+.recipe .recipe-detail-list .formset__item {
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+  border-bottom: 1px solid #ddd;
+  padding: 0.35em 0;
+  font-size: 0.7em;
+}
+.recipe .recipe-detail-list .formset__item--head,
+.recipe .recipe-detail-list .formset__item-head {
+  border-bottom: 2px solid #000;
+  font-weight: 700;
+}
+.recipe .recipe-detail-list .formset__ttl,
+.recipe .recipe-detail-list .formset__ttl2 { min-width: 9em; font-weight: 600; color: #555; }
+.recipe .recipe-detail-list .formset__input { flex: 1 1 auto; }
+@media print { .recipe .recipe-detail-list .formset__item { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }

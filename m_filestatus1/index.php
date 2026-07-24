@@ -582,18 +582,37 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				break;
 			*/
 			case '請求':
+				$tmp .= "
+				<div class='filestatus_content'>
+				<div class='filestatus_datetime'>" . substr($item['NEWDATE'], 0, 16) . "</div>
+				<div>An Invoice has been issued to the administrator (cosmo bio inc.).
+				<br><br>
+				<div>
+				<a href='javascript:window.parent.open_mcontact2(\"/m_contact1/?type=請求&mode=disp_frame&key=".$item['ID']."\");'>Confirm Invoice</a>
+				</div>
+				</div>
+				</div>
+				";
+				break;
 			case '完了':
 				$tmp .= "
- 		    	<div class='filestatus_content'>
-						<div class='filestatus_datetime'>" . substr($item['NEWDATE'], 0, 16) . "</div>
-  		      <div>An Invoice has been issued to the administrator (cosmo bio inc.).
-	  		      <br><br>
-    		      <div>
-	    		      <a href='javascript:window.parent.open_mcontact2(\"/m_contact1/?type=請求&mode=disp_frame&key=".$item['ID']."\");'>Confirm Invoice</a>
-	     	    	</div>
- 	     	  	</div>
-	  	    </div>
+				<div class='filestatus_content'>
+				<div class='filestatus_datetime'>" . substr($item['NEWDATE'], 0, 16) . "</div>
+				<div>Transaction is completed.
+				</div>
+				</div>
 				";
+				//$tmp .= "
+				//<div class='filestatus_content'>
+				//<div class='filestatus_datetime'>" . substr($item['NEWDATE'], 0, 16) . "</div>
+				//<div>An Invoice has been issued to the administrator (cosmo bio inc.).
+				//<br><br>
+				//<div>
+				//<a href='javascript:window.parent.open_mcontact2(\"/m_contact1/?type=請求&mode=disp_frame&key=".$item['ID']."\");'>Confirm Invoice</a>
+				//</div>
+				//</div>
+				//</div>
+				//";
 				$seikyu_flg = true;
 				break;
 			case 'キャンセル依頼':

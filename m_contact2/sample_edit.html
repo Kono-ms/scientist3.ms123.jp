@@ -92,6 +92,11 @@
             <input type="hidden" name="m1_mid" value="[m1_mid]">
             <input type="hidden" name="param_div_id" value="[param_div_id]">
 
+            <input type="hidden" name="TEMPR" value="[TEMPR]">
+              <input type="hidden" name="SAMPLE" value="[SAMPLE]">
+              <input type="hidden" name="ORIGIN" value="[ORIGIN]">
+              <input type="hidden" name="LEGAL" value="[LEGAL]">
+
             <div class="formset"><!--
               <div class="formset__item formset__item--head">
                 <div class="formset__ttl"><strong>内容</strong></div>
@@ -103,6 +108,24 @@
                   [D-TITLE]
                 </div>
               </div>
+
+              <div class="formset__item">
+                <div class="formset__ttl"><span>輸送温度</span></div>
+                <div class="formset__input">[D-TEMPR]</div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span>サンプルの種類</span></div>
+                <div class="formset__input">[D-SAMPLE]</div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span>由来</span></div>
+                <div class="formset__input">[D-ORIGIN]</div>
+              </div>
+              <div class="formset__item">
+                <div class="formset__ttl"><span>法規制</span></div>
+                <div class="formset__input">[D-LEGAL]</div>
+              </div>
+
               <div class="formset__item">
                 <div class="formset__ttl">保管温度</div>
                 <div class="formset__input">
@@ -142,8 +165,8 @@
               <div class="formset__item">
                 <div class="formset__ttl">添付ファイル</div>
                 <div class="formset__input">
-                  <input class="txt_w35p" type="file" name="EP_SAMPLE_FIlE" value="[D-SAMPLE_FIlE]" placeholder="" />
-                  <input type="hidden" name="SAMPLE_FIlE" value="[D-SAMPLE_FIlE]" />
+                  <input class="txt_w35p" type="file" name="EP_SAMPLE_FILE" value="[D-SAMPLE_FILE]" placeholder="" />
+                  <input type="hidden" name="SAMPLE_FILE" value="[D-SAMPLE_FILE]" />
                 </div>
               </div>
               <!--

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>[PAGE_TITLE]｜Scientist3</title>
+  <meta name="description"
+    content="[PAGE_TITLE]のページ。Scientist3はSupplierとResearchersを結ぶ新たなマッチングサービスです。Supplierが求めるResearchersと、Researchersが求めるSupplier、双方の希望条件を基にマッチング率を算出することでご自身に合った相手を見つけることをサポートします。" />
+  <!--template=/common/template/head.html-->
+  <link rel="stylesheet" href="/common/css/style-estimate.css" />
+  <script>
+    $(document).ready(function () {
+
+      $('header').hide();
+      $('.breadcrumb').hide();
+      $('footer').hide();
+
+      if (location.search.indexOf('frame=on') != -1) {
+        $('header').hide();
+        $('.breadcrumb').hide();
+        $('.c-head').hide();
+        $('footer').hide();
+        $('.wrap').css('padding', '0px');
+        $('.edit').css('padding', '0px');
+        $('.container').css('padding', '0px');
+        $('.form-box').css('padding', '3rem');
+      }
+
+      $('#close_btn').on('click', function () {
+        close_popup();
+      });
+    });
+    function close_popup() {
+      $('#mask_mcontact2', parent.document).hide();
+      $('#popup_mcontact2', parent.document).fadeOut();
+    }
+  </script>
+</head>
+
+<body>
+  <div class="sub" style="background-color:white;">
+    <!--template=/common/template/header.html-->
+
+    <!-- 以上共通 -->
+    <div class="breadcrumb">
+      <div class="l-container">
+        <ol class="breadcrumb__list">
+          <li class="breadcrumb__item"><a href="/">Top</a></li>
+          <li class="breadcrumb__item">[PAGE_TITLE]</li>
+        </ol>
+      </div>
+    </div>
+    <section class="contract">
+      <div class="l-container">
+        <div class="c-head">
+          <h1 class="c-head__ttl">[PAGE_TITLE]</h1>
+          <div>
+            <a href="javascript:close_popup();">
+              Close
+            </a>
+          </div>
+        </div>
+        [ERR-S]
+        <div class="error_01">
+          <div class="head_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+          <div class="body">
+            <p class="mLft10 mBtm05"><img src="/html_a/img/txt_04.jpg" width="203" height="28" alt="入力内容に不備があります。" />
+            </p>
+            <p class="mLft10">[ERRMSG]</p>
+          </div>
+          <div class="foot_01">
+            <div class="right">
+              <div class="box">&nbsp;</div>
+            </div>
+            <div class="left">&nbsp;</div>
+          </div>
+        </div>
+        [ERR-E]
+        <div class="form-box">
+          <!-- ▼ 帳票プレビュー：既存項目（Deliverableファイル群・Message）をすべて保持し、レイアウトのみ帳票化 -->
+          <div class="recipe">
+            <div class="recipe-close">
+              <a id="close_btn" class="recipe-close__btn" href="javascript:close_popup();">Close</a>
+            </div>
+            <div class="recipe-dl">
+              <a class="recipe-dl__btn" href="javascript:window.print();">Download</a>
+              <p class="recipe-dl__notes">To save as PDF, choose "Save as PDF" in the print dialog.</p>
+            </div>
+
+            <div class="recipe-header recipe-header--R">
+              <h1 class="recipe-title">Delivery Note</h1>
+              <figure class="recipe-logo"><img src="/common/images/logo.png" width="200" alt="Cosmo Bio" onerror="this.style.display='none'"></figure>
+            </div>
+
+            <div class="recipe-desc">
+              <div class="recipe-no">
+                <p class="recipe-no__project-name">Project Name：[D-TITLE]</p>
+              </div>
+              <div class="recipe-date">
+                <table class="recipe-date__table">
+                  <tbody>
+                    <tr><th>Supplier</th><td>[M1_VIEW]</td></tr>
+                    <tr><th>Date</th><td>[D-NOHIN_NEWDATE]</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 発行元／宛先（Excel期待値どおり） -->
+            <div class="recipe-address">
+              <table class="recipe-address__table">
+                <tbody>
+                  <tr class="recipe-address__item-ttl">
+                    <td>From</td>
+                    <td>To</td>
+                  </tr>
+                  <tr class="recipe-address__item-name">
+                    <td>Cosmo Bio Co Ltd<br>Toyo Ekimae Bldg. 2-20, Toyo 2-chome,<br>Koto-ku, Tokyo 135-0016, Japan<br>Tel: (81)3-5632-9615</td>
+                    <td><span class="pdf-tbd">現在ハリボテ（Researcher Company Name）</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="recipe-items">
+              <p class="recipe-items__text">We hereby deliver the following.</p>
+              <table class="recipe-items-table">
+                <tbody>
+                  <tr class="recipe-items-table__item-header recipe-items-table__item-name">
+                    <td colspan="5">Deliverables<span class="formset__must">Mandatory</span></td>
+                  </tr>
+                  <tr class="recipe-items-table__item-body">
+                    <td colspan="5">
+                      <ul>
+                        <li><a href="/a_filestatus/data/[KEY]/[D-N_FILE]" download>[D-N_FILE]</a></li>
+                        <li><a href="/a_filestatus/data/[KEY]/[D-N_FILE2]" download>[D-N_FILE2]</a></li>
+                        <li><a href="/a_filestatus/data/[KEY]/[D-N_FILE3]" download>[D-N_FILE3]</a></li>
+                        <li><a href="/a_filestatus/data/[KEY]/[D-N_FILE4]" download>[D-N_FILE4]</a></li>
+                        <li><a href="/a_filestatus/data/[KEY]/[D-N_FILE5]" download>[D-N_FILE5]</a></li>
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr class="recipe-items-table__item-footer">
+                    <td colspan="5">Message：<br>[D-N_MESSAGE]</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="text-align:right;margin:1em 0 0;">以上</p>
+          </div>
+          <!-- ▲ 帳票プレビューここまで -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 以下共通 -->
+
+    <!--template=/common/template/footer_en.html-->
+  </div>
+</body>
+
+</html>
