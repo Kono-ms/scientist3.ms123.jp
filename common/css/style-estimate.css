@@ -579,3 +579,6 @@ p.recipe-details--title {
 .recipe .recipe-detail-list .formset__ttl2 { min-width: 9em; font-weight: 600; color: #555; }
 .recipe .recipe-detail-list .formset__input { flex: 1 1 auto; }
 @media print { .recipe .recipe-detail-list .formset__item { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+
+/* 帳票テーブルの見出しセルは左揃えに統一（ブラウザ既定の中央寄せを上書き） */
+.recipe .recipe-items-table th { text-align: left; }
