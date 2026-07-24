@@ -198,7 +198,7 @@
 
             <!-- 明細：見積帳票と同じ「品目ごとの複数行ブロック」。既存IDを<span>に載せJSが流し込む -->
             <div class="recipe-items">
-              <p class="recipe-items__text">下記の通り、御発注申し上げます。</p>
+              <p class="recipe-items__text">下記の通り、発注いたします。</p>
               <table class="recipe-items-table">
                 <tbody>
                   <!-- 1品目め（サーバ/JSが流し込み） -->
@@ -227,9 +227,7 @@
 
               <table class="recipe-items-table">
                 <tbody>
-                  <tr class="recipe-items-table__item-footer">
-                    <td colspan="5">Special discount：<span id="M2_SPECIAL_DISCOUNT">[D-M2_SPECIAL_DISCOUNT]</span></td>
-                  </tr>
+                  <tr style="display:none;"><td colspan="5"><span id="M2_SPECIAL_DISCOUNT">[D-M2_SPECIAL_DISCOUNT]</span></td></tr>
                   <tr class="recipe-items-table__item-footer">
                     <td colspan="5">特記事項：<br><span id="M2_SPECIAL_NOTE">[D-M2_SPECIAL_NOTE]</span></td>
                   </tr>
