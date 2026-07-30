@@ -2029,29 +2029,24 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 			//$str=str_replace("[D-M1_M2_ID]",$item_filestatus2['M2_ID'] . '（バージョン' . $item_filestatus2['M2_VERSION'] . ', '.$disp_part.'）',$str);
 
 			$detail_template = '
-            <div class="formset__item formset__item-head">
-              <div class="formset__ttl2"><strong>Details XXX</strong></div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Item #</div>
-              <div class="formset__input">[D-M2_DETAIL_ITEM_XXX]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">内容</div>
-              <div class="formset__input">[D-M2_DETAIL_DESCRIPTION_XXX]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Price</div>
-              <div class="formset__input">[D-M2_DETAIL_PRICE_ORIGIN_XXX]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Special discount</div>
-              <div class="formset__input">[D-M2_DETAIL_SP_DISCOUNT_XXX]</div>
-            </div>
-            <div class="formset__item">
-              <div class="formset__ttl">Note</div>
-              <div class="formset__input">[D-M2_DETAIL_NOTE_XXX]</div>
-            </div>
+            <tr class="recipe-items-table__item-header recipe-items-table__item-name">
+              <td colspan="5">品番：[D-M2_DETAIL_ITEM_XXX]</td>
+            </tr>
+            <tr class="recipe-items-table__item-header">
+              <td colspan="2">数量: <span class="pdf-tbd">現在ハリボテ</span></td>
+              <td>単価: <span class="pdf-tbd">現在ハリボテ</span></td>
+              <td>値引き: [D-M2_DETAIL_SP_DISCOUNT_XXX]</td>
+              <td>合計: [D-M2_DETAIL_PRICE_ORIGIN_XXX]</td>
+            </tr>
+            <tr class="recipe-items-table__item-body">
+              <td colspan="5">詳細:<br>[D-M2_DETAIL_DESCRIPTION_XXX]</td>
+            </tr>
+            <tr class="recipe-items-table__item-body">
+              <td colspan="5">納品物:<br>[D-M2_DETAIL_NOTE_XXX]</td>
+            </tr>
+            <tr class="recipe-items-table__item-footer">
+              <td colspan="5">支払い条件:<br><span class="pdf-tbd">現在ハリボテ</span></td>
+            </tr>
 			';
 			$add_detail_area = '';
 			$detail_key = 0;
@@ -2069,10 +2064,6 @@ function DispData($type,$mode,$sort,$word,$word2,$mid_list,$m1_id,$m1_mid,$key,$
 				$origin_price=$m2_detail_quantity*$m2_detail_unit_price;
 				echo "<!--debug:[D-M2_DETAIL_PRICE_ORIGIN_$detail_no]-->";
 				echo "<!--debug:origin_price:$origin_price-->";
-				
-				$add_detail_area=str_replace("[D-M2_DETAIL_QUANTITY_".$detail_no."]",$m2_detail_quantity,$add_detail_area);
-				$add_detail_area=str_replace("[D-M2_DETAIL_UNIT_PRICE_".$detail_no."]",$m2_detail_unit_price,$add_detail_area);
-
 				$add_detail_area=str_replace("[D-M2_DETAIL_PRICE_ORIGIN_".$detail_no."]",$origin_price,$add_detail_area);
 
 				$add_detail_area=str_replace("[D-M2_DETAIL_ITEM_".$detail_no."]",$item_filestatus_detail['M2_DETAIL_ITEM'],$add_detail_area);

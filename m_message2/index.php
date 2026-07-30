@@ -386,7 +386,7 @@ function DispData($mode,$sort,$word,$word2,$key,$page,$lid,$token)
 				$status="クローズ";
 			}
 
-			if($status=="キャンセル承認"){
+			if($status=="キャンセル承認" || $status=="管理者キャンセル承認"){
 				$status="キャンセル";
 			}
 			// 受領ボタン（納品承認のことと思われる）を押した時点で「請求」にするように変更とのこと

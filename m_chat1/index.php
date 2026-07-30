@@ -767,11 +767,11 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token,$mid1,$mid2,$etc02)
 	if($item_shodan['STATUS']=="請求書送付(一括前払い)" || $item_shodan['STATUS']=="請求書送付(前払い)"){
 		$status="実施中";
 	}
-	if($item_shodan['STATUS']=="決済者発注承認"){
-		$status="決済者発注承認";
-	}
-	if($item_shodan['STATUS']=="サプライヤーキャンセル承認"){
-		$status="サプライヤーキャンセル承認";
+
+	if($item_shodan['STATUS']=="決済者発注承認" ||
+		$item_shodan['STATUS']=="サプライヤーキャンセル承認" ||
+		$item_shodan['STATUS']=="管理者キャンセル承認"){
+		$status=$item_shodan['STATUS'];
 	}
 
 	$str=str_replace("[TITLE]",$item_shodan['TITLE'],$str);

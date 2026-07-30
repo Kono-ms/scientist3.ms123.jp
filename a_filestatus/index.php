@@ -172,6 +172,12 @@ function Main()
 			ImportData($obj,$a,$b,$key,$mode);
 			$mode="list";
 			break;
+		case "AdminCancelApproval":
+			//echo "<!--at Case: AdminCancelApproval-->";
+			SubmitAdminCancelApproval($key);
+			$url=BASE_URL . "/a_filestatus/?mode=edit&key=".$key;
+			header("Location: {$url}");
+			break;
 	} 
 
 	DispData($mode,$sort,$word,$key,$page,$lid,$token,$sync_item_ary,$preview_type,$pdf_action,$pdf_btn_version);
@@ -5327,7 +5333,7 @@ function SubmitJyutyusyonin($key)
 			'".$date_stmp."',
 			'".$date_stmp."'
 		)";
-	echo('<!--'.$StrSQL.'-->');
+	//echo('<!--'.$StrSQL.'-->');
 	if (!(mysqli_query(ConnDB(),$StrSQL))) {
 		die;
 	}
@@ -5380,6 +5386,194 @@ function SubmitJyutyusyonin($key)
 
 
 }
+
+
+
+//=========================================================================================================
+//名前 DB書き込み（「管理者キャンセル承認」レコードの送信）
+//機能 DBにレコードを保存
+//引数 a_filestatusのレコード（アコーディオン(関連履歴)部分の「サプライヤーキャンセル承認」のデータ）のID($key):
+//戻値 $function_ret
+//=========================================================================================================
+function SubmitAdminCancelApproval($key)
+{
+	eval(globals());
+
+	echo "<!--at SubmitAdminCancelApproval-->";
+
+	$StrSQL="SELECT * FROM DAT_FILESTATUS WHERE ID='".$key."' order by ID desc limit 1;";
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$itemFS=mysqli_fetch_assoc($rs);
+	echo "<!--StrSQL:$StrSQL-->";
+
+	$shodan_id=$itemFS["SHODAN_ID"];
+	$div_id=$itemFS["DIV_ID"];
+	$mid1=$itemFS["MID1"];
+	$mid2=$itemFS["MID2"];
+
+	//更新基本データ1
+	$date_stmp=date('Y/m/d H:i:s');
+	$status="管理者キャンセル承認";
+	$c_status = 'キャンセル';
+	$status_sort = '96';
+
+
+	if(checkDIV_ID($div_id)==""){
+		$StrSQL = "
+		UPDATE DAT_SHODAN SET
+		EDITDATE = '".$date_stmp."',
+		STATUS_SORT = '".$status_sort."',
+		C_STATUS = '".$c_status."',
+		STATUS = '".$status."'
+		WHERE
+		ID = ".$shodan_id."
+		";
+		if (!(mysqli_query(ConnDB(),$StrSQL))) {
+			die;
+		}
+
+	}else{
+		$StrSQL = "
+		UPDATE DAT_SHODAN_DIV SET
+		EDITDATE = '".$date_stmp."',
+		C_STATUS = '".$c_status."',
+		STATUS = '".$status."'
+		WHERE
+		DIV_ID = '".$div_id."'
+		";
+			//echo "<!--sql: $StrSQL-->";
+		if (!(mysqli_query(ConnDB(),$StrSQL))) {
+			die;
+		}
+	}
+
+	$StrSQL = "
+		INSERT INTO DAT_FILESTATUS (
+			SHODAN_ID,
+			MID1,
+			MID2,
+
+			CATEGORY,
+			STATUS,
+
+			DIV_ID,
+
+			NEWDATE,
+			EDITDATE
+		) VALUE (
+			'".$shodan_id."',
+			'".$mid1."',
+			'".$mid2."',
+
+			'".$c_status."',
+			'".$status."',
+
+			'".$div_id."',
+
+			'".$date_stmp."',
+			'".$date_stmp."'
+		)";
+	//echo('<!--'.$StrSQL.'-->');
+	if (!(mysqli_query(ConnDB(),$StrSQL))) {
+		die;
+	}
+
+
+
+	$StrSQL="SELECT * FROM DAT_FILESTATUS where SHODAN_ID='".$shodan_id."' ";
+	$StrSQL.=" AND STATUS='見積り送付' AND DIV_ID='".$div_id."' order by ID desc;";
+	echo('<!--'.$StrSQL.'-->');
+	$rs=mysqli_query(ConnDB(),$StrSQL);
+	$m_item = mysqli_fetch_assoc($rs);
+	$m_key = $m_item['ID'];
+	echo "<!--m_item:\n";
+	var_dump($m_item);
+	echo "-->";
+
+	$SCNo_ary=array(
+		"SCNo_yy" => "", 
+		"SCNo_mm" => "", 
+		"SCNo_dd" => "", 
+		"SCNo_cnt" => "", 
+		"SCNo_else1" => "", 
+		"SCNo_else2" => "", 
+	);
+	$m2_quote_no="";
+
+	$SCNo_ary["SCNo_yy"]=$m_item["SCNo_yy"];
+	$SCNo_ary["SCNo_mm"]=$m_item["SCNo_mm"];
+	$SCNo_ary["SCNo_dd"]=$m_item["SCNo_dd"];
+	$SCNo_ary["SCNo_cnt"]=$m_item["SCNo_cnt"];
+	$SCNo_ary["SCNo_else1"]=$m_item["SCNo_else1"];
+	$SCNo_ary["SCNo_else2"]=$m_item["SCNo_else2"];
+	$SCNo_str=formatAlphabetId($SCNo_ary);
+	$m2_quote_no=$m_item["M2_QUOTE_NO"];
+	$m2_version=$m_item["M2_VERSION"];
+
+	$comment = 'Order No:<br>'.$SCNo_str.'-Version'.$m2_version.'<br>has been canceled.';
+
+	if($comment != '') {
+		$aid = $mid1 . '-' . $mid2;
+		$StrSQL = "
+			INSERT INTO DAT_MESSAGE (
+				AID,
+				RID,
+				ENABLE,
+				NEWDATE,
+				COMMENT,
+				ETC02,
+				ETC03,
+				ETC04
+			) VALUE (
+				'".$aid."',
+				'".$mid2."',
+				'ENABLE:公開中',
+				'".$date_stmp."',
+				'".$comment."',
+				'".$shodan_id."',
+				'".$mid1."',
+				'".$key."'
+			)
+		";
+		if (!(mysqli_query(ConnDB(),$StrSQL))) {
+			die;
+		}
+	}
+
+	$comment = '発注 No:<br>'.$SCNo_str.'-Version'.$m2_version.'<br>はキャンセル承認されました。誤ってキャンセルした場合は、<a href="/contact/" target="_blank">管理者にご連絡</a>ください。';
+
+	if($comment != '') {
+		$aid = $mid1 . '-' . $mid2;
+		$StrSQL = "
+			INSERT INTO DAT_MESSAGE (
+				AID,
+				RID,
+				ENABLE,
+				NEWDATE,
+				COMMENT,
+				ETC02,
+				ETC03,
+				ETC04
+			) VALUE (
+				'".$aid."',
+				'".$mid1."',
+				'ENABLE:公開中',
+				'".$date_stmp."',
+				'".$comment."',
+				'".$shodan_id."',
+				'".$mid2."',
+				'".$key."'
+			)
+		";
+		if (!(mysqli_query(ConnDB(),$StrSQL))) {
+			die;
+		}
+	}
+
+
+}
+
+
 
 
 //=========================================================================================================
@@ -5636,7 +5830,7 @@ function SubmitSeikyu($key){
 //=========================================================================================================
 //名前 DB書き込み（完了データに表示される請求書プレビューのSENDボタンを押したときの、「完了後対応」（追加請求（研究者））レコードの送信）
 //機能 DBにレコードを保存
-//引数 a_filestatusのレコード（「納品確認」のレコード）のID($key):
+//引数 a_filestatusのレコード（「完了」のレコード）のID($key):
 //戻値 $function_ret
 //=========================================================================================================
 function SubmitSeikyu_add($key){
@@ -5736,7 +5930,7 @@ function SubmitSeikyu_add($key){
 			$rs=mysqli_query(ConnDB(),$StrSQL);
 			echo "<!--StrSQL1:$StrSQL-->";
 			$item_num=mysqli_num_rows($rs);
-			if($item_num==0){
+			if($item_num>=1){
 				$StrSQL = "
 				INSERT INTO DAT_FILESTATUS (
 					SHODAN_ID,

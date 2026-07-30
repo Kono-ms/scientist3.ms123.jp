@@ -224,13 +224,37 @@
               </tr>
             </script>
 
-            <!-- 金額：研究者宛見積ベース＋手数料（サービス費用〜合計金額）。下記エリアにPHPが実データを差し込む。
-                 ※重要：この説明文に角括弧付きプレースホルダ（SERVICE_FEE_AREA 等）を書かないこと。
-                   差し込まれる実データ側にHTMLコメントが含まれ、外側コメントが途中で閉じて金額表が二重表示になるため。 -->
+            <!-- 金額（PHP接続部）：本来は [SERVICE_FEE_AREA]（研究者宛見積ベース＋手数料）を差し込む。
+                 disp表示では未接続のため、期待値の構成どおりのハリボテ表を表示。
+                 ★エンジニア実装時：下記 recipe-details 内の「サービス費用〜合計金額」を
+                   [S-PREVIEW_INFO_R_AREA][SERVICE_FEE_AREA][E-PREVIEW_INFO_R_AREA] に置換 -->
             <div class="recipe-details">
-              [S-PREVIEW_INFO_R_AREA]
-              [SERVICE_FEE_AREA]
-              [E-PREVIEW_INFO_R_AREA]
+              <p style="font-size:0.875em;font-weight:700;margin:1em 0 0.4em;">サービス費用</p>
+              <table class="recipe-details__table">
+                <tbody>
+                  <tr><th>小計</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>税率</th><td><span class="pdf-tbd">現在ハリボテ</span> %</td></tr>
+                  <tr><th>消費税</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                </tbody>
+              </table>
+              <p style="font-size:0.875em;font-weight:700;margin:1em 0 0.4em;">手数料</p>
+              <table class="recipe-details__table">
+                <tbody>
+                  <tr><th>PF手数料</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>輸入代行費用</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>輸出代行費用</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>特別値引き</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>小計</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>税率</th><td><span class="pdf-tbd">現在ハリボテ</span> %</td></tr>
+                  <tr><th>消費税</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                </tbody>
+              </table>
+              <table class="recipe-details__table">
+                <tbody>
+                  <tr><th>合計金額</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                </tbody>
+              </table>
+
               <table class="recipe-details__table" style="margin-top:1em;">
                 <tbody>
                   <tr><td>備考：<span class="pdf-tbd">お支払い回数：1回（現在ハリボテ）</span></td></tr>

@@ -13,48 +13,10 @@
   <script>
     var h_m2_detail = ([H_M2_DETAIL]);
     $(document).ready(function () {
-      /*
-      var id = $('input[name=H_M2_ID]').val();
-      var val = h_m2_detail[id];
-      if(val) {
-          $('#M2_NOHIN_TYPE').html(val['M2_NOHIN_TYPE']);
-          $('#M2_PAY_TYPE').html(val['M2_PAY_TYPE']);
-          $('#M2_STUDY_CODE').html(val['M2_STUDY_CODE']);
-          $('#M2_DATE').html(val['M2_DATE']);
-          $('#M2_QUOTE_VALID_UNTIL').html(val['M2_QUOTE_VALID_UNTIL']);
-          $('#M2_DESCRIPTION').html(val['M2_DESCRIPTION']);
-          $('#M2_CURRENCY').html(val['M2_CURRENCY']);
-
-          // detail
-          if(val['detail'] != null && val['detail'].length > 0) {
-            for(var i = 0; i < val['detail'].length; i++) {
-              if(i > 0) {
-                add_detail();
-              }
-              var detail = val['detail'][i];
-              var detail_no = i + 1;
-              $('#M2_DETAIL_ITEM_' + detail_no).html(detail['M2_DETAIL_ITEM']);
-              $('#M2_DETAIL_DESCRIPTION_' + detail_no).html(detail['M2_DETAIL_DESCRIPTION']);
-              $('#M2_DETAIL_PRICE_' + detail_no).html(detail['M2_DETAIL_PRICE']);
-              $('#M2_DETAIL_NOTE_' + detail_no).html(detail['M2_DETAIL_NOTE']);
-            }
-
-          }
-
-          $('#M2_SPECIAL_DISCOUNT').html(val['M2_SPECIAL_DISCOUNT']);
-          $('#M2_SPECIAL_NOTE').html(val['M2_SPECIAL_NOTE']);
-      }
-      */
+      /* 発注確認画面では明細はサーバ側ADD_DETAIL_AREA（プレースホルダ）で表示していた。
+         ★エンジニア実装：$detail_template を「品番/数量/単価/値引き/合計/詳細/納品物/支払条件」の
+           recipe-items-table 行(下記コメント参照)に変更し ADD_DETAIL_AREA（プレースホルダ） に差し込む。 */
     });
-    var detail_cnt = 1;
-    function add_detail() {
-      detail_cnt++;
-      var html = $('#detail_template').html();
-      html = html.replace(/XXX/g, '' + detail_cnt);
-      var area = $('#add_detail_area').html();
-      area += html;
-      $('#add_detail_area').html(area);
-    }
   </script>
 </head>
 
@@ -100,34 +62,33 @@
         </div>
         [ERR-E]
         <div class="form-box">
-          <!-- ▼ 帳票プレビュー：既存の項目・サーバ明細[ADD_DETAIL_AREA]・フォームはすべて保持し、レイアウトのみ帳票化 -->
+          <!-- ▼ 帳票プレビュー：明細表と金額はPHP接続前のためハリボテ（期待値レイアウト）。既存フォーム・特記事項・納品先は保持 -->
           <div class="recipe">
 
-            <!-- ヘッダー：タイトル＋ロゴ -->
             <div class="recipe-header recipe-header--R">
               <h1 class="recipe-title">発注書</h1>
               <figure class="recipe-logo"><img src="/common/images/logo.png" width="200" alt="Cosmo Bio" onerror="this.style.display='none'"></figure>
             </div>
 
-            <!-- 案件情報（サーバ側[D-*]で流し込み） -->
+            <!-- 案件情報（左＝案件名/試験番号、右＝発注番号/見積番号/発注日/管理番号） -->
             <div class="recipe-desc">
               <div class="recipe-no">
                 <p class="recipe-no__project-name">案件名：[D-TITLE]</p>
-                <p class="recipe-no__study-code">試験番号：<span id="M2_STUDY_CODE">[D-M2_STUDY_CODE]</span></p>
+                <p class="recipe-no__study-code">試験番号：[D-M2_STUDY_CODE]</p>
               </div>
               <div class="recipe-date">
                 <table class="recipe-date__table">
                   <tbody>
                     <tr><th>発注番号</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
-                    <tr><th>見積番号</th><td id="M2_QUOTE_NO">[D-M2_QUOTE_NO]</td></tr>
-                    <tr><th>発注日</th><td id="M2_DATE">[D-M2_DATE]</td></tr>
-                    <tr><th>Scientist3管理番号<span class="formset__must">Mandatory</span></th><td>[D-H_M2_ID]</td></tr>
+                    <tr><th>見積番号</th><td>[D-M2_QUOTE_NO]</td></tr>
+                    <tr><th>発注日</th><td>[D-M2_DATE]</td></tr>
+                    <tr><th>Scientist3管理番号</th><td>[D-H_M2_ID]</td></tr>
                   </tbody>
                 </table>
               </div>
             </div>
 
-            <!-- 宛先ブロック：Excel期待値どおり 発行元(コスモバイオ)／サプライヤー／宛先(研究者) -->
+            <!-- 宛先：発行元(コスモバイオ)／サプライヤー／宛先(研究者) -->
             <div class="recipe-address">
               <table class="recipe-address__table">
                 <tbody>
@@ -145,47 +106,14 @@
               </table>
             </div>
 
-            <!-- 確認事項（納品形態/支払条件/Currency/Quote Valid Until/コメント）はExcel帳票に表示場所が無いため非表示。データ（サーバ流し込み先）は保持 -->
-            <div style="display:none;">
-              <span id="M2_NOHIN_TYPE">[D-M2_NOHIN_TYPE]</span>
-              <span id="M2_PAY_TYPE">[D-M2_PAY_TYPE]</span>
-              <span id="M2_CURRENCY">[D-M2_CURRENCY]</span>
-              <span id="M2_QUOTE_VALID_UNTIL">[D-M2_QUOTE_VALID_UNTIL]</span>
-            </div>
-
-            <!-- 明細：既存のサーバ側 [ADD_DETAIL_AREA]（formset出力）をそのまま保持し、CSSで帳票内に整形 -->
+            <!-- 明細：確認画面で実データが出るのはサーバ側 [ADD_DETAIL_AREA]（品番/内容/価格/値引き/Note）のみ。
+                 これを表示（recipe-detail-listで整形）。
+                 ※期待値の列組み表（数量/単価/合計を横1行）にするには、サーバが数量/単価を出力し
+                   $detail_template を recipe-items-table 行に変更するPHP対応が必要。 -->
             <div class="recipe-items">
-              <p class="recipe-items__text">下記の通り、御発注申し上げます。</p>
+              <p class="recipe-items__text">下記の通り、発注いたします。</p>
               <div class="recipe-detail-list">
                 [ADD_DETAIL_AREA]
-              </div>
-
-              <div id="detail_template" style="display:none;">
-                <div id="detail_XXX">
-                  <div class="formset__item formset__item--head">
-                    <div class="formset__ttl2"><br><strong>Details XXX</strong></div>
-                  </div>
-                  <div class="formset__item">
-                    <div class="formset__ttl">Item #</div>
-                    <div id="M2_DETAIL_ITEM_XXX" class="formset__input">[D-M2_DETAIL_ITEM_XXX]</div>
-                  </div>
-                  <div class="formset__item">
-                    <div class="formset__ttl">内容<span class="formset__must">Mandatory</span></div>
-                    <div id="M2_DETAIL_DESCRIPTION_XXX" class="formset__input">[D-M2_DETAIL_DESCRIPTION_XXX]</div>
-                  </div>
-                  <div class="formset__item">
-                    <div class="formset__ttl">Price<span class="formset__must">Mandatory</span></div>
-                    <div id="M2_DETAIL_PRICE_XXX" class="formset__input">[D-M2_DETAIL_PRICE_ORIGIN_XXX]</div>
-                  </div>
-                  <div class="formset__item">
-                    <div class="formset__ttl">M2_DETAIL_SP_DISCOUNT<span class="formset__must">Mandatory</span></div>
-                    <div id="M2_DETAIL_PRICE_XXX" class="formset__input">[D-M2_DETAIL_SP_DISCOUNT_XXX]</div>
-                  </div>
-                  <div class="formset__item">
-                    <div class="formset__ttl">Note</div>
-                    <div id="M2_DETAIL_NOTE_XXX" class="formset__input">[D-M2_DETAIL_NOTE_XXX]</div>
-                  </div>
-                </div>
               </div>
 
               <table class="recipe-items-table">
@@ -197,7 +125,42 @@
               </table>
             </div>
 
-            <!-- 納品先（決済者登録情報。既存の実データを保持） -->
+            <!-- 金額（PHP接続部）：本来は [SERVICE_FEE_AREA]（研究者宛見積ベース＋手数料）。未接続のためハリボテ。
+                 ★エンジニア実装時：下記「サービス費用〜合計金額」を [S-PREVIEW_INFO_R_AREA][SERVICE_FEE_AREA][E-PREVIEW_INFO_R_AREA] に置換 -->
+            <div class="recipe-details">
+              <p style="font-size:0.875em;font-weight:700;margin:1em 0 0.4em;">サービス費用</p>
+              <table class="recipe-details__table">
+                <tbody>
+                  <tr><th>小計</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>税率</th><td><span class="pdf-tbd">現在ハリボテ</span> %</td></tr>
+                  <tr><th>消費税</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                </tbody>
+              </table>
+              <p style="font-size:0.875em;font-weight:700;margin:1em 0 0.4em;">手数料</p>
+              <table class="recipe-details__table">
+                <tbody>
+                  <tr><th>PF手数料</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>輸入代行費用</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>輸出代行費用</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>特別値引き</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>小計</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                  <tr><th>税率</th><td><span class="pdf-tbd">現在ハリボテ</span> %</td></tr>
+                  <tr><th>消費税</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                </tbody>
+              </table>
+              <table class="recipe-details__table">
+                <tbody>
+                  <tr><th>合計金額</th><td><span class="pdf-tbd">現在ハリボテ</span></td></tr>
+                </tbody>
+              </table>
+              <table class="recipe-details__table" style="margin-top:1em;">
+                <tbody>
+                  <tr><td>備考：<span class="pdf-tbd">お支払い回数：1回（現在ハリボテ）</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 納品先（決済者登録情報・既存の実データを保持） -->
             [S-KESAISYA_SHIP_TO]
             <div class="recipe-details">
               <p style="font-size:0.875em;font-weight:700;margin:1em 0 0.4em;">納品先</p>
@@ -210,6 +173,8 @@
               </table>
             </div>
             [E-KESAISYA_SHIP_TO]
+
+            <p style="text-align:right;margin:1em 0 0;">以上</p>
 
           </div>
           <!-- ▲ 帳票プレビューここまで -->

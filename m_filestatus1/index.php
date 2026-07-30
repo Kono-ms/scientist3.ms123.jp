@@ -106,7 +106,8 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 			$item['STATUS']=="サプライヤーキャンセル否認" || 
 			$item['STATUS']=="サプライヤーキャンセル承認（追加見積り）" ||
 			$item['STATUS']=="キャンセル承認" ||
-			$item['STATUS']=="キャンセル承認（請求あり）"){
+			$item['STATUS']=="キャンセル承認（請求あり）" ||
+			$item['STATUS']=="管理者キャンセル承認"){
 			//別の画面でのステータス表示と乖離しているための対策
 			$s_category="キャンセル関連ステータス特別表示分け用";
 		}
@@ -767,8 +768,30 @@ function DispData($mode,$sort,$word,$key,$page,$lid,$token)
 				</div>
 				';
 				break;
+			case '管理者キャンセル承認':
+				$c_hatyu_str="";
+				if( count($cancel_scno_ary)>0 ){
+					foreach ($cancel_scno_ary as $idx => $val) {
+						if($val!=""){
+							$c_hatyu_str.=$val."<br>";
+						}
+					}
+				}
+				if($c_hatyu_str!=""){
+					$c_hatyu_str="Order No:<br>".$c_hatyu_str;
+				}
 
-				case 'キャンセル':
+				$tmp.='
+				<div class="filestatus_content">
+				<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>
+				<div>
+				'.$c_hatyu_str.'
+				The order has been canceled.
+				</div>
+				</div>
+				';
+				break;
+			case 'キャンセル':
 				$tmp .= '
 				<div class="filestatus_content">
 				<div class="filestatus_datetime">' . substr($item['NEWDATE'], 0, 16) . '</div>

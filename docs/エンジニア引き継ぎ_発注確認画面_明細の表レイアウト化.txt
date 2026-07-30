@@ -1,0 +1,67 @@
+【引き継ぎ】発注依頼 確認画面（m_contact2 h_conf）の明細を、期待値の表レイアウト（実データ）にする
+
+現状：
+  ・明細は [ADD_DETAIL_AREA]（サーバ出力＝実データ：品番/内容/価格/値引き/Note）をリスト整形で表示。
+  ・期待値は「品番／数量・単価・値引き・合計（横1行）／詳細／納品物／支払い条件」の表。
+  ・明細のHTML構造は m_contact2/index.php 内の $detail_template（HTML文字列）で決まるため、
+    表化にはこの文字列の差し替えが必要（html側だけでは不可）。
+
+------------------------------------------------------------
+■ 手順1：m_contact2/index.php の $detail_template を差し替え
+  対象：if($type == '発注依頼') ブロック内の $detail_template（2031行付近。DBから明細を読む方）。
+  ※すぐ下に SELECT * FROM DAT_FILESTATUS_DETAIL … があるのが目印。別タイプ用($detail_template 2096行付近=else側)は触らない。
+
+  下記に置き換え（プレースホルダはそのまま＝既存の埋め込みで実データが入る）：
+
+$detail_template = '
+            <tr class="recipe-items-table__item-header recipe-items-table__item-name">
+              <td colspan="5">品番：[D-M2_DETAIL_ITEM_XXX]</td>
+            </tr>
+            <tr class="recipe-items-table__item-header">
+              <td colspan="2">数量: [D-M2_DETAIL_QUANTITY_XXX]</td>
+              <td>単価: [D-M2_DETAIL_UNIT_PRICE_XXX]</td>
+              <td>値引き: [D-M2_DETAIL_SP_DISCOUNT_XXX]</td>
+              <td>合計: [D-M2_DETAIL_PRICE_ORIGIN_XXX]</td>
+            </tr>
+            <tr class="recipe-items-table__item-body">
+              <td colspan="5">詳細:<br>[D-M2_DETAIL_DESCRIPTION_XXX]</td>
+            </tr>
+            <tr class="recipe-items-table__item-body">
+              <td colspan="5">納品物:<br>[D-M2_DETAIL_NOTE_XXX]</td>
+            </tr>
+            <tr class="recipe-items-table__item-footer">
+              <td colspan="5">支払い条件:<br>[D-M2_PAYMENT_NOTE_JP_XXX]</td>
+            </tr>
+';
+
+------------------------------------------------------------
+■ 手順2：数量・単価・支払い条件を実データにする（str_replace 追記）
+  同ブロックの明細ループ内（$m2_detail_quantity / $m2_detail_unit_price を計算している直後。2064行付近）に追記：
+
+    $add_detail_area=str_replace("[D-M2_DETAIL_QUANTITY_".$detail_no."]",$m2_detail_quantity,$add_detail_area);
+    $add_detail_area=str_replace("[D-M2_DETAIL_UNIT_PRICE_".$detail_no."]",$m2_detail_unit_price,$add_detail_area);
+
+  ※支払い条件（[D-M2_PAYMENT_NOTE_JP_XXX]）を出す場合は、DAT_FILESTATUS_DETAIL に該当列があれば
+    同様に str_replace を追記。無ければ当該<td>を「現在ハリボテ」等に。
+
+  ※「合計」は現状の“Price”＝[D-M2_DETAIL_PRICE_ORIGIN]（数量×単価）を流用。
+    値引き後の額にしたい場合は [D-M2_DETAIL_PRICE_XXX]（M2_DETAIL_PRICE）に変更。
+
+------------------------------------------------------------
+■ 手順3：m_contact2/h_conf.html の囲みを <table> に
+  現状：
+    <div class="recipe-detail-list">
+      [ADD_DETAIL_AREA]
+    </div>
+  を、下記に変更（$detail_template が <tr> を出すため）：
+    <table class="recipe-items-table">
+      <tbody>
+        [ADD_DETAIL_AREA]
+      </tbody>
+    </table>
+
+------------------------------------------------------------
+補足：
+  ・手順1のみ＝品番/詳細/価格/値引き/納品物が実データの表（数量/単価/支払条件は空）。
+  ・手順1+2＝数量/単価も実データ。ほぼ全項目が実データの表になる。
+  ・PHPロジック（ループ・SQL）は変更不要。触るのはHTMLテンプレ文字列と str_replace 追記のみ。

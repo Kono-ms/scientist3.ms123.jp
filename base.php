@@ -682,6 +682,7 @@ function showStatus($val){
 			case "サプライヤーキャンセル承認":
 			case "キャンセル承認":
 			case "キャンセル承認（請求あり）":
+			case "管理者キャンセル承認":
 				$status="Cancellation";
 				break;
 			case "辞退":
